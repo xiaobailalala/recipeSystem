@@ -20,6 +20,12 @@ public class TestController {
     @GetMapping("test")
     public String test(){
         FilePath.RealPathMkdir("123");
+        FilePath.RealPathMkdir("123");
+        FilePath.RealPathMkdir("123");
+        FilePath.RealPathMkdir("123");
+        FilePath.RealPathMkdir("123");
+        FilePath.RealPathMkdir("123");
+        FilePath.RealPathMkdir("123");
         return "success";
     }
 }
