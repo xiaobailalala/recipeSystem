@@ -1,0 +1,39 @@
+spring:
+  # 配置数据库连接信息以及改变数据源为Druid
+  datasource:
+    username: root
+    password: devmysql.960314
+    url: jdbc:mysql://192.168.1.108:3306/recipe?useSSL=false
+#    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  http:
+    multipart:
+      max-file-size: 10Mb
+      max-request-size: 10Mb
+  elasticsearch:
+    jest:
+      uris: http://192.168.1.108:9200
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 192.168.1.108:9301
+  redis:
+    host: 192.168.1.108
+    password: devredis.960314
+mybatis:
+  type-aliases-package: com.smxy.recipe.entity
