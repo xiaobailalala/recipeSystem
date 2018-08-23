@@ -12,48 +12,61 @@ package com.smxy.recipe.entity;
  *
  */
 public class Attent {
-	private int f_id;
-	private int f_uid_m;
-	private int f_uid_o;
-	private Common_user common_user;
+	private Integer fId;
+	private Integer fUidM;
+	private Integer fUidO;
+	private CommonUser commonUser;
 	public Attent() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Attent(int f_id, int f_uid_m, int f_uid_o, Common_user common_user) {
-		super();
-		this.f_id = f_id;
-		this.f_uid_m = f_uid_m;
-		this.f_uid_o = f_uid_o;
-		this.common_user = common_user;
+
+	public Attent(Integer fId, Integer fUidM, Integer fUidO, CommonUser commonUser) {
+		this.fId = fId;
+		this.fUidM = fUidM;
+		this.fUidO = fUidO;
+		this.commonUser = commonUser;
 	}
-	public int getF_id() {
-		return f_id;
+
+	public Integer getfId() {
+		return fId;
 	}
-	public void setF_id(int f_id) {
-		this.f_id = f_id;
+
+	public void setfId(Integer fId) {
+		this.fId = fId;
 	}
-	public int getF_uid_m() {
-		return f_uid_m;
+
+	public Integer getfUidM() {
+		return fUidM;
 	}
-	public void setF_uid_m(int f_uid_m) {
-		this.f_uid_m = f_uid_m;
+
+	public void setfUidM(Integer fUidM) {
+		this.fUidM = fUidM;
 	}
-	public int getF_uid_o() {
-		return f_uid_o;
+
+	public Integer getfUidO() {
+		return fUidO;
 	}
-	public void setF_uid_o(int f_uid_o) {
-		this.f_uid_o = f_uid_o;
+
+	public void setfUidO(Integer fUidO) {
+		this.fUidO = fUidO;
 	}
-	public Common_user getCommon_user() {
-		return common_user;
+
+	public CommonUser getCommonUser() {
+		return commonUser;
 	}
-	public void setCommon_user(Common_user common_user) {
-		this.common_user = common_user;
+
+	public void setCommonUser(CommonUser commonUser) {
+		this.commonUser = commonUser;
 	}
+
 	@Override
 	public String toString() {
-		return "Common_attent [f_id=" + f_id + ", f_uid_m=" + f_uid_m + ", f_uid_o=" + f_uid_o + ", common_user="
-				+ common_user + "]";
+		return "Attent{" +
+				"fId=" + fId +
+				", fUidM=" + fUidM +
+				", fUidO=" + fUidO +
+				", commonUser=" + commonUser +
+				'}';
 	}
 }

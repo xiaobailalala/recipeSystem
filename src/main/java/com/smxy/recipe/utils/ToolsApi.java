@@ -25,13 +25,111 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+@Component
+@PropertySource("classpath:custom.properties")
 public class ToolsApi {
+
+	public static final String MAILTYPE_VERIFY="verify";
+	public static final String MAILTYPE_RESET="reset";
+	private static JavaMailSenderImpl mailSender;
+	@Autowired(required = true)
+	public void setMailSender(JavaMailSenderImpl mailSender){
+		ToolsApi.mailSender=mailSender;
+	}
+
+	private static String senderAddress;
+	@Value("${userinfo.email.address}")
+	public void setSenderAddress(String senderAddress){
+		ToolsApi.senderAddress=senderAddress;
+	}
+
+	@Async
+	public void sendMail(String type,String title,String reciver,String account,String code){
+		MimeMessage mimeMessage = mailSender.createMimeMessage();
+		MimeMessageHelper helper = null;
+		try {
+			helper = new MimeMessageHelper(mimeMessage, true);
+			helper.setSubject(title);
+			if ("verify".equals(type)){
+				helper.setText("<!DOCTYPE html><html><head>    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />    <title></title>    <meta charset=\"utf-8\" /></head><body>    <div class=\"qmbox qm_con_body_content qqmail_webmail_only\" id=\"mailContentContainer\" style=\"\">        <style type=\"text/css\">            .qmbox body {                margin: 0;                padding: 0;                background: #fff;                font-family: \"Verdana, Arial, Helvetica, sans-serif\";                font-size: 14px;                line-height: 24px;            }            .qmbox div, .qmbox p, .qmbox span, .qmbox img {                margin: 0;                padding: 0;            }            .qmbox img {                border: none;            }            .qmbox .contaner {                margin: 0 auto;            }            .qmbox .title {                margin: 0 auto;                background: url() #CCC repeat-x;                height: 30px;                text-align: center;                font-weight: bold;                padding-top: 12px;                font-size: 16px;            }            .qmbox .content {                margin: 4px;            }            .qmbox .biaoti {                padding: 6px;                color: #000;            }            .qmbox .xtop, .qmbox .xbottom {                display: block;                font-size: 1px;            }            .qmbox .xb1, .qmbox .xb2, .qmbox .xb3, .qmbox .xb4 {                display: block;                overflow: hidden;            }            .qmbox .xb1, .qmbox .xb2, .qmbox .xb3 {                height: 1px;            }            .qmbox .xb2, .qmbox .xb3, .qmbox .xb4 {                border-left: 1px solid #BCBCBC;                border-right: 1px solid #BCBCBC;            }            .qmbox .xb1 {                margin: 0 5px;                background: #BCBCBC;            }            .qmbox .xb2 {                margin: 0 3px;                border-width: 0 2px;            }            .qmbox .xb3 {                margin: 0 2px;            }            .qmbox .xb4 {                height: 2px;                margin: 0 1px;            }            .qmbox .xboxcontent {                display: block;                border: 0 solid #BCBCBC;                border-width: 0 1px;            }            .qmbox .line {                margin-top: 6px;                border-top: 1px dashed #B9B9B9;                padding: 4px;            }            .qmbox .neirong {                padding: 6px;                color: #666666;            }            .qmbox .foot {                padding: 6px;                color: #777;            }            .qmbox .font_darkblue {                color: #006699;                font-weight: bold;            }            .qmbox .font_lightblue {                color: #008BD1;                font-weight: bold;            }            .qmbox .font_gray {                color: #888;                font-size: 12px;            }        </style>        <div class=\"contaner\">            <div class=\"title\">"+title+"</div>            <div class=\"content\">                <p class=\"biaoti\"><b>亲爱的用户，你好！</b></p>                <b class=\"xtop\"><b class=\"xb1\"></b><b class=\"xb2\"></b><b class=\"xb3\"></b><b class=\"xb4\"></b></b>                <div class=\"xboxcontent\">                    <div class=\"neirong\">                        <p><b>请核对你的账号：</b><span id=\"userName\" class=\"font_darkblue\">"+account+"</span></p>                        <p><b>邮箱绑定的验证码：</b><span class=\"font_lightblue\"><span id=\"yzm\" data=\""+code+"\" onclick=\"return false;\" t=\"7\" style=\"border-bottom: 1px dashed rgb(204, 204, 204); z-index: 1; position: static;\">"+code+"</span></span><br><span class=\"font_gray\">(请输入该验证码完成邮箱绑定，验证码30分钟内有效！)</span></p>                        <div class=\"line\">如果你未申请邮箱绑定服务，请忽略该邮件。</div>                    </div>                </div>                <b class=\"xbottom\"><b class=\"xb4\"></b><b class=\"xb3\"></b><b class=\"xb2\"></b><b class=\"xb1\"></b></b>                <p class=\"foot\">如果仍有问题，请拨打我们的会员服务专线: <span data=\"800-820-5100\" onclick=\"return false;\" t=\"7\" style=\"border-bottom: 1px dashed rgb(204, 204, 204); z-index: 1; position: static;\">15080558157</span></p>            </div>        </div>        <style type=\"text/css\">            .qmbox style, .qmbox script, .qmbox head, .qmbox link, .qmbox meta {                display: none !important;            }        </style>    </div></body></html>",true);
+			}
+			if ("reset".equals(type)){
+				helper.setText("<!DOCTYPE html><html><head>    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />    <title></title>    <meta charset=\"utf-8\" /></head><body>    <div class=\"qmbox qm_con_body_content qqmail_webmail_only\" id=\"mailContentContainer\" style=\"\">        <style type=\"text/css\">            .qmbox body {                margin: 0;                padding: 0;                background: #fff;                font-family: \"Verdana, Arial, Helvetica, sans-serif\";                font-size: 14px;                line-height: 24px;            }            .qmbox div, .qmbox p, .qmbox span, .qmbox img {                margin: 0;                padding: 0;            }            .qmbox img {                border: none;            }            .qmbox .contaner {                margin: 0 auto;            }            .qmbox .title {                margin: 0 auto;                background: url() #CCC repeat-x;                height: 30px;                text-align: center;                font-weight: bold;                padding-top: 12px;                font-size: 16px;            }            .qmbox .content {                margin: 4px;            }            .qmbox .biaoti {                padding: 6px;                color: #000;            }            .qmbox .xtop, .qmbox .xbottom {                display: block;                font-size: 1px;            }            .qmbox .xb1, .qmbox .xb2, .qmbox .xb3, .qmbox .xb4 {                display: block;                overflow: hidden;            }            .qmbox .xb1, .qmbox .xb2, .qmbox .xb3 {                height: 1px;            }            .qmbox .xb2, .qmbox .xb3, .qmbox .xb4 {                border-left: 1px solid #BCBCBC;                border-right: 1px solid #BCBCBC;            }            .qmbox .xb1 {                margin: 0 5px;                background: #BCBCBC;            }            .qmbox .xb2 {                margin: 0 3px;                border-width: 0 2px;            }            .qmbox .xb3 {                margin: 0 2px;            }            .qmbox .xb4 {                height: 2px;                margin: 0 1px;            }            .qmbox .xboxcontent {                display: block;                border: 0 solid #BCBCBC;                border-width: 0 1px;            }            .qmbox .line {                margin-top: 6px;                border-top: 1px dashed #B9B9B9;                padding: 4px;            }            .qmbox .neirong {                padding: 6px;                color: #666666;            }            .qmbox .foot {                padding: 6px;                color: #777;            }            .qmbox .font_darkblue {                color: #006699;                font-weight: bold;            }            .qmbox .font_lightblue {                color: #008BD1;                font-weight: bold;            }            .qmbox .font_gray {                color: #888;                font-size: 12px;            }        </style>        <div class=\"contaner\">            <div class=\"title\">"+title+"</div>            <div class=\"content\">                <p class=\"biaoti\"><b>亲爱的用户，你好！</b></p>                <b class=\"xtop\"><b class=\"xb1\"></b><b class=\"xb2\"></b><b class=\"xb3\"></b><b class=\"xb4\"></b></b>                <div class=\"xboxcontent\">                    <div class=\"neirong\">                        <p><b>请核对你的账号：</b><span id=\"userName\" class=\"font_darkblue\">"+account+"</span></p>                        <p><b>您的账号经由管理处处理，密码已重置成功，重置后的密码为：</b><span class=\"font_lightblue\"><span id=\"yzm\" data=\""+code+"\" onclick=\"return false;\" t=\"7\" style=\"border-bottom: 1px dashed rgb(204, 204, 204); z-index: 1; position: static;\">"+code+"</span></span><br><span class=\"font_gray\">(该密码为临时密码，为了您的账号安全，请登录后及时进行密码修改。)</span></p>                        <div class=\"line\">如果你进行密码重置服务，请联系管理员。</div>                    </div>                </div>                <b class=\"xbottom\"><b class=\"xb4\"></b><b class=\"xb3\"></b><b class=\"xb2\"></b><b class=\"xb1\"></b></b>                <p class=\"foot\">如果仍有问题，请拨打我们的会员服务专线: <span data=\"800-820-5100\" onclick=\"return false;\" t=\"7\" style=\"border-bottom: 1px dashed rgb(204, 204, 204); z-index: 1; position: static;\">15080558157</span></p>            </div>        </div>        <style type=\"text/css\">            .qmbox style, .qmbox script, .qmbox head, .qmbox link, .qmbox meta {                display: none !important;            }        </style>    </div></body></html>",true);
+			}
+			helper.setTo(reciver);
+			helper.setFrom("1051973784@qq.com");
+			mailSender.send(mimeMessage);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String getCookie(HttpServletRequest request, String cookieName){
+		Cookie[] cookies=request.getCookies();
+		if (cookies!=null){
+			for (Cookie cookie:cookies){
+				if(cookie.getName().equals(cookieName)){
+					return cookie.getValue();
+				}
+			}
+		}
+		return null;
+	}
+
+	public static void writeCookie(HttpServletResponse response, String cookieName, String value){
+		Cookie cookie=new Cookie(cookieName,value);
+		cookie.setPath("/");
+		cookie.setMaxAge(24*60*60);
+		response.addCookie(cookie);
+	}
+
+	public static void removeCookie(HttpServletRequest request, String cookieName){
+		Cookie[] cookies=request.getCookies();
+		for (int i=0;i<(cookies==null?0:cookies.length);i++){
+			if ((cookieName).equalsIgnoreCase(cookies[i].getName())){
+				Cookie cookie=new Cookie(cookieName,"");
+				cookie.setPath("/");
+				cookie.setMaxAge(0);
+			}
+		}
+	}
+
+	public static String randomPwd(){
+		Object[] ch={1,2,3,4,5,6,7,8,9,0,
+				'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+				'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+		};
+		String resCode="";
+		for (int i=0;i<16;i++){
+			resCode+=ch[(int)Math.floor(Math.random()*16)];
+		}
+		return resCode;
+	}
+
+	public static String entryptBySaltMd5(String password,String salt) {
+		Object md5Password = new SimpleHash("MD5", password, ByteSource.Util.bytes(salt), 1);
+		return md5Password.toString();
+	}
 	public static String toMD5(String str) {  
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -42,35 +140,7 @@ public class ToolsApi {
            return null;
         }
     }
-	/**
-	 * @author zpx
-	 * @param page
-	 * @param pageTotal
-	 * @return
-	 */
-	public static int[] getPagesArr(int page, int pageTotal) {
-		int pageLength = 9;
-		int pagesArr[] = { page };
-		int left = page - 1;
-		int right = page + 1;
-		while (page <= pageTotal && pagesArr.length < pageLength && (left > 0 || right <= pageTotal)) {
-			if (left > 0) {
-				pagesArr = Arrays.copyOf(pagesArr, pagesArr.length + 1);
-				for (int i = pagesArr.length - 1; i > 0; i--) {
-					pagesArr[i] = pagesArr[i - 1];
-				}
-				pagesArr[0] = left;
-			}
-			if (right <= pageTotal) {
-				pagesArr = Arrays.copyOf(pagesArr, pagesArr.length + 1);
-				pagesArr[pagesArr.length - 1] = right;
-			}
-			left--;
-			right++;
-		}
-		return pagesArr;
-	}
-	public static boolean FileUpload(MultipartFile multipartFile,boolean fileLimit,String serverPathMkdir,String fileName,int isDelete,String preFile) {
+	public static boolean fileUpload(MultipartFile multipartFile,boolean fileLimit,String serverPathMkdir,String fileName,int isDelete,String preFile) {
 		if (isDelete>0) {
 			File file=new File(serverPathMkdir+getName(preFile));
 			if (file.exists()&&file.isFile()) {
@@ -91,7 +161,7 @@ public class ToolsApi {
 	}
 	public static String reName(String file) {
 		int index = file.lastIndexOf(".");
-		String name = new Date().getTime() + "" + new Random().nextInt(199)
+		String name = new Date().getTime() + "" + new Random().nextInt(1001)
 				+ file.substring(index);
 		return name;
 	}

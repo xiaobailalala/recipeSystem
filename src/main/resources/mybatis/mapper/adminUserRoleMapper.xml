@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.AdminUserRoleDao">
+    <select id="getAdminUserRoleByFuid" parameterType="int" resultMap="getAdminRolePermissionDetail">
+        select * from t_admin_user_role where f_uid=#{fUid};
+    </select>
+    <resultMap id="getAdminRolePermissionDetail" type="AdminUserRole">
+        <result property="fRid" column="f_rid"/>
+        <association property="adminRole" column="f_rid" select="com.smxy.recipe.dao.AdminRoleDao.getAdminRoleByFid">
+        </association>
+    </resultMap>
+
+    <delete id="deleteInfoByUidAndRid" parameterType="Map">
+        delete from t_admin_user_role where f_rid=#{fRid} and f_uid=#{fUid};
+    </delete>
+
+    <insert id="saveInfo" parameterType="Map">
+        insert into t_admin_user_role(f_rid,f_uid) values (#{fRid},#{fUid});
+    </insert>
+
+    <delete id="deleteInfoByUid" parameterType="Integer">
+        delete from t_admin_user_role where f_uid=#{fUid};
+    </delete>
+</mapper>

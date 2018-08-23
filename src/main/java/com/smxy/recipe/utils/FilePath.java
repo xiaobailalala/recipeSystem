@@ -23,26 +23,31 @@ import java.io.File;
 @PropertySource("classpath:custom.properties")
 public class FilePath {
 
-	private static String realPath;
+    public static String realPathStr(String filePath) {
+        String path=realPath+filePath;
+        File file=new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return path;
+    }
+
+    public static String realPath;
     @Value("${filepath.realPath}")
     public void setRealPath(String realPath) {
         FilePath.realPath = realPath;
     }
 
-
-	public static String commonUserHeadPath;
+    public static String commonUserHeadPath;
     @Value("${filepath.commonUserHeadPath}")
     public void setCommonUserHeadPath(String commonUserHeadPath) {
         FilePath.commonUserHeadPath = commonUserHeadPath;
     }
 
-    public static String RealPathMkdir(String filePath) {
-		String path=realPath+filePath;
-		File file=new File(path);
-		if (!file.exists()) {
-            file.mkdirs();
-        }
-		return path;
-	}
+    public static String adminUserHeadPath;
+    @Value("${filepath.adminUserHeadPath}")
+    public void setAdminUserHeadPath(String adminUserHeadPath){
+        FilePath.adminUserHeadPath=adminUserHeadPath;
+    }
 }
 

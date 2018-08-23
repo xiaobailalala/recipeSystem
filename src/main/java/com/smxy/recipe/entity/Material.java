@@ -12,47 +12,61 @@ package com.smxy.recipe.entity;
  *
  */
 public class Material {
-	private int f_id;
-	private int f_rid;
+	private Integer fId;
+	private Integer fRid;
 	private Recipe recipe;
-	private String f_name;
+	private String fName;
 	public Material() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Material(int f_id, int f_rid, Recipe recipe, String f_name) {
-		super();
-		this.f_id = f_id;
-		this.f_rid = f_rid;
+
+	public Material(Integer fId, Integer fRid, Recipe recipe, String fName) {
+		this.fId = fId;
+		this.fRid = fRid;
 		this.recipe = recipe;
-		this.f_name = f_name;
+		this.fName = fName;
 	}
-	public int getF_id() {
-		return f_id;
+
+	public Integer getfId() {
+		return fId;
 	}
-	public void setF_id(int f_id) {
-		this.f_id = f_id;
+
+	public void setfId(Integer fId) {
+		this.fId = fId;
 	}
-	public int getF_rid() {
-		return f_rid;
+
+	public Integer getfRid() {
+		return fRid;
 	}
-	public void setF_rid(int f_rid) {
-		this.f_rid = f_rid;
+
+	public void setfRid(Integer fRid) {
+		this.fRid = fRid;
 	}
+
 	public Recipe getRecipe() {
 		return recipe;
 	}
+
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
 	}
-	public String getF_name() {
-		return f_name;
+
+	public String getfName() {
+		return fName;
 	}
-	public void setF_name(String f_name) {
-		this.f_name = f_name;
+
+	public void setfName(String fName) {
+		this.fName = fName;
 	}
+
 	@Override
 	public String toString() {
-		return "Material [f_id=" + f_id + ", f_rid=" + f_rid + ", recipe=" + recipe + ", f_name=" + f_name + "]";
+		return "Material{" +
+				"fId=" + fId +
+				", fRid=" + fRid +
+				", recipe=" + recipe +
+				", fName='" + fName + '\'' +
+				'}';
 	}
 }

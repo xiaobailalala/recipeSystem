@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('角色信息管理——新增角色')}"></head>
+<body>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(2,2)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">角色信息管理——新增信息</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">管理员监管区</a>
+                <a class="btn btn-light" th:href="@{/adminRole/role}">角色信息管理</a>
+                <a class="btn btn-light" disabled="disabled">添加角色</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        权限管理——新增权限信息
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label" for="fRolename">角色名称</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control form-control-line" id="fRolename" name="fRolename" placeholder="Please input roleName...">
+                                </div>
+                                <div class="col-sm-2 text-right">
+                                    <button type="button" class="btn btn-primary" id="verify">点我验证</button>
+                                </div>
+                            </div>
+                            <div class="collapse" id="subCont">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label form-label" for="fIntroduction">角色说明</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" rows="3" id="fIntroduction" name="fIntroduction" placeholder="Please input role introduction..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label form-label"></label>
+                                    <div class="col-sm-10">
+                                        <input type="submit" value="Submit" class="btn btn-default" disabled="disabled">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/role/add.js}"></script>
+</html>

@@ -12,39 +12,50 @@ package com.smxy.recipe.entity;
  *
  */
 public class Classify {
-	private int f_id;
-	private String f_name;
-	private String f_introduction;
+	private Integer fId;
+	private String fName;
+	private String fIntroduction;
 	public Classify() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Classify(int f_id, String f_name, String f_introduction) {
-		super();
-		this.f_id = f_id;
-		this.f_name = f_name;
-		this.f_introduction = f_introduction;
+
+	public Classify(Integer fId, String fName, String fIntroduction) {
+		this.fId = fId;
+		this.fName = fName;
+		this.fIntroduction = fIntroduction;
 	}
-	public int getF_id() {
-		return f_id;
+
+	public Integer getfId() {
+		return fId;
 	}
-	public void setF_id(int f_id) {
-		this.f_id = f_id;
+
+	public void setfId(Integer fId) {
+		this.fId = fId;
 	}
-	public String getF_name() {
-		return f_name;
+
+	public String getfName() {
+		return fName;
 	}
-	public void setF_name(String f_name) {
-		this.f_name = f_name;
+
+	public void setfName(String fName) {
+		this.fName = fName;
 	}
-	public String getF_introduction() {
-		return f_introduction;
+
+	public String getfIntroduction() {
+		return fIntroduction;
 	}
-	public void setF_introduction(String f_introduction) {
-		this.f_introduction = f_introduction;
+
+	public void setfIntroduction(String fIntroduction) {
+		this.fIntroduction = fIntroduction;
 	}
+
 	@Override
 	public String toString() {
-		return "Classify [f_id=" + f_id + ", f_name=" + f_name + ", f_introduction=" + f_introduction + "]";
+		return "Classify{" +
+				"fId=" + fId +
+				", fName='" + fName + '\'' +
+				", fIntroduction='" + fIntroduction + '\'' +
+				'}';
 	}
 }

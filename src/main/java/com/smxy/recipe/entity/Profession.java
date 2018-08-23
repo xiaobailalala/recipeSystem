@@ -12,31 +12,39 @@ package com.smxy.recipe.entity;
  *
  */
 public class Profession {
-	private Integer f_id;
-	private String f_name;
+	private Integer fId;
+	private String fName;
 	public Profession() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Profession(Integer f_id, String f_name) {
-		super();
-		this.f_id = f_id;
-		this.f_name = f_name;
+
+	public Profession(Integer fId, String fName) {
+		this.fId = fId;
+		this.fName = fName;
 	}
-	public Integer getF_id() {
-		return f_id;
+
+	public Integer getfId() {
+		return fId;
 	}
-	public void setF_id(int f_id) {
-		this.f_id = f_id;
+
+	public void setfId(Integer fId) {
+		this.fId = fId;
 	}
-	public String getF_name() {
-		return f_name;
+
+	public String getfName() {
+		return fName;
 	}
-	public void setF_name(String f_name) {
-		this.f_name = f_name;
+
+	public void setfName(String fName) {
+		this.fName = fName;
 	}
+
 	@Override
 	public String toString() {
-		return "Common_profession [f_id=" + f_id + ", f_name=" + f_name + "]";
+		return "Profession{" +
+				"fId=" + fId +
+				", fName='" + fName + '\'' +
+				'}';
 	}
 }

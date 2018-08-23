@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('未授权！')}"></head>
+<style type="text/css">
+    body{background: #F5F5F5;}
+</style>
+<body>
+    <div class="error-pages">
+        <img th:src="@{/assets/img/unauthorized.png}" alt="404" class="icon" width="400" height="260">
+        <h1>Sorry the operation couldn't be accessed</h1>
+        <h4>You don't currently have permission to perform this operation</h4>
+        <!--<form>-->
+        <!--<input type="text" class="form-control" placeholder="Search for Page">-->
+        <!--<i class="fa fa-search"></i>-->
+        <!--</form>-->
+
+        <div class="bottom-links">
+            <a href="javascript:history.go(-1);" class="btn btn-default">Go Back</a>
+            <a href="javascript:window.location.reload();" class="btn btn-light">Reload Page</a>
+        </div>
+
+    </div>
+</body>
+</html>

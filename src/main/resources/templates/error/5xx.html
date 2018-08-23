@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('系统出错啦！')}"></head>
+<style type="text/css">
+    body{background: #F5F5F5;}
+</style>
+<body>
+
+    <div class="error-pages">
+
+    <img th:src="@{/assets/img/500.png}" alt="500" class="icon" width="400" height="260">
+        <h1>Internal server error</h1>
+        <h4>Something has gone seriously wrong. Please try later.</h4>
+
+        <div class="bottom-links">
+            <a href="javascript:history.go(-1);" class="btn btn-default">Go Back</a>
+            <a href="javascript:window.location.reload();" class="btn btn-light">Reload Page</a>
+        </div>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('角色权限分配')}"></head>
+<body>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(2,2)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">角色信息管理</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">管理员监管区</a>
+                <a class="btn btn-light" th:href="@{/adminRole/role}">角色信息管理</a>
+                <a class="btn btn-light" disabled="disabled">分配权限</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        角色权限分配
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12 col-lg-6">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">已授权权限</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:if="${data.data.includeSize}!=0" th:each="item:${data.data.include.adminRolePermissions}">
+                                        <td width="10%">
+                                            <div class="checkbox margin-t-0 checkbox-inline">
+                                                <input type="checkbox" style="z-index: 1;" th:id="checkbox+${item.adminPermission.fId}" name="include" th:value="${item.adminPermission.fId}">
+                                                <label th:for="checkbox+${item.adminPermission.fId}"></label>
+                                            </div>
+                                        </td>
+                                        <td th:text="${item.adminPermission.fPermissionname}" data-toggle="tooltip" data-placement="bottom" th:title="${item.adminPermission.fIntroduction}"></td>
+                                    </tr>
+                                    <tr th:if="${data.data.includeSize}!=0">
+                                        <td colspan="2">
+                                            <button class="btn btn-danger btn-block" type="button" id="deletePerm" th:data-id="${data.data.include.fId}">移除选中的权限
+                                                <i class="fa fa-long-arrow-right"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${data.data.includeSize}==0">
+                                        <td colspan="2">该角色当前未拥有任何权限</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">未授权权限</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:if="${data.data.excludeSize}!=0" th:each="item:${data.data.exclude}">
+                                        <td width="10%">
+                                            <div class="checkbox margin-t-0 checkbox-inline">
+                                                <input type="checkbox" style="z-index: 1;" th:for="checkbox+${item.fId}" name="exclude" th:value="${item.fId}">
+                                                <label th:for="checkbox+${item.fId}"></label>
+                                            </div>
+                                        </td>
+                                        <td th:text="${item.fPermissionname}" data-toggle="tooltip" data-placement="bottom" th:title="${item.fIntroduction}"></td>
+                                    </tr>
+                                    <tr th:if="${data.data.excludeSize}!=0">
+                                        <td colspan="2">
+                                            <button class="btn btn-primary btn-block" type="button" id="addPerm" th:data-id="${data.data.include.fId}">
+                                                <i class="fa fa-long-arrow-left"></i>
+                                                添加选中的权限</button>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${data.data.excludeSize}==0">
+                                        <td colspan="2">该角色当前已拥有所有权限</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/role/perm.js}"></script>
+</html>

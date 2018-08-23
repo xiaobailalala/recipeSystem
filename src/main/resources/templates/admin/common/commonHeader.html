@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header(title)">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Kode is a Premium Bootstrap Admin Template, It's responsive, clean coded and mobile friendly">
+    <meta name="keywords" content="bootstrap, admin, dashboard, flat admin template, responsive," />
+    <title th:text="${title}"></title>
+    <link rel="shortcut icon" th:href="@{/src/favicon.ico}">
+    <link rel="bookmark" th:href="@{/src/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/src/plugins/cropper/cropper.css}">
+    <link rel="stylesheet" th:href="@{/src/plugins/verify/jigsaw.css}">
+    <link th:href="@{/assets/css/root.css}" rel="stylesheet">
+</head>
+</html>

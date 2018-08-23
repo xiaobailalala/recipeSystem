@@ -5,4 +5,24 @@
     <select id="findAll" resultType="Profession">
 		select * from t_common_profession order by f_id ASC;
 	</select>
+
+	<delete id="deleteInfo" parameterType="Integer">
+        delete from t_common_profession where f_id=#{fId};
+    </delete>
+
+    <select id="getPorfessByName" parameterType="String" resultType="Profession">
+        select * from t_common_profession where f_name=#{fName};
+    </select>
+
+    <insert id="saveInfo" parameterType="Profession">
+        insert into t_common_profession(f_name) values (#{fName});
+    </insert>
+
+    <update id="updateInfo" parameterType="Profession">
+        update t_common_profession set f_name = #{fName} where f_id = #{fId};
+    </update>
+
+    <select id="getOneById" parameterType="Integer" resultType="Profession">
+        select * from t_common_profession where f_id=#{fId};
+    </select>
 </mapper>

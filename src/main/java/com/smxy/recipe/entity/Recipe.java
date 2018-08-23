@@ -12,106 +12,138 @@ package com.smxy.recipe.entity;
  *
  */
 public class Recipe {
-	private int f_id;
-	private int f_cid;
+	private Integer fId;
+	private Integer fCid;
 	private Classify classify;
-	private String f_author;
-	private String f_release;
-	private String f_cover;
-	private String f_introduction;
-	private int f_good;
-	private int f_count;
-	private int type;
-	private int ready;
+	private String fAuthor;
+	private String fRelease;
+	private String fCover;
+	private String fIntroduction;
+	private Integer fGood;
+	private Integer fCount;
+	private Integer fType;
+	private Integer fReady;
 	public Recipe() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Recipe(int f_id, int f_cid, Classify classify, String f_author, String f_release, String f_cover,
-			String f_introduction, int f_good, int f_count, int type, int ready) {
-		super();
-		this.f_id = f_id;
-		this.f_cid = f_cid;
+
+	public Recipe(Integer fId, Integer fCid, Classify classify, String fAuthor, String fRelease, String fCover, String fIntroduction, Integer fGood, Integer fCount, Integer fType, Integer fReady) {
+		this.fId = fId;
+		this.fCid = fCid;
 		this.classify = classify;
-		this.f_author = f_author;
-		this.f_release = f_release;
-		this.f_cover = f_cover;
-		this.f_introduction = f_introduction;
-		this.f_good = f_good;
-		this.f_count = f_count;
-		this.type = type;
-		this.ready = ready;
+		this.fAuthor = fAuthor;
+		this.fRelease = fRelease;
+		this.fCover = fCover;
+		this.fIntroduction = fIntroduction;
+		this.fGood = fGood;
+		this.fCount = fCount;
+		this.fType = fType;
+		this.fReady = fReady;
 	}
-	public int getF_id() {
-		return f_id;
+
+	public Integer getfId() {
+		return fId;
 	}
-	public void setF_id(int f_id) {
-		this.f_id = f_id;
+
+	public void setfId(Integer fId) {
+		this.fId = fId;
 	}
-	public int getF_cid() {
-		return f_cid;
+
+	public Integer getfCid() {
+		return fCid;
 	}
-	public void setF_cid(int f_cid) {
-		this.f_cid = f_cid;
+
+	public void setfCid(Integer fCid) {
+		this.fCid = fCid;
 	}
+
 	public Classify getClassify() {
 		return classify;
 	}
+
 	public void setClassify(Classify classify) {
 		this.classify = classify;
 	}
-	public String getF_author() {
-		return f_author;
+
+	public String getfAuthor() {
+		return fAuthor;
 	}
-	public void setF_author(String f_author) {
-		this.f_author = f_author;
+
+	public void setfAuthor(String fAuthor) {
+		this.fAuthor = fAuthor;
 	}
-	public String getF_release() {
-		return f_release;
+
+	public String getfRelease() {
+		return fRelease;
 	}
-	public void setF_release(String f_release) {
-		this.f_release = f_release;
+
+	public void setfRelease(String fRelease) {
+		this.fRelease = fRelease;
 	}
-	public String getF_cover() {
-		return f_cover;
+
+	public String getfCover() {
+		return fCover;
 	}
-	public void setF_cover(String f_cover) {
-		this.f_cover = f_cover;
+
+	public void setfCover(String fCover) {
+		this.fCover = fCover;
 	}
-	public String getF_introduction() {
-		return f_introduction;
+
+	public String getfIntroduction() {
+		return fIntroduction;
 	}
-	public void setF_introduction(String f_introduction) {
-		this.f_introduction = f_introduction;
+
+	public void setfIntroduction(String fIntroduction) {
+		this.fIntroduction = fIntroduction;
 	}
-	public int getF_good() {
-		return f_good;
+
+	public Integer getfGood() {
+		return fGood;
 	}
-	public void setF_good(int f_good) {
-		this.f_good = f_good;
+
+	public void setfGood(Integer fGood) {
+		this.fGood = fGood;
 	}
-	public int getF_count() {
-		return f_count;
+
+	public Integer getfCount() {
+		return fCount;
 	}
-	public void setF_count(int f_count) {
-		this.f_count = f_count;
+
+	public void setfCount(Integer fCount) {
+		this.fCount = fCount;
 	}
-	public int getType() {
-		return type;
+
+	public Integer getfType() {
+		return fType;
 	}
-	public void setType(int type) {
-		this.type = type;
+
+	public void setfType(Integer fType) {
+		this.fType = fType;
 	}
-	public int getReady() {
-		return ready;
+
+	public Integer getfReady() {
+		return fReady;
 	}
-	public void setReady(int ready) {
-		this.ready = ready;
+
+	public void setfReady(Integer fReady) {
+		this.fReady = fReady;
 	}
+
 	@Override
 	public String toString() {
-		return "Recipe [f_id=" + f_id + ", f_cid=" + f_cid + ", classify=" + classify + ", f_author=" + f_author
-				+ ", f_release=" + f_release + ", f_cover=" + f_cover + ", f_introduction=" + f_introduction
-				+ ", f_good=" + f_good + ", f_count=" + f_count + ", type=" + type + ", ready=" + ready + "]";
+		return "Recipe{" +
+				"fId=" + fId +
+				", fCid=" + fCid +
+				", classify=" + classify +
+				", fAuthor='" + fAuthor + '\'' +
+				", fRelease='" + fRelease + '\'' +
+				", fCover='" + fCover + '\'' +
+				", fIntroduction='" + fIntroduction + '\'' +
+				", fGood=" + fGood +
+				", fCount=" + fCount +
+				", fType=" + fType +
+				", fReady=" + fReady +
+				'}';
 	}
 }

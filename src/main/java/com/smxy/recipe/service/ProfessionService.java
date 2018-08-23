@@ -18,4 +18,8 @@ import com.smxy.recipe.utils.ResApi;
  */
 public interface ProfessionService {
 	public ResApi<List<Profession>> getAllInfo();
+	public ResApi<Object> deleteInfo(Integer id);
+	public ResApi<Object> saveInfo(Profession profession);
+	public ResApi<Object> updateInfo(Integer id,Profession profession);
+	public Profession getOneById(Integer id);
 }

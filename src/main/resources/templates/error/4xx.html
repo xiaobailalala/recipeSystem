@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('页面不见啦！')}"></head>
+<style type="text/css">
+    body{background: #F5F5F5;}
+</style>
+<body>
+    <div class="error-pages">
+
+        <img th:src="@{/assets/img/404.png}" alt="404" class="icon" width="400" height="260">
+        <h1>Sorry but we couldn’t find this page</h1>
+        <h4>It seems that this page doesn’t exist or has been removed</h4>
+        <!--<form>-->
+            <!--<input type="text" class="form-control" placeholder="Search for Page">-->
+            <!--<i class="fa fa-search"></i>-->
+        <!--</form>-->
+
+        <div class="bottom-links">
+            <a href="javascript:history.go(-1);" class="btn btn-default">Go Back</a>
+            <a href="javascript:window.location.reload();" class="btn btn-light">Reload Page</a>
+        </div>
+
+    </div>
+</body>
+</html>

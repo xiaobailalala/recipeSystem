@@ -12,64 +12,83 @@ package com.smxy.recipe.entity;
  *
  */
 public class Tips {
-	private int f_id;
-	private int f_rid;
+	private Integer fId;
+	private Integer fRid;
 	private Recipe recipe;
-	private String f_content;
-	private int f_pid;
-	private Common_product common_product;
+	private String fContent;
+	private Integer fPid;
+	private CommonProduct commonProduct;
 	public Tips() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Tips(int f_id, int f_rid, Recipe recipe, String f_content, int f_pid, Common_product common_product) {
-		super();
-		this.f_id = f_id;
-		this.f_rid = f_rid;
+
+	public Tips(Integer fId, Integer fRid, Recipe recipe, String fContent, Integer fPid, CommonProduct commonProduct) {
+		this.fId = fId;
+		this.fRid = fRid;
 		this.recipe = recipe;
-		this.f_content = f_content;
-		this.f_pid = f_pid;
-		this.common_product = common_product;
+		this.fContent = fContent;
+		this.fPid = fPid;
+		this.commonProduct = commonProduct;
 	}
-	public int getF_id() {
-		return f_id;
+
+	public Integer getfId() {
+		return fId;
 	}
-	public void setF_id(int f_id) {
-		this.f_id = f_id;
+
+	public void setfId(Integer fId) {
+		this.fId = fId;
 	}
-	public int getF_rid() {
-		return f_rid;
+
+	public Integer getfRid() {
+		return fRid;
 	}
-	public void setF_rid(int f_rid) {
-		this.f_rid = f_rid;
+
+	public void setfRid(Integer fRid) {
+		this.fRid = fRid;
 	}
+
 	public Recipe getRecipe() {
 		return recipe;
 	}
+
 	public void setRecipe(Recipe recipe) {
 		this.recipe = recipe;
 	}
-	public String getF_content() {
-		return f_content;
+
+	public String getfContent() {
+		return fContent;
 	}
-	public void setF_content(String f_content) {
-		this.f_content = f_content;
+
+	public void setfContent(String fContent) {
+		this.fContent = fContent;
 	}
-	public int getF_pid() {
-		return f_pid;
+
+	public Integer getfPid() {
+		return fPid;
 	}
-	public void setF_pid(int f_pid) {
-		this.f_pid = f_pid;
+
+	public void setfPid(Integer fPid) {
+		this.fPid = fPid;
 	}
-	public Common_product getCommon_product() {
-		return common_product;
+
+	public CommonProduct getCommonProduct() {
+		return commonProduct;
 	}
-	public void setCommon_product(Common_product common_product) {
-		this.common_product = common_product;
+
+	public void setCommonProduct(CommonProduct commonProduct) {
+		this.commonProduct = commonProduct;
 	}
+
 	@Override
 	public String toString() {
-		return "Tips [f_id=" + f_id + ", f_rid=" + f_rid + ", recipe=" + recipe + ", f_content=" + f_content
-				+ ", f_pid=" + f_pid + ", common_product=" + common_product + "]";
+		return "Tips{" +
+				"fId=" + fId +
+				", fRid=" + fRid +
+				", recipe=" + recipe +
+				", fContent='" + fContent + '\'' +
+				", fPid=" + fPid +
+				", commonProduct=" + commonProduct +
+				'}';
 	}
 }

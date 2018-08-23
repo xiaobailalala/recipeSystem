@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('管理员信息编辑')}"></head>
+<body>
+    <div th:replace="~{admin/common/nav::loading}"></div>
+    <div th:replace="~{admin/common/nav::topFixed}"></div>
+    <div th:replace="~{admin/common/nav::sideFixed(1,1)}"></div>
+    <div class="content">
+        <div class="page-header">
+            <h1 class="title">管理员信息编辑</h1>
+            <ol class="breadcrumb">
+                <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+            </ol>
+            <div class="right">
+                <div class="btn-group" role="group" aria-label="...">
+                    <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                    <a class="btn btn-light" disabled="disabled">个人信息编辑</a>
+                    <a href="javascript:history.go(-1);" class="btn btn-light">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                    <a href="javascript:location.reload();" class="btn btn-light">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container-widget">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+
+                        <div class="panel-title">
+                            管理员资料编辑
+                            <ul class="panel-tools">
+                                <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                                <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                                <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="panel-body">
+                            <div role="tabpanel">
+                                <ul class="nav nav-pills nav-stacked col-md-2" role="tablist">
+                                    <li role="presentation" class="active"><a href="#profile3" aria-controls="profile3" role="tab" data-toggle="tab">基本信息编辑</a></li>
+                                    <li role="presentation"><a href="#messages3" aria-controls="messages3" role="tab" data-toggle="tab">密码修改</a></li>
+                                    <li role="presentation"><a href="#messages4" aria-controls="messages4" role="tab" data-toggle="tab">邮箱绑定</a></li>
+                                </ul>
+                                <div class="tab-content col-md-10">
+                                    <div role="tabpanel" class="tab-pane active" id="profile3">
+                                        <form class="form-horizontal" id="usernameForm">
+                                            <input type="hidden" th:value="${user.data.fId}" name="fId">
+                                            <input type="hidden" name="_method" value="put">
+                                            <input type="hidden" name="fHead" th:value="${user.data.fHead}">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label"></label>
+                                                <div class="col-sm-10">
+                                                    <img th:src="${user.data.fHead==null}?(${user.data.fSex}==2?@{/src/images/woman.png}:@{/src/images/man.png}):(${fileServerPath})+${user.data.fHead}" alt="adminUserhead">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label">修改头像</label>
+                                                <div class="col-sm-10">
+                                                    <input type="checkbox" id="changeImgPre" data-toggle="toggle" data-onstyle="success" data-on="" data-off="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label" for=""></label>
+                                                <div class="col-sm-10">
+                                                    <div class="collapse margin-t-10" id="changeImgContainer">
+                                                        <div class="well">
+                                                            <input type="file" id="imgFile" style="display: none;">
+                                                            <div class="col-sm-7" style="height: 300px;border: 1px solid gainsboro;border-radius: 5px;overflow: hidden;padding: 0;">
+                                                                <img src="" alt="" id="imageContainer">
+                                                            </div>
+                                                            <div class="col-sm-5 text-center">
+                                                                <div style="width: 220px;height: 220px;margin-bottom: 30px;border: 1px solid gainsboro;border-radius: 5px;overflow: hidden;padding: 0;display: inline-block;">
+                                                                    <img src="" alt="" id="previewContainer">
+                                                                </div>
+                                                                <div>
+                                                                    <button class="btn btn-default" type="button" id="selectFileBtn">浏览本地图片</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clear"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label">管理员账号</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" th:value="${user.data.fAccount}" id="fAccount" th:data-acc="${user.data.fAccount}" class="form-control" disabled="disabled">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label" for="fUsername">管理员用户名</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control form-control-line" id="fUsername" name="fUsername"
+                                                           th:value="${user.data.fUsername}" placeholder="请设置您的用户名">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <input type="submit" class="btn btn-default" disabled="disabled" id="usernameBtn" value="Submit">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="messages3">
+                                        <form class="form-horizontal" id="passwordForm">
+                                            <input type="hidden" th:value="${user.data.fId}" name="fId">
+                                            <input type="hidden" name="_method" value="put">
+                                            <input type="hidden" name="fAccount" th:value="${user.data.fAccount}">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label" for="prePassword">原密码</label>
+                                                <div class="col-sm-8">
+                                                    <input type="password" class="form-control" id="prePassword" name="prePassword" placeholder="请输入原密码">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button type="button" class="btn btn-primary btn-block" id="isPwd">验证</button>
+                                                </div>
+                                            </div>
+                                            <div class="collapse" id="newPwdInput">
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label form-label" for="newPassword">新密码</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="password" class="form-control" id="newPassword" name="fPassword" placeholder="请设置新密码">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-2 control-label form-label" for="reNewPassword">确认密码</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="password" class="form-control" id="reNewPassword" placeholder="请再次输入密码">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-2 col-sm-10">
+                                                        <input type="submit" class="btn btn-default" id="passwordBtn" value="提交">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="messages4">
+                                        <form class="form-horizontal" id="emailForm">
+                                            <input type="hidden" th:value="${user.data.fId}" name="fId">
+                                            <input type="hidden" name="_method" value="put">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label" for="banding-fEmail">绑定的邮箱</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="banding-fEmail"
+                                                           th:value="${user.data.fEmail}==null?'':${user.data.fEmail}" disabled="disabled" th:placeholder="${user.data.fEmail==null?'您当前未绑定邮箱':''}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" th:if="${user.data.fEmail}==null">
+                                                <label class="col-sm-2 control-label form-label" for="fEmail">绑定邮箱</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="fEmail" name="fEmail" placeholder="请设置要绑定的邮箱">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button type="button" id="verifyBtn" data-loading-text="验证中..." class="btn btn-primary btn-block" autocomplete="off">
+                                                        验证邮箱
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label form-label"></label>
+                                                <div class="col-sm-10">
+                                                    <div class="collapse margin-t-10" id="verifyContainer">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div id="captcha" style="position: relative; width: 310px;"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="collapse" id="verifyInput">
+                                                <div class="form-group ">
+                                                    <label class="col-sm-2 control-label form-label" for="verifyNum">请输入验证码</label>
+                                                    <div class="col-sm-4">
+                                                        <input type="text" placeholder="请输入验证码" id="verifyNum" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-2 col-sm-10">
+                                                        <input type="submit" class="btn btn-default" disabled="disabled" id="emailBtn" value="绑定邮箱">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{admin/common/nav::copyright}"></div>
+    </div>
+    <div th:replace="~{admin/common/nav::tabpanel}"></div>
+    <div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/admin/editor.js}"></script>
+</html>

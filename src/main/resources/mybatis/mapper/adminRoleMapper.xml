@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.AdminRoleDao">
+    <select id="getAdminRoleByFid" parameterType="int" resultMap="getAdminRoleDetail">
+        select * from t_admin_role where f_id=#{fId};
+    </select>
+    <resultMap id="getAdminRoleDetail" type="AdminRole">
+        <result property="fId" column="f_id"/>
+        <collection
+            property="adminRolePermissions" column="f_id" select="com.smxy.recipe.dao.AdminRolePermissionDao.getAdminRolePermissionByFrid">
+        </collection>
+    </resultMap>
+
+    <select id="getInfoAll" resultMap="getAdminRoleDetail">
+        select * from t_admin_role order by f_id ASC;
+    </select>
+
+    <select id="getAdminRoleByName" parameterType="AdminRole" resultType="AdminRole">
+        select * from t_admin_role where f_rolename=#{fRolename};
+    </select>
+
+    <insert id="saveInfo" parameterType="AdminRole">
+        insert into t_admin_role(f_rolename,f_introduction) values(#{fRolename},#{fIntroduction});
+    </insert>
+
+    <update id="updateInfo" parameterType="AdminRole">
+        update t_admin_role set f_rolename=#{fRolename},f_introduction=#{fIntroduction} where f_id=#{fId};
+    </update>
+
+    <delete id="deleteInfo" parameterType="Integer">
+        delete from t_admin_role where f_id=#{fId};
+    </delete>
+</mapper>

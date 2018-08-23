@@ -3,7 +3,8 @@ spring:
   datasource:
     username: root
     password: devmysql.960314
-    url: jdbc:mysql://192.168.1.108:3306/recipe?useSSL=false
+#    url: jdbc:mysql://192.168.1.108:3306/recipe?useSSL=false
+    url: jdbc:mysql://192.168.1.120:3306/recipe?useSSL=false
 #    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
@@ -27,13 +28,35 @@ spring:
       max-request-size: 10Mb
   elasticsearch:
     jest:
-      uris: http://192.168.1.108:9200
+#      uris: http://192.168.1.108:9200
+      uris: http://192.168.1.120:9200
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 192.168.1.108:9301
+#      cluster-nodes: 192.168.1.108:9300
+      cluster-nodes: 192.168.1.120:9300
   redis:
-    host: 192.168.1.108
+#    host: 192.168.1.108
+    host: 192.168.1.120
     password: devredis.960314
+  mail:
+    password: fziqpvgpiemvbcdi
+    username: 1051973784@qq.com
+    host: smtp.qq.com
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+  thymeleaf:
+    mode: HTML
 mybatis:
   type-aliases-package: com.smxy.recipe.entity
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+server:
+  session:
+    timeout: 3600
+logging:
+  level: error

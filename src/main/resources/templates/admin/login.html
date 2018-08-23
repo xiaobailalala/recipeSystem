@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('膳食膳房后台登录')}"></head>
+<style type="text/css">
+    body{background: #F5F5F5;}
+</style>
+<body>
+    <div class="login-form">
+        <form id="subform">
+            <div class="top">
+                <img src="" th:src="@{/src/images/favicon.png}" alt="icon" class="icon">
+                <h1>膳食膳房</h1>
+                <h4>Dietary Cuisine</h4>
+            </div>
+            <div class="form-area">
+                <div class="group">
+                    <input type="text" class="form-control" name="fAccount" id="account"  placeholder="Account">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="group">
+                    <input type="password" class="form-control" name="fPassword" id="password" placeholder="Password">
+                    <i class="fa fa-key"></i>
+                </div>
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox101" type="checkbox" name="rememberMe">
+                    <label for="checkbox101"> Remember Me</label>
+                </div>
+                <button type="submit" class="btn btn-default btn-block">LOGIN</button>
+            </div>
+        </form>
+        <div class="footer-links row">
+            <div class="col-xs-6 text-right"><a href="#"><i class="fa fa-lock"></i> Forgot password</a></div>
+        </div>
+    </div>
+    <div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/admin/login.js}"></script>
+</html>

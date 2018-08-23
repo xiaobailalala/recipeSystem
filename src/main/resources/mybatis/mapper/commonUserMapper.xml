@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.CommonUserDao">
+    <select id="isUser" parameterType="CommonUser" resultType="int">
+		select count(*) from t_common_user where f_account=#{fAccount};
+	</select>
+    <select id="isLogin" parameterType="CommonUser" resultMap="getUserDetail">
+		select * from t_common_user where f_account=#{fAccount} and
+		f_password=#{fPassword};
+	</select>
+    <resultMap type="CommonUser" id="getUserDetail">
+        <result property="fPid" column="f_pid" />
+        <association
+			property="profession" column="fPid"
+			select="getProfessionInfo">
+		</association>
+    </resultMap>
+    <select id="getProfessionInfo" resultType="Profession"
+            parameterType="CommonUser">
+		select * from t_common_profession where f_id=#{fPid};
+	</select>
+
+    <insert id="saveUser" parameterType="CommonUser"
+            useGeneratedKeys="true" keyProperty="fId">
+		insert into
+		t_common_user(f_account,f_password)
+		values(#{fAccount},#{fPassword});
+	</insert>
+
+    <update id="updateUserInfo" parameterType="CommonUser">
+		update t_common_user
+		set
+		f_username=#{fUsername},f_province=#{fProvince},f_city=#{fCity},f_area=#{fArea},f_cover=#{fCover},f_sex=#{fSex},f_sign=#{fSign},f_pid=#{fPid}
+		where f_id=#{fId};
+	</update>
+</mapper>

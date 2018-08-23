@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="onloadJs">
+    <div id="temporaryContainer"></div>
+    <div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">温馨提示</h4>
+                </div>
+                <div id="tip_main" class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/plugins.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/bootstrap-select/bootstrap-select.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/bootstrap-toggle/bootstrap-toggle.min.js}"></script>
+    <!--<script type="text/javascript" th:src="@{assets/js/flot-chart/flot-chart.js}"></script>-->
+    <!--<script type="text/javascript" th:src="@{assets/js/flot-chart/flot-chart-time.js}"></script>-->
+    <!--<script type="text/javascript" th:src="@{assets/js/flot-chart/flot-chart-stack.js}"></script>-->
+    <!--<script type="text/javascript" th:src="@{assets/js/flot-chart/flot-chart-pie.js}"></script>-->
+    <!--<script type="text/javascript" th:src="@{assets/js/flot-chart/flot-chart-plugin.js}"></script>-->
+    <script type="text/javascript" th:src="@{/assets/js/easypiechart/easypiechart.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/easypiechart/easypiechart-plugin.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/sparkline/sparkline.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/sparkline/sparkline-plugin.js}"></script>
+    <script th:src="@{/assets/js/rickshaw/d3.v3.js}"></script>
+    <!--<script th:src="@{assets/js/rickshaw/rickshaw.js}"></script>-->
+    <!--<script th:src="@{assets/js/rickshaw/rickshaw-plugin.js}"></script>-->
+    <script type="text/javascript" th:src="@{/assets/js/moment/moment.min.js}"></script>
+    <script th:src="@{/assets/js/sweet-alert/sweet-alert.min.js}"></script>
+    <script th:src="@{/src/plugins/cropper/cropper.js}"></script>
+    <script th:src="@{/src/plugins/verify/jigsaw.js}"></script>
+    <script th:src="@{/assets/js/datatables/datatables.min.js}"></script>
+    <script th:src="@{/src/js/publicScript.js}"></script>
+</div>
+</html>
