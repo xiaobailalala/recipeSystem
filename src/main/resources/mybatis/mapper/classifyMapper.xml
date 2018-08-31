@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ClassifyDao">
+
+    <select id="getAllInfo" resultMap="getClassifyDetail">
+        select * from t_food_classify order by f_id ASC;
+    </select>
+
+    <resultMap id="getClassifyDetail" type="Classify">
+        <result column="f_tid" property="fTid"/>
+        <association property="classifyTwo" column="f_tid"
+             select="com.smxy.recipe.dao.ClassifyTwoDao.getInfoById">
+        </association>
+    </resultMap>
+
+    <select id="getInfoByNameAndTid" parameterType="Classify" resultType="Classify">
+        select * from t_food_classify where f_name=#{fName} and f_tid=#{fTid};
+    </select>
+
+    <insert id="saveInfo" parameterType="Classify">
+        insert into t_food_classify (f_name, f_tid) values (#{fName}, #{fTid});
+    </insert>
+
+    <delete id="deleteInfo" parameterType="Integer">
+        delete from t_food_classify where f_id=#{fId};
+    </delete>
+
+    <select id="getInfoById" resultMap="getClassifyDetail">
+        select * from t_food_classify where f_id=#{fId};
+    </select>
+
+    <update id="updateInfo" parameterType="Classify">
+        update t_food_classify set f_name=#{fName}, f_tid=#{fTid} where f_id=#{fId};
+    </update>
+
+    <select id="getInfoByTid" parameterType="Integer" resultType="Classify">
+        select * from t_food_classify where f_tid=#{fTid};
+    </select>
+</mapper>

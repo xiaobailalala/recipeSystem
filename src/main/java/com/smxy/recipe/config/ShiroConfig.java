@@ -71,6 +71,7 @@ public class ShiroConfig {
 //        filterChainDefinitionMap.put("/logout", "logout");	// 用户退出，只需配置logout即可实现该功能
         filterChainDefinitionMap.put("/src/**","anon");
         filterChainDefinitionMap.put("/assets/**","anon");
+        filterChainDefinitionMap.put("/common/**","anon");
         filterChainDefinitionMap.put("/adm/adlogin","anon");
         filterChainDefinitionMap.put("/mob/**","anon");
         filterChainDefinitionMap.put("/druid/**","anon");

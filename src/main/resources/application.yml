@@ -28,13 +28,13 @@ spring:
       max-request-size: 10Mb
   elasticsearch:
     jest:
-#      uris: http://192.168.1.108:9200
-      uris: http://192.168.1.120:9200
+      uris: http://192.168.1.108:9201
+#      uris: http://192.168.1.120:9200
   data:
     elasticsearch:
       cluster-name: elasticsearch
-#      cluster-nodes: 192.168.1.108:9300
-      cluster-nodes: 192.168.1.120:9300
+      cluster-nodes: 192.168.1.108:9301
+#      cluster-nodes: 192.168.1.120:9300
   redis:
 #    host: 192.168.1.108
     host: 192.168.1.120
@@ -59,4 +59,4 @@ server:
   session:
     timeout: 3600
 logging:
-  level: error
+  level: debug

@@ -1,6 +1,6 @@
 $(function(){
     (function Delete(){
-        $('.deleteInfo').click(function(){
+        $('body').on('click','.deleteInfo',function(){
             var id=$(this).data("id");
             swal({
                 title: "确定删除吗？",

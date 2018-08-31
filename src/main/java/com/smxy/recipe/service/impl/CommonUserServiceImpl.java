@@ -71,10 +71,9 @@ public class CommonUserServiceImpl implements CommonUserService {
 	@Override
 	public ResApi<String> commonUsersaveHead(MultipartFile file,int img,String preImg) {
 		// TODO Auto-generated method stub
-		String name=ToolsApi.reName(file.getOriginalFilename());
-		boolean uploadRes=ToolsApi.fileUpload(file, ToolsApi.imgLimit(ToolsApi.suffixName(file.getOriginalFilename())), FilePath.realPathStr(FilePath.commonUserHeadPath),name,img,preImg);
-		if (uploadRes) {
-			return new ResApi<>(200,"success",FilePath.commonUserHeadPath+name);
+		if (ToolsApi.imgLimit(ToolsApi.suffixName(file.getOriginalFilename()))) {
+			String name = ToolsApi.multipartFile_upload_file(file, null);
+			return new ResApi<>(200,"success",name);
 		}else {
 			return new ResApi<>(400,"头像上传失败",null);
 		}

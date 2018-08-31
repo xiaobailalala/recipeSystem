@@ -177,21 +177,24 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="javascript:;" th:class="${first==4?'active':''}">
               <span class="icon color10">
                 <i class="fa fa-check-square-o"></i>
-              </span>Forms
+              </span>食谱资料管理
                     <span class="caret"></span>
                 </a>
-                <ul>
+                <ul th:style="${first==4?'display: block;':''}">
                     <li>
-                        <a href="form-elements.html">Form Elements</a>
+                        <a th:class="${(first==4&&second==1)?'active':''}" th:href="@{/claOne/info}">一级食谱分类</a>
                     </li>
                     <li>
-                        <a href="layouts.html">Form Layouts</a>
+                        <a th:class="${(first==4&&second==2)?'active':''}" th:href="@{/claTwo/info}">二级食谱分类</a>
                     </li>
                     <li>
-                        <a href="text-editors.html">Text Editors</a>
+                        <a th:class="${(first==4&&second==3)?'active':''}" th:href="@{/cla/info}">三级食谱分类</a>
+                    </li>
+                    <li>
+                        <a th:class="${(first==4&&second==4)?'active':''}" th:href="@{/cla/info}">食谱管理</a>
                     </li>
                 </ul>
             </li>

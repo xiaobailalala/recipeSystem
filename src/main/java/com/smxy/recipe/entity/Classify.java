@@ -7,23 +7,27 @@
  */
 package com.smxy.recipe.entity;
 
+import java.io.Serializable;
+
 /**
  * @author zpx
  *
  */
-public class Classify {
+public class Classify implements Serializable {
 	private Integer fId;
 	private String fName;
-	private String fIntroduction;
+	private Integer fTid;
+	private ClassifyTwo classifyTwo;
 	public Classify() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Classify(Integer fId, String fName, String fIntroduction) {
+	public Classify(Integer fId, String fName, Integer fTid, ClassifyTwo classifyTwo) {
 		this.fId = fId;
 		this.fName = fName;
-		this.fIntroduction = fIntroduction;
+		this.fTid = fTid;
+		this.classifyTwo = classifyTwo;
 	}
 
 	public Integer getfId() {
@@ -42,12 +46,20 @@ public class Classify {
 		this.fName = fName;
 	}
 
-	public String getfIntroduction() {
-		return fIntroduction;
+	public Integer getfTid() {
+		return fTid;
 	}
 
-	public void setfIntroduction(String fIntroduction) {
-		this.fIntroduction = fIntroduction;
+	public void setfTid(Integer fTid) {
+		this.fTid = fTid;
+	}
+
+	public ClassifyTwo getClassifyTwo() {
+		return classifyTwo;
+	}
+
+	public void setClassifyTwo(ClassifyTwo classifyTwo) {
+		this.classifyTwo = classifyTwo;
 	}
 
 	@Override
@@ -55,7 +67,8 @@ public class Classify {
 		return "Classify{" +
 				"fId=" + fId +
 				", fName='" + fName + '\'' +
-				", fIntroduction='" + fIntroduction + '\'' +
+				", fTid=" + fTid +
+				", classifyTwo=" + classifyTwo +
 				'}';
 	}
 }

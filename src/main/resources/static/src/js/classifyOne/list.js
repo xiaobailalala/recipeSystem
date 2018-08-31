@@ -4,7 +4,7 @@ $(function(){
             var id=$(this).data("id");
             swal({
                 title: "确定删除吗？",
-                text: "你将无法恢复该权限信息",
+                text: "你将无法恢复该分类信息",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/adminPermission/perm/"+id,
+                    url:"/claOne/info/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,

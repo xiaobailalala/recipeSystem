@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ClassifyOneDao">
+    <select id="getAllInfo" resultMap="getClassifyOneDetail">
+        select * from t_food_cla_one order by f_id ASC;
+    </select>
+    <resultMap id="getClassifyOneDetail" type="ClassifyOne">
+        <result column="f_id" property="fId"/>
+        <collection property="classifyTwos" column="f_id"
+            select="com.smxy.recipe.dao.ClassifyTwoDao.getInfoByOid">
+        </collection>
+    </resultMap>
+    <select id="getInfoById" parameterType="Integer" resultType="ClassifyOne">
+        select * from t_food_cla_one where f_id=#{fId};
+    </select>
+    <select id="getInfoByName" parameterType="String" resultType="ClassifyOne">
+        select * from t_food_cla_one where f_name=#{fName};
+    </select>
+    <insert id="saveInfo" parameterType="String">
+        insert into t_food_cla_one (f_name) values (#{fName});
+    </insert>
+
+    <delete id="deleteInfoById" parameterType="Integer">
+        delete from t_food_cla_one where f_id=#{fId};
+    </delete>
+
+    <update id="updateInfoById" parameterType="ClassifyOne">
+        update t_food_cla_one set f_name=#{fName} where f_id=#{fId};
+    </update>
+</mapper>

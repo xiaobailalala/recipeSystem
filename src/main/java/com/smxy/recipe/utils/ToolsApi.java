@@ -11,31 +11,10 @@ package com.smxy.recipe.utils;
  * @author zpx
  *
  */
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Random;
-import java.util.UUID;
-
-import javax.imageio.ImageIO;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
+import org.csource.common.NameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -45,12 +24,28 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+
 @Component
 @PropertySource("classpath:custom.properties")
 public class ToolsApi {
 
 	public static final String MAILTYPE_VERIFY="verify";
 	public static final String MAILTYPE_RESET="reset";
+
 	private static JavaMailSenderImpl mailSender;
 	@Autowired(required = true)
 	public void setMailSender(JavaMailSenderImpl mailSender){
@@ -61,6 +56,33 @@ public class ToolsApi {
 	@Value("${userinfo.email.address}")
 	public void setSenderAddress(String senderAddress){
 		ToolsApi.senderAddress=senderAddress;
+	}
+
+	public static String multipartFile_upload_file(MultipartFile file, NameValuePair[] pairs){
+		try {
+			InputStream inputStream = file.getInputStream();
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			int len=0;
+			byte[] bs = new byte[1024];
+			while ((len=inputStream.read(bs))!=-1){
+				bos.write(bs);
+			}
+			inputStream.close();
+			String res = FastDFSClient.upload_binary_file(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
+			return res;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return "failed";
+	}
+
+	public static int multipartFile_delete_file(String fileName){
+		try {
+			return FastDFSClient.delete_file(fileName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 2;
 	}
 
 	@Async

@@ -49,5 +49,11 @@ public class FilePath {
     public void setAdminUserHeadPath(String adminUserHeadPath){
         FilePath.adminUserHeadPath=adminUserHeadPath;
     }
+
+    public static String recipeClassifyTwoPath;
+    @Value("${filepath.recipeClassifyTwoPath}")
+    public void setRecipeClassifyTwoPath(String recipeClassifyTwoPath){
+        FilePath.recipeClassifyTwoPath=recipeClassifyTwoPath;
+    }
 }
 

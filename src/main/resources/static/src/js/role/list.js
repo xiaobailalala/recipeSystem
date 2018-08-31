@@ -1,6 +1,6 @@
 $(function(){
     (function Delete(){
-        $('.deleteInfo').click(function(){
+        $('body').on('click','.deleteInfo',function(){
             var id=$(this).data("id");
             swal({
                 title: "确定删除吗？",
@@ -43,7 +43,7 @@ $(function(){
         });
     }());
     (function ShowPerm(){
-        $('.showPerm').click(function(){
+        $('body').on('click','.showPerm',function(){
             var id=$(this).data("id");
             $.ajax({
                 url:"/adminRole/role/getPerm/"+id,

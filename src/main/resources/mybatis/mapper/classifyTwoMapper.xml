@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ClassifyTwoDao">
+    <select id="getInfoAll" resultMap="getClassifyTwoDetail">
+        select * from t_food_cla_two order by f_id ASC;
+    </select>
+
+    <resultMap id="getClassifyTwoDetail" type="ClassifyTwo">
+        <result property="fOid" column="f_oid"/>
+        <association property="classifyOne" column="f_oid"
+             select="com.smxy.recipe.dao.ClassifyOneDao.getInfoById">
+        </association>
+    </resultMap>
+    <resultMap id="getClassifyTwoNext" type="ClassifyTwo">
+        <result property="fId" column="f_id"/>
+        <collection property="classifies" column="f_id"
+            select="com.smxy.recipe.dao.ClassifyDao.getInfoByTid">
+        </collection>
+    </resultMap>
+
+    <insert id="saveInfo" parameterType="ClassifyTwo">
+        insert into t_food_cla_two (f_name, f_oid, f_cover, f_bg, f_color) values (#{fName}, #{fOid}, #{fCover}, #{fBg}, #{fColor});
+    </insert>
+
+    <select id="getInfoByNameAndOid" parameterType="ClassifyTwo" resultType="ClassifyTwo">
+        select * from t_food_cla_two where f_name=#{fName} and f_oid=#{fOid};
+    </select>
+
+    <delete id="deleteInfo" parameterType="Integer">
+        delete from t_food_cla_two where f_id=#{fId};
+    </delete>
+
+    <select id="getInfoById" parameterType="Integer" resultMap="getClassifyTwoDetail">
+        select * from t_food_cla_two where f_id=#{fId};
+    </select>
+
+    <update id="updateInfo" parameterType="ClassifyTwo">
+        update t_food_cla_two set f_name=#{fName},f_oid=#{fOid},f_cover=#{fCover},f_bg=#{fBg},f_color=#{fColor} where f_id=#{fId};
+    </update>
+
+    <select id="getInfoByOid" parameterType="Integer" resultMap="getClassifyTwoNext">
+        select * from t_food_cla_two where f_oid=#{fOid};
+    </select>
+
+</mapper>

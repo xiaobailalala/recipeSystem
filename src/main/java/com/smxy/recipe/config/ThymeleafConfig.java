@@ -23,7 +23,7 @@ public class ThymeleafConfig {
     private void configureThymeleafStaticVars(ThymeleafViewResolver viewResolver) {
         if(viewResolver != null) {
             Map<String, Object> vars = new HashMap<>();
-            vars.put("fileServerPath", "http://192.168.1.119:8080/recipeUpload");
+            vars.put("fileServerPath", "http://192.168.1.108/");
             viewResolver.setStaticVariables(vars);
         }
     }
