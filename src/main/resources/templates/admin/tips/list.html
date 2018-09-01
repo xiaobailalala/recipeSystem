@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('食谱/作品标签管理列表')}"></head>
+<body>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(4,5)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">食谱/作品标签管理</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">标签管理</a>
+                <a class="btn btn-light" disabled="disabled">食谱/作品标签管理</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        信息列表
+                        <a type="button" th:href="@{/tips/add}" class="btn btn-info"
+                           style="float: right;color: #ffffff;">新增标签</a>
+                    </div>
+                    <div class="panel-body table-responsive">
+
+                        <table id="example0" class="table display table-bordered">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>标签名称</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>序号</th>
+                                <th>标签名称</th>
+                                <th>操作</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr th:each="item,status:${list.data}">
+                                <td th:text="${status.index+1}"></td>
+                                <td th:text="${item.fName}"></td>
+                                <td>
+                                    <a th:href="@{/profession/info/toeditor/}+${item.fId}" th:data-id="${item.fId}"
+                                       class="btn btn-default">
+                                        <i class="fa fa-edit"></i>
+                                        编辑
+                                    </a>
+                                    <a href="javascript:;" th:data-id="${item.fId}" class="btn btn-danger deleteInfo">
+                                        <i class="fa fa-close"></i>
+                                        删除
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/profession/list.js}"></script>
+</html>
