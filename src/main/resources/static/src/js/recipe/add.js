@@ -1,3 +1,1 @@
-function fffffff() {
-    
-}
+function fffffff() {}
