@@ -17,4 +17,7 @@ $(function(){
             }
         }
     }());
+    (function del() {
+       $('#haha').attr("action");
+    });
 });
