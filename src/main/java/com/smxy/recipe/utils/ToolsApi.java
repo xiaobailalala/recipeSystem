@@ -85,6 +85,28 @@ public class ToolsApi {
 		return 2;
 	}
 
+	public static String getUndertint(){
+		Random random = new Random();
+		String r1 = Integer.toHexString(random.nextInt(128)+128).toUpperCase();
+		String g1 = Integer.toHexString(random.nextInt(128)+128).toUpperCase();
+		String b1 = Integer.toHexString(random.nextInt(128)+128).toUpperCase();
+		r1 = r1.length()==1 ? "0" + r1 : r1 ;
+		g1 = g1.length()==1 ? "0" + g1 : g1 ;
+		b1 = b1.length()==1 ? "0" + b1 : b1 ;
+		return "#"+r1+g1+b1;
+	}
+
+	public static String getDertint(){
+		Random random = new Random();
+		String r2 = Integer.toHexString(random.nextInt(128)).toUpperCase();
+		String g2 = Integer.toHexString(random.nextInt(128)).toUpperCase();
+		String b2 = Integer.toHexString(random.nextInt(128)).toUpperCase();
+		r2 = r2.length()==1 ? "0" + r2 : r2 ;
+		g2 = g2.length()==1 ? "0" + g2 : g2 ;
+		b2 = b2.length()==1 ? "0" + b2 : b2 ;
+		return "#"+r2+g2+b2;
+	}
+
 	@Async
 	public void sendMail(String type,String title,String reciver,String account,String code){
 		MimeMessage mimeMessage = mailSender.createMimeMessage();

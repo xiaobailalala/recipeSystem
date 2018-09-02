@@ -17,4 +17,8 @@ public interface TipsDao {
 
     public List<Tips> getAllInfo();
 
+    public int saveInfo(Tips tips);
+
+    public Tips getInfoByName(String fName);
+
 }

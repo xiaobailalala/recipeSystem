@@ -5,4 +5,10 @@
     <select id="getAllInfo" resultType="Tips">
         select * from t_food_tips order by f_id ASC;
     </select>
+    <select id="getInfoByName" parameterType="String" resultType="Tips">
+        select * from t_food_tips where f_name=#{fName};
+    </select>
+    <insert id="saveInfo" parameterType="Tips">
+        insert into t_food_tips (f_name,f_bg,f_color) values (#{fName},#{fBg},#{fColor});
+    </insert>
 </mapper>

@@ -13,23 +13,19 @@ package com.smxy.recipe.entity;
  */
 public class Tips {
 	private Integer fId;
-	private Integer fRid;
-	private Recipe recipe;
-	private String fContent;
-	private Integer fPid;
-	private CommonProduct commonProduct;
+	private String fName;
+	private String fBg;
+	private String fColor;
 	public Tips() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Tips(Integer fId, Integer fRid, Recipe recipe, String fContent, Integer fPid, CommonProduct commonProduct) {
+	public Tips(Integer fId, String fName, String fBg, String fColor) {
 		this.fId = fId;
-		this.fRid = fRid;
-		this.recipe = recipe;
-		this.fContent = fContent;
-		this.fPid = fPid;
-		this.commonProduct = commonProduct;
+		this.fName = fName;
+		this.fBg = fBg;
+		this.fColor = fColor;
 	}
 
 	public Integer getfId() {
@@ -40,55 +36,37 @@ public class Tips {
 		this.fId = fId;
 	}
 
-	public Integer getfRid() {
-		return fRid;
+	public String getfName() {
+		return fName;
 	}
 
-	public void setfRid(Integer fRid) {
-		this.fRid = fRid;
+	public void setfName(String fName) {
+		this.fName = fName;
 	}
 
-	public Recipe getRecipe() {
-		return recipe;
+	public String getfBg() {
+		return fBg;
 	}
 
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
+	public void setfBg(String fBg) {
+		this.fBg = fBg;
 	}
 
-	public String getfContent() {
-		return fContent;
+	public String getfColor() {
+		return fColor;
 	}
 
-	public void setfContent(String fContent) {
-		this.fContent = fContent;
-	}
-
-	public Integer getfPid() {
-		return fPid;
-	}
-
-	public void setfPid(Integer fPid) {
-		this.fPid = fPid;
-	}
-
-	public CommonProduct getCommonProduct() {
-		return commonProduct;
-	}
-
-	public void setCommonProduct(CommonProduct commonProduct) {
-		this.commonProduct = commonProduct;
+	public void setfColor(String fColor) {
+		this.fColor = fColor;
 	}
 
 	@Override
 	public String toString() {
 		return "Tips{" +
 				"fId=" + fId +
-				", fRid=" + fRid +
-				", recipe=" + recipe +
-				", fContent='" + fContent + '\'' +
-				", fPid=" + fPid +
-				", commonProduct=" + commonProduct +
+				", fName='" + fName + '\'' +
+				", fBg='" + fBg + '\'' +
+				", fColor='" + fColor + '\'' +
 				'}';
 	}
 }
