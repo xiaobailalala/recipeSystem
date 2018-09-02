@@ -14,8 +14,6 @@ $(function(){
             fs.onload = function () {
                 var image='<img src="'+fs.result+'" style="height: 100%;width: 100%;" alt="cover">';
                 $('#imgCont').html(image);
-
-                function aaaaaaaaaffff() {}
             }
         }
     }());
