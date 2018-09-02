@@ -3,11 +3,6 @@ $(function(){
         $('#browser').click(function(){
             $('#fCover').click();
         });
-        $('#fCover').change(function(){
-            if (this.files[0]){
-                onImg(this.files[0]);
-            }
-        });
         function onImg(data) {
             var fs = new FileReader();
             fs.readAsDataURL(data);
