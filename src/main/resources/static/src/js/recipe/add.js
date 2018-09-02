@@ -8,9 +8,6 @@ $(function(){
                 onImg(this.files[0]);
             }
         });
-        function gg() {
-            var a="sss";
-        }
         function onImg(data) {
             var fs = new FileReader();
             fs.readAsDataURL(data);
@@ -18,8 +15,6 @@ $(function(){
                 var image='<img src="'+fs.result+'" style="height: 100%;width: 100%;" alt="cover">';
                 $('#imgCont').html(image);
             }
-
-            fdsjlgdsjlklkjgds
         }
     }());
 });
