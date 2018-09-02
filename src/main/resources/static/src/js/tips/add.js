@@ -27,4 +27,5 @@ $(function(){
             Tools.tip("请完善资料后再尝试提交");
         }
     });
+   (function asd(){}()); 
 });
