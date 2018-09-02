@@ -19,7 +19,5 @@ $(function(){
                 $('#imgCont').html(image);
             }
         }
-        
-        fdsjlkfjasldkfjlksadjlf
     }());
 });
