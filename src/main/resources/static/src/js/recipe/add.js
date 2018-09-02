@@ -8,7 +8,7 @@ $(function(){
                 onImg(this.files[0]);
             }
         });
-        function ggg() {
+        function aaa() {
 
         }
         function onImg(data) {
