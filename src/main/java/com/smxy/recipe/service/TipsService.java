@@ -9,9 +9,12 @@
  */
 package com.smxy.recipe.service;
 
+import com.smxy.recipe.entity.Tips;
 import com.smxy.recipe.utils.ResApi;
 
 public interface TipsService {
 
     public ResApi<Object> getAllInfo();
+
+    public ResApi<Object> saveInfo(Tips tips);
 }

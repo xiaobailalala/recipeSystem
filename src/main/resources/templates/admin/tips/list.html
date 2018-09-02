@@ -55,7 +55,9 @@
                             <tbody>
                             <tr th:each="item,status:${list.data}">
                                 <td th:text="${status.index+1}"></td>
-                                <td th:text="${item.fName}"></td>
+                                <td>
+                                    <span th:style="'background-color:'+${item.fBg}+';color:'+${item.fColor}+';'" th:text="${item.fName}" class="label"></span>
+                                </td>
                                 <td>
                                     <a th:href="@{/profession/info/toeditor/}+${item.fId}" th:data-id="${item.fId}"
                                        class="btn btn-default">
