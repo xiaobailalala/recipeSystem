@@ -17,4 +17,10 @@ public interface TipsService {
     public ResApi<Object> getAllInfo();
 
     public ResApi<Object> saveInfo(Tips tips);
+
+    public ResApi<Object> deleteInfo(Integer id);
+
+    public Tips getInfoById(Integer id);
+
+    public ResApi<Object> updateInfo(Integer id, Tips tips);
 }

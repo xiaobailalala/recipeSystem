@@ -59,7 +59,7 @@
                                     <span th:style="'background-color:'+${item.fBg}+';color:'+${item.fColor}+';'" th:text="${item.fName}" class="label"></span>
                                 </td>
                                 <td>
-                                    <a th:href="@{/profession/info/toeditor/}+${item.fId}" th:data-id="${item.fId}"
+                                    <a th:href="@{/tips/editor/}+${item.fId}" th:data-id="${item.fId}"
                                        class="btn btn-default">
                                         <i class="fa fa-edit"></i>
                                         编辑
@@ -83,5 +83,5 @@
 <div th:replace="~{admin/common/nav::tabpanel}"></div>
 <div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
 </body>
-<script th:src="@{/src/js/profession/list.js}"></script>
+<script th:src="@{/src/js/tips/list.js}"></script>
 </html>

@@ -45,4 +45,28 @@ public class TipsServiceImpl implements TipsService {
         return resApi;
     }
 
+    @Override
+    public ResApi<Object> deleteInfo(Integer id) {
+        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
+        if (tipsDao.deleteInfo(id)>0){
+            resApi=new ResApi<>(200,"success","success");
+        }
+        return resApi;
+    }
+
+    @Override
+    public Tips getInfoById(Integer id) {
+        return tipsDao.getInfoById(id);
+    }
+
+    @Override
+    public ResApi<Object> updateInfo(Integer id,Tips tips) {
+        tips.setfId(id);
+        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
+        if (tipsDao.updateInfo(tips)>0){
+            resApi=new ResApi<>(200,"success","success");
+        }
+        return resApi;
+    }
+
 }
