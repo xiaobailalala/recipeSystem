@@ -71,5 +71,12 @@ public class TipsController {
         return tipsService.updateInfo(id, tips);
     }
 
+    @RequiresPermissions("tips:select")
+    @ResponseBody
+    @GetMapping("/info/searchInfo")
+    public ResApi<Object> searchInfo(String fName){
+        return tipsService.searchInfo(fName);
+    }
+
 
 }

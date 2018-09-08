@@ -1,0 +1,16 @@
+/**
+ * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
+ *
+ * @Package:
+ * @author: zpx
+ * Build File @date: 2018/9/4 22:34
+ * @Description TODO
+ * @version 1.0
+ */
+package com.smxy.recipe.service;
+
+import com.smxy.recipe.utils.ResApi;
+
+public interface RecipeService {
+    public ResApi<Object> getAddData();
+}

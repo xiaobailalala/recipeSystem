@@ -92,4 +92,9 @@ public class ClassifyServiceImpl implements ClassifyService {
         }
         return resApi;
     }
+
+    @Override
+    public ResApi<Object> getInfoByTid(Integer id) {
+        return new ResApi<>(200,"success",classifyDao.getInfoByTid(id));
+    }
 }

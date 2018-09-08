@@ -46,6 +46,7 @@ public class SensorDataApi {
     @GetMapping("/test")
     @ResponseBody
     public List<Dht11Data> test(){
+        System.out.println(213);
         return SensorDataApi.dht11List;
     }
 

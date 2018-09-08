@@ -27,4 +27,6 @@ public interface ClassifyService {
     public ResApi<Object> getInfoById(Integer id);
 
     public ResApi<Object> updateInfo(Integer id, Classify classify);
+
+    public ResApi<Object> getInfoByTid(Integer id);
 }

@@ -2217,7 +2217,7 @@ dd {
   padding: 7px 20px 7px 20px;
   border: none;
   background: #e4e4e4;
-  color: inherit;
+  color: #555555;
   border-radius: 3px;
 }
 .btn:hover {

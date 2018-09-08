@@ -65,7 +65,70 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label form-label">类别资料</label>
-                                <div></div>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-6">
+                                        <div class="panel panel-dark">
+                                            <div class="panel-title">
+                                                食谱类别（选择越多用户越容易找到该食谱）
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="padding-b-10 padding-t-10" style="display: flex;justify-content: space-between;align-items: center;">
+                                                    <label>请至少选择一项二级分类</label>
+                                                </div>
+                                                <div id="addCla">
+                                                    <div></div>
+                                                    <button type="button" class="btn btn-block btn-light" style="color: #000000;" id="searchClasBtn">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1">
+                                        <div class="panel panel-dark">
+                                            <div class="panel-title">
+                                                食谱标签（为食谱添加标志性的标签）
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="padding-t-10 padding-b-10" style="display: flex;justify-content: space-between;align-items: center;">
+                                                    <input type="text" class="form-control" id="searchTipsText" placeholder="搜搜有没有想要的标签">&nbsp;
+                                                    <button type="button" class="btn btn-default btn-rounded btn-icon" data-toggle="tooltip" id="searchTipsBtn"
+                                                            data-placement="bottom" title="搜索标签">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>&nbsp;
+                                                    <button type="button" id="refresh" class="btn btn-warning btn-rounded btn-icon" data-toggle="tooltip"
+                                                            data-placement="bottom" title="换一批标签">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </button>&nbsp;
+                                                    <button type="button" id="addnewTip" class="btn btn-info btn-rounded btn-icon" data-toggle="tooltip"
+                                                            data-placement="bottom" title="找不到想要的？试试自定义添加">
+                                                        <i style="width: 13px;height: 15px;" class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="collapse" id="addTips">
+                                                    <div class="padding-t-10 padding-b-10" style="display: flex;justify-content: space-between;align-items: center;">
+                                                        <input type="text" class="form-control" id="newTip" placeholder="Input a new tips...">
+                                                        &emsp;<button type="button" class="btn btn-success btn-rounded btn-icon" id="addTipBtn">添加</button>
+                                                    </div>
+                                                </div>
+                                                <div id="tipsCont">
+                                                    <span th:each="item:${data.data.tips}" style="margin-bottom: 5px;display: inline-block;">
+                                                        <button type="button" th:text="${item.fName}" th:data-style="${item.fStyle}" th:data-id="${item.fId}" th:class="${item.fStyle}+' btn btn-sm tipsBtn'"></button>&emsp;
+                                                    </span>
+                                                </div>
+                                                <div class="padding-t-10 padding-b-10">
+                                                    <label>已选标签</label>
+                                                    <div class="padding-b-10 padding-t-10" id="tipsSelectedCont">
+                                                        <span id="contTitle">（无）最多可选两项</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label"></label>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label form-label"></label>

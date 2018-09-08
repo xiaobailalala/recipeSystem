@@ -13,18 +13,14 @@ package com.smxy.recipe.entity;
  */
 public class Material {
 	private Integer fId;
-	private Integer fRid;
-	private Recipe recipe;
 	private String fName;
 	public Material() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Material(Integer fId, Integer fRid, Recipe recipe, String fName) {
+	public Material(Integer fId, String fName) {
 		this.fId = fId;
-		this.fRid = fRid;
-		this.recipe = recipe;
 		this.fName = fName;
 	}
 
@@ -34,22 +30,6 @@ public class Material {
 
 	public void setfId(Integer fId) {
 		this.fId = fId;
-	}
-
-	public Integer getfRid() {
-		return fRid;
-	}
-
-	public void setfRid(Integer fRid) {
-		this.fRid = fRid;
-	}
-
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
 	}
 
 	public String getfName() {
@@ -64,8 +44,6 @@ public class Material {
 	public String toString() {
 		return "Material{" +
 				"fId=" + fId +
-				", fRid=" + fRid +
-				", recipe=" + recipe +
 				", fName='" + fName + '\'' +
 				'}';
 	}

@@ -23,4 +23,6 @@ public interface TipsService {
     public Tips getInfoById(Integer id);
 
     public ResApi<Object> updateInfo(Integer id, Tips tips);
+
+    public ResApi<Object> searchInfo(String fName);
 }

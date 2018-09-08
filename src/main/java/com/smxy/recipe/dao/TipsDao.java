@@ -27,4 +27,6 @@ public interface TipsDao {
 
     public int updateInfo(Tips tips);
 
+    public List<Tips> searchInfo(String fName);
+
 }

@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{admin/common/commonHeader::header('食谱/作品标签管理——添加标签')}"></head>
+<head th:replace="~{admin/common/commonHeader::header('食材信息编辑')}"></head>
 <body>
 <div th:replace="~{admin/common/nav::loading}"></div>
 <div th:replace="~{admin/common/nav::topFixed}"></div>
-<div th:replace="~{admin/common/nav::sideFixed(4,5)}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(4,6)}"></div>
 <div class="content">
     <div class="page-header">
-        <h1 class="title">食谱/作品标签管理——新增标签</h1>
+        <h1 class="title">食材信息编辑</h1>
         <ol class="breadcrumb">
             <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
         </ol>
         <div class="right">
             <div class="btn-group" role="group" aria-label="...">
                 <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
-                <a class="btn btn-light" disabled="disabled">标签管理</a>
-                <a class="btn btn-light" th:href="@{/tips/info}">食谱/作品标签管理</a>
-                <a class="btn btn-light" disabled="disabled">添加标签</a>
+                <a class="btn btn-light" disabled="disabled">食谱资料管理</a>
+                <a class="btn btn-light" th:href="@{/material/info}">食材管理</a>
+                <a class="btn btn-light" disabled="disabled">信息编辑</a>
                 <a href="javascript:history.go(-1);" class="btn btn-light">
                     <i class="fa fa-reply"></i>
                 </a>
@@ -31,20 +31,25 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
+
                     <div class="panel-title">
-                        食谱/作品标签管理——新增标签信息
+                        食材管理——编辑食材信息
                         <ul class="panel-tools">
                             <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
                             <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
                             <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
                         </ul>
                     </div>
+
                     <div class="panel-body">
                         <form class="form-horizontal">
+                            <input type="hidden" name="_method" value="put">
+                            <input type="hidden" name="fId" th:value="${item.fId}">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label form-label" for="fName">标签名称</label>
+                                <label class="col-sm-2 control-label form-label" for="fName">食材名称</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control form-control-line" id="fName" name="fName" placeholder="Please input tipsName...">
+                                    <input type="text" class="form-control form-control-line" id="fName" name="fName"
+                                           placeholder="Please input tipsName..." th:value="${item.fName}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -64,5 +69,5 @@
 <div th:replace="~{admin/common/nav::tabpanel}"></div>
 <div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
 </body>
-<script th:src="@{/src/js/tips/add.js}"></script>
+<script th:src="@{/src/js/material/editor.js}"></script>
 </html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MaterialDao">
+
+    <select id="getInfoByName" parameterType="String" resultType="Material">
+        select * from t_food_material where f_name=#{fName};
+    </select>
+
+    <insert id="saveInfo" parameterType="String">
+        insert into t_food_material (f_name) values (#{fName});
+    </insert>
+
+    <select id="getAllInfo" resultType="Material">
+        select * from t_food_material order by f_id ASC;
+    </select>
+
+    <delete id="deleteInfo" parameterType="Integer">
+        delete from t_food_material where f_id=#{fId};
+    </delete>
+
+    <update id="updateInfo" parameterType="Material">
+        update t_food_material set f_name=#{fName} where f_id=#{fId};
+    </update>
+
+    <select id="getInfoById" parameterType="Integer" resultType="Material">
+        select * from t_food_material where f_id=#{fId};
+    </select>
+</mapper>

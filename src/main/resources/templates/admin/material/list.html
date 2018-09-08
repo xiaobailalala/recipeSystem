@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{admin/common/commonHeader::header('食谱/作品标签管理列表')}"></head>
+<head th:replace="~{admin/common/commonHeader::header('食材管理列表')}"></head>
 <body>
 <div th:replace="~{admin/common/nav::loading}"></div>
 <div th:replace="~{admin/common/nav::topFixed}"></div>
-<div th:replace="~{admin/common/nav::sideFixed(4,5)}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(4,6)}"></div>
 <div class="content">
     <div class="page-header">
-        <h1 class="title">食谱/作品标签管理</h1>
+        <h1 class="title">食材管理</h1>
         <ol class="breadcrumb">
             <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
         </ol>
@@ -16,7 +16,7 @@
             <div class="btn-group" role="group" aria-label="...">
                 <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
                 <a class="btn btn-light" disabled="disabled">食谱资料管理</a>
-                <a class="btn btn-light" disabled="disabled">食谱/作品标签管理</a>
+                <a class="btn btn-light" disabled="disabled">食材管理</a>
                 <a href="javascript:history.go(-1);" class="btn btn-light">
                     <i class="fa fa-reply"></i>
                 </a>
@@ -32,8 +32,8 @@
                 <div class="panel panel-default">
                     <div class="panel-title">
                         信息列表
-                        <a type="button" th:href="@{/tips/add}" class="btn btn-info"
-                           style="float: right;color: #ffffff;">新增标签</a>
+                        <a type="button" th:href="@{/material/add}" class="btn btn-info"
+                           style="float: right;color: #ffffff;">新增食材</a>
                     </div>
                     <div class="panel-body table-responsive">
 
@@ -41,25 +41,23 @@
                             <thead>
                             <tr>
                                 <th>序号</th>
-                                <th>标签名称</th>
+                                <th>食材名称</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>序号</th>
-                                <th>标签名称</th>
+                                <th>食材名称</th>
                                 <th>操作</th>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr th:each="item,status:${list.data}">
                                 <td th:text="${status.index+1}"></td>
+                                <td th:text="${item.fName}"></td>
                                 <td>
-                                    <button th:text="${item.fName}" th:class="${item.fStyle}+' btn btn-sm'"></button>
-                                </td>
-                                <td>
-                                    <a th:href="@{/tips/editor/}+${item.fId}" th:data-id="${item.fId}"
+                                    <a th:href="@{/material/editor/}+${item.fId}" th:data-id="${item.fId}"
                                        class="btn btn-default">
                                         <i class="fa fa-edit"></i>
                                         编辑
@@ -83,5 +81,5 @@
 <div th:replace="~{admin/common/nav::tabpanel}"></div>
 <div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
 </body>
-<script th:src="@{/src/js/tips/list.js}"></script>
+<script th:src="@{/src/js/material/list.js}"></script>
 </html>

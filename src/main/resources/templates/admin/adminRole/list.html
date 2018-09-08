@@ -61,7 +61,6 @@
                                     <td th:text="${item.fIntroduction}"></td>
                                     <td>
                                         <a th:href="@{/adminRole/role/perm/}+${item.fId}" th:data-id="${item.fId}" class="btn btn-primary">
-                                            <i class="fa fa-edit"></i>
                                             分配权限
                                         </a>
                                         <a href="javascript:;" th:data-id="${item.fId}" title="查看权限" class="btn btn-option2 showPerm"
