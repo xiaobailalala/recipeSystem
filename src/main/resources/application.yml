@@ -3,8 +3,8 @@ spring:
   datasource:
     username: root
     password: devmysql.960314
-#    url: jdbc:mysql://192.168.1.108:3306/recipe?useSSL=false
-    url: jdbc:mysql://192.168.1.120:3306/recipe?useSSL=false
+    url: jdbc:mysql://192.168.1.108:3306/recipe?useSSL=false
+#    url: jdbc:mysql://192.168.1.120:3306/recipe?useSSL=false
 #    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
@@ -36,8 +36,8 @@ spring:
       cluster-nodes: 192.168.1.108:9301
 #      cluster-nodes: 192.168.1.120:9300
   redis:
-#    host: 192.168.1.108
-    host: 192.168.1.120
+    host: 192.168.1.108
+#    host: 192.168.1.120
     password: devredis.960314
   mail:
     password: fziqpvgpiemvbcdi

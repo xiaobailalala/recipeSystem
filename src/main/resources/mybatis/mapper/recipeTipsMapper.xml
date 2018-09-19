@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.RecipeTipsDao">
+    <insert id="saveInfo" parameterType="RecipeTips">
+        insert into t_food_recipe_tips (f_rid, f_tid) values (#{fRid}, #{fTid});
+    </insert>
+</mapper>

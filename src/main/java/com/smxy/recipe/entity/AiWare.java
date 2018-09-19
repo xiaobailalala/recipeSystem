@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class AiWare {
+public final class AiWare {
 	private Integer fId;
 	private String fContent;
 	private String fWord;

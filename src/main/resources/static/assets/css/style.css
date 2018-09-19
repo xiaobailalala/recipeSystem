@@ -2217,7 +2217,7 @@ dd {
   padding: 7px 20px 7px 20px;
   border: none;
   background: #e4e4e4;
-  color: inherit;
+  color: #555555;
   border-radius: 3px;
 }
 .btn:hover {
@@ -4078,4 +4078,7 @@ Widgets
 .table-dic .type {
   font-size: 11px;
   opacity: 0.7;
+}
+.panel-dark .toggle-off{
+  color: #555555;
 }

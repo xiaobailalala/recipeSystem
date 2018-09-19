@@ -21,4 +21,12 @@ public interface TipsDao {
 
     public Tips getInfoByName(String fName);
 
+    public int deleteInfo(Integer fId);
+
+    public Tips getInfoById(Integer fId);
+
+    public int updateInfo(Tips tips);
+
+    public List<Tips> searchInfo(String fName);
+
 }

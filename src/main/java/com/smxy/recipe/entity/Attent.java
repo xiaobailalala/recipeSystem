@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Attent {
+public final class Attent {
 	private Integer fId;
 	private Integer fUidM;
 	private Integer fUidO;

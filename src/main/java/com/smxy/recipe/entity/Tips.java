@@ -11,21 +11,19 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Tips {
+public final class Tips {
 	private Integer fId;
 	private String fName;
-	private String fBg;
-	private String fColor;
+	private String fStyle;
 	public Tips() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Tips(Integer fId, String fName, String fBg, String fColor) {
+	public Tips(Integer fId, String fName, String fStyle) {
 		this.fId = fId;
 		this.fName = fName;
-		this.fBg = fBg;
-		this.fColor = fColor;
+		this.fStyle = fStyle;
 	}
 
 	public Integer getfId() {
@@ -44,20 +42,12 @@ public class Tips {
 		this.fName = fName;
 	}
 
-	public String getfBg() {
-		return fBg;
+	public String getfStyle() {
+		return fStyle;
 	}
 
-	public void setfBg(String fBg) {
-		this.fBg = fBg;
-	}
-
-	public String getfColor() {
-		return fColor;
-	}
-
-	public void setfColor(String fColor) {
-		this.fColor = fColor;
+	public void setfStyle(String fStyle) {
+		this.fStyle = fStyle;
 	}
 
 	@Override
@@ -65,8 +55,7 @@ public class Tips {
 		return "Tips{" +
 				"fId=" + fId +
 				", fName='" + fName + '\'' +
-				", fBg='" + fBg + '\'' +
-				", fColor='" + fColor + '\'' +
+				", fStyle='" + fStyle + '\'' +
 				'}';
 	}
 }

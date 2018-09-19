@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class CommonProduct {
+public final class CommonProduct {
 	private Integer fId;
 	private String fCover;
 	private Integer fUid;

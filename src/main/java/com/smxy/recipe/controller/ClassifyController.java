@@ -67,5 +67,12 @@ public class ClassifyController {
         return classifyService.updateInfo(id, classify);
     }
 
+    @RequiresPermissions("recipeClassify:select")
+    @ResponseBody
+    @PostMapping("/getByTid/{id}")
+    public ResApi<Object> getByTid(@PathVariable("id") Integer id){
+        return classifyService.getInfoByTid(id);
+    }
+
 
 }

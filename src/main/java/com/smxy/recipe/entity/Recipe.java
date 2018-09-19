@@ -11,10 +11,8 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Recipe {
+public final class Recipe {
 	private Integer fId;
-	private Integer fCid;
-	private Classify classify;
 	private String fAuthor;
 	private String fRelease;
 	private String fCover;
@@ -22,16 +20,15 @@ public class Recipe {
 	private Integer fGood;
 	private Integer fCount;
 	private Integer fType;
-	private Integer fReady;
+	private String fName;
+	private String fFire;
 	public Recipe() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Recipe(Integer fId, Integer fCid, Classify classify, String fAuthor, String fRelease, String fCover, String fIntroduction, Integer fGood, Integer fCount, Integer fType, Integer fReady) {
+	public Recipe(Integer fId, String fAuthor, String fRelease, String fCover, String fIntroduction, Integer fGood, Integer fCount, Integer fType, String fName, String fFire) {
 		this.fId = fId;
-		this.fCid = fCid;
-		this.classify = classify;
 		this.fAuthor = fAuthor;
 		this.fRelease = fRelease;
 		this.fCover = fCover;
@@ -39,7 +36,8 @@ public class Recipe {
 		this.fGood = fGood;
 		this.fCount = fCount;
 		this.fType = fType;
-		this.fReady = fReady;
+		this.fName = fName;
+		this.fFire = fFire;
 	}
 
 	public Integer getfId() {
@@ -48,22 +46,6 @@ public class Recipe {
 
 	public void setfId(Integer fId) {
 		this.fId = fId;
-	}
-
-	public Integer getfCid() {
-		return fCid;
-	}
-
-	public void setfCid(Integer fCid) {
-		this.fCid = fCid;
-	}
-
-	public Classify getClassify() {
-		return classify;
-	}
-
-	public void setClassify(Classify classify) {
-		this.classify = classify;
 	}
 
 	public String getfAuthor() {
@@ -122,20 +104,26 @@ public class Recipe {
 		this.fType = fType;
 	}
 
-	public Integer getfReady() {
-		return fReady;
+	public String getfName() {
+		return fName;
 	}
 
-	public void setfReady(Integer fReady) {
-		this.fReady = fReady;
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getfFire() {
+		return fFire;
+	}
+
+	public void setfFire(String fFire) {
+		this.fFire = fFire;
 	}
 
 	@Override
 	public String toString() {
 		return "Recipe{" +
 				"fId=" + fId +
-				", fCid=" + fCid +
-				", classify=" + classify +
 				", fAuthor='" + fAuthor + '\'' +
 				", fRelease='" + fRelease + '\'' +
 				", fCover='" + fCover + '\'' +
@@ -143,7 +131,8 @@ public class Recipe {
 				", fGood=" + fGood +
 				", fCount=" + fCount +
 				", fType=" + fType +
-				", fReady=" + fReady +
+				", fName='" + fName + '\'' +
+				", fFire='" + fFire + '\'' +
 				'}';
 	}
 }

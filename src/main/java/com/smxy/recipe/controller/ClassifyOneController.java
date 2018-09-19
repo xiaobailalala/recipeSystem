@@ -27,6 +27,13 @@ public class ClassifyOneController {
     ClassifyOneService classifyOneService;
 
     @RequiresPermissions("recipeClassify:select")
+    @ResponseBody
+    @GetMapping("/getAllInfo")
+    public ResApi<Object> getAllInfoJson(){
+        return classifyOneService.getAllInfo();
+    }
+
+    @RequiresPermissions("recipeClassify:select")
     @GetMapping("/info")
     public String getAllInfo(Model model){
         model.addAttribute("list",classifyOneService.getAllInfo());

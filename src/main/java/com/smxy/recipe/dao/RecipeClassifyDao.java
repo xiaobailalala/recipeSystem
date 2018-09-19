@@ -1,0 +1,16 @@
+/**
+ * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
+ *
+ * @Package:
+ * @author: zpx
+ * Build File @date: 2018/9/18 16:48
+ * @Description TODO
+ * @version 1.0
+ */
+package com.smxy.recipe.dao;
+
+import com.smxy.recipe.entity.RecipeClassify;
+
+public interface RecipeClassifyDao {
+    public int saveInfo(RecipeClassify recipeClassify);
+}

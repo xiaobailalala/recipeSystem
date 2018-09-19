@@ -11,27 +11,32 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Process {
+public final class Process {
 	private Integer fId;
 	private Integer fRid;
 	private Recipe recipe;
-	private Integer fNum;
 	private String fContent;
-	private Integer fRequest;
-	private String fAiContent;
+	private String fRequest;
+	private String fCover;
 	public Process() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Process(Integer fId, Integer fRid, Recipe recipe, Integer fNum, String fContent, Integer fRequest, String fAiContent) {
+	public Process(Integer fRid, String fContent, String fRequest, String fCover) {
+		this.fRid = fRid;
+		this.fContent = fContent;
+		this.fRequest = fRequest;
+		this.fCover = fCover;
+	}
+
+	public Process(Integer fId, Integer fRid, Recipe recipe, String fContent, String fRequest, String fCover) {
 		this.fId = fId;
 		this.fRid = fRid;
 		this.recipe = recipe;
-		this.fNum = fNum;
 		this.fContent = fContent;
 		this.fRequest = fRequest;
-		this.fAiContent = fAiContent;
+		this.fCover = fCover;
 	}
 
 	public Integer getfId() {
@@ -58,14 +63,6 @@ public class Process {
 		this.recipe = recipe;
 	}
 
-	public Integer getfNum() {
-		return fNum;
-	}
-
-	public void setfNum(Integer fNum) {
-		this.fNum = fNum;
-	}
-
 	public String getfContent() {
 		return fContent;
 	}
@@ -74,20 +71,20 @@ public class Process {
 		this.fContent = fContent;
 	}
 
-	public Integer getfRequest() {
+	public String getfRequest() {
 		return fRequest;
 	}
 
-	public void setfRequest(Integer fRequest) {
+	public void setfRequest(String fRequest) {
 		this.fRequest = fRequest;
 	}
 
-	public String getfAiContent() {
-		return fAiContent;
+	public String getfCover() {
+		return fCover;
 	}
 
-	public void setfAiContent(String fAiContent) {
-		this.fAiContent = fAiContent;
+	public void setfCover(String fCover) {
+		this.fCover = fCover;
 	}
 
 	@Override
@@ -96,10 +93,9 @@ public class Process {
 				"fId=" + fId +
 				", fRid=" + fRid +
 				", recipe=" + recipe +
-				", fNum=" + fNum +
 				", fContent='" + fContent + '\'' +
-				", fRequest=" + fRequest +
-				", fAiContent='" + fAiContent + '\'' +
+				", fRequest='" + fRequest + '\'' +
+				", fCover='" + fCover + '\'' +
 				'}';
 	}
 }
