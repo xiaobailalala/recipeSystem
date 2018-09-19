@@ -8,9 +8,6 @@ $(function(){
                 onImg(this.files[0]);
             }
         });
-        function aaa() {
-
-        }
         function onImg(data) {
             var fs = new FileReader();
             fs.readAsDataURL(data);
