@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Tips {
+public final class Tips {
 	private Integer fId;
 	private String fName;
 	private String fStyle;

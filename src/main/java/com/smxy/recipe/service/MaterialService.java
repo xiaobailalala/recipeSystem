@@ -23,4 +23,6 @@ public interface MaterialService {
     public Material getInfoById(Integer id);
 
     public ResApi<Object> updateInfo(Integer id, Material material);
+
+    public ResApi<Object> getOneByName(String fName);
 }

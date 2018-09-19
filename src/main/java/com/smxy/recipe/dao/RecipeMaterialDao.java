@@ -3,14 +3,14 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/4 22:35
+ * Build File @date: 2018/9/18 16:49
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.dao;
 
-import com.smxy.recipe.entity.Recipe;
+import com.smxy.recipe.entity.RecipeMaterial;
 
-public interface RecipeDao {
-    public int saveInfo(Recipe recipe);
+public interface RecipeMaterialDao {
+    public int saveInfo(RecipeMaterial recipeMaterial);
 }

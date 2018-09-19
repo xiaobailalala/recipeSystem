@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class MerchantUser {
+public final class MerchantUser {
 	private Integer fId;
 	private String fCover;
 	private String fUsername;

@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Collect {
+public final class Collect {
 	private Integer fId;
 	private Integer fUid;
 	private Integer fRid;

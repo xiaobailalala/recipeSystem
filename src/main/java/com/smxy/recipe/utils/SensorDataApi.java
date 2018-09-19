@@ -9,7 +9,8 @@
  */
 package com.smxy.recipe.utils;
 
-import com.smxy.recipe.entity.Dht11Data;
+import com.smxy.recipe.entity.SensorEntity.Dht11Data;
+import com.smxy.recipe.entity.SensorEntity.Gp2y1051Data;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +27,47 @@ public class SensorDataApi {
 
     public static List<Dht11Data> dht11List;
 
+    public static List<Gp2y1051Data> gp2y1051DataList;
+
     static {
-        dht11List=new ArrayList<>();
+        dht11List = new ArrayList<>();
+        gp2y1051DataList = new ArrayList<>();
     }
 
     @GetMapping("/getDht11Data")
     @ResponseBody
-    public Map<String, Object> getDht11Data(String rh, String tmp){
-        Map<String, Object> map=new HashMap<>();
+    public Map<String, Object> getDht11Data(String rh, String tmp) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", "success");
+        if (dht11List.size() == 30) {
+            dht11List.remove(dht11List.get(0));
+        }
+        dht11List.add(new Dht11Data(rh, tmp));
+        return map;
+    }
+
+    @GetMapping("/getGp2y1051Data")
+    @ResponseBody
+    public Map<String, Object> getGp2y1051Data(String pm){
+        Map<String, Object> map = new HashMap<>();
         map.put("success","success");
-        if (dht11List.size()==30){
+        if (gp2y1051DataList.size()==30){
+            gp2y1051DataList.remove(gp2y1051DataList.get(0));
+        }
+        gp2y1051DataList.add(new Gp2y1051Data(pm));
+        return map;
+    }
+
+    @GetMapping("/getSensorData")
+    @ResponseBody
+    public Map<String, Object> getSensorData(String pm, String rh, String tmp){
+        Map<String, Object> map = new HashMap<>();
+        map.put("success","success");
+        if (gp2y1051DataList.size()==30){
+            gp2y1051DataList.remove(gp2y1051DataList.get(0));
+        }
+        gp2y1051DataList.add(new Gp2y1051Data(pm));
+        if (dht11List.size() == 30) {
             dht11List.remove(dht11List.get(0));
         }
         dht11List.add(new Dht11Data(rh, tmp));
@@ -43,11 +75,16 @@ public class SensorDataApi {
     }
 
 
-    @GetMapping("/test")
+    @GetMapping("/test1")
     @ResponseBody
-    public List<Dht11Data> test(){
-        System.out.println(213);
+    public List<Dht11Data> test1() {
         return SensorDataApi.dht11List;
+    }
+
+    @GetMapping("/test2")
+    @ResponseBody
+    public List<Gp2y1051Data> test2(){
+        return SensorDataApi.gp2y1051DataList;
     }
 
 }

@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class CommonUser {
+public final class CommonUser {
 	private Integer fId;
 	private String fAccount;
 	private String fUsername;

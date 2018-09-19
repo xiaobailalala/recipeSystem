@@ -68,5 +68,15 @@ public class MaterialServiceImpl implements MaterialService {
         return resApi;
     }
 
+    @Override
+    public ResApi<Object> getOneByName(String fName) {
+        ResApi<Object> resApi=new ResApi<>(500,"failed","failed");
+        Material material=materialDao.getInfoByName(fName);
+        if (material!=null){
+            resApi=new ResApi<>(200,"success",material);
+        }
+        return resApi;
+    }
+
 
 }

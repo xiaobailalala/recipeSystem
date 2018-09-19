@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author zpx
  *
  */
-public class MerchantComment {
+public final class MerchantComment {
 	private Integer fId;
 	private Integer fPid;
 	private MerchantProduct merchantProduct;

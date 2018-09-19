@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Material {
+public final class Material {
 	private Integer fId;
 	private String fName;
 	public Material() {

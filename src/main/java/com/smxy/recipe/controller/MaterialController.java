@@ -66,4 +66,11 @@ public class MaterialController {
         return materialService.updateInfo(id,material);
     }
 
+    @RequiresPermissions("material:select")
+    @ResponseBody
+    @GetMapping("/getByName")
+    public ResApi<Object> getOneByName(String fName){
+        return materialService.getOneByName(fName);
+    }
+
 }

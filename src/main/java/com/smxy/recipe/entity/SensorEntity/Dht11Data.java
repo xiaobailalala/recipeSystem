@@ -7,7 +7,7 @@
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.entity.SensorEntity;
 
 public class Dht11Data {
     private String rh;

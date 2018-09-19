@@ -11,7 +11,7 @@ package com.smxy.recipe.entity;
  * @author zpx
  *
  */
-public class Profession {
+public final class Profession {
 	private Integer fId;
 	private String fName;
 	public Profession() {

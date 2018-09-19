@@ -9,19 +9,14 @@
  */
 package com.smxy.recipe.controller;
 
-import com.smxy.recipe.entity.Classify;
-import com.smxy.recipe.entity.Dht11Data;
 import com.smxy.recipe.entity.Tips;
 import com.smxy.recipe.service.TipsService;
 import com.smxy.recipe.utils.ResApi;
-import com.smxy.recipe.utils.SensorDataApi;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/tips")

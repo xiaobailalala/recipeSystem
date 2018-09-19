@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author zpx
  *
  */
-public class FoodComment {
+public final class FoodComment {
 	private Integer fId;
 	private Integer fRid;
 	private Recipe recipe;
