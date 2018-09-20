@@ -24,8 +24,8 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   http:
     multipart:
-      max-file-size: 10Mb
-      max-request-size: 10Mb
+      max-file-size: 300Mb
+      max-request-size: 300Mb
   elasticsearch:
     jest:
       uris: http://192.168.1.108:9201

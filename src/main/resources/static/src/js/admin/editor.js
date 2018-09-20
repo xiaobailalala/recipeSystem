@@ -31,12 +31,35 @@ $(function(){
             }
         });
         function subAjax(formdata){
+            $('#usernameBtn').attr("disabled","disabled");
+            $('#progressBar').attr("aria-valuenow","0").css("width","0%");
+            $('#progressCont').show();
             $.ajax({
                 url:"/adm/editor/name/"+formdata.get("fId"),
                 type:"post",
                 data:formdata,
+                Accept:'text/html;charset=UTF-8',
                 processData:false,
                 contentType:false,
+                xhr:function(e){
+                    var xhr = $.ajaxSettings.xhr();
+                    if(xhr.upload){ // check if upload property exists
+                        xhr.upload.addEventListener('progress',function(e){
+                            var loaded = e.loaded;
+                            var total = e.total;
+                            var percent = Math.floor(100*loaded/total);
+                            if (percent === 100){
+                                $('#usernameBtn').val("资源已上传，保存中...").
+                                removeClass("btn-default").addClass("btn-success");
+                                $('#progressBar').attr("aria-valuenow",percent).css("width",percent + "%").
+                                addClass("progress-bar-success");
+                            } else{
+                                $('#progressBar').attr("aria-valuenow",percent).css("width",percent + "%");
+                            }
+                        }, false);
+                    }
+                    return xhr;
+                },
                 success:function(res){
                     if (res.code===200){
                         swal({
@@ -74,7 +97,7 @@ $(function(){
             var files = e.target.files;
             if (files && files.length > 0) {
                 file = URL.createObjectURL(files[0]);
-                $('#imageContainer').attr({'src': file})
+                $('#imageContainer').attr({'src': file});
             }
             isImg=true;
             $('#usernameBtn').removeAttr("disabled");

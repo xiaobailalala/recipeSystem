@@ -423,6 +423,9 @@ $(function () {
                              Tools.tip("请完善烹饪流程的内容");
                              return false;
                          }else{
+                             $('input[type=submit]').attr("disabled","disabled");
+                             $('#progressBar').attr("aria-valuenow","0").css("width","0%");
+                             $('#progressCont').show();
                              var formData=new FormData(this);
                              formData.append("fIntroduction",((formData.get("fIntroduction").replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;")).replace(/\n/gi,"|"));
                              formData.append("twoArr", twoArr);
@@ -437,12 +440,33 @@ $(function () {
                              $.ajax({
                                  url:"/recipe/info",
                                  type:"post",
+                                 Accept:'text/html;charset=UTF-8',
                                  processData:false,
                                  contentType:false,
                                  data:formData,
+                                 xhr:function(e){
+                                     var xhr = $.ajaxSettings.xhr();
+                                     if(xhr.upload){ // check if upload property exists
+                                         xhr.upload.addEventListener('progress',function(e){
+                                             var loaded = e.loaded;
+                                             var total = e.total;
+                                             var percent = Math.floor(100*loaded/total);
+                                             if (percent === 100){
+                                                 $('input[type=submit]').val("资源已上传，保存中...").
+                                                 removeClass("btn-default").addClass("btn-success");
+                                                 $('#progressBar').attr("aria-valuenow",percent).css("width",percent + "%").
+                                                 addClass("progress-bar-success");
+                                             } else{
+                                                 $('#progressBar').attr("aria-valuenow",percent).css("width",percent + "%");
+                                             }
+                                         }, false);
+                                     }
+                                     return xhr;
+                                 },
                                  success:function(res){
+                                     console.log(123);
                                      if (res.code===200){
-                                         location.reload();
+                                         Tools.successAddTimeoutTip(res,3);
                                      }else{
                                          Tools.tip(res.msg);
                                      }
