@@ -16,22 +16,22 @@ import java.util.List;
 
 public interface AdminRoleService {
 
-    public ResApi<Object> roleList();
+    ResApi<Object> roleList();
 
-    public ResApi<Object> isName(AdminRole adminRole);
+    ResApi<Object> isName(AdminRole adminRole);
 
-    public ResApi<Object> saveRole(AdminRole adminRole);
+    ResApi<Object> saveRole(AdminRole adminRole);
 
-    public AdminRole getOneById(Integer id);
+    AdminRole getOneById(Integer id);
 
-    public ResApi<Object> updateRole(Integer id, AdminRole adminRole);
+    ResApi<Object> updateRole(Integer id, AdminRole adminRole);
 
-    public ResApi<Object> deleteRole(Integer id);
+    ResApi<Object> deleteRole(Integer id);
 
-    public ResApi<Object> toPerm(Integer id);
+    ResApi<Object> toPerm(Integer id);
 
-    public ResApi<Object> deletePerm(Integer[] pid, Integer rid);
+    ResApi<Object> deletePerm(Integer[] pid, Integer rid);
 
-    public ResApi<Object> addPerm(Integer[] pid, Integer rid);
+    ResApi<Object> addPerm(Integer[] pid, Integer rid);
 
 }

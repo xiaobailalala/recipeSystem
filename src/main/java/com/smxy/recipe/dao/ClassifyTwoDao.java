@@ -15,17 +15,17 @@ import java.util.List;
 
 public interface ClassifyTwoDao {
 
-    public List<ClassifyTwo> getInfoAll();
+    List<ClassifyTwo> getInfoAll();
 
-    public int saveInfo(ClassifyTwo classifyTwo);
+    Integer saveInfo(ClassifyTwo classifyTwo);
 
-    public ClassifyTwo getInfoByNameAndOid(ClassifyTwo classifyTwo);
+    ClassifyTwo getInfoByNameAndOid(ClassifyTwo classifyTwo);
 
-    public int deleteInfo(Integer fId);
+    Integer deleteInfo(Integer fId);
 
-    public ClassifyTwo getInfoById(Integer fId);
+    ClassifyTwo getInfoById(Integer fId);
 
-    public int updateInfo(ClassifyTwo classifyTwo);
+    Integer updateInfo(ClassifyTwo classifyTwo);
 
-    public List<ClassifyTwo> getInfoByOid(Integer fOid);
+    List<ClassifyTwo> getInfoByOid(Integer fOid);
 }

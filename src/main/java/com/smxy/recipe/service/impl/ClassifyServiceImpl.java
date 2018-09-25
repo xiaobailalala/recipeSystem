@@ -81,7 +81,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
     public ResApi<Object> updateInfo(Integer id, Classify classify) {
-        classify.setfId(id);
+        classify.setFId(id);
         ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
         if (classifyDao.getInfoByNameAndTid(classify)==null){
             if (classifyDao.updateInfo(classify)>0){

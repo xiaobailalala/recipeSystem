@@ -191,7 +191,7 @@ public class ToolsApi {
 	}
 
 	public static String entryptBySaltMd5(String password,String salt) {
-		Object md5Password = new SimpleHash("MD5", password, ByteSource.Util.bytes(salt), 1);
+		Object md5Password = new SimpleHash("MD5", password, ByteSource.Util.bytes(salt), 1024);
 		return md5Password.toString();
 	}
 	public static String toMD5(String str) {  

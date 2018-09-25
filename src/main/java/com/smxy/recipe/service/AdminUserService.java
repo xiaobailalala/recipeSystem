@@ -21,44 +21,44 @@ import java.util.Map;
 
 public interface AdminUserService {
 
-    public ResApi<String> isAdminUser(String fAccount);
+    ResApi<String> isAdminUser(String fAccount);
 
-    public ResApi<String> userLogin(AdminUser adminUser, HttpServletRequest request, boolean rememberMe);
+    ResApi<String> userLogin(AdminUser adminUser, HttpServletRequest request, boolean rememberMe);
 
-    public ResApi<Object> userList();
+    ResApi<Object> userList();
 
-    public ResApi<Object> userById(Integer id);
+    ResApi<Object> userById(Integer id);
 
-    public ResApi<Object> editorInfo(HttpServletRequest request, MultipartFile multipartFile, Integer fId, AdminUser adminUser);
+    ResApi<Object> editorInfo(HttpServletRequest request, MultipartFile multipartFile, Integer fId, AdminUser adminUser);
 
-    public ResApi<Object> editorPassword(Integer fId, AdminUser adminUser);
+    ResApi<Object> editorPassword(Integer fId, AdminUser adminUser);
 
-    public ResApi<Object> editorEmail(Integer fId, AdminUser adminUser);
+    ResApi<Object> editorEmail(Integer fId, AdminUser adminUser);
 
-    public ResApi<Object> isEmail(String fEmail);
+    ResApi<Object> isEmail(String fEmail);
 
-    public ResApi<Object> sendEmail(String toEmail, String title, String type, String account);
+    ResApi<Object> sendEmail(String toEmail, String title, String type, String account);
 
-    public ResApi<Object> resetPwd(Boolean isRe, Integer id, AdminUser adminUser, String prePassword);
+    ResApi<Object> resetPwd(Boolean isRe, Integer id, AdminUser adminUser, String prePassword);
 
-    public ResApi<Object> deleteInfo(Integer id);
+    ResApi<Object> deleteInfo(Integer id);
 
-    public ResApi<Object> resetUserPwd(Integer id, AdminUser adminUser);
+    ResApi<Object> resetUserPwd(Integer id, AdminUser adminUser);
 
-    public ResApi<Object> toUserPerm(Integer id);
+    ResApi<Object> toUserPerm(Integer id);
 
-    public ResApi<Object> deletePerm(Integer[] rid, Integer uid);
+    ResApi<Object> deletePerm(Integer[] rid, Integer uid);
 
-    public ResApi<Object> addPerm(Integer[] rid, Integer uid);
+    ResApi<Object> addPerm(Integer[] rid, Integer uid);
 
-    public ResApi<Object> isAcc(String account);
+    ResApi<Object> isAcc(String account);
 
-    public ResApi<Object> saveInfo(AdminUser adminUser);
+    ResApi<Object> saveInfo(AdminUser adminUser);
 
-//    public ResApi<Map<String, Object>> getRoleAndPermission(Integer uid);
+//    ResApi<Map<String, Object>> getRoleAndPermission(Integer uid);
 
-    public List<AdminRole> verifyRole(Integer uid);
+    List<AdminRole> verifyRole(Integer uid);
 
-    public List<AdminPermission> verifyPermission(Integer uid);
+    List<AdminPermission> verifyPermission(Integer uid);
 
 }

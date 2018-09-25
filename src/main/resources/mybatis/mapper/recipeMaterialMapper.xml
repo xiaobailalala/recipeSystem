@@ -3,6 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.RecipeMaterialDao">
     <insert id="saveInfo" parameterType="RecipeMaterial">
-        insert into t_food_recipe_material (f_rid, f_mid, f_number) values (#{fRid}, #{fMid}, #{fNumber});
+        insert into t_food_recipe_material (f_rid, f_mid, f_number, f_name) values (#{fRid}, #{fMid}, #{fNumber}, #{fName});
     </insert>
+    <select id="getInfoByRid" parameterType="Integer" resultMap="getRecipeMaterialDetail">
+        select * from t_food_recipe_material where f_rid=#{fRid};
+    </select>
+    <resultMap id="getRecipeMaterialDetail" type="RecipeMaterial">
+        <result column="f_mid" property="fMid"/>
+        <association property="material" column="fMid"
+                    select="com.smxy.recipe.dao.MaterialDao.getInfoById">
+        </association>
+    </resultMap>
+    <delete id="deleteInfoByRid" parameterType="Integer">
+        delete from t_food_recipe_material where f_rid=#{fRid};
+    </delete>
 </mapper>

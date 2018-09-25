@@ -45,7 +45,7 @@ public class ProfessionServiceImpl implements ProfessionService {
 	@Override
 	public ResApi<Object> saveInfo(Profession profession) {
         ResApi<Object> resApi;
-        if (professionDao.getPorfessByName(profession.getfName())!=null){
+        if (professionDao.getPorfessByName(profession.getFName())!=null){
             resApi=new ResApi<>(501,"该职业已存在，请勿重复添加","failed");
         }else{
             if (professionDao.saveInfo(profession)>0){
@@ -59,7 +59,7 @@ public class ProfessionServiceImpl implements ProfessionService {
 
     @Override
     public ResApi<Object> updateInfo(Integer id, Profession profession) {
-	    profession.setfId(id);
+	    profession.setFId(id);
         ResApi<Object> resApi=new ResApi<>(500,"系统出错。","error");
         if (professionDao.updateInfo(profession)>0){
             resApi=new ResApi<>(200,"success","success");

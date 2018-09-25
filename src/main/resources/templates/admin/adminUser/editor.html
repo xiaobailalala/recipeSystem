@@ -5,7 +5,7 @@
 <body>
     <div th:replace="~{admin/common/nav::loading}"></div>
     <div th:replace="~{admin/common/nav::topFixed}"></div>
-    <div th:replace="~{admin/common/nav::sideFixed(1,1)}"></div>
+    <div th:replace="~{admin/common/nav::sideFixed(2,1)}"></div>
     <div class="content">
         <div class="page-header">
             <h1 class="title">管理员信息编辑</h1>
@@ -100,10 +100,10 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-2">
+                                                <div class="col-sm-offset-2 col-sm-3">
                                                     <input type="submit" class="btn btn-default" disabled="disabled" id="usernameBtn" value="Submit">
                                                 </div>
-                                                <div class="col-sm-6" id="progressCont" style="display: none;">
+                                                <div class="col-sm-5" id="progressCont" style="display: none;">
                                                     <div class="progress progress-striped active">
                                                         <div class="progress-bar" role="progressbar" aria-valuenow="45" id="progressBar" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
                                                             <!--<span class="sr-only">45% Complete</span>-->

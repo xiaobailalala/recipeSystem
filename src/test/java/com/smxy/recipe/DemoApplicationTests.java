@@ -1,5 +1,7 @@
 package com.smxy.recipe;
 
+import com.smxy.recipe.config.ThymeleafConfig;
+import com.smxy.recipe.entity.ToolsEntity.RecipeClassifyList;
 import com.smxy.recipe.service.MaterialService;
 import com.smxy.recipe.utils.FastDFSClient;
 import com.smxy.recipe.utils.ResApi;
@@ -16,6 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

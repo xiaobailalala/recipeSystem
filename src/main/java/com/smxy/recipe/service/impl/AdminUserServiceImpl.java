@@ -68,7 +68,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         Subject currentUser = SecurityUtils.getSubject();
         try {
             if (!currentUser.isAuthenticated()){
-                UsernamePasswordToken token=new UsernamePasswordToken(adminUser.getfAccount(),adminUser.getfPassword());
+                UsernamePasswordToken token=new UsernamePasswordToken(adminUser.getFAccount(),adminUser.getFPassword());
                 token.setRememberMe(rememberMe);
                 try {
                     currentUser.login(token);
@@ -102,7 +102,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public ResApi<Object> editorInfo(HttpServletRequest request,MultipartFile multipartFile,Integer id, AdminUser adminUser) {
-        adminUser.setfId(id);
+        adminUser.setFId(id);
         if (multipartFile==null||multipartFile.getSize()==0){
             if (adminUserDao.updateInfoByFid(adminUser)>0){
                 return new ResApi<>(200,"success",true);
@@ -110,12 +110,12 @@ public class AdminUserServiceImpl implements AdminUserService {
                 return new ResApi<>(501,"failed",false);
             }
         }else{
-            ToolsApi.multipartFile_delete_file(adminUser.getfHead());
+            ToolsApi.multipartFile_delete_file(adminUser.getFHead());
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
                 String name=ToolsApi.multipartFile_upload_file(multipartFile,null);
-                adminUser.setfHead(name);
+                adminUser.setFHead(name);
                 if (adminUserDao.updateInfoByFid(adminUser)>0){
-                    request.getSession().setAttribute("aduser",adminUserDao.getAdminUserByFid(adminUser.getfId()));
+                    request.getSession().setAttribute("aduser",adminUserDao.getAdminUserByFid(adminUser.getFId()));
                     return new ResApi<>(200,"success",true);
                 }else{
                     return new ResApi<>(501,"failed",false);
@@ -128,7 +128,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public ResApi<Object> editorPassword(Integer id,AdminUser adminUser) {
-        adminUser.setfId(id);
+        adminUser.setFId(id);
         if (adminUserDao.updatePasswordByFid(adminUser)>0){
             return new ResApi<>(200,"success",true);
         }else{
@@ -138,7 +138,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public ResApi<Object> editorEmail(Integer id,AdminUser adminUser) {
-        adminUser.setfId(id);
+        adminUser.setFId(id);
         if (adminUserDao.updateEmailByFid(adminUser)>0){
             return new ResApi<>(200,"success",true);
         }else{
@@ -170,13 +170,13 @@ public class AdminUserServiceImpl implements AdminUserService {
     public ResApi<Object> resetPwd(Boolean isRe, Integer id,AdminUser adminUser,String prePassword) {
         ResApi<Object> resApi;
         if (isRe){
-            if (adminUserDao.getAdminUserByFid(id).getfPassword().equals(ToolsApi.entryptBySaltMd5(prePassword,adminUser.getfAccount()))){
+            if (adminUserDao.getAdminUserByFid(id).getFPassword().equals(ToolsApi.entryptBySaltMd5(prePassword,adminUser.getFAccount()))){
                 resApi=new ResApi<>(200,"success","success");
             }else{
                 resApi=new ResApi<>(501,"您输入的密码不正确。","failed");
             }
         }else{
-            adminUser.setfPassword(ToolsApi.entryptBySaltMd5(adminUser.getfPassword(),adminUser.getfAccount()));
+            adminUser.setFPassword(ToolsApi.entryptBySaltMd5(adminUser.getFPassword(),adminUser.getFAccount()));
             if (adminUserDao.updatePasswordByFid(adminUser)>0){
                 resApi=new ResApi<>(200,"success","success");
             }else{
@@ -199,11 +199,11 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public ResApi<Object> resetUserPwd(Integer id,AdminUser adminUser) {
-        adminUser.setfId(id);
+        adminUser.setFId(id);
         ResApi<Object> resApi;
         String newPwd= ToolsApi.randomPwd();
-        toolsApi.sendMail(ToolsApi.MAILTYPE_RESET,"膳食膳房——Manage 管理员密码重置",adminUser.getfEmail(),adminUser.getfAccount(),newPwd);
-        adminUser.setfPassword(ToolsApi.entryptBySaltMd5(newPwd,adminUser.getfAccount()));
+        toolsApi.sendMail(ToolsApi.MAILTYPE_RESET,"膳食膳房——Manage 管理员密码重置",adminUser.getFEmail(),adminUser.getFAccount(),newPwd);
+        adminUser.setFPassword(ToolsApi.entryptBySaltMd5(newPwd,adminUser.getFAccount()));
         int res=adminUserDao.updatePasswordByFid(adminUser);
         if (res>0){
             resApi=new ResApi<>(200,"success","success");
@@ -223,7 +223,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         for (int i=0;i<adminRoles.size();i++){
             int flag=0;
             for (int j=0;j<include.getAdminUserRoles().size();j++){
-                if (adminRoles.get(i).getfId()==include.getAdminUserRoles().get(j).getAdminRole().getfId()){
+                if (adminRoles.get(i).getFId()==include.getAdminUserRoles().get(j).getAdminRole().getFId()){
                     flag++;
                     break;
                 }
@@ -296,6 +296,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public ResApi<Object> saveInfo(AdminUser adminUser) {
         ResApi<Object> resApi=new ResApi<>(500,"系统出错。","error");
+        adminUser.setFPassword(ToolsApi.entryptBySaltMd5(adminUser.getFPassword(), adminUser.getFAccount()));
         if (adminUserDao.saveInfo(adminUser)>0){
             resApi=new ResApi<>(200,"success","success");
         }

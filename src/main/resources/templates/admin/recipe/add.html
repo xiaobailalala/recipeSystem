@@ -15,7 +15,7 @@
             <div class="btn-group" role="group" aria-label="...">
                 <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
                 <a class="btn btn-light" disabled="disabled">食谱资料管理</a>
-                <a class="btn btn-light" th:href="@{/profession/info}">食谱管理</a>
+                <a class="btn btn-light" th:href="@{/recipe/info}">食谱管理</a>
                 <a class="btn btn-light" disabled="disabled">添加食谱</a>
                 <a href="javascript:history.go(-1);" class="btn btn-light">
                     <i class="fa fa-reply"></i>
@@ -40,6 +40,7 @@
                     </div>
                     <div class="panel-body">
                         <form id="subForm" class="form-horizontal">
+                            <input type="hidden" name="fType" value="4">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label form-label" for="fName">食谱封面</label>
                                 <div class="col-sm-10">
@@ -199,10 +200,10 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label form-label"></label>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     <input type="submit" value="Submit" class="btn btn-default" disabled="disabled">
                                 </div>
-                                <div class="col-sm-6" id="progressCont" style="display: none;">
+                                <div class="col-sm-5" id="progressCont" style="display: none;">
                                     <div class="progress progress-striped active">
                                         <div class="progress-bar" role="progressbar" aria-valuenow="45" id="progressBar" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
                                             <!--<span class="sr-only">45% Complete</span>-->

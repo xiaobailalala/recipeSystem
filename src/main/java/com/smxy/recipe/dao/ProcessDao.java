@@ -11,6 +11,10 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.Process;
 
+import java.util.List;
+
 public interface ProcessDao {
-    public int saveInfo(Process process);
+    Integer saveInfo(Process process);
+    List<Process> getInfoByRid(Integer fRid);
+    Integer deleteInfoByRid(Integer fRid);
 }

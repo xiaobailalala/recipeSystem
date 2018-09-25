@@ -69,8 +69,8 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     @Override
     public ResApi<Object> updateRole(Integer id, AdminRole adminRole) {
         ResApi<Object> resApi=new ResApi<>(500,"系统出错了。","error");
-        adminRole.setfId(id);
-        if (!adminRole.getfRolename().equals(adminRoleDao.getAdminRoleByFid(adminRole.getfId()).getfRolename())&&
+        adminRole.setFId(id);
+        if (!adminRole.getFRolename().equals(adminRoleDao.getAdminRoleByFid(adminRole.getFId()).getFRolename())&&
                 adminRoleDao.getAdminRoleByName(adminRole)!=null){
             resApi=new ResApi<>(501,"该权限代号已存在，请重新提交。","failed");
         }else{
@@ -101,7 +101,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
         for (int i=0;i<adminPermissions.size();i++){
             int flag=0;
             for (int j=0;j<include.getAdminRolePermissions().size();j++){
-                if (adminPermissions.get(i).getfId()==include.getAdminRolePermissions().get(j).getAdminPermission().getfId()){
+                if (adminPermissions.get(i).getFId()==include.getAdminRolePermissions().get(j).getAdminPermission().getFId()){
                     flag++;
                     break;
                 }

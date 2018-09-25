@@ -16,16 +16,16 @@ import java.util.List;
 
 public interface ClassifyOneDao {
 
-    public List<ClassifyOne> getAllInfo();
+    List<ClassifyOne> getAllInfo();
 
-    public ClassifyOne getInfoByName(String fName);
+    ClassifyOne getInfoByName(String fName);
 
-    public int saveInfo(String fName);
+    Integer saveInfo(String fName);
 
-    public int deleteInfoById(Integer fId);
+    Integer deleteInfoById(Integer fId);
 
-    public Classify getInfoById(Integer fId);
+    Classify getInfoById(Integer fId);
 
-    public int updateInfoById(Classify classify);
+    Integer updateInfoById(Classify classify);
 
 }

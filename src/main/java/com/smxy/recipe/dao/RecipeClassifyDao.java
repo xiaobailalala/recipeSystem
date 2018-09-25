@@ -11,6 +11,14 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.RecipeClassify;
 
+import java.util.List;
+
 public interface RecipeClassifyDao {
-    public int saveInfo(RecipeClassify recipeClassify);
+
+    Integer saveInfo(RecipeClassify recipeClassify);
+
+    List<RecipeClassify> getInfoByRid(Integer fRid);
+
+    Integer deleteInfoByRid(Integer fRid);
+
 }

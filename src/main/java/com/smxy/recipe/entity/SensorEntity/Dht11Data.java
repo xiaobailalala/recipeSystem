@@ -9,39 +9,14 @@
  */
 package com.smxy.recipe.entity.SensorEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dht11Data {
     private String rh;
     private String tmp;
-
-    public Dht11Data() {
-    }
-
-    public Dht11Data(String rh, String tmp) {
-        this.rh = rh;
-        this.tmp = tmp;
-    }
-
-    public String getRh() {
-        return rh;
-    }
-
-    public void setRh(String rh) {
-        this.rh = rh;
-    }
-
-    public String getTmp() {
-        return tmp;
-    }
-
-    public void setTmp(String tmp) {
-        this.tmp = tmp;
-    }
-
-    @Override
-    public String toString() {
-        return "Dht11{" +
-                "rh='" + rh + '\'' +
-                ", tmp='" + tmp + '\'' +
-                '}';
-    }
 }

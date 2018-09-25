@@ -15,16 +15,16 @@ import java.util.List;
 
 public interface AdminPermissionDao {
 
-    public AdminPermission getAdminPermissionByFid(int fId);
+    AdminPermission getAdminPermissionByFid(int fId);
 
-    public List<AdminPermission> getAdminPermissionAll();
+    List<AdminPermission> getAdminPermissionAll();
 
-    public AdminPermission getAdminPermissionByName(String fPermissionname);
+    AdminPermission getAdminPermissionByName(String fPermissionname);
 
-    public int saveInfo(AdminPermission adminPermission);
+    Integer saveInfo(AdminPermission adminPermission);
 
-    public int deleteInfo(Integer fId);
+    Integer deleteInfo(Integer fId);
 
-    public int updateInfo(AdminPermission adminPermission);
+    Integer updateInfo(AdminPermission adminPermission);
 
 }

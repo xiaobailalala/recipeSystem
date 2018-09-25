@@ -4,7 +4,7 @@ $(function () {
     var threeArr = new Array(), twoArr = new Array();
     var materialName = new Array(), materialId = new Array(), materialNumber = new Array();
 
-    var name = false, cover = false, introduction = false, fire = false;
+    var name = true, cover = true, introduction = true, fire = false;
 
     function isSub() {
         if (name && cover && introduction) {
@@ -15,6 +15,18 @@ $(function () {
             return false;
         }
     }
+
+    (function LoadGetData(){
+        var index = window.location.href.lastIndexOf("/");
+        var id = window.location.href.substr(index+1, window.location.href.length);
+        $.ajax({
+            url:"/load/getData/"+id,
+            type:"get",
+            success:function(res){
+
+            }
+        });
+    }());
 
     (function ClaOne() {
         $.ajax({

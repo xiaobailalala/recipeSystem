@@ -2,7 +2,8 @@ var Tools={
     tip:tipFn,
     successAddTimeoutTip:successAddTimeoutTip,
     path:window.document.location.pathname.substring(0,window.document.location.pathname.substr(1).indexOf('/')+1),
-    myModal:myModal
+    myModal:myModal,
+    fileServerPath:"http://192.168.1.108/"
 }
 function tipFn(msg){
     var doc="#tipModal";

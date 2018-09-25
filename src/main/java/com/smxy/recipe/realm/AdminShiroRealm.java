@@ -49,10 +49,10 @@ public class AdminShiroRealm extends AuthorizingRealm {
 //                authorizationInfo.addStringPermission(adminPermission.getfPermissionname());
 //            }
 //        }
-        for (AdminRole adminRole:adminUserService.verifyRole(adminUser.getfId())){
-            authorizationInfo.addRole(adminRole.getfRolename());
-            for (AdminPermission adminPermission:adminUserService.verifyPermission(adminUser.getfId())){
-                authorizationInfo.addStringPermission(adminPermission.getfPermissionname());
+        for (AdminRole adminRole:adminUserService.verifyRole(adminUser.getFId())){
+            authorizationInfo.addRole(adminRole.getFRolename());
+            for (AdminPermission adminPermission:adminUserService.verifyPermission(adminUser.getFId())){
+                authorizationInfo.addStringPermission(adminPermission.getFPermissionname());
             }
         }
         return authorizationInfo;
@@ -69,7 +69,7 @@ public class AdminShiroRealm extends AuthorizingRealm {
             return null;
         }
         Object principal=adminUser;
-        Object credentials = adminUser.getfPassword();
+        Object credentials = adminUser.getFPassword();
         String realmName = getName();
         ByteSource credentialsSalt = ByteSource.Util.bytes(account);
         return new SimpleAuthenticationInfo(principal, credentials, credentialsSalt, realmName);

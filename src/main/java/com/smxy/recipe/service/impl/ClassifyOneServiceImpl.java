@@ -63,7 +63,7 @@ public class ClassifyOneServiceImpl implements ClassifyOneService {
     @Override
     public ResApi<Object> updateInfo(Classify classify) {
         ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
-        if (classifyOneDao.getInfoByName(classify.getfName())!=null){
+        if (classifyOneDao.getInfoByName(classify.getFName())!=null){
             resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
         }else{
             if (classifyOneDao.updateInfoById(classify)>0){

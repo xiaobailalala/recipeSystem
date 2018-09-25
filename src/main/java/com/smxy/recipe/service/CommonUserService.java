@@ -17,8 +17,8 @@ import com.smxy.recipe.utils.ResApi;
  *
  */
 public interface CommonUserService {
-	public ResApi<CommonUser> commonUserLogin(CommonUser common_user);
-	public ResApi<String> commonUserReg(CommonUser common_user);
-	public ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg);
-	public ResApi<CommonUser> commonUserSaveInfo(CommonUser common_user);
+	ResApi<CommonUser> commonUserLogin(CommonUser common_user);
+	ResApi<String> commonUserReg(CommonUser common_user);
+	ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg);
+	ResApi<CommonUser> commonUserSaveInfo(CommonUser common_user);
 }

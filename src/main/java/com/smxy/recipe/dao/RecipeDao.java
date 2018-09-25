@@ -11,6 +11,16 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.Recipe;
 
+import java.util.List;
+
 public interface RecipeDao {
-    public int saveInfo(Recipe recipe);
+    Integer saveInfo(Recipe recipe);
+
+    List<Recipe> getAllInfo();
+
+    List<Recipe> getAllInfoBre();
+
+    Recipe getInfoById(Integer fId);
+
+    Integer deleteInfoById(Integer fId);
 }

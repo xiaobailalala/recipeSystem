@@ -7,66 +7,20 @@
  */
 package com.smxy.recipe.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author zpx
  *
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public final class Attent {
 	private Integer fId;
 	private Integer fUidM;
 	private Integer fUidO;
 	private CommonUser commonUser;
-	public Attent() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Attent(Integer fId, Integer fUidM, Integer fUidO, CommonUser commonUser) {
-		this.fId = fId;
-		this.fUidM = fUidM;
-		this.fUidO = fUidO;
-		this.commonUser = commonUser;
-	}
-
-	public Integer getfId() {
-		return fId;
-	}
-
-	public void setfId(Integer fId) {
-		this.fId = fId;
-	}
-
-	public Integer getfUidM() {
-		return fUidM;
-	}
-
-	public void setfUidM(Integer fUidM) {
-		this.fUidM = fUidM;
-	}
-
-	public Integer getfUidO() {
-		return fUidO;
-	}
-
-	public void setfUidO(Integer fUidO) {
-		this.fUidO = fUidO;
-	}
-
-	public CommonUser getCommonUser() {
-		return commonUser;
-	}
-
-	public void setCommonUser(CommonUser commonUser) {
-		this.commonUser = commonUser;
-	}
-
-	@Override
-	public String toString() {
-		return "Attent{" +
-				"fId=" + fId +
-				", fUidM=" + fUidM +
-				", fUidO=" + fUidO +
-				", commonUser=" + commonUser +
-				'}';
-	}
 }

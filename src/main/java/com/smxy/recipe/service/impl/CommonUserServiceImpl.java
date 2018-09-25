@@ -33,7 +33,7 @@ public class CommonUserServiceImpl implements CommonUserService {
 		// TODO Auto-generated method stub
 		ResApi<CommonUser> resApi;
 		if (common_userDao.isUser(common_user)>0) {
-			common_user.setfPassword(ToolsApi.toMD5(common_user.getfPassword()));
+			common_user.setFPassword(ToolsApi.toMD5(common_user.getFPassword()));
 			common_user=common_userDao.isLogin(common_user);
 			if (common_user!=null) {
 				resApi=new ResApi<>(200,"登录成功",common_user);
@@ -53,9 +53,9 @@ public class CommonUserServiceImpl implements CommonUserService {
 		if (common_userDao.isUser(common_user)>0) {
 			resApi=new ResApi<>(402,"该用户已存在。",null);
 		}else {
-			common_user.setfPassword(ToolsApi.toMD5(common_user.getfPassword()));
+			common_user.setFPassword(ToolsApi.toMD5(common_user.getFPassword()));
 			if (common_userDao.saveUser(common_user)>0) {
-				common_user.setfUsername("膳客"+common_user.getfId());
+				common_user.setFUsername("膳客"+common_user.getFId());
 				if (common_userDao.updateUserInfo(common_user)>0) {
 					resApi=new ResApi<>(200,"注册成功",null);
 				}else {

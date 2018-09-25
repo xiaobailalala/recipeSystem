@@ -18,18 +18,18 @@ import java.util.List;
 
 public interface ClassifyTwoService {
 
-    public ResApi<Object> getInfoAll();
+    ResApi<Object> getInfoAll();
 
-    public List<ClassifyOne> getClassifyOne();
+    List<ClassifyOne> getClassifyOne();
 
-    public ResApi<Object> saveInfo(MultipartFile multipartFile, ClassifyTwo classifyTwo);
+    ResApi<Object> saveInfo(MultipartFile multipartFile, ClassifyTwo classifyTwo);
 
-    public ResApi<Object> deleteInfo(Integer id);
+    ResApi<Object> deleteInfo(Integer id);
 
-    public ResApi<Object> getInfoOne(Integer id);
+    ResApi<Object> getInfoOne(Integer id);
 
-    public ResApi<Object> updateInfo(MultipartFile multipartFile, Integer id, ClassifyTwo classifyTwo);
+    ResApi<Object> updateInfo(MultipartFile multipartFile, Integer id, ClassifyTwo classifyTwo);
 
-    public ResApi<Object> getInfoByOid(Integer oid);
+    ResApi<Object> getInfoByOid(Integer oid);
 
 }

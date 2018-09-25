@@ -16,16 +16,16 @@ import java.util.List;
 
 public interface AdminPermissionService {
 
-    public ResApi<Object> permissionList();
+    ResApi<Object> permissionList();
 
-    public ResApi<Object> isName(AdminPermission adminPermission);
+    ResApi<Object> isName(AdminPermission adminPermission);
 
-    public ResApi<Object> saveInfo(AdminPermission adminPermission);
+    ResApi<Object> saveInfo(AdminPermission adminPermission);
 
-    public ResApi<Object> deleteInfo(Integer id);
+    ResApi<Object> deleteInfo(Integer id);
 
-    public AdminPermission getOneByFid(Integer id);
+    AdminPermission getOneByFid(Integer id);
 
-    public ResApi<Object> updateInfo(Integer id,AdminPermission adminPermission);
+    ResApi<Object> updateInfo(Integer id,AdminPermission adminPermission);
 
 }

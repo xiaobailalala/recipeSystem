@@ -16,13 +16,13 @@ import com.smxy.recipe.entity.CommonUser;
 
 public interface CommonUserDao {
 
-	public int isUser(CommonUser common_user);
+	Integer isUser(CommonUser common_user);
 
-	public CommonUser isLogin(CommonUser common_user);
+	CommonUser isLogin(CommonUser common_user);
 	
-	public int saveUser(CommonUser common_user);
+	Integer saveUser(CommonUser common_user);
 	
-	public int updateUserInfo(CommonUser common_user);
+	Integer updateUserInfo(CommonUser common_user);
 	
 }
 

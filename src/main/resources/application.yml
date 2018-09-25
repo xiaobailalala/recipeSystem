@@ -1,10 +1,10 @@
+ServerHostIp: 192.168.1.108
 spring:
   # 配置数据库连接信息以及改变数据源为Druid
   datasource:
     username: root
     password: devmysql.960314
-    url: jdbc:mysql://192.168.1.108:3306/recipe?useSSL=false
-#    url: jdbc:mysql://192.168.1.120:3306/recipe?useSSL=false
+    url: jdbc:mysql://${ServerHostIp}:3306/recipe?useSSL=false
 #    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
@@ -28,16 +28,13 @@ spring:
       max-request-size: 300Mb
   elasticsearch:
     jest:
-      uris: http://192.168.1.108:9201
-#      uris: http://192.168.1.120:9200
+      uris: http://${ServerHostIp}:9201
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: 192.168.1.108:9301
-#      cluster-nodes: 192.168.1.120:9300
+      cluster-nodes: ${ServerHostIp}:9301
   redis:
-    host: 192.168.1.108
-#    host: 192.168.1.120
+    host: ${ServerHostIp}
     password: devredis.960314
   mail:
     password: fziqpvgpiemvbcdi
