@@ -14,23 +14,23 @@ import com.smxy.recipe.entity.AdminUser;
 import java.util.List;
 
 public interface AdminUserDao {
-    public AdminUser isAdminUser(String fAccount);
+    AdminUser isAdminUser(String fAccount);
 
-    public AdminUser isLogin(AdminUser adminUser);
+    AdminUser isLogin(AdminUser adminUser);
 
-    public List<AdminUser> getAdminUserAll();
+    List<AdminUser> getAdminUserAll();
 
-    public AdminUser getAdminUserByFid(Integer fId);
+    AdminUser getAdminUserByFid(Integer fId);
 
-    public int updateInfoByFid(AdminUser adminUser);
+    Integer updateInfoByFid(AdminUser adminUser);
 
-    public int updatePasswordByFid(AdminUser adminUser);
+    Integer updatePasswordByFid(AdminUser adminUser);
 
-    public int updateEmailByFid(AdminUser adminUser);
+    Integer updateEmailByFid(AdminUser adminUser);
 
-    public int isEmail(String fEmail);
+    Integer isEmail(String fEmail);
 
-    public int deleteUser(Integer id);
+    Integer deleteUser(Integer id);
 
-    public int saveInfo(AdminUser adminUser);
+    Integer saveInfo(AdminUser adminUser);
 }

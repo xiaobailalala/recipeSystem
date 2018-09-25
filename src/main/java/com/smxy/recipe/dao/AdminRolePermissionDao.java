@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface AdminRolePermissionDao {
-    public List<AdminRolePermission> getAdminRolePermissionByFrid(Integer fRid);
-    public int deleteInfoByRidAndPid(Map<String, Integer> map);
-    public int saveInfo(Map<String, Integer> map);
-    public int deleteInfoByRid(Integer fRid);
+    List<AdminRolePermission> getAdminRolePermissionByFrid(Integer fRid);
+    Integer deleteInfoByRidAndPid(Map<String, Integer> map);
+    Integer saveInfo(Map<String, Integer> map);
+    Integer deleteInfoByRid(Integer fRid);
 }

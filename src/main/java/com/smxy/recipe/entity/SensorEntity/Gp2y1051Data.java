@@ -9,29 +9,14 @@
  */
 package com.smxy.recipe.entity.SensorEntity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Gp2y1051Data {
 
     private String pm;
-
-    public Gp2y1051Data() {
-    }
-
-    public Gp2y1051Data(String pm) {
-        this.pm = pm;
-    }
-
-    public String getPm() {
-        return pm;
-    }
-
-    public void setPm(String pm) {
-        this.pm = pm;
-    }
-
-    @Override
-    public String toString() {
-        return "Gp2y1051Data{" +
-                "pm='" + pm + '\'' +
-                '}';
-    }
 }

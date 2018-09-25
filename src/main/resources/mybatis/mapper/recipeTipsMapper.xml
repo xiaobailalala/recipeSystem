@@ -5,4 +5,16 @@
     <insert id="saveInfo" parameterType="RecipeTips">
         insert into t_food_recipe_tips (f_rid, f_tid) values (#{fRid}, #{fTid});
     </insert>
+    <select id="getInfoByRid" parameterType="Integer" resultMap="getRecipeTipDetail">
+        select * from t_food_recipe_tips where f_rid=#{fRid};
+    </select>
+    <resultMap id="getRecipeTipDetail" type="RecipeTips">
+        <result column="f_tid" property="fTid"/>
+        <association property="tips" column="f_tid"
+                    select="com.smxy.recipe.dao.TipsDao.getInfoById">
+        </association>
+    </resultMap>
+    <delete id="deleteInfoByRid" parameterType="Integer">
+        delete from t_food_recipe_tips where f_rid=#{fRid};
+    </delete>
 </mapper>

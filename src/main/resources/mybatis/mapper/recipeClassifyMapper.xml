@@ -5,4 +5,22 @@
     <insert id="saveInfo" parameterType="RecipeClassify">
         insert into t_food_recipe_classify (f_rid,f_two_id,f_three_id) values (#{fRid}, #{fTwoId}, #{fThreeId});
     </insert>
+
+    <select id="getInfoByRid" parameterType="Integer" resultMap="getRecipeClassifyDetail">
+        select * from t_food_recipe_classify where f_rid=#{fRid};
+    </select>
+
+    <resultMap id="getRecipeClassifyDetail" type="RecipeClassify">
+        <result column="f_two_id" property="fTwoId"/>
+        <result column="f_three_id" property="fThreeId"/>
+        <association property="classifyTwo" column="f_two_id"
+                select="com.smxy.recipe.dao.ClassifyTwoDao.getInfoById">
+        </association>
+        <association property="classify" column="f_three_id"
+                select="com.smxy.recipe.dao.ClassifyDao.getInfoById">
+        </association>
+    </resultMap>
+    <delete id="deleteInfoByRid" parameterType="Integer">
+        delete from t_food_recipe_classify where f_rid=#{fRid};
+    </delete>
 </mapper>

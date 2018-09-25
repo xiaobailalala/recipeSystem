@@ -7,44 +7,18 @@
  */
 package com.smxy.recipe.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author zpx
  *
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public final class Profession {
 	private Integer fId;
 	private String fName;
-	public Profession() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Profession(Integer fId, String fName) {
-		this.fId = fId;
-		this.fName = fName;
-	}
-
-	public Integer getfId() {
-		return fId;
-	}
-
-	public void setfId(Integer fId) {
-		this.fId = fId;
-	}
-
-	public String getfName() {
-		return fName;
-	}
-
-	public void setfName(String fName) {
-		this.fName = fName;
-	}
-
-	@Override
-	public String toString() {
-		return "Profession{" +
-				"fId=" + fId +
-				", fName='" + fName + '\'' +
-				'}';
-	}
 }

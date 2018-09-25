@@ -16,17 +16,17 @@ import java.util.List;
 
 public interface ClassifyService {
 
-    public ResApi<Object> getAllInfo();
+    ResApi<Object> getAllInfo();
 
-    public ResApi<Object> getClaOneAllInfo();
+    ResApi<Object> getClaOneAllInfo();
 
-    public ResApi<Object> saveInfo(Classify classify);
+    ResApi<Object> saveInfo(Classify classify);
 
-    public ResApi<Object> deleteInfo(Integer id);
+    ResApi<Object> deleteInfo(Integer id);
 
-    public ResApi<Object> getInfoById(Integer id);
+    ResApi<Object> getInfoById(Integer id);
 
-    public ResApi<Object> updateInfo(Integer id, Classify classify);
+    ResApi<Object> updateInfo(Integer id, Classify classify);
 
-    public ResApi<Object> getInfoByTid(Integer id);
+    ResApi<Object> getInfoByTid(Integer id);
 }

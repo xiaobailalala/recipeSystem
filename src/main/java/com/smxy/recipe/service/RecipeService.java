@@ -20,10 +20,17 @@ import java.util.List;
 
 public interface RecipeService {
 
-    public ResApi<Object> getAddData();
+    ResApi<Object> getAddData();
 
-    public ResApi<Object> saveInfo(MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
-                                   Integer[] tipArr, String[] materialNumber, Integer[] materialId,
+    ResApi<Object> saveInfo(MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
+                                   Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime, HttpServletRequest request);
 
+    ResApi<Object> getAllInfo();
+
+    ResApi<Object> getDetailInfo(Integer id);
+
+    ResApi<Object> deleteInfo(Integer id);
+
+    ResApi<Object> getOneInfo(Integer id);
 }

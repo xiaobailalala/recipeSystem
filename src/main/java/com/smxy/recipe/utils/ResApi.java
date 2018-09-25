@@ -7,47 +7,22 @@
  */
 package com.smxy.recipe.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 /**
  * @author zpx
  *
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResApi<T> implements Serializable {
 	private int code;//状态码
 	private String msg;//信息
 	private T data;//数据
-	public ResApi() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public ResApi(int code, String msg, T data) {
-		super();
-		this.code = code;
-		this.msg = msg;
-		this.data = data;
-	}
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
-	}
-	public String getMsg() {
-		return msg;
-	}
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-	public T getData() {
-		return data;
-	}
-	public void setData(T data) {
-		this.data = data;
-	}
-	@Override
-	public String toString() {
-		return "ResApi [code=" + code + ", msg=" + msg + ", data=" + data + "]";
-	}
 }
 

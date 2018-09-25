@@ -7,55 +7,20 @@
  */
 package com.smxy.recipe.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Value;
+
 /**
  * @author zpx
  *
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public final class AiWare {
 	private Integer fId;
 	private String fContent;
 	private String fWord;
-	public AiWare() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public AiWare(Integer fId, String fContent, String fWord) {
-		this.fId = fId;
-		this.fContent = fContent;
-		this.fWord = fWord;
-	}
-
-	public Integer getfId() {
-		return fId;
-	}
-
-	public void setfId(Integer fId) {
-		this.fId = fId;
-	}
-
-	public String getfContent() {
-		return fContent;
-	}
-
-	public void setfContent(String fContent) {
-		this.fContent = fContent;
-	}
-
-	public String getfWord() {
-		return fWord;
-	}
-
-	public void setfWord(String fWord) {
-		this.fWord = fWord;
-	}
-
-	@Override
-	public String toString() {
-		return "AiWare{" +
-				"fId=" + fId +
-				", fContent='" + fContent + '\'' +
-				", fWord='" + fWord + '\'' +
-				'}';
-	}
 }

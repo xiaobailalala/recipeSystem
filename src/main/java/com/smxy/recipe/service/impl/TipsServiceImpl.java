@@ -34,12 +34,12 @@ public class TipsServiceImpl implements TipsService {
     @Override
     public ResApi<Object> saveInfo(Tips tips) {
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
-        if (tipsDao.getInfoByName(tips.getfName()) != null) {
+        if (tipsDao.getInfoByName(tips.getFName()) != null) {
             resApi = new ResApi<>(501, "该标签已存在，请勿重复添加", "failed");
         } else {
             String[] arr = {"btn-default", "btn-primary", "btn-success", "btn-info", "btn-warning",
                     "btn-danger", "btn-option1", "btn-option2", "btn-option3", "btn-option4", "btn-option5", "", "btn-lignt"};
-            tips.setfStyle(arr[(int)Math.floor(Math.random()*13)]);
+            tips.setFStyle(arr[(int)Math.floor(Math.random()*13)]);
             if (tipsDao.saveInfo(tips) > 0) {
                 resApi = new ResApi<>(200, "success", tips);
             }
@@ -63,7 +63,7 @@ public class TipsServiceImpl implements TipsService {
 
     @Override
     public ResApi<Object> updateInfo(Integer id,Tips tips) {
-        tips.setfId(id);
+        tips.setFId(id);
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
         if (tipsDao.updateInfo(tips)>0){
             resApi=new ResApi<>(200,"success","success");

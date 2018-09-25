@@ -17,11 +17,11 @@ import java.util.Map;
 
 public interface AdminUserRoleDao {
 
-    public List<AdminUserRole> getAdminUserRoleByFuid(int fUid);
+    List<AdminUserRole> getAdminUserRoleByFuid(Integer fUid);
 
-    public int deleteInfoByUidAndRid(Map<String, Integer> map);
+    Integer deleteInfoByUidAndRid(Map<String, Integer> map);
 
-    public int saveInfo(Map<String, Integer> map);
+    Integer saveInfo(Map<String, Integer> map);
 
-    public int deleteInfoByUid(Integer fUid);
+    Integer deleteInfoByUid(Integer fUid);
 }

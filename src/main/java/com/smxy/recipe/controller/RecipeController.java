@@ -22,7 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/recipe")
@@ -49,9 +52,39 @@ public class RecipeController {
     @PostMapping("/info")
     @ResponseBody
     public ResApi<Object> saveInfo(@RequestParam("file") MultipartFile file, @RequestParam("processImg") MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
-                                   Integer[] tipArr, String[] materialNumber, Integer[] materialId,
+                                   Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime, HttpServletRequest request){
-        return recipeService.saveInfo(file, processImg, recipe, twoArr, threeArr, tipArr, materialNumber, materialId, stepContent, stepTime, request);
+        return recipeService.saveInfo(file, processImg, recipe, twoArr, threeArr, tipArr, materialNumber, materialId, materialName, stepContent, stepTime, request);
     }
+
+    @RequiresPermissions("recipe:select")
+    @GetMapping("/info")
+    public String list(Model model){
+        model.addAttribute("list",recipeService.getAllInfo());
+        return "admin/recipe/list";
+    }
+
+    @RequiresPermissions("recipe:select")
+    @GetMapping("/detailInfo/{id}")
+    @ResponseBody
+    public ResApi<Object> detailInfo(@PathVariable("id") Integer id){
+        return recipeService.getDetailInfo(id);
+    }
+
+    @RequiresPermissions("recipe:delete")
+    @DeleteMapping("/info/{id}")
+    @ResponseBody
+    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id){
+        return recipeService.deleteInfo(id);
+    }
+
+    @RequiresPermissions("recipe:select")
+    @GetMapping("/editor/{id}")
+    public String toEditor(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("item", recipeService.getOneInfo(id));
+        return "admin/recipe/editor";
+    }
+
+//    @RequiresPermissions("recipe:select")
 
 }

@@ -33,7 +33,7 @@ public class AdminPermissionServiceImpl implements AdminPermissionService {
     @Override
     public ResApi<Object> isName(AdminPermission adminPermission) {
         ResApi<Object> resApi;
-        if (adminPermissionDao.getAdminPermissionByName(adminPermission.getfPermissionname())!=null){
+        if (adminPermissionDao.getAdminPermissionByName(adminPermission.getFPermissionname())!=null){
             resApi=new ResApi<>(501,"该权限代号已存在，请重新提交。","failed");
         }else{
             resApi=new ResApi<>(200,"success","success");
@@ -70,9 +70,9 @@ public class AdminPermissionServiceImpl implements AdminPermissionService {
     @Override
     public ResApi<Object> updateInfo(Integer id, AdminPermission adminPermission) {
         ResApi<Object> resApi=new ResApi<>(500,"系统出错了。","error");
-        adminPermission.setfId(id);
-        if (!adminPermission.getfPermissionname().equals(adminPermissionDao.getAdminPermissionByFid(adminPermission.getfId()).getfPermissionname())&&
-                adminPermissionDao.getAdminPermissionByName(adminPermission.getfPermissionname())!=null){
+        adminPermission.setFId(id);
+        if (!adminPermission.getFPermissionname().equals(adminPermissionDao.getAdminPermissionByFid(adminPermission.getFId()).getFPermissionname())&&
+                adminPermissionDao.getAdminPermissionByName(adminPermission.getFPermissionname())!=null){
             resApi=new ResApi<>(501,"该权限代号已存在，请重新提交。","failed");
         }else{
             if (adminPermissionDao.updateInfo(adminPermission)>0){

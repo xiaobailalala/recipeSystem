@@ -14,15 +14,15 @@ import com.smxy.recipe.utils.ResApi;
 
 public interface TipsService {
 
-    public ResApi<Object> getAllInfo();
+    ResApi<Object> getAllInfo();
 
-    public ResApi<Object> saveInfo(Tips tips);
+    ResApi<Object> saveInfo(Tips tips);
 
-    public ResApi<Object> deleteInfo(Integer id);
+    ResApi<Object> deleteInfo(Integer id);
 
-    public Tips getInfoById(Integer id);
+    Tips getInfoById(Integer id);
 
-    public ResApi<Object> updateInfo(Integer id, Tips tips);
+    ResApi<Object> updateInfo(Integer id, Tips tips);
 
-    public ResApi<Object> searchInfo(String fName);
+    ResApi<Object> searchInfo(String fName);
 }

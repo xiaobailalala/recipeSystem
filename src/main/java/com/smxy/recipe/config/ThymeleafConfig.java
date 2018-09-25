@@ -17,14 +17,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+//@Lazy(false)
 public class ThymeleafConfig {
+
+//    @Value("${ServerHostIp}")
+    private String serverHost="192.168.1.108";
+//    private String serverHost="172.21.91.21";
 
     @Resource
     private void configureThymeleafStaticVars(ThymeleafViewResolver viewResolver) {
+//        System.out.println("---->"+serverHost);
+//        try {
+//            System.out.println(YmlConfigUtil.getConfigByKey("ServerHostIp"));
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
         if(viewResolver != null) {
             Map<String, Object> vars = new HashMap<>();
-            vars.put("fileServerPath", "http://192.168.1.108/");
+//            vars.put("fileServerPath", "http://192.168.1.108/");
+            vars.put("fileServerPath", "http://"+serverHost+"/");
             viewResolver.setStaticVariables(vars);
         }
     }
+
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
+
 }

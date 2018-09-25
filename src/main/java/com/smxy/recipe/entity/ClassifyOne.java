@@ -9,53 +9,18 @@
  */
 package com.smxy.recipe.entity;
 
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.List;
 
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClassifyOne implements Serializable {
     private Integer fId;
     private String fName;
     private List<ClassifyTwo> classifyTwos;
-
-    public ClassifyOne() {
-    }
-
-    public ClassifyOne(Integer fId, String fName, List<ClassifyTwo> classifyTwos) {
-        this.fId = fId;
-        this.fName = fName;
-        this.classifyTwos = classifyTwos;
-    }
-
-    public Integer getfId() {
-        return fId;
-    }
-
-    public void setfId(Integer fId) {
-        this.fId = fId;
-    }
-
-    public String getfName() {
-        return fName;
-    }
-
-    public void setfName(String fName) {
-        this.fName = fName;
-    }
-
-    public List<ClassifyTwo> getClassifyTwos() {
-        return classifyTwos;
-    }
-
-    public void setClassifyTwos(List<ClassifyTwo> classifyTwos) {
-        this.classifyTwos = classifyTwos;
-    }
-
-    @Override
-    public String toString() {
-        return "ClassifyOne{" +
-                "fId=" + fId +
-                ", fName='" + fName + '\'' +
-                ", classifyTwos=" + classifyTwos +
-                '}';
-    }
 }

@@ -15,18 +15,18 @@ import java.util.List;
 
 public interface TipsDao {
 
-    public List<Tips> getAllInfo();
+    List<Tips> getAllInfo();
 
-    public int saveInfo(Tips tips);
+    Integer saveInfo(Tips tips);
 
-    public Tips getInfoByName(String fName);
+    Tips getInfoByName(String fName);
 
-    public int deleteInfo(Integer fId);
+    Integer deleteInfo(Integer fId);
 
-    public Tips getInfoById(Integer fId);
+    Tips getInfoById(Integer fId);
 
-    public int updateInfo(Tips tips);
+    Integer updateInfo(Tips tips);
 
-    public List<Tips> searchInfo(String fName);
+    List<Tips> searchInfo(String fName);
 
 }

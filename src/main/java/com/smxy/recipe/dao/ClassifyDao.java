@@ -15,18 +15,18 @@ import java.util.List;
 
 public interface ClassifyDao {
 
-    public List<Classify> getAllInfo();
+    List<Classify> getAllInfo();
 
-    public int saveInfo(Classify classify);
+    Integer saveInfo(Classify classify);
 
-    public Classify getInfoByNameAndTid(Classify classify);
+    Classify getInfoByNameAndTid(Classify classify);
 
-    public int deleteInfo(Integer fId);
+    Integer deleteInfo(Integer fId);
 
-    public Classify getInfoById(Integer fId);
+    Classify getInfoById(Integer fId);
 
-    public int updateInfo(Classify classify);
+    Integer updateInfo(Classify classify);
 
-    public List<Classify> getInfoByTid(Integer fTid);
+    List<Classify> getInfoByTid(Integer fTid);
 
 }

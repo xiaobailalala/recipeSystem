@@ -3,7 +3,15 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/common/commonHeader::header('膳食膳房后台登录')}"></head>
 <style type="text/css">
-    body{background: #F5F5F5;}
+    html,body{
+        height: 100%;
+    }
+    body{
+        /*background: #F5F5F5;*/
+        background-image: url("/src/images/loginbg.jpg");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+    }
 </style>
 <body>
     <div class="login-form">

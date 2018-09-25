@@ -17,16 +17,16 @@ import com.smxy.recipe.entity.Profession;
 
 public interface ProfessionDao {
 
-	public List<Profession> findAll();
+	List<Profession> findAll();
 
-	public int deleteInfo(Integer fId);
+	Integer deleteInfo(Integer fId);
 
-	public Profession getPorfessByName(String fName);
+	Profession getPorfessByName(String fName);
 
-	public int saveInfo(Profession profession);
+	Integer saveInfo(Profession profession);
 
-	public int updateInfo(Profession profession);
+	Integer updateInfo(Profession profession);
 
-	public Profession getOneById(Integer fId);
+	Profession getOneById(Integer fId);
 	
 }

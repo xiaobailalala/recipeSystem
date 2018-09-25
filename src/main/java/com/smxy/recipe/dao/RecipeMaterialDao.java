@@ -11,6 +11,10 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.RecipeMaterial;
 
+import java.util.List;
+
 public interface RecipeMaterialDao {
-    public int saveInfo(RecipeMaterial recipeMaterial);
+    Integer saveInfo(RecipeMaterial recipeMaterial);
+    List<RecipeMaterial> getInfoByRid(Integer fRid);
+    Integer deleteInfoByRid(Integer fRid);
 }

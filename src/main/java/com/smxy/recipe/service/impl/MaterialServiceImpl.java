@@ -56,9 +56,9 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public ResApi<Object> updateInfo(Integer id, Material material) {
-        material.setfId(id);
+        material.setFId(id);
         ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
-        if (materialDao.getInfoByName(material.getfName())!=null){
+        if (materialDao.getInfoByName(material.getFName())!=null){
             resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
         }else {
             if (materialDao.updateInfo(material)>0){

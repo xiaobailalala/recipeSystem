@@ -5,4 +5,10 @@
     <insert id="saveInfo" parameterType="Process">
         insert into t_food_process (f_rid, f_content, f_request, f_cover) values (#{fRid}, #{fContent}, #{fRequest}, #{fCover});
     </insert>
+    <select id="getInfoByRid" parameterType="Integer" resultType="Process">
+        select * from t_food_process where f_rid=#{fRid};
+    </select>
+    <delete id="deleteInfoByRid" parameterType="Integer">
+        delete from t_food_process where f_rid=#{fRid};
+    </delete>
 </mapper>

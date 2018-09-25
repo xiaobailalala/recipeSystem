@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('食谱管理——修改食谱')}"></head>
+<body>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(4,4)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">食谱管理——修改食谱</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">食谱资料管理</a>
+                <a class="btn btn-light" th:href="@{/recipe/info}">食谱管理</a>
+                <a class="btn btn-light" disabled="disabled">修改食谱</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        食谱管理——修改食谱
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <form id="subForm" class="form-horizontal">
+                            <input type="hidden" name="fType" value="4">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label" for="fName">食谱封面</label>
+                                <div class="col-sm-10">
+                                    <div id="imgCont" style="display: inline-block;width: 310px;height: 230px;padding: 5px;
+                                    border-radius: 5px;border: 1px solid #bdc4c9;vertical-align: top;text-align: center;color: #bdc4c9;">
+                                        <img th:src="(${fileServerPath})+${item.data.item.fCover}"
+                                             style="height: 100%;width: 100%;" alt="cover">
+                                    </div>
+                                    <div style="display: inline-block;margin-left: 10px;vertical-align: bottom;">
+                                        <button type="button" id="browser" class="btn btn-info">浏览文件</button>
+                                        <input type="file" style="display: none;" id="fCover" name="file">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label" for="fName">食谱名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control form-control-line" id="fName" name="fName"
+                                           th:value="${item.data.item.fName}" placeholder="Please input recipe Name...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label" for="fIntroduction">食谱介绍</label>
+                                <div class="col-sm-10">
+                                    <textarea name="fIntroduction" id="fIntroduction"
+                                              th:utext="${item.data.item.fIntroduction}" class="form-control" rows="6"
+                                              placeholder="Please input recipe Introduction..."></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label">类别资料</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-6">
+                                        <div class="panel panel-dark">
+                                            <div class="panel-title">
+                                                食谱类别（选择越多用户越容易找到该食谱）
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="padding-b-10 padding-t-10"
+                                                     style="display: flex;justify-content: space-between;align-items: center;">
+                                                    <label>请至少选择一项二级分类</label>
+                                                </div>
+                                                <div id="addCla">
+                                                    <div>
+                                                        <div th:each="self:${item.data.clas}" class="padding-b-10"
+                                                             style="display: flex;justify-content: space-between;align-items: center;">
+                                                            <select class="form-control oneCont" disabled="disabled">
+                                                                <option th:each="selfSe:${self.classifyOnes}"
+                                                                        th:value="${selfSe.fId}"
+                                                                        th:text="${selfSe.fName}"
+                                                                        th:selected="${selfSe.fId}==${self.selectedOne}"></option>
+                                                            </select>&nbsp;
+                                                            <select class="form-control twoCont" disabled="disabled">
+                                                                <option th:each="selfSe:${self.classifyTwos}"
+                                                                        th:value="${selfSe.fId}"
+                                                                        th:text="${selfSe.fName}"
+                                                                        th:selected="${selfSe.fId}==${self.selectedTwo}"></option>
+                                                            </select>&nbsp;
+                                                            <select class="form-control threeCont" disabled="disabled">
+                                                                <option th:if="${#lists.isEmpty(self.classifies)}"
+                                                                        value="-1">三级分类
+                                                                </option>
+                                                                <option th:unless="${#lists.isEmpty(self.classifies)}"
+                                                                        th:each="selfSe:${self.classifies}"
+                                                                        th:value="${selfSe.fId}"
+                                                                        th:text="${selfSe.fName}"
+                                                                        th:selected="${selfSe.fId}==${self.selectedThree}"></option>
+                                                            </select>&nbsp;
+                                                            <button type="button"
+                                                                    class="btn btn-danger btn-icon btn-rounded deleteClas">
+                                                                <i class="fa fa-minus" style="width: 13.92px;"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="btn btn-block btn-light"
+                                                            style="color: #000000;" id="searchClasBtn">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1">
+                                        <div class="panel panel-dark">
+                                            <div class="panel-title">
+                                                食谱标签（为食谱添加标志性的标签）
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="padding-t-10 padding-b-10"
+                                                     style="display: flex;justify-content: space-between;align-items: center;">
+                                                    <input type="text" class="form-control" id="searchTipsText"
+                                                           placeholder="搜搜有没有想要的标签">&nbsp;
+                                                    <button type="button" class="btn btn-default btn-rounded btn-icon"
+                                                            data-toggle="tooltip" id="searchTipsBtn"
+                                                            data-placement="bottom" title="搜索标签">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>&nbsp;
+                                                    <button type="button" id="refresh"
+                                                            class="btn btn-warning btn-rounded btn-icon"
+                                                            data-toggle="tooltip"
+                                                            data-placement="bottom" title="换一批标签">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </button>&nbsp;
+                                                    <button type="button" id="addnewTip"
+                                                            class="btn btn-info btn-rounded btn-icon"
+                                                            data-toggle="tooltip"
+                                                            data-placement="bottom" title="找不到想要的？试试自定义添加">
+                                                        <i style="width: 13px;height: 15px;" class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="collapse" id="addTips">
+                                                    <div class="padding-t-10 padding-b-10"
+                                                         style="display: flex;justify-content: space-between;align-items: center;">
+                                                        <input type="text" class="form-control" id="newTip"
+                                                               placeholder="Input a new tips...">
+                                                        &emsp;<button type="button"
+                                                                      class="btn btn-success btn-rounded btn-icon"
+                                                                      id="addTipBtn">添加
+                                                    </button>
+                                                    </div>
+                                                </div>
+                                                <div id="tipsCont">
+                                                    <span th:each="item:${item.data.tips}"
+                                                          style="margin-bottom: 5px;display: inline-block;">
+                                                        <button type="button" th:text="${item.fName}"
+                                                                th:data-style="${item.fStyle}" th:data-id="${item.fId}"
+                                                                th:class="${item.fStyle}+' btn btn-sm tipsBtn'"></button>&emsp;
+                                                    </span>
+                                                </div>
+                                                <div class="padding-t-10 padding-b-10">
+                                                    <label>已选标签</label>
+                                                    <div class="padding-b-10 padding-t-10" id="tipsSelectedCont">
+                                                        <span id="contTitle"
+                                                              th:if="${#lists.isEmpty(item.data.item.recipeTips)}">（无）最多可选两项</span>
+                                                        <span style="margin-bottom: 8px;display: inline-block;"
+                                                              th:unless="${#lists.isEmpty(item.data.item.recipeTips)}"
+                                                              th:each="self:${item.data.item.recipeTips}">
+                                                            <button th:class="${self.tips.fStyle}+' btn btn-sm tipsBtn'"
+                                                                    th:data-id="${self.tips.fId}" type="button"
+                                                                    th:data-style="${self.tips.fStyle}">
+                                                                [[${self.tips.fName}]]
+                                                                <span class="badge badge-warning btn-warning btn-icon deleteTips">
+                                                                    <i class="fa fa-minus"></i>
+                                                                </span>
+                                                            </button>&emsp;
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label">准备工作</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-7">
+                                        <div class="panel panel-dark">
+                                            <div class="panel-title">
+                                                食材准备（可添加多项）
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="padding-t-10 padding-b-10"
+                                                     style="display: flex;align-items: center;">
+                                                    <input type="text" class="form-control" id="materialName"
+                                                           placeholder="请输入食材的名称">&emsp;
+                                                    <input type="text" class="form-control" id="materialNumber"
+                                                           placeholder="请输入所选食材的剂量/备注">&emsp;
+                                                    <button type="button" id="addMaterialTip"
+                                                            class="btn btn-info btn-rounded btn-icon">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="padding-t-10 padding-b-10">
+                                                    <table class="table">
+                                                        <tbody id="materialCont">
+                                                        <tr th:each="self:${item.data.materials}">
+                                                            <td th:text="${self.fName}"></td>
+                                                            <td th:text="${self.fNumber}"></td>
+                                                            <td>
+                                                                <button type="button"
+                                                                        class="btn btn-icon btn-rounded btn-danger deleteMaterial">
+                                                                    <i class="fa fa-minus"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-sm-offset-1">
+                                        <div class="panel panel-dark">
+                                            <div class="panel-title">
+                                                火候要求
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="padding-b-10 padding-t-10">
+                                                    <label>开启火候监控</label>
+                                                    <input type="checkbox" th:checked="${item.data.item.fFire}!=-1"
+                                                           id="fireMonitor" data-toggle="toggle"
+                                                           data-onstyle="success" data-on="" data-off="">
+                                                </div>
+                                                <div th:class="'collapse '+${item.data.item.fFire}!=-1?'in':''"
+                                                     id="fireMonitorCont">
+                                                    <div class="padding-t-10 padding-b-10">
+                                                        <label>火候监控为距离式检测，非径直火候检测，请选择火候范围</label>
+                                                        <div class="radio radio-primary">
+                                                            <input type="radio" value="30-40" class="fireSelect"
+                                                                   name="fireSelect" id="fireLow"
+                                                                   th:checked="${item.data.item.fFire}=='30-40'">
+                                                            <label for="fireLow">低火（30~40）</label>
+                                                        </div>
+                                                        <div class="radio radio-primary">
+                                                            <input type="radio" value="60-70" class="fireSelect"
+                                                                   name="fireSelect" id="fireMiddle"
+                                                                   th:checked="${item.data.item.fFire}=='60-70'">
+                                                            <label for="fireMiddle">中火（60~70）</label>
+                                                        </div>
+                                                        <div class="radio radio-primary">
+                                                            <input type="radio" value="80-90" class="fireSelect"
+                                                                   name="fireSelect" id="fireHight"
+                                                                   th:checked="${item.data.item.fFire}=='80-90'">
+                                                            <label for="fireHight">高火（80~90）</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label">烹饪流程</label>
+                                <div class="col-sm-10">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body" id="processCont">
+                                            <div class="panel panel-dark" th:each="self,status:${item.data.processes}">
+                                                <div class="panel-title">
+                                                    <span th:text="'步骤 '+(${status.index}+1)+'、'"></span>
+                                                    <ul class="panel-tools">
+                                                        <li>
+                                                            <button class="btn btn-danger btn-rounded btn-icon deleteProcess"
+                                                                    type="button">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="col-sm-6">
+                                                        <label>步骤内容（尽量详细）</label>
+                                                        <textarea class="form-control processContent"
+                                                                  name="recipeContent" cols="30" style="height: 160px;"
+                                                                  placeholder="Please Input Process..."
+                                                        th:text="${self.fContent}"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label>步骤配图（最多只能添加一张图解）</label>
+                                                        <div>
+                                                            <input type="file" style="display: none;" name="processImg">
+                                                            <div class="selectProcessImg text-center"
+                                                                 style="background-color: #eeeeee;cursor:pointer;border-radius: 5px;height: 150px;box-sizing: content-box;padding: 5px;">
+                                                                <span th:if="${self.fCover}==null" style="display: flex;color: #999;font-weight: bold;
+                                                                    align-items: center;justify-content: center;width: 100%;height: 100%;font-size: 50px;">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </span>
+                                                                <img th:unless="${self.fCover}==null" th:src="(${fileServerPath})+${self.fCover}" style="height: 150px;max-width: 230px;" alt="cover">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>至下一步骤所需时间</label>
+                                                        <input type="number" name="recipeTime"
+                                                               class="form-control processTime" placeholder="单位/s"
+                                                               min="0" th:value="${self.fRequest}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <label>添加该食谱的制作流程</label>
+                                            <button class="btn btn-default btn-icon margin-l-15" type="button"
+                                                    id="addProcess">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label"></label>
+                                <div class="col-sm-3">
+                                    <input type="submit" value="Submit" class="btn btn-default" disabled="disabled">
+                                </div>
+                                <div class="col-sm-5" id="progressCont" style="display: none;">
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="45" id="progressBar"
+                                             aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                            <!--<span class="sr-only">45% Complete</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/recipe/editor.js}"></script>
+</html>

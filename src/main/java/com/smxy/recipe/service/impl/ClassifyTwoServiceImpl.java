@@ -50,7 +50,7 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
         }else{
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
                 String name = ToolsApi.multipartFile_upload_file(multipartFile, null);
-                classifyTwo.setfCover(name);
+                classifyTwo.setFCover(name);
                 if (classifyTwoDao.saveInfo(classifyTwo)>0){
                     resApi=new ResApi<>(200,"success","success");
                 }
@@ -82,17 +82,17 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
     public ResApi<Object> updateInfo(MultipartFile multipartFile, Integer id, ClassifyTwo classifyTwo) {
-        classifyTwo.setfId(id);
+        classifyTwo.setFId(id);
         ResApi<Object> resApi=new ResApi<>(500,"系统出错。","error");
         if (multipartFile==null||multipartFile.getSize()==0){
             if (classifyTwoDao.updateInfo(classifyTwo)>0){
                 resApi=new ResApi<>(200,"success","success");
             }
         }else{
-            ToolsApi.multipartFile_delete_file(classifyTwo.getfCover());
+            ToolsApi.multipartFile_delete_file(classifyTwo.getFCover());
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
                 String name = ToolsApi.multipartFile_upload_file(multipartFile, null);
-                classifyTwo.setfCover(name);
+                classifyTwo.setFCover(name);
                 if (classifyTwoDao.updateInfo(classifyTwo)>0){
                     resApi=new ResApi<>(200,"success","success");
                 }

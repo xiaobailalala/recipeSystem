@@ -14,15 +14,15 @@ import com.smxy.recipe.utils.ResApi;
 
 public interface MaterialService {
 
-    public ResApi<Object> saveInfo(String fName);
+    ResApi<Object> saveInfo(String fName);
 
-    public ResApi<Object> deleteInfo(Integer id);
+    ResApi<Object> deleteInfo(Integer id);
 
-    public ResApi<Object> getAllInfo();
+    ResApi<Object> getAllInfo();
 
-    public Material getInfoById(Integer id);
+    Material getInfoById(Integer id);
 
-    public ResApi<Object> updateInfo(Integer id, Material material);
+    ResApi<Object> updateInfo(Integer id, Material material);
 
-    public ResApi<Object> getOneByName(String fName);
+    ResApi<Object> getOneByName(String fName);
 }

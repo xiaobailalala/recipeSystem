@@ -14,15 +14,15 @@ import com.smxy.recipe.entity.AdminRole;
 import java.util.List;
 
 public interface AdminRoleDao {
-    public AdminRole getAdminRoleByFid(int fId);
+    AdminRole getAdminRoleByFid(int fId);
 
-    public List<AdminRole> getInfoAll();
+    List<AdminRole> getInfoAll();
 
-    public AdminRole getAdminRoleByName(AdminRole adminRole);
+    AdminRole getAdminRoleByName(AdminRole adminRole);
 
-    public int saveInfo(AdminRole adminRole);
+    Integer saveInfo(AdminRole adminRole);
 
-    public int updateInfo(AdminRole adminRole);
+    Integer updateInfo(AdminRole adminRole);
 
-    public int deleteInfo(Integer id);
+    Integer deleteInfo(Integer id);
 }
