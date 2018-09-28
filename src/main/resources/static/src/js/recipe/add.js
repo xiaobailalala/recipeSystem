@@ -22,7 +22,7 @@ $(function () {
             type: "get",
             success: function (res) {
                 res.data.forEach(function (item, index) {
-                    claArr += "<option value='" + item.fId + "'>" + item.fName + "</option>";
+                    claArr += "<option value='" + item.fid + "'>" + item.fname + "</option>";
                 });
             }
         });
@@ -36,7 +36,7 @@ $(function () {
                     var tips = '';
                     res.data.tips.forEach(function (item, index) {
                         tips += '<span style="margin-bottom: 8px;display: inline-block;">\n' +
-                            '       <button type="button" data-style="' + item.fStyle + '" data-id="' + item.fId + '" class="' + item.fStyle + ' btn btn-sm tipsBtn">' + item.fName + '</button>&emsp;\n' +
+                            '       <button type="button" data-style="' + item.fstyle + '" data-id="' + item.fid + '" class="' + item.fstyle + ' btn btn-sm tipsBtn">' + item.fname + '</button>&emsp;\n' +
                             '  </span>';
                     });
                     $('#tipsCont').html(tips);
@@ -96,8 +96,8 @@ $(function () {
                     },
                     success: function (res) {
                         if (res.code === 200) {
-                            tipArr.push(res.data.fId);
-                            var btn = '<span><button class="' + res.data.fStyle + ' btn-sm btn selectedTips" data-id="' + res.data.fId + '" type="button" style="margin-bottom: 5px;">' + res.data.fName + '\n' +
+                            tipArr.push(res.data.fid);
+                            var btn = '<span><button class="' + res.data.fstyle + ' btn-sm btn selectedTips" data-id="' + res.data.fid + '" type="button" style="margin-bottom: 5px;">' + res.data.fname + '\n' +
                                 '           <span class="badge badge-warning btn-warning btn-icon deleteTips">\n' +
                                 '                <i class="fa fa-minus"></i>\n' +
                                 '           </span>\n' +
@@ -124,7 +124,7 @@ $(function () {
                             var tips = '';
                             res.data.forEach(function (item, index) {
                                 tips += '<span style="margin-bottom: 8px;display: inline-block;">\n' +
-                                    '       <button type="button" data-style="' + item.fStyle + '" data-id="' + item.fId + '" class="' + item.fStyle + ' btn btn-sm tipsBtn">' + item.fName + '</button>&emsp;\n' +
+                                    '       <button type="button" data-style="' + item.fstyle + '" data-id="' + item.fid + '" class="' + item.fstyle + ' btn btn-sm tipsBtn">' + item.fname + '</button>&emsp;\n' +
                                     '  </span>';
                             });
                             $('#tipsCont').html(tips);
@@ -202,7 +202,7 @@ $(function () {
                     success: res => {
                         var content = '<option value="-1">二级分类</option>';
                         res.data.forEach(function (item, index) {
-                            content += '<option value="' + item.fId + '">' + item.fName + '</option>';
+                            content += '<option value="' + item.fid + '">' + item.fname + '</option>';
                         });
                         $(this).siblings(".twoCont").html(content);
                     }
@@ -219,7 +219,7 @@ $(function () {
                     success: res => {
                         var content = '<option value="-1">三级分类</option>';
                         res.data.forEach(function (item, index) {
-                            content += '<option value="' + item.fId + '">' + item.fName + '</option>';
+                            content += '<option value="' + item.fid + '">' + item.fname + '</option>';
                         });
                         $(this).siblings(".threeCont").html(content);
                     }
@@ -242,8 +242,8 @@ $(function () {
                         success: function (res) {
                             var name, id;
                             if (res.code === 200) {
-                                name = res.data.fName;
-                                id = res.data.fId;
+                                name = res.data.fname;
+                                id = res.data.fid;
                             } else {
                                 name = $("#materialName").val();
                                 id = 0;

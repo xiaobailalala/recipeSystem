@@ -85,6 +85,21 @@ public class RecipeController {
         return "admin/recipe/editor";
     }
 
-//    @RequiresPermissions("recipe:select")
+    @RequiresPermissions("recipe:select")
+    @GetMapping("/load/getData/{id}")
+    @ResponseBody
+    public ResApi<Object> loadGetData(@PathVariable("id") Integer id){
+        return recipeService.getOneInfo(id);
+    }
+
+    @RequiresPermissions("recipe:update")
+    @PutMapping("/info/{id}")
+    @ResponseBody
+    public ResApi<Object> updateInfo(@PathVariable("id") Integer id, @RequestParam(value = "file", required = false) MultipartFile file,
+                                     @RequestParam(value = "processImg", required = false) MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
+                                     Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
+                                     String[] stepContent, String[] stepTime, Integer[] stepPreid, HttpServletRequest request){
+        return recipeService.updateInfo(id, file, processImg, recipe, twoArr, threeArr, tipArr, materialNumber, materialId, materialName, stepContent, stepTime, stepPreid, request);
+    }
 
 }

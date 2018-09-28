@@ -23,4 +23,6 @@ public interface RecipeDao {
     Recipe getInfoById(Integer fId);
 
     Integer deleteInfoById(Integer fId);
+
+    Integer updateInfoById(Recipe recipe);
 }

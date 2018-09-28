@@ -21,10 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("recipeService")
 public class RecipeServiceImpl implements RecipeService {
@@ -123,6 +120,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeMaterialDao.deleteInfoByRid(id);
         recipeTipsDao.deleteInfoByRid(id);
         recipeDao.deleteInfoById(id);
+        processDao.deleteInfoByRid(id);
         return new ResApi<>(200, "success", "success");
     }
 
@@ -166,4 +164,74 @@ public class RecipeServiceImpl implements RecipeService {
         map.put("processes", processDao.getInfoByRid(recipe.getFId()));
         return new ResApi<>(200, "success", map);
     }
+
+    @Override
+    public ResApi<Object> updateInfo(Integer id, MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr,
+                                     Integer[] threeArr, Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
+                                     String[] stepContent, String[] stepTime, Integer[] stepPreid, HttpServletRequest request) {
+        recipe.setFId(id);
+        if (file.getSize() != 0) {
+            ToolsApi.multipartFile_delete_file(recipe.getFCover());
+            recipe.setFCover(ToolsApi.multipartFile_upload_file(file, null));
+        }
+        recipeClassifyDao.deleteInfoByRid(id);
+        for (Integer item : twoArr) {
+            recipeClassifyDao.saveInfo(new RecipeClassify(id, item, 0));
+        }
+        for (Integer item : threeArr) {
+            recipeClassifyDao.saveInfo(new RecipeClassify(id, 0, item));
+        }
+        recipeTipsDao.deleteInfoByRid(id);
+        for (Integer item : tipArr) {
+            recipeTipsDao.saveInfo(new RecipeTips(id, item));
+        }
+        recipeMaterialDao.deleteInfoByRid(id);
+        for (int i = 0; i < materialId.length; i++) {
+            recipeMaterialDao.saveInfo(new RecipeMaterial(id, materialId[i], materialNumber[i], materialName[i]));
+        }
+        List<Process> hasProcesses = new ArrayList<>();
+        processDao.getInfoByRid(id).forEach(item -> {
+            if (Arrays.asList(stepPreid).contains(item.getFId())) {
+                hasProcesses.add(item);
+            } else {
+                ToolsApi.multipartFile_delete_file(item.getFCover());
+            }
+        });
+        processDao.deleteInfoByRid(id);
+        for (int i = 0; i < stepTime.length; i++) {
+            String fileName, customFilename=null;
+            int flag = 0;
+            for (Process hasProcess : hasProcesses) {
+                if (stepPreid[i].equals(hasProcess.getFId())) {
+                    flag++;
+                    customFilename = hasProcess.getFCover();
+                    break;
+                }
+            }
+            if (flag == 0) {
+                if (processImg[i] == null || processImg[i].getSize() == 0) {
+                    fileName = null;
+                } else {
+                    fileName = ToolsApi.multipartFile_upload_file(processImg[i], null);
+                }
+            } else {
+                fileName = customFilename;
+            }
+            processDao.saveInfo(new Process(id, stepContent[i], stepTime[i], fileName));
+        }
+        recipeDao.updateInfoById(recipe);
+        return new ResApi<>(200, "success", "success");
+    }
+
+    @Override
+    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid) {
+        List<RecipeClassify> recipeClassifies;
+        if (twoid==0){
+            recipeClassifies = recipeClassifyDao.getInfoByThreeIdForRecipe(threeid);
+        }else{
+            recipeClassifies = recipeClassifyDao.getInfoByTwoIdForRecipe(twoid);
+        }
+        return new ResApi<>(200, "success", recipeClassifies);
+    }
+
 }

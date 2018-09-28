@@ -21,4 +21,8 @@ public interface RecipeClassifyDao {
 
     Integer deleteInfoByRid(Integer fRid);
 
+    List<RecipeClassify> getInfoByThreeIdForRecipe(Integer fThreeId);
+
+    List<RecipeClassify> getInfoByTwoIdForRecipe(Integer fTwoId);
+
 }

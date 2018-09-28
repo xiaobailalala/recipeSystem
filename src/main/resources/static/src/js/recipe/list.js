@@ -5,20 +5,20 @@ $(function () {
             url: "/recipe/detailInfo/" + id,
             type: "get",
             success: function (res) {
-                var fire = res.data.fFire === '0' ? '无' : res.data.fFire;
+                var fire = res.data.ffire === '0' ? '无' : res.data.ffire;
                 var tips = '', cla = '', material = '', process = '';
                 res.data.recipeTips.forEach(function (item, index) {
-                    tips += '<button class="btn btn-sm ' + item.tips.fStyle + '" disabled>' + item.tips.fName + '</button>&emsp;';
+                    tips += '<button class="btn btn-sm ' + item.tips.fstyle + '" disabled>' + item.tips.fname + '</button>&emsp;';
                 });
                 res.data.recipeClassifies.forEach(function (item, index) {
-                    if (item.fTwoId === 0) {
-                        cla += '<li class="list-group-item">' + item.classify.classifyTwo.classifyOne.fName + ' <i class="fa fa-long-arrow-right"></i> ' + item.classify.classifyTwo.fName + ' <i class="fa fa-long-arrow-right"></i> ' + item.classify.fName + '</li>';
+                    if (item.ftwoId === 0) {
+                        cla += '<li class="list-group-item">' + item.classify.classifyTwo.classifyOne.fname + ' <i class="fa fa-long-arrow-right"></i> ' + item.classify.classifyTwo.fname + ' <i class="fa fa-long-arrow-right"></i> ' + item.classify.fname + '</li>';
                     } else {
-                        cla += '<li class="list-group-item">' + item.classifyTwo.classifyOne.fName + ' <i class="fa fa-long-arrow-right"></i> ' + item.classifyTwo.fName + '</li>';
+                        cla += '<li class="list-group-item">' + item.classifyTwo.classifyOne.fname + ' <i class="fa fa-long-arrow-right"></i> ' + item.classifyTwo.fname + '</li>';
                     }
                 });
                 res.data.recipeMaterials.forEach(function (item, index) {
-                    material += '<tr><td>' + item.fName + '</td><td> ' + item.fNumber + ' </td></tr>';
+                    material += '<tr><td>' + item.fname + '</td><td> ' + item.fnumber + ' </td></tr>';
                 });
                 res.data.processes.forEach(function (item, index) {
                     process += '<li class="list-group-item">\n' +
@@ -26,11 +26,11 @@ $(function () {
                         '              <div style="padding-right: 280px;">\n' +
                         '                   <p><strong>步骤' + (index + 1) + '、</strong></p>\n' +
                         '                   <p><strong>流程所需时间：</strong></p>\n' +
-                        '                   <p>' + item.fRequest + '<strong>&nbsp;秒</strong></p>\n' +
+                        '                   <p>' + item.frequest + '<strong>&nbsp;秒</strong></p>\n' +
                         '              </div>\n' +
-                        '              <img src="'+Tools.fileServerPath+item.fCover+'" width="260" height="180" style="right: 0;top: 0;position: absolute;" alt="">\n' +
+                        '              <img src="' + Tools.fileServerPath + item.fcover + '" width="260" height="180" style="right: 0;top: 0;position: absolute;" alt="">\n' +
                         '          </div>\n' +
-                        '           <div class="margin-t-10"><strong>流程内容：</strong>'+item.fContent+'</div>\n' +
+                        '           <div class="margin-t-10"><strong>流程内容：</strong>' + item.fcontent + '</div>\n' +
                         '       </li>\n';
                 });
                 var div = '<div class="modal fade" id="detailInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">\n' +
@@ -43,18 +43,18 @@ $(function () {
                     '                <div class="modal-body">\n' +
                     '                    <form class="fieldset-form">\n' +
                     '                        <div class="form-group text-center">\n' +
-                    '                            <img src="' + Tools.fileServerPath + res.data.fCover + '" alt="cover" width="300" height="200">\n' +
+                    '                            <img src="' + Tools.fileServerPath + res.data.fcover + '" alt="cover" width="300" height="200">\n' +
                     '                        </div>\n' +
                     '                        <div class="margin-b-10">\n' +
                     '                            <fieldset>\n' +
                     '                                <legend>基本信息</legend>\n' +
                     '                                <div class="form-group">\n' +
                     '                                    <label class="form-label">食谱名</label>\n' +
-                    '                                    <input type="text" class="form-control" value="' + res.data.fName + '" readonly>\n' +
+                    '                                    <input type="text" class="form-control" value="' + res.data.fname + '" readonly>\n' +
                     '                                </div>\n' +
                     '                                <div class="form-group">\n' +
                     '                                    <label class="form-label">食谱介绍</label>\n' +
-                    '                                    <textarea class="form-control" rows="6" readonly>' + res.data.fIntroduction + '</textarea>\n' +
+                    '                                    <textarea class="form-control" rows="6" readonly>' + res.data.fintroduction + '</textarea>\n' +
                     '                                </div>\n' +
                     '                                <div class="form-group">\n' +
                     '                                    <label class="form-label">火候监控</label>\n' +
@@ -113,8 +113,8 @@ $(function () {
             }
         });
     });
-    $('body').on('click','.deleteInfo',function(){
-        var id=$(this).data("id");
+    $('body').on('click', '.deleteInfo', function () {
+        var id = $(this).data("id");
         swal({
             title: "确定删除吗？",
             text: "你将无法恢复该食谱信息",
@@ -123,17 +123,17 @@ $(function () {
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "确定删除",
             closeOnConfirm: false
-        },function(){
-            var formData=new FormData();
-            formData.append("_method","delete");
+        }, function () {
+            var formData = new FormData();
+            formData.append("_method", "delete");
             $.ajax({
-                url:"/recipe/info/"+id,
-                type:"post",
-                processData:false,
-                contentType:false,
-                data:formData,
-                success:function(res){
-                    if (res.code===200){
+                url: "/recipe/info/" + id,
+                type: "post",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (res) {
+                    if (res.code === 200) {
                         swal({
                             title: "删除成功",
                             text: "系统将在3秒后刷新页面，或者可以点击“确认”手动刷新",
@@ -141,13 +141,13 @@ $(function () {
                             confirmButtonColor: "#5cb85c",
                             confirmButtonText: "确认",
                             closeOnConfirm: false
-                        },function(){
+                        }, function () {
                             location.reload();
                         });
-                        setTimeout(function(){
+                        setTimeout(function () {
                             location.reload();
-                        },3000);
-                    } else{
+                        }, 3000);
+                    } else {
                         Tools.tip(res.msg);
                     }
                 }

@@ -20,6 +20,22 @@
                 select="com.smxy.recipe.dao.ClassifyDao.getInfoById">
         </association>
     </resultMap>
+
+    <resultMap id="getRecipeDetail" type="RecipeClassify">
+        <result column="f_rid" property="fRid"/>
+        <association property="recipe" column="f_rid"
+                select="com.smxy.recipe.dao.RecipeDao.getInfoById">
+        </association>
+    </resultMap>
+
+    <select id="getInfoByThreeIdForRecipe" parameterType="Integer" resultMap="getRecipeDetail">
+        select distinct * from t_food_recipe_classify where f_three_id=#{fThreeId};
+    </select>
+
+    <select id="getInfoByTwoIdForRecipe" parameterType="Integer" resultMap="getRecipeDetail">
+        select distinct * from t_food_recipe_classify where f_two_id=#{fTwoId};
+    </select>
+
     <delete id="deleteInfoByRid" parameterType="Integer">
         delete from t_food_recipe_classify where f_rid=#{fRid};
     </delete>

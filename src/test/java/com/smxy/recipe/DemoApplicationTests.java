@@ -1,6 +1,7 @@
 package com.smxy.recipe;
 
 import com.smxy.recipe.config.ThymeleafConfig;
+import com.smxy.recipe.entity.Process;
 import com.smxy.recipe.entity.ToolsEntity.RecipeClassifyList;
 import com.smxy.recipe.service.MaterialService;
 import com.smxy.recipe.utils.FastDFSClient;
@@ -119,5 +120,15 @@ public class DemoApplicationTests {
             e.printStackTrace();
         }
     }
+
+//    public void testEq(){
+//        Process process = new Process();
+//        process.setFId(1);
+//        Integer flag=1;
+//        if (process.getFId()==flag){
+//
+//        }
+//        System.out.println();
+//    }
 
 }

@@ -24,7 +24,7 @@ public class MyExceptionResolver implements HandlerExceptionResolver {
             return mv;
         }
         e.printStackTrace();
-        ModelAndView mv=new ModelAndView("error/unauthorized");
+        ModelAndView mv=new ModelAndView("error/5xx");
         mv.addObject("exception",e.toString().replaceAll("\n","<br/>"));
         return mv;
     }
