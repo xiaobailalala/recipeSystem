@@ -5,6 +5,8 @@ import com.smxy.recipe.entity.ToolsEntity.RecipeClassifyList;
 import com.smxy.recipe.service.MaterialService;
 import com.smxy.recipe.utils.FastDFSClient;
 import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.utils.ToolsApi;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.junit.Test;
@@ -118,6 +120,12 @@ public class DemoApplicationTests {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testToolsAPI(){
+        String s = Integer.toHexString(100);
+        System.out.println(s);
     }
 
 }

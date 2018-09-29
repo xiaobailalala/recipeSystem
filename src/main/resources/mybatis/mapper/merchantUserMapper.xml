@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantUserDao">
+
+    <select id="isUser" parameterType="MerchantUser" resultType="int">
+        SELECT COUNT(*) FROM t_merchant_user WHERE f_account=#{fAccount};
+    </select>
+
+    <select id="isLogin" parameterType="MerchantUser" resultType="MerchantUser">
+        SELECT * FROM t_merchant_user WHERE f_account=#{fAccount} AND f_password=#{fPassword};
+    </select>
+
+
+    <insert id="saveMerchantUser" parameterType="MerchantUser" useGeneratedKeys="true" keyProperty="fId" >
+        INSERT INTO t_merchant_user(f_account,f_password)
+        VALUES (#{fAccount},#{fPassword});
+    </insert>
+
+    <update id="updateUserInfo" parameterType="MerchantUser">
+        UPDATE t_merchant_user
+        SET
+        f_username=#{fUsername},f_province=#{fProvince},f_city=#{fCity},f_area=#{fArea}
+        WHERE f_id=#{fId};
+    </update>
+</mapper>
