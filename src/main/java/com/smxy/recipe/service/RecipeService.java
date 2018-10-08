@@ -37,4 +37,6 @@ public interface RecipeService {
     ResApi<Object> updateInfo(Integer id, MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr, Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName, String[] stepContent, String[] stepTime, Integer[] stepPreid, HttpServletRequest request);
 
     ResApi<Object> getDataByClaId(Integer twoid, Integer threeid);
+
+    ResApi<Object> updateRecipeCount(Integer id);
 }

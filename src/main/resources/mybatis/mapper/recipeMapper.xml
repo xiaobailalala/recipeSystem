@@ -58,4 +58,8 @@
     <update id="updateInfoById" parameterType="Recipe">
         update t_food_recipe set f_cover=#{fCover},f_introduction=#{fIntroduction},f_name=#{fName},f_fire=#{fFire} where f_id=#{fId};
     </update>
+
+    <update id="updateRecipeCount" parameterType="Integer">
+        update t_food_recipe set f_count=#{fCount} where f_id=#{fId};
+    </update>
 </mapper>

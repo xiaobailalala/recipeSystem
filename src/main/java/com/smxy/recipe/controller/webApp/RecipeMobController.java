@@ -53,4 +53,9 @@ public class RecipeMobController {
         return recipeService.getDetailInfo(id);
     }
 
+    @GetMapping("/updateRecipeCount")
+    public ResApi<Object> updateRecipeCount(Integer id){
+        return recipeService.updateRecipeCount(id);
+    }
+
 }

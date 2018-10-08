@@ -25,4 +25,6 @@ public interface RecipeDao {
     Integer deleteInfoById(Integer fId);
 
     Integer updateInfoById(Recipe recipe);
+
+    Integer updateRecipeCount(Recipe recipe);
 }

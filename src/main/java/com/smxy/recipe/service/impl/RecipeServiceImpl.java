@@ -16,6 +16,7 @@ import com.smxy.recipe.entity.ToolsEntity.RecipeClassifyList;
 import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +47,8 @@ public class RecipeServiceImpl implements RecipeService {
     ClassifyTwoDao classifyTwoDao;
     @Autowired
     ClassifyDao classifyDao;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     @Override
     public ResApi<Object> getAddData() {
@@ -271,6 +274,12 @@ public class RecipeServiceImpl implements RecipeService {
         });
         map.put("goods", recipeClassifies);
         return new ResApi<>(200, "success", map);
+    }
+
+    @Override
+    public ResApi<Object> updateRecipeCount(Integer id) {
+        rabbitTemplate.convertAndSend("recipeSystem.direct", "recipeCountUpload.queue", id);
+        return new ResApi<>(200, "success", "success");
     }
 
 }
