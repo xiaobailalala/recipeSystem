@@ -26,6 +26,7 @@ public final class Process {
 	private String fContent;
 	private String fRequest;
 	private String fCover;
+	private String fVoice;
 
 	public Process(Integer fRid, String fContent, String fRequest, String fCover) {
 		this.fRid = fRid;

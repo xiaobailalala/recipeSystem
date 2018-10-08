@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{admin/common/commonHeader::header('食谱管理')}"></head>
+<head th:replace="~{admin/common/commonHeader::header('语音代号管理')}"></head>
 <body>
 <div th:replace="~{admin/common/nav::loading}"></div>
 <div th:replace="~{admin/common/nav::topFixed}"></div>
-<div th:replace="~{admin/common/nav::sideFixed(4,4)}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(5,1)}"></div>
 <div class="content">
     <div class="page-header">
-        <h1 class="title">食谱管理</h1>
+        <h1 class="title">语音代号管理</h1>
         <ol class="breadcrumb">
             <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
         </ol>
         <div class="right">
             <div class="btn-group" role="group" aria-label="...">
                 <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
-                <a class="btn btn-light" disabled="disabled">食谱资料管理</a>
-                <a class="btn btn-light" disabled="disabled">食谱管理</a>
+                <a class="btn btn-light" disabled="disabled">智能信息管理</a>
+                <a class="btn btn-light" disabled="disabled">语音代号管理</a>
                 <a href="javascript:history.go(-1);" class="btn btn-light">
                     <i class="fa fa-reply"></i>
                 </a>
@@ -32,8 +32,8 @@
                 <div class="panel panel-default">
                     <div class="panel-title">
                         信息列表
-                        <a type="button" th:href="@{/recipe/add}" class="btn btn-info"
-                           style="float: right;color: #ffffff;">新增食谱</a>
+                        <a type="button" th:href="@{/aiMark/add}" class="btn btn-info"
+                           style="float: right;color: #ffffff;">新增代号</a>
                     </div>
                     <div class="panel-body table-responsive">
 
@@ -41,49 +41,26 @@
                             <thead>
                             <tr>
                                 <th>序号</th>
-                                <th>食谱封面</th>
-                                <th>食谱名称</th>
-                                <th>发布者</th>
-                                <th>发布时间</th>
-                                <th>审核状态</th>
-                                <th>详情</th>
+                                <th>代号名称</th>
+                                <th>回应内容</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
                                 <th>序号</th>
-                                <th>食谱封面</th>
-                                <th>食谱名称</th>
-                                <th>发布者</th>
-                                <th>发布时间</th>
-                                <th>审核状态</th>
-                                <th>详情</th>
+                                <th>代号名称</th>
+                                <th>回应内容</th>
                                 <th>操作</th>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr th:each="item,status:${list.data}">
                                 <td th:text="${status.index+1}"></td>
+                                <td th:text="${item.fMark}"></td>
+                                <td th:text="${item.fContent}"></td>
                                 <td>
-                                    <img style="height: 70px;width: 100px;border-radius: 8px;" th:src="(${fileServerPath})+${item.fCover}" alt="cover">
-                                </td>
-                                <td th:text="${item.fName}"></td>
-                                <td th:if="${item.fAid}==0" th:text="${item.commonUser.fUsername}"></td>
-                                <td th:unless="${item.fAid}==0" th:text="${item.adminUser.fUsername}"></td>
-                                <td th:text="${item.fRelease}"></td>
-                                <td>
-                                    <a href="javascript:;" th:text="${item.fType}"
-                                        th:class="${item.fType}=='直通车'?'text-primary':
-                                        (${item.fType}=='审核通过'?'text-success':
-                                        (${item.fType}=='审核未通过'?'text-danger':
-                                        (${item.fType}=='待审核'?'text-warning':'')))"></a>
-                                </td>
-                                <td>
-                                    <a href="javascript:;" class="btn btn-light showDetail" th:data-id="${item.fId}">查看详情</a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/recipe/editor/}+${item.fId}" th:data-id="${item.fId}"
+                                    <a th:href="@{/aiMark/editor/}+${item.fId}" th:data-id="${item.fId}"
                                        class="btn btn-default">
                                         <i class="fa fa-edit"></i>
                                         编辑
@@ -101,10 +78,11 @@
             </div>
         </div>
     </div>
+
     <div th:replace="~{admin/common/nav::copyright}"></div>
 </div>
 <div th:replace="~{admin/common/nav::tabpanel}"></div>
 <div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
 </body>
-<script th:src="@{/src/js/recipe/list.js}"></script>
+<script th:src="@{/src/js/aiMark/list.js}"></script>
 </html>

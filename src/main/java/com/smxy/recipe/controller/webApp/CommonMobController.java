@@ -9,7 +9,7 @@
  */
 package com.smxy.recipe.controller.webApp;
 
-import com.smxy.recipe.utils.CodeApi;
+import com.smxy.recipe.utils.api.CodeApi;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

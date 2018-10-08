@@ -20,6 +20,10 @@
             parameterType="CommonUser">
 		select * from t_common_profession where f_id=#{fPid};
 	</select>
+	
+	<select id="getInfoByIdBrief" parameterType="Integer" resultType="CommonUser">
+		select * from t_common_user where f_id=#{fId};
+	</select>
 
     <insert id="saveUser" parameterType="CommonUser"
             useGeneratedKeys="true" keyProperty="fId">

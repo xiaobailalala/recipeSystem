@@ -6,6 +6,8 @@ import com.smxy.recipe.entity.ToolsEntity.RecipeClassifyList;
 import com.smxy.recipe.service.MaterialService;
 import com.smxy.recipe.utils.FastDFSClient;
 import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.utils.ToolsApi;
+import com.smxy.recipe.utils.api.Baidu_TTSApi;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
 import org.junit.Test;
@@ -130,5 +132,15 @@ public class DemoApplicationTests {
 //        }
 //        System.out.println();
 //    }
+
+    //group1/M00/00/02/wKgBbFuwHvSAAWxHAAAWgEVoXMQ785.mp3
+    //group1/M00/00/02/wKgBbFuwH1qAXobXAAATsOCq3jk970.mp3
+    @Test
+    public void ttsTest(){
+//        String filePath=Baidu_TTSApi.sendVoiceData("啊！是充满激情的你啊！");
+//        System.out.println(filePath);
+        ToolsApi.multipartFile_delete_file("group1/M00/01/02/wKgBbFuwH1qAXobXAAATsOCq3jk970.mp3");
+//        ToolsApi.multipartFile_delete_file(null);
+    }
 
 }

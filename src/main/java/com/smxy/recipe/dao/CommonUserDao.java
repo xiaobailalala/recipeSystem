@@ -23,6 +23,8 @@ public interface CommonUserDao {
 	Integer saveUser(CommonUser common_user);
 	
 	Integer updateUserInfo(CommonUser common_user);
-	
+
+	CommonUser getInfoByIdBrief(Integer fId);
+
 }
 

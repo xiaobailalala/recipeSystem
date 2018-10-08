@@ -21,7 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.print.Book;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("recipeService")
 public class RecipeServiceImpl implements RecipeService {
@@ -64,7 +66,7 @@ public class RecipeServiceImpl implements RecipeService {
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime, HttpServletRequest request) {
         AdminUser adminUser = (AdminUser) request.getSession().getAttribute("aduser");
-        recipe.setFAuthor(adminUser.getFUsername());
+        recipe.setFUid(adminUser.getFId());
         recipe.setFRelease(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
         recipe.setFCover(ToolsApi.multipartFile_upload_file(file, null));
         int saveRecipe = recipeDao.saveInfo(recipe);
@@ -113,7 +115,12 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = recipeDao.getInfoById(id);
         ToolsApi.multipartFile_delete_file(recipe.getFCover());
         recipe.getProcesses().forEach(item -> {
-            ToolsApi.multipartFile_delete_file(item.getFCover());
+            if (item.getFCover()!=null){
+                ToolsApi.multipartFile_delete_file(item.getFCover());
+            }
+            if (item.getFVoice()!=null){
+                ToolsApi.multipartFile_delete_file(item.getFVoice());
+            }
         });
         processDao.deleteInfoByRid(id);
         recipeClassifyDao.deleteInfoByRid(id);
@@ -194,7 +201,12 @@ public class RecipeServiceImpl implements RecipeService {
             if (Arrays.asList(stepPreid).contains(item.getFId())) {
                 hasProcesses.add(item);
             } else {
-                ToolsApi.multipartFile_delete_file(item.getFCover());
+                if (item.getFCover()!=null){
+                    ToolsApi.multipartFile_delete_file(item.getFCover());
+                }
+                if (item.getFVoice()!=null){
+                    ToolsApi.multipartFile_delete_file(item.getFVoice());
+                }
             }
         });
         processDao.deleteInfoByRid(id);
@@ -226,12 +238,39 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid) {
         List<RecipeClassify> recipeClassifies;
+        Map<String, List<RecipeClassify>> map = new HashMap<>();
         if (twoid==0){
             recipeClassifies = recipeClassifyDao.getInfoByThreeIdForRecipe(threeid);
         }else{
             recipeClassifies = recipeClassifyDao.getInfoByTwoIdForRecipe(twoid);
+            recipeClassifies.addAll(recipeClassifyDao.getInfoByThreeIdNextForRecipe(twoid));
+            recipeClassifies = recipeClassifies.stream().collect(
+                    Collectors.collectingAndThen(Collectors.toCollection(
+                            () -> new TreeSet<>(Comparator.comparing(o -> o.getFRid()))), ArrayList::new)
+            );
         }
-        return new ResApi<>(200, "success", recipeClassifies);
+        Collections.sort(recipeClassifies, new Comparator<RecipeClassify>() {
+            @Override
+            public int compare(RecipeClassify o1, RecipeClassify o2) {
+                return o2.getRecipe().getFCount().compareTo(o1.getRecipe().getFCount());
+            }
+        });
+        map.put("counts", recipeClassifies);
+        Collections.sort(recipeClassifies, new Comparator<RecipeClassify>() {
+            @Override
+            public int compare(RecipeClassify o1, RecipeClassify o2) {
+                return o2.getFId().compareTo(o1.getFId());
+            }
+        });
+        map.put("news", recipeClassifies);
+        Collections.sort(recipeClassifies, new Comparator<RecipeClassify>() {
+            @Override
+            public int compare(RecipeClassify o1, RecipeClassify o2) {
+                return o2.getRecipe().getFGood().compareTo(o1.getRecipe().getFGood());
+            }
+        });
+        map.put("goods", recipeClassifies);
+        return new ResApi<>(200, "success", map);
     }
 
 }

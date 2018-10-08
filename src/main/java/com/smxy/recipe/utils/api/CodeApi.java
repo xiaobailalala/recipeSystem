@@ -5,7 +5,7 @@
  * @author: 雏实。   
  * Build File @date: 2018年7月4日 下午1:35:57 
  */
-package com.smxy.recipe.utils;
+package com.smxy.recipe.utils.api;
 
 /**
  * @author zpx

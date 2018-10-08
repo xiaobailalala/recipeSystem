@@ -25,4 +25,6 @@ public interface RecipeClassifyDao {
 
     List<RecipeClassify> getInfoByTwoIdForRecipe(Integer fTwoId);
 
+    List<RecipeClassify> getInfoByThreeIdNextForRecipe(Integer fTwoId);
+
 }

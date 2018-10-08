@@ -36,6 +36,11 @@
         select distinct * from t_food_recipe_classify where f_two_id=#{fTwoId};
     </select>
 
+    <select id="getInfoByThreeIdNextForRecipe" parameterType="Integer" resultMap="getRecipeDetail">
+        select * from t_food_recipe_classify,t_food_classify
+        where f_three_id=t_food_classify.f_id and t_food_classify.f_tid=#{fTwoId};
+    </select>
+
     <delete id="deleteInfoByRid" parameterType="Integer">
         delete from t_food_recipe_classify where f_rid=#{fRid};
     </delete>

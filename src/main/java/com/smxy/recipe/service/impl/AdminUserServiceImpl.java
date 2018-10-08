@@ -14,10 +14,8 @@ import com.smxy.recipe.dao.AdminUserDao;
 import com.smxy.recipe.dao.AdminUserRoleDao;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.service.AdminUserService;
-import com.smxy.recipe.utils.FilePath;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
-import org.apache.lucene.geo3d.Tools;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -26,16 +24,11 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.*;
 
 @Service("adminUserService")

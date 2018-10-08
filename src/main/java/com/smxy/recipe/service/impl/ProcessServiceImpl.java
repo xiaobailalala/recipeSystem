@@ -23,34 +23,37 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/27 22:26
+ * Build File @date: 2018/9/30 10:04
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.service.impl;
 
-import com.smxy.recipe.service.RecipeService;
+import com.smxy.recipe.dao.ProcessDao;
+import com.smxy.recipe.entity.Process;
+import com.smxy.recipe.service.ProcessService;
 import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.utils.api.Baidu_TTSApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
-@RestController
-@RequestMapping("/mob/recipe")
-public class RecipeMobController {
+@Service("processService")
+public class ProcessServiceImpl implements ProcessService {
 
     @Autowired
-    RecipeService recipeService;
+    ProcessDao processDao;
 
-    @GetMapping("/getDataByClaId")
-    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){
-        return recipeService.getDataByClaId(twoid, threeid);
+    @Override
+    public ResApi<Object> produceVoiceForId(Process process) {
+        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
+        String filePath = Baidu_TTSApi.sendVoiceData(process.getFContent());
+        if (filePath != null) {
+            process.setFVoice(filePath);
+            if (processDao.updateVoiceById(process) > 0) {
+                return new ResApi<>(200, "success", filePath);
+            }
+            return resApi;
+        }
+        return resApi;
     }
-
-    @GetMapping("/getRecipeById")
-    public ResApi<Object> getRecipeById(Integer id){
-        return recipeService.getDetailInfo(id);
-    }
-
 }

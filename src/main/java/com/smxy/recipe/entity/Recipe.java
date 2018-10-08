@@ -22,7 +22,10 @@ import java.util.List;
 @NoArgsConstructor
 public final class Recipe {
 	private Integer fId;
-	private String fAuthor;
+	private Integer fAid;
+	private Integer fUid;
+	private AdminUser adminUser;
+	private CommonUser commonUser;
 	private String fRelease;
 	private String fCover;
 	private String fIntroduction;

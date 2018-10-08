@@ -23,34 +23,24 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/27 22:26
+ * Build File @date: 2018/9/30 21:14
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.entity;
 
-import com.smxy.recipe.service.RecipeService;
-import com.smxy.recipe.utils.ResApi;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/mob/recipe")
-public class RecipeMobController {
-
-    @Autowired
-    RecipeService recipeService;
-
-    @GetMapping("/getDataByClaId")
-    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){
-        return recipeService.getDataByClaId(twoid, threeid);
-    }
-
-    @GetMapping("/getRecipeById")
-    public ResApi<Object> getRecipeById(Integer id){
-        return recipeService.getDetailInfo(id);
-    }
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public final class AiMark {
+    private Integer fId;
+    private String fMark;
+    private String fContent;
+    private String fVoice;
 }

@@ -11,4 +11,9 @@
     <delete id="deleteInfoByRid" parameterType="Integer">
         delete from t_food_process where f_rid=#{fRid};
     </delete>
+
+    <update id="updateVoiceById" parameterType="Process">
+        update t_food_process set f_voice=#{fVoice} where f_id=#{fId};
+    </update>
+
 </mapper>

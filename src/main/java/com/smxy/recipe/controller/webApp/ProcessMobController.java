@@ -23,13 +23,14 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/27 22:26
+ * Build File @date: 2018/9/30 10:01
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.controller.webApp;
 
-import com.smxy.recipe.service.RecipeService;
+import com.smxy.recipe.entity.Process;
+import com.smxy.recipe.service.ProcessService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,20 +38,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mob/recipe")
-public class RecipeMobController {
+@RequestMapping("/mob/process")
+public class ProcessMobController {
 
     @Autowired
-    RecipeService recipeService;
+    ProcessService processService;
 
-    @GetMapping("/getDataByClaId")
-    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){
-        return recipeService.getDataByClaId(twoid, threeid);
-    }
-
-    @GetMapping("/getRecipeById")
-    public ResApi<Object> getRecipeById(Integer id){
-        return recipeService.getDetailInfo(id);
+    @GetMapping("/produceVoice")
+    public ResApi<Object> produceVoice(Process process){
+        return processService.produceVoiceForId(process);
     }
 
 }
