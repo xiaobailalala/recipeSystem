@@ -23,29 +23,19 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/8 21:54
+ * Build File @date: 2018/10/11 20:34
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.utils.queueMessage;
+package com.smxy.recipe.controller.webApp;
 
-import com.smxy.recipe.dao.RecipeDao;
-import com.smxy.recipe.entity.Recipe;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
-public class QmManager {
+@RestController
+@RequestMapping("/mob/aiMark")
+public class AiMarkMobController {
 
-    @Autowired
-    RecipeDao recipeDao;
 
-    @RabbitListener(queues = "recipeCountUpload.queue")
-    public void updateRecipeCount(Integer id){
-        Recipe recipe = recipeDao.getInfoById(id);
-        recipe.setFCount(recipe.getFCount()+1);
-        recipeDao.updateRecipeCount(recipe);
-    }
 
 }

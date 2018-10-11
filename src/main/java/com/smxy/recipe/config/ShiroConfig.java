@@ -76,6 +76,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/mob/**","anon");
         filterChainDefinitionMap.put("/druid/**","anon");
         filterChainDefinitionMap.put("/sensorData/**","anon");
+        filterChainDefinitionMap.put("/endpoint-websocket-wxClient","anon");
+//        filterChainDefinitionMap.put("/app","anon");
+//        filterChainDefinitionMap.put("/topic","anon");
         filterChainDefinitionMap.put("/**", "authc");		// 其他路径均需要身份认证，一般位于最下面，优先级最低
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 //        FormAuthenticationFilter formAuthenticationFilter = new FormAuthenticationFilter();
