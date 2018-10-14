@@ -24,6 +24,7 @@ public final class MerchantUser {
 	private String fUsername;
 	private String fAccount;
 	private String fPassword;
+	private String fBirth;
 	private String fProvince;
 	private String fCity;
 	private String fArea;
