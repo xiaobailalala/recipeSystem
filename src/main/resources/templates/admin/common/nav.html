@@ -205,10 +205,17 @@
                 </ul>
             </li>
             <li>
-                <a href="widgets.html">
-              <span class="icon color11">
-                <i class="fa fa-diamond"></i>
-              </span>Widgets</a>
+                <a href="javascript:;" th:class="${first==5?'active':''}">
+              <span class="icon color10">
+                <i class="fa fa-check-square-o"></i>
+              </span>智能信息管理
+                    <span class="caret"></span>
+                </a>
+                <ul th:style="${first==5?'display: block;':''}">
+                    <li>
+                        <a th:class="${(first==5&&second==1)?'active':''}" th:href="@{/aiMark/info}">语音代号管理</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="calendar.html">

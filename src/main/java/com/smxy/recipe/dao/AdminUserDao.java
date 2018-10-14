@@ -33,4 +33,6 @@ public interface AdminUserDao {
     Integer deleteUser(Integer id);
 
     Integer saveInfo(AdminUser adminUser);
+
+    AdminUser getInfoByIdBrief(Integer fId);
 }

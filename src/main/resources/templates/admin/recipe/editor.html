@@ -40,7 +40,9 @@
                     </div>
                     <div class="panel-body">
                         <form id="subForm" class="form-horizontal">
+                            <input type="hidden" name="_method" value="put">
                             <input type="hidden" name="fType" value="4">
+                            <input type="hidden" name="fCover" th:value="${item.data.item.fCover}">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label form-label" for="fName">食谱封面</label>
                                 <div class="col-sm-10">
@@ -65,7 +67,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label form-label" for="fIntroduction">食谱介绍</label>
                                 <div class="col-sm-10">
-                                    <textarea name="fIntroduction" id="fIntroduction"
+                                    <textarea id="fIntroduction"
                                               th:utext="${item.data.item.fIntroduction}" class="form-control" rows="6"
                                               placeholder="Please input recipe Introduction..."></textarea>
                                 </div>
@@ -100,10 +102,10 @@
                                                                         th:selected="${selfSe.fId}==${self.selectedTwo}"></option>
                                                             </select>&nbsp;
                                                             <select class="form-control threeCont" disabled="disabled">
-                                                                <option th:if="${#lists.isEmpty(self.classifies)}"
+                                                                <option th:if="${self.selectedThree}==0"
                                                                         value="-1">三级分类
                                                                 </option>
-                                                                <option th:unless="${#lists.isEmpty(self.classifies)}"
+                                                                <option th:unless="${self.selectedThree}==0"
                                                                         th:each="selfSe:${self.classifies}"
                                                                         th:value="${selfSe.fId}"
                                                                         th:text="${selfSe.fName}"
@@ -294,6 +296,7 @@
                                                 <div class="panel-body">
                                                     <div class="col-sm-6">
                                                         <label>步骤内容（尽量详细）</label>
+                                                        <input type="hidden" th:value="${self.fId}" name="recipePreid">
                                                         <textarea class="form-control processContent"
                                                                   name="recipeContent" cols="30" style="height: 160px;"
                                                                   placeholder="Please Input Process..."
@@ -335,7 +338,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label form-label"></label>
                                 <div class="col-sm-3">
-                                    <input type="submit" value="Submit" class="btn btn-default" disabled="disabled">
+                                    <input type="submit" value="Submit" class="btn btn-default">
                                 </div>
                                 <div class="col-sm-5" id="progressCont" style="display: none;">
                                     <div class="progress progress-striped active">

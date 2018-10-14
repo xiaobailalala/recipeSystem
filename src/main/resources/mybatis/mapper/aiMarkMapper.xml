@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.AiMarkDao">
+    <select id="getAllInfo" resultType="AiMark">
+        select * from t_ai_mark order by f_id ASC;
+    </select>
+
+    <select id="getInfoByMark" resultType="AiMark" parameterType="AiMark">
+        select * from t_ai_mark where f_mark=#{fMark};
+    </select>
+
+    <insert id="saveInfo" parameterType="AiMark">
+        insert into t_ai_mark (f_mark, f_content, f_voice) values (#{fMark}, #{fContent}, #{fVoice});
+    </insert>
+
+    <delete id="deleteInfo" parameterType="Integer">
+        delete from t_ai_mark where f_id=#{fId};
+    </delete>
+
+    <select id="getInfoById" parameterType="Integer" resultType="AiMark">
+        select * from t_ai_mark where f_id=#{fId};
+    </select>
+
+    <update id="updateInfoById" parameterType="AiMark">
+        update t_ai_mark set f_content=#{fContent},f_voice=#{fVoice} where f_id=#{fId};
+    </update>
+</mapper>

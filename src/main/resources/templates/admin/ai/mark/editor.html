@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('代号信息编辑')}"></head>
+<body>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(1,1)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">职业信息编辑</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">智能信息管理</a>
+                <a class="btn btn-light" th:href="@{/aiMark/info}">语音代号管理</a>
+                <a class="btn btn-light" disabled="disabled">信息编辑</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        语音代号管理——编辑代号
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="panel-body">
+                        <form class="form-horizontal">
+                            <input type="hidden" name="_method" value="put">
+                            <input type="hidden" name="fId" th:value="${item.fId}">
+                            <input type="hidden" name="fVoice" th:value="${item.fVoice}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label" for="fMark">代号名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" disabled="disabled" class="form-control form-control-line text-center" th:value="${item.fMark}" id="fMark" placeholder="Please input Ai Voice Mark...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label" for="fContent">回应内容</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control form-control-line" id="fContent" th:value="${item.fContent}" name="fContent" placeholder="Please input Ai Voice Content for Mark...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label form-label"></label>
+                                <div class="col-sm-10">
+                                    <input type="submit" value="Submit" class="btn btn-default" disabled="disabled">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/aiMark/editor.js}"></script>
+</html>

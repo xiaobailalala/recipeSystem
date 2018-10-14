@@ -3,16 +3,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.RecipeDao">
     <insert id="saveInfo" parameterType="Recipe" useGeneratedKeys="true" keyProperty="fId">
-        insert into t_food_recipe (f_name, f_author, f_release, f_cover, f_introduction, f_type, f_fire) values (#{fName}, #{fAuthor}, #{fRelease}, #{fCover}, #{fIntroduction}, #{fType}, #{fFire})
+        insert into t_food_recipe (f_name, f_uid, f_release, f_cover, f_introduction, f_type, f_fire) values (#{fName}, #{fUid}, #{fRelease}, #{fCover}, #{fIntroduction}, #{fType}, #{fFire})
     </insert>
 
     <select id="getAllInfo" resultMap="getRecipeDetail">
         select * from t_food_recipe order by f_id ASC;
     </select>
 
-    <select id="getAllInfoBre" resultType="Recipe">
+    <select id="getAllInfoBre" resultMap="getRecipeAuthor">
         select * from t_food_recipe order by f_id ASC;
     </select>
+
+    <resultMap id="getRecipeAuthor" type="Recipe">
+        <result column="f_uid" property="fUid"/>
+        <result column="f_aid" property="fAid"/>
+        <association property="commonUser" column="f_uid"
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <association property="adminUser" column="f_aid"
+                     select="com.smxy.recipe.dao.AdminUserDao.getInfoByIdBrief">
+        </association>
+    </resultMap>
 
     <select id="getInfoById" resultMap="getRecipeDetail" parameterType="Integer">
         select * from t_food_recipe where f_id=#{fId};
@@ -20,6 +31,14 @@
 
     <resultMap id="getRecipeDetail" type="Recipe">
         <result column="f_id" property="fId"/>
+        <result column="f_uid" property="fUid"/>
+        <result column="f_aid" property="fAid"/>
+        <association property="commonUser" column="f_uid"
+                    select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <association property="adminUser" column="f_aid"
+                    select="com.smxy.recipe.dao.AdminUserDao.getInfoByIdBrief">
+        </association>
         <collection property="recipeClassifies" column="f_id"
                     select="com.smxy.recipe.dao.RecipeClassifyDao.getInfoByRid">
         </collection>
@@ -36,4 +55,11 @@
     <delete id="deleteInfoById" parameterType="Integer">
         delete from t_food_recipe where f_id=#{fId};
     </delete>
+    <update id="updateInfoById" parameterType="Recipe">
+        update t_food_recipe set f_cover=#{fCover},f_introduction=#{fIntroduction},f_name=#{fName},f_fire=#{fFire} where f_id=#{fId};
+    </update>
+
+    <update id="updateRecipeCount" parameterType="Integer">
+        update t_food_recipe set f_count=#{fCount} where f_id=#{fId};
+    </update>
 </mapper>

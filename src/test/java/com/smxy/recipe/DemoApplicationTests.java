@@ -1,10 +1,13 @@
 package com.smxy.recipe;
 
 import com.smxy.recipe.config.ThymeleafConfig;
+import com.smxy.recipe.entity.Process;
 import com.smxy.recipe.entity.ToolsEntity.RecipeClassifyList;
 import com.smxy.recipe.service.MaterialService;
 import com.smxy.recipe.utils.FastDFSClient;
 import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.utils.ToolsApi;
+import com.smxy.recipe.utils.api.Baidu_TTSApi;
 import com.smxy.recipe.utils.ToolsApi;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import org.csource.common.NameValuePair;
@@ -120,12 +123,6 @@ public class DemoApplicationTests {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @Test
-    public void testToolsAPI(){
-        String s = Integer.toHexString(100);
-        System.out.println(s);
     }
 
 }

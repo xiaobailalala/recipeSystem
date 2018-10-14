@@ -17,4 +17,5 @@ public interface ProcessDao {
     Integer saveInfo(Process process);
     List<Process> getInfoByRid(Integer fRid);
     Integer deleteInfoByRid(Integer fRid);
+    Integer updateVoiceById(Process process);
 }

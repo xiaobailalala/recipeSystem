@@ -10,6 +10,10 @@
         select * from t_admin_user order by f_id ASC;
     </select>
 
+    <select id="getInfoByIdBrief" parameterType="Integer" resultType="AdminUser">
+        select * from t_admin_user where f_id=#{fId};
+    </select>
+
     <select id="getAdminUserByFid" resultMap="getAdminUserDetail" parameterType="Integer">
         select * from t_admin_user where f_id=#{fId};
     </select>

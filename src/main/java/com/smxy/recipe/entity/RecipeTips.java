@@ -9,6 +9,13 @@
  */
 package com.smxy.recipe.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RecipeTips {
     private Integer fId;
     private Integer fRid;

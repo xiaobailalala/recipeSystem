@@ -9,11 +9,10 @@
  */
 package com.smxy.recipe.realm;
 
-import com.smxy.recipe.dao.AdminRoleDao;
 import com.smxy.recipe.dao.AdminUserDao;
-import com.smxy.recipe.dao.AdminUserRoleDao;
-import com.smxy.recipe.entity.*;
-import com.smxy.recipe.service.AdminRoleService;
+import com.smxy.recipe.entity.AdminPermission;
+import com.smxy.recipe.entity.AdminRole;
+import com.smxy.recipe.entity.AdminUser;
 import com.smxy.recipe.service.AdminUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -23,11 +22,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class AdminShiroRealm extends AuthorizingRealm {
 

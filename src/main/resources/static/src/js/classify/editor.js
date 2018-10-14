@@ -7,7 +7,7 @@ $(function () {
                 success: function (res) {
                     var opt = '<option value="-1">请先选择一级分类</option>';
                     res.data.forEach(function (item, index) {
-                        opt += '<option value="' + item.fId + '">' + item.fName + '</option>';
+                        opt += '<option value="' + item.fid + '">' + item.fname + '</option>';
                     });
                     $('#fTid').html(opt);
                 }

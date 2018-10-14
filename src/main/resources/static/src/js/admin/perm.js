@@ -15,8 +15,8 @@ $(function(){
                         res.adminRolePermissions.forEach(function(item,index){
                             content+='<tr>' +
                                 '<td>'+(index+1)+'</td>' +
-                                '<td>'+item.adminPermission.fPermissionname+'</td>' +
-                                '<td>'+item.adminPermission.fIntroduction+'</td>' +
+                                '<td>'+item.adminPermission.fpermissionname+'</td>' +
+                                '<td>'+item.adminPermission.fintroduction+'</td>' +
                                 '</tr>';
                         });
                         content+='</tbody></table>';
