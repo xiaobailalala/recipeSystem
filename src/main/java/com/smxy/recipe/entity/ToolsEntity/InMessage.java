@@ -23,29 +23,20 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/11 20:34
+ * Build File @date: 2018/10/13 16:09
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.entity.ToolsEntity;
 
-import com.smxy.recipe.service.AiMarkService;
-import com.smxy.recipe.utils.ResApi;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@RestController
-@RequestMapping("/mob/aiMark")
-public class AiMarkMobController {
-
-    @Autowired
-    private AiMarkService aiMarkService;
-
-    @GetMapping("/getVoiceForWXReady")
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark){
-        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark);
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class InMessage {
+    private Integer uid;
+    private Integer top;
 }

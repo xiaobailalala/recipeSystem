@@ -21,4 +21,8 @@ public interface CommonUserService {
 	ResApi<String> commonUserReg(CommonUser common_user);
 	ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg);
 	ResApi<CommonUser> commonUserSaveInfo(CommonUser common_user);
+
+    ResApi<Object> getAllInfo();
+
+	ResApi<Object> getOneById(Integer id);
 }

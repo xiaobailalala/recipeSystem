@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class TipsController {
 
     @Autowired
-    TipsService tipsService;
+    private TipsService tipsService;
 
     @RequiresPermissions("tips:select")
     @GetMapping("/info")

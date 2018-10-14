@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('用户管理')}"></head>
+<body>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(6,1)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">用户信息管理——监控中心</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">用户管理</a>
+                <a class="btn btn-light" th:href="@{/commonUser/info}">用户信息管理</a>
+                <a class="btn btn-light" disabled="disabled">监控中心</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        用户信息管理——监控中心
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <input type="hidden" id="itemId" th:value="${item.data.item.fId}">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <div id="fireMonitor" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="text-center" style="font-size: 18px;color: #333333;fill: #333333;">异常报表</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 padding-t-15">
+                            <button class="btn isMonitoring" type="button">用户未开启数据监控</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        用户信息管理——监控中心
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <div id="smogMonitor" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="text-center" style="font-size: 18px;color: #333333;fill: #333333;">异常报表</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 padding-t-15">
+                            <button class="btn isMonitoring" type="button">用户未开启数据监控</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/commonUser/monitor.js}"></script>
+</html>

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class MaterialController {
 
     @Autowired
-    MaterialService materialService;
+    private MaterialService materialService;
 
     @RequiresPermissions("material:insert")
     @ResponseBody

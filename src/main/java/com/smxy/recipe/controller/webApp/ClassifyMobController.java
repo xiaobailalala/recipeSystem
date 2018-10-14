@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClassifyMobController {
 
     @Autowired
-    ClassifyOneService classifyOneService;
+    private ClassifyOneService classifyOneService;
 
     @GetMapping("/getAllInfo")
     public ResApi<Object> getAllInfo(){

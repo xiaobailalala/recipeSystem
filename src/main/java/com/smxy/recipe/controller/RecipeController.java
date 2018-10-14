@@ -32,7 +32,7 @@ import java.util.Map;
 public class RecipeController {
 
     @Autowired
-    RecipeService recipeService;
+    private RecipeService recipeService;
 
     @RequiresPermissions("recipe:select")
     @GetMapping("/add")

@@ -38,11 +38,14 @@ import com.smxy.recipe.utils.api.Baidu_TTSApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service("aiMarkService")
 public class AiMarkServiceImpl implements AiMarkService {
 
     @Autowired
-    AiMarkDao aiMarkDao;
+    private AiMarkDao aiMarkDao;
 
     @Override
     public ResApi<Object> getAllInfo() {
@@ -88,5 +91,18 @@ public class AiMarkServiceImpl implements AiMarkService {
             resApi = new ResApi<>(200, "success", "success");
         }
         return resApi;
+    }
+
+    @Override
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark) {
+        List<String> strings = new ArrayList<>();
+        AiMark aiMark = new AiMark();
+        aiMark.setFMark(readyMark);
+        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
+        aiMark.setFMark(fireMark);
+        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
+        aiMark.setFMark(smogMark);
+        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
+        return new ResApi<>(200, "success", strings);
     }
 }

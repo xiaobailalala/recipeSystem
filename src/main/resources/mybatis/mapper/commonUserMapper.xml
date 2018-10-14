@@ -12,7 +12,7 @@
     <resultMap type="CommonUser" id="getUserDetail">
         <result property="fPid" column="f_pid" />
         <association
-			property="profession" column="fPid"
+			property="profession" column="f_pid"
 			select="getProfessionInfo">
 		</association>
     </resultMap>
@@ -38,4 +38,8 @@
 		f_username=#{fUsername},f_province=#{fProvince},f_city=#{fCity},f_area=#{fArea},f_cover=#{fCover},f_sex=#{fSex},f_sign=#{fSign},f_pid=#{fPid}
 		where f_id=#{fId};
 	</update>
+
+	<select id="getInfoAll" resultMap="getUserDetail">
+		select * from t_common_user order by f_id ASC;
+	</select>
 </mapper>

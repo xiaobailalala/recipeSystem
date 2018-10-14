@@ -42,11 +42,12 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
         stompEndpointRegistry.addEndpoint("/endpoint-websocket-wxClient").setAllowedOrigins("*");
+        stompEndpointRegistry.addEndpoint("/endpoint-websocket-webClient").setAllowedOrigins("*").withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/sensorData","/chat");
-        registry.setApplicationDestinationPrefixes("/app");
+        registry.setApplicationDestinationPrefixes("/sensorMonitor");
     }
 }

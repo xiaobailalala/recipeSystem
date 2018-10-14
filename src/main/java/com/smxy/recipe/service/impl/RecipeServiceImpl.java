@@ -30,25 +30,25 @@ import java.util.stream.Collectors;
 public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
-    TipsDao tipsDao;
+    private TipsDao tipsDao;
     @Autowired
-    ClassifyOneDao classifyOneDao;
+    private ClassifyOneDao classifyOneDao;
     @Autowired
-    RecipeClassifyDao recipeClassifyDao;
+    private RecipeClassifyDao recipeClassifyDao;
     @Autowired
-    RecipeDao recipeDao;
+    private RecipeDao recipeDao;
     @Autowired
-    RecipeTipsDao recipeTipsDao;
+    private RecipeTipsDao recipeTipsDao;
     @Autowired
-    RecipeMaterialDao recipeMaterialDao;
+    private RecipeMaterialDao recipeMaterialDao;
     @Autowired
-    ProcessDao processDao;
+    private ProcessDao processDao;
     @Autowired
-    ClassifyTwoDao classifyTwoDao;
+    private ClassifyTwoDao classifyTwoDao;
     @Autowired
-    ClassifyDao classifyDao;
+    private ClassifyDao classifyDao;
     @Autowired
-    RabbitTemplate rabbitTemplate;
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public ResApi<Object> getAddData() {

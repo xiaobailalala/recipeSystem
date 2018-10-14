@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class MaterialServiceImpl implements MaterialService {
 
     @Autowired
-    MaterialDao materialDao;
+    private MaterialDao materialDao;
 
     @Override
     public ResApi<Object> saveInfo(String fName) {

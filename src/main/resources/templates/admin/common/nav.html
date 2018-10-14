@@ -218,12 +218,17 @@
                 </ul>
             </li>
             <li>
-                <a href="calendar.html">
-              <span class="icon color8">
+                <a href="javascript:;" th:class="${first==6?'active':''}">
+              <span class="icon color10">
                 <i class="fa fa-calendar-o"></i>
-              </span>Calendar
-                    <span class="label label-danger">NEW</span>
+              </span>用户管理
+                    <span class="caret"></span>
                 </a>
+                <ul th:style="${first==6?'display: block;':''}">
+                    <li>
+                        <a th:class="${(first==6&&second==1)?'active':''}" th:href="@{/commonUser/info}">用户信息管理</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="typography.html">

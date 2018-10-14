@@ -29,8 +29,11 @@
  */
 package com.smxy.recipe.controller.websocketOper;
 
+import com.smxy.recipe.entity.ToolsEntity.InMessage;
+import com.smxy.recipe.service.socket.CommonUserSocketService;
 import com.smxy.recipe.service.socket.RecipeSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
@@ -38,7 +41,9 @@ import org.springframework.stereotype.Controller;
 public class RecipeSocket {
 
     @Autowired
-    RecipeSocketService recipeSocketService;
+    private RecipeSocketService recipeSocketService;
+    @Autowired
+    private CommonUserSocketService commonUserSocketService;
 
     @Scheduled(fixedRate = 1500)
     public void getSensorFireData(){
@@ -48,6 +53,32 @@ public class RecipeSocket {
     @Scheduled(fixedRate = 1500)
     public void getSensorSmogData(){
         recipeSocketService.getSensorSmogData();
+    }
+
+    @MessageMapping("/fireListenStart")
+    public void fireListenStart(InMessage inMessage){
+        commonUserSocketService.fireNumberPush(inMessage);
+    }
+
+    @MessageMapping("/smogListenStart")
+    public void smogListenStart(InMessage inMessage){
+        commonUserSocketService.smogNumberPush(inMessage);
+    }
+
+    @MessageMapping("/fireListenStop")
+    public void fireListenStop(Integer uid){
+        commonUserSocketService.fireNumberPop(uid);
+    }
+
+    @MessageMapping("/smogListenStop")
+    public void smogListenStop(Integer uid){
+        commonUserSocketService.smogNumberPop(uid);
+    }
+
+    @MessageMapping("/allListenStop")
+    public void allListenStop(Integer uid){
+        commonUserSocketService.fireNumberPop(uid);
+        commonUserSocketService.smogNumberPop(uid);
     }
     
 }

@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecipeMobController {
 
     @Autowired
-    RecipeService recipeService;
+    private RecipeService recipeService;
 
     @GetMapping("/getDataByClaId")
     public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){

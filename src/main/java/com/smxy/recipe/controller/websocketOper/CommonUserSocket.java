@@ -23,29 +23,31 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/11 20:34
+ * Build File @date: 2018/10/12 22:11
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.controller.websocketOper;
 
-import com.smxy.recipe.service.AiMarkService;
-import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.service.socket.CommonUserSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Controller;
 
-@RestController
-@RequestMapping("/mob/aiMark")
-public class AiMarkMobController {
+@Controller
+public class CommonUserSocket {
 
     @Autowired
-    private AiMarkService aiMarkService;
+    private CommonUserSocketService commonUserSocketService;
 
-    @GetMapping("/getVoiceForWXReady")
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark){
-        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark);
+    @Scheduled(fixedRate = 1000)
+    public void sendFireNumber(){
+        commonUserSocketService.sendFireNumber();
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void sendSmogNumber(){
+        commonUserSocketService.sendSmogNumber();
     }
 
 }

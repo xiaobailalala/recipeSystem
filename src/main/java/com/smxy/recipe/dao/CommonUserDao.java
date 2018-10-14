@@ -14,6 +14,8 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.CommonUser;
 
+import java.util.List;
+
 public interface CommonUserDao {
 
 	Integer isUser(CommonUser common_user);
@@ -25,6 +27,8 @@ public interface CommonUserDao {
 	Integer updateUserInfo(CommonUser common_user);
 
 	CommonUser getInfoByIdBrief(Integer fId);
+
+	List<CommonUser> getInfoAll();
 
 }
 

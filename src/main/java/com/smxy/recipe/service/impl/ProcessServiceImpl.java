@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
 public class ProcessServiceImpl implements ProcessService {
 
     @Autowired
-    ProcessDao processDao;
+    private ProcessDao processDao;
 
     @Override
     public ResApi<Object> produceVoiceForId(Process process) {
