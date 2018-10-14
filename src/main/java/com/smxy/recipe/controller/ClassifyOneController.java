@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class ClassifyOneController {
 
     @Autowired
-    ClassifyOneService classifyOneService;
+    private ClassifyOneService classifyOneService;
 
     @RequiresPermissions("recipeClassify:select")
     @ResponseBody

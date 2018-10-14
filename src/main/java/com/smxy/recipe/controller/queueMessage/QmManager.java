@@ -39,7 +39,7 @@ import org.springframework.stereotype.Controller;
 public class QmManager {
 
     @Autowired
-    RecipeDao recipeDao;
+    private RecipeDao recipeDao;
 
     @RabbitListener(queues = "recipeCountUpload.queue")
     public void updateRecipeCount(Integer id){

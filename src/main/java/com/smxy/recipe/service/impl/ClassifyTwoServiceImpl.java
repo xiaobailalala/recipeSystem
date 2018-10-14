@@ -28,9 +28,9 @@ import java.util.Map;
 @Service("classifyTwoService")
 public class ClassifyTwoServiceImpl implements ClassifyTwoService {
     @Autowired
-    ClassifyTwoDao classifyTwoDao;
+    private ClassifyTwoDao classifyTwoDao;
     @Autowired
-    ClassifyOneDao classifyOneDao;
+    private ClassifyOneDao classifyOneDao;
     @Override
     public ResApi<Object> getInfoAll() {
         return new ResApi<>(200,"success",classifyTwoDao.getInfoAll());

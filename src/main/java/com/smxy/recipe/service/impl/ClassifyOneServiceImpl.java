@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class ClassifyOneServiceImpl implements ClassifyOneService {
 
     @Autowired
-    ClassifyOneDao classifyOneDao;
+    private ClassifyOneDao classifyOneDao;
 
     @Cacheable(value = "recipeAllClassify")
     @Override

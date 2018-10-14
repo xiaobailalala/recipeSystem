@@ -43,7 +43,7 @@ import org.springframework.web.bind.annotation.*;
 public class AiMarkController {
 
     @Autowired
-    AiMarkService aiMarkService;
+    private AiMarkService aiMarkService;
 
     @RequiresPermissions("aiMark:select")
     @GetMapping("/info")

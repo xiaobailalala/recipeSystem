@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ClassifyTwoController {
 
     @Autowired
-    ClassifyTwoService classifyTwoService;
+    private ClassifyTwoService classifyTwoService;
 
     @RequiresPermissions("recipeClassify:select")
     @GetMapping("/info")

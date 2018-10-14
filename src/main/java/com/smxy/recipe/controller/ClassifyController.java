@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class ClassifyController {
 
     @Autowired
-    ClassifyService classifyService;
+    private ClassifyService classifyService;
 
     @RequiresPermissions("recipeClassify:select")
     @GetMapping("/info")

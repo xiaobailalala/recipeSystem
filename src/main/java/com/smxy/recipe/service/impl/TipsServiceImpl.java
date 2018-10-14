@@ -24,7 +24,7 @@ import java.util.Random;
 public class TipsServiceImpl implements TipsService {
 
     @Autowired
-    TipsDao tipsDao;
+    private TipsDao tipsDao;
 
     @Override
     public ResApi<Object> getAllInfo() {

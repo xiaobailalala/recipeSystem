@@ -27,11 +27,11 @@ import java.util.Map;
 public class ClassifyServiceImpl implements ClassifyService {
 
     @Autowired
-    ClassifyDao classifyDao;
+    private ClassifyDao classifyDao;
     @Autowired
-    ClassifyOneDao classifyOneDao;
+    private ClassifyOneDao classifyOneDao;
     @Autowired
-    ClassifyTwoDao classifyTwoDao;
+    private ClassifyTwoDao classifyTwoDao;
 
     @Cacheable(value = "recipeClassify")
     @Override

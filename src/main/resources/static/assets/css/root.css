@@ -93,3 +93,7 @@ img[alt=adminUserhead]{
 .clear{
     clear: both;
 }
+
+.label-custom-bg{
+    background-color: #cccccc;
+}

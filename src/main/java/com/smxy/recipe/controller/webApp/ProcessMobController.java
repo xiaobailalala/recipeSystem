@@ -42,7 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProcessMobController {
 
     @Autowired
-    ProcessService processService;
+    private ProcessService processService;
 
     @GetMapping("/produceVoice")
     public ResApi<Object> produceVoice(Process process){

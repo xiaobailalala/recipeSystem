@@ -38,11 +38,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("recipeSocketService")
 public class RecipeSocketService {
 
     @Autowired
-    SimpMessagingTemplate template;
+    private SimpMessagingTemplate template;
 
     public void getSensorFireData(){
         List<Dht11Data> dht11DataList = SensorDataApi.dht11List;
@@ -55,5 +55,4 @@ public class RecipeSocketService {
         template.convertAndSend("/sensorData/smog",
                 gp2y1051DataList.size() == 0 ? 0 : gp2y1051DataList.get(gp2y1051DataList.size()-1));
     }
-
 }
