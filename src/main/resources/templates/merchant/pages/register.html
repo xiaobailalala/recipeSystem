@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{merchant/common/commonHeader::header('Recipe Merchant',~{::link})}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/register.css}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-banner">
+            <!-- 如果banner背景是图片，此div是为banner添加蒙版 -->
+            <div id="masking"></div>
+            <div class="banner-logo-div">
+                <img th:src="@{/src/images/merchant/logo-dark-02.png}" alt="" id="banner-logo">
+                <h2 class="banner-title">商家入驻系统</h2>
+            </div>
+            <div class="banner-logo-div">
+                <img th:src="@{/src/images/merchant/logo-dark-smile.png}" alt="" id="banner-logo-smile">
+            </div>
+        </div>
+        <div class="right-div">
+            <div class="right-form-div">
+                <div class="project-title">
+                    <h1>入驻膳食膳房</h1>
+                </div>
+                <form action="" class="layui-form">
+                    <div class="layui-row layui-form-item">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label mylayui-form-label">用户名：</label>
+                        </div>
+                        <div class="layui-col-md9 mylayui-form-div">
+                            <i class="layui-icon layui-icon-username mylayui-input-icon"></i>
+                            <input type="text" name="account" id="account" required lay-verify="required|account"
+                                placeholder="手机号/邮箱" autocomplete="off" class="layui-input mylayui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-row layui-form-item">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label  mylayui-form-label">密码：</label>
+                        </div>
+                        <div class="layui-col-md9 mylayui-form-div">
+                            <i class="layui-icon layui-icon-password mylayui-input-icon"></i>
+                            <!-- <i class=" showpwd iconfont icon-normal"></i> -->
+                            <input type="password" name="password" required lay-verify="required|password" placeholder="请输入密码"
+                                autocomplete="off" class="layui-input mylayui-input" id="password">
+                        </div>
+                    </div>
+
+                    <div class="layui-row layui-form-item">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label  mylayui-form-label">确认密码：</label>
+                        </div>
+                        <div class="layui-col-md9 mylayui-form-div">
+                            <i class="iconfont icon-querenmima mylayui-input-icon"></i>
+                            <!-- <i class="iconfont icon-normal showpwd"></i> -->
+                            <input type="password" required lay-verify="required|repassword" placeholder="请确认密码" autocomplete="off"
+                                class="layui-input mylayui-input" id="repassword">
+                            
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label mylayui-form-label">性别：</label>
+                        </div>
+                        <div class="layui-col-md9">
+                            <input type="radio" name="sex" value="男" title="男" class="mylayui-input-radio" lay-filter="changcolor">
+                            <input type="radio" name="sex" value="女" title="女" class="mylayui-input-radio" checked
+                                lay-filter="changcolor">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label mylayui-form-label">生日：</label>
+                        </div>
+                        <div class="layui-col-md9">
+                            <input type="text" name="birth" id="birth" class="layui-input" autocomplete="off"
+                                placeholder="请输入您的生日" lay-verify="date">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label mylayui-form-label city">请选择您所在的城市：</label>
+                        </div>
+
+                        <div class="layui-col-md3 mylayui-form-select">
+                            <select name="province" lay-verify="required" lay-search id="province" lay-filter="provincepick">
+                                <option value="">请选择省份</option>
+                            </select>
+                        </div>
+
+                        <div class="layui-col-md3 mylayui-form-select">
+                            <select name="city" lay-verify="required" lay-search id="city" lay-filter="citypick">
+                                <option value="">请选择城市</option>
+                            </select>
+                        </div>
+
+                        <div class="layui-col-md3 mylayui-form-select">
+                            <select name="area" lay-verify="required" lay-search id="area" lay-filter="areapick">
+                                <option value="">请选择地区</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-col-md12 mylayui-form-div">
+                            <button class="layui-btn mylayui-btn" lay-submit lay-filter="login">立即注册</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-row">
+                        <div class="layui-col-md4 layui-col-md-offset8 mylayui-form-a">
+                            <a href="/merchant/login">已有账号？转去登陆</a>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},false)}">
+            <script th:src="@{/src/js/merchant/register.js}"></script>
+        </div>
+    </div>
+</body>
+
+</html>

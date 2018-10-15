@@ -32,71 +32,71 @@ public class AdminController {
     private AdminUserService adminUserService;
 
     @GetMapping("/adlogout")
-    public String adlogout(){
-        Subject subject=SecurityUtils.getSubject();
+    public String adlogout() {
+        Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return "redirect:/adm/adLogin";
     }
 
     @GetMapping("/adLogin")
-    public String adLogin(){
+    public String adLogin() {
         return "admin/login";
     }
 
     @ResponseBody
     @PostMapping("/adlogin")
-    public ResApi<String> adAdd(AdminUser adminUser,boolean rememberMe, HttpServletRequest request){
-        return adminUserService.userLogin(adminUser,request,rememberMe);
+    public ResApi<String> adAdd(AdminUser adminUser, boolean rememberMe, HttpServletRequest request) {
+        return adminUserService.userLogin(adminUser, request, rememberMe);
     }
 
     @RequiresRoles(value = {"sysAdmin", "pubAdmim"}, logical = Logical.OR)
     @GetMapping("/admin/index")
-    public String adminIndex(){
+    public String adminIndex() {
         return "admin/index";
     }
 
     @RequiresRoles("sysAdmin")
     @GetMapping("/editor/{id}")
-    public String toEditor(@PathVariable("id")Integer id, Model model){
-        model.addAttribute("user",adminUserService.userById(id));
+    public String toEditor(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("user", adminUserService.userById(id));
         return "admin/adminUser/editor";
     }
 
     @RequiresRoles("sysAdmin")
     @ResponseBody
     @PutMapping("/editor/name/{id}")
-    public ResApi<Object> edtorUsername(HttpServletRequest request,@RequestParam(value = "file",required = false) MultipartFile multipartFile,
-                                        @PathVariable("id")Integer id, AdminUser adminUser){
-        return adminUserService.editorInfo(request,multipartFile,id,adminUser);
+    public ResApi<Object> editorUsername(HttpServletRequest request, @RequestParam(value = "file", required = false) MultipartFile multipartFile,
+                                         @PathVariable("id") Integer id, AdminUser adminUser) {
+        return adminUserService.editorInfo(request, multipartFile, id, adminUser);
     }
 
     @RequiresRoles("sysAdmin")
     @ResponseBody
     @PostMapping("/verify/email")
-    public ResApi<Object> verifyEmail(String fEmail){
+    public ResApi<Object> verifyEmail(String fEmail) {
         return adminUserService.isEmail(fEmail);
     }
 
     @RequiresRoles("sysAdmin")
     @ResponseBody
     @GetMapping("/verify/email/send")
-    public ResApi<Object> emailSend(@RequestParam("email")String email,
-                                    @RequestParam("account")String account){
-        return adminUserService.sendEmail(email,"膳食膳房——Manage 管理员邮箱绑定", "邮箱绑定",account);
+    public ResApi<Object> emailSend(@RequestParam("email") String email,
+                                    @RequestParam("account") String account) {
+        return adminUserService.sendEmail(email, "膳食膳房——Manage 管理员邮箱绑定", "邮箱绑定", account);
     }
 
     @RequiresRoles("sysAdmin")
     @ResponseBody
     @PutMapping("/verify/email/{id}")
-    public ResApi<Object> editorEmail(@PathVariable("id")Integer id,AdminUser adminUser){
-        return adminUserService.editorEmail(id,adminUser);
+    public ResApi<Object> editorEmail(@PathVariable("id") Integer id, AdminUser adminUser) {
+        return adminUserService.editorEmail(id, adminUser);
     }
 
     @RequiresRoles("sysAdmin")
     @ResponseBody
     @PutMapping("/reset/{id}")
-    public ResApi<Object> resetPwd(@RequestParam("isRe")Boolean isRe,@RequestParam("prePassword")String prePassword,@PathVariable("id")Integer id,AdminUser adminUser){
-        return adminUserService.resetPwd(isRe,id,adminUser,prePassword);
+    public ResApi<Object> resetPwd(@RequestParam("isRe") Boolean isRe, @RequestParam("prePassword") String prePassword, @PathVariable("id") Integer id, AdminUser adminUser) {
+        return adminUserService.resetPwd(isRe, id, adminUser, prePassword);
     }
 
 }

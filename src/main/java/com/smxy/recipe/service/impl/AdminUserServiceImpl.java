@@ -216,7 +216,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         for (int i=0;i<adminRoles.size();i++){
             int flag=0;
             for (int j=0;j<include.getAdminUserRoles().size();j++){
-                if (adminRoles.get(i).getFId()==include.getAdminUserRoles().get(j).getAdminRole().getFId()){
+                if (adminRoles.get(i).getFId().equals(include.getAdminUserRoles().get(j).getAdminRole().getFId())){
                     flag++;
                     break;
                 }

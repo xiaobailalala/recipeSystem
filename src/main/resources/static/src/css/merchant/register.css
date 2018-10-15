@@ -1,0 +1,223 @@
+html,
+body,
+div,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ol,
+form,
+input,
+textarea,
+th,
+td,
+select {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+    color: #333;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    color: #232323;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+input,
+textarea {
+    outline: none;
+    border: none;
+}
+
+textarea {
+    resize: none;
+    overflow: auto;
+}
+
+/* 蒙版div的样式 */
+/* #masking{
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(255, 184, 0, 0.5);
+} */
+.container {
+    height: 100%;
+}
+
+.left-banner {
+    position: absolute;
+    left: 0px;
+    width: 35%;
+    min-height: 100%;
+    background-color: #FFB800;
+}
+
+.banner-logo-div:nth-of-type(2) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -200px;
+    width: 400px;
+    height: 146px;
+}
+
+#banner-logo {
+    width: 100%;
+    height: 100%;
+}
+
+.banner-title {
+    color: #000000;
+    text-align: center;
+    width: 200px;
+    margin: 0px auto;
+    padding-top: 20px;
+}
+
+.banner-logo-div:nth-of-type(3) {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    margin-left: -75px;
+    width: 150px;
+    height: 50px;
+}
+
+#banner-logo-smile {
+    width: 100%;
+    height: 100%;
+}
+
+.right-div {
+    margin-left: 35%;
+    width: 65%;
+    height: 100%;
+    position: relative;
+}
+
+.right-form-div {
+    width: 500px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -250px;
+    position: absolute;
+
+}
+
+.right-form-div>.project-title>h1 {
+    text-align: center;
+    padding-bottom: 50px;
+    color: #000000;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    margin-bottom: 30px;
+}
+
+.mylayui-form-label {
+    width: 100px;
+}
+.city{
+    text-align: left;
+    width: 100%;
+}
+
+.mylayui-form-div {
+    position: relative;
+}
+
+.mylayui-form-div>.mylayui-input-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    line-height: 38px;
+    display: inline-block;
+    font-size: 18px;
+}
+
+/* 显示密码 */
+/* i.showpwd{
+    position: absolute;
+    right: 0px;
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    line-height: 38px;
+    display: inline-block;
+    font-size: 18px;
+} */
+
+.mylayui-input {
+    padding-left: 38px;
+}
+
+.mylayui-form-div>.mylayui-btn{
+    width: 100%;
+    background-color: #000000;
+}
+
+.mylayui-form-select{
+    padding-right: 5px;
+}
+.mylayui-form-a{
+    text-align: right;
+}
+/* layui 默认样式修改 */
+.layui-form-radio>i:hover,
+.layui-form-radioed>i {
+    color: #000000;
+}
+
+.layui-form-select dl dd.layui-this{
+    background-color: #000000;
+}
+

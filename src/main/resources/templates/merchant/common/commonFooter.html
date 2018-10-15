@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<div th:fragment="onloadJs(scripts,isDiv)">
+    <div class="footer" th:style="${!isDiv ? 'display:none;':'display:block;'}">
+        <div class="foot-link">
+            <ul>
+                <li><a href="">关于膳食膳房</a></li><i class="iconfont icon-dot"></i>
+                <li><a href="">在膳食膳房工作</a></li><i class="iconfont icon-dot"></i>
+                <li><a href="">意见反馈</a></li><i class="iconfont icon-dot"></i>
+                <li><a href="">友情链接</a></li><i class="iconfont icon-dot"></i>
+                <li><a href="">神秘页面</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <script th:src="@{/assets/js/jquery.min.js}"></script>
+        <script th:src="@{/assets/layui/layui.js}"></script>
+        <!-- 模板外部link -->
+        <th:block th:replace="${scripts}" />
+    </div>
+</div>
+</html>

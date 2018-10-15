@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="~{merchant/common/commonHeader::header('Recipe Merchant',~{::link})}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/index.css}">
+</head>
+
+
+<body>
+    <div class="container">
+
+        <div class="header">
+            <div class="layui-main header-middle">
+                <div class="mylayui-div-inline-block">
+                    <a href="/" class="logo"><img th:src="@{/src/images/merchant/logo-dark-smile.png}" alt="">
+                    </a>
+                </div>
+
+                <div class="mylayui-div-inline-block mylayui-div-control">
+                    <ul class="layui-nav mylayui-bg-recipe-yellow mylayui-head-nav">
+                        <li class="layui-nav-item mylayui-nav-item">
+                            <a href="javascript:;" class="mylayui-nav-a">我的订单<span class="layui-badge layui-bg-cyan">99+</span></a>
+                        </li>
+                        <li class="layui-nav-item mylayui-nav-item">
+                            <a href="javascript:;" class="mylayui-nav-a"><span class="layui-icon layui-icon-cellphone"></span>
+                                下载手机端</a>
+                        </li>
+                        <li class="layui-nav-item mylayui-nav-item">
+                            <a href=""><img src="./images/timg.jpg" class="layui-nav-img">我</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">修改信息</a></dd>
+                                <dd><a href="javascript:;">安全管理</a></dd>
+                                <dd><a href="javascript:;">退了</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-nav">
+            <div class="layui-main mylayui-main">
+                <div class="top-nav-middle">
+                    <ul class="layui-nav mylayui-bg-recipe-yellow-dark mylayui-top-nav" lay-filter="">
+                        <li class="layui-nav-item mylayui-nav-item">
+                            <a href="javascript:;" class="mylayui-nav-a">首页</a>
+                        </li>
+                        <span style="vertical-align: middle;color: black;">|</span>
+                        <li class="layui-nav-item mylayui-nav-item">
+                            <a href="javascript:;" class="mylayui-nav-a">商品列表</a>
+                        </li>
+                        <span style="vertical-align: middle;color: black;">|</span>
+                        <li class="layui-nav-item mylayui-nav-item">
+                            <a href="javascript:;" class="mylayui-nav-a">商品列表</a>
+                        </li>
+                        <span style="vertical-align: middle;color: black;">|</span>
+                        <li class="layui-nav-item mylayui-nav-item">
+                            <a href="javascript:;" class="mylayui-nav-a">商品列表</a>
+                        </li>
+                        <div class="mylayui-div-control">
+                            <form class="layui-form mylayui-from-search" action="">
+                                <div class="mylayui-form-div">
+                                    <label class="mylayui-form-label">搜索商品</label>
+                                    <div class="mylayui-div-control">
+                                        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题"
+                                            autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="mylayui-form-div">
+                                    <div class="mylayui-div-control">
+                                        <button class="layui-btn btn-search" lay-submit lay-filter=""><i class="layui-icon layui-icon-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-main carousel-div">
+            <div class="layui-carousel" id="produce-carousel">
+                <div carousel-item>
+                    <div class="produce-item"><a href=""><img src="./images/lajiao.jpg" alt=""></a></div>
+                    <div class="produce-item"><a href=""><img src="./images/midiexiang.jpg" alt=""></a></div>
+                    <div class="produce-item"><a href=""><img src="./images/jidan.jpg" alt=""></a></div>
+                    <div class="produce-item"><a href=""><img src="./images/tongxinfen.jpg" alt=""></a></div>
+                    <div class="produce-item"><a href=""><img src="./images/head-bg.jpg" alt=""></a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="layui-main produce-list-sell">
+                <fieldset class="layui-elem-field mylayui-elem-field">
+                    <legend>收藏较多的商品</legend>
+                    <div class="layui-field-box mylayui-field-box">
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                jj
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="layui-main produce-list-mark">
+                <fieldset class="layui-elem-field mylayui-elem-field">
+                    <legend>购买较多的商品</legend>
+                    <div class="layui-field-box mylayui-field-box">
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                jj
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                        <div class="layui-card mylayui-card">
+                            <div class="mylayui-card-img">
+                                <a href=""><img src="./images/tongxinfen.jpg" alt=""></a>
+                            </div>
+                            <div class="layui-card-header"><a href="">卡片面板</a></div>
+                            <div class="layui-card-body mylayui-card-body">
+                                卡片式面板面板通常用于非白色背景色的主体内<br>
+                                从而映衬出边框投影
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},true)}">
+            <script th:src="@{/src/js/merchant/index.js}"></script>
+        </div>
+    </div>
+</body>
+</html>
