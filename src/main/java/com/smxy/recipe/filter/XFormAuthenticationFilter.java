@@ -48,7 +48,7 @@ public class XFormAuthenticationFilter extends FormAuthenticationFilter {
         } else {
 // 判断session里是否有用户信息
             if (httpRequest.getHeader("X-Requested-With") != null
-                    && httpRequest.getHeader("X-Requested-With").equalsIgnoreCase("XMLHttpRequest")) {
+                    && "XMLHttpRequest".equalsIgnoreCase(httpRequest.getHeader("X-Requested-With"))) {
 // 如果是ajax请求响应头会有，x-requested-with
                 httpResponse.sendError(HttpStatus.UNAUTHORIZED.value());
 

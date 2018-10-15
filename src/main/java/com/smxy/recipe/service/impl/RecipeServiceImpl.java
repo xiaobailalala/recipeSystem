@@ -71,7 +71,7 @@ public class RecipeServiceImpl implements RecipeService {
         AdminUser adminUser = (AdminUser) request.getSession().getAttribute("aduser");
         recipe.setFUid(adminUser.getFId());
         recipe.setFRelease(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
-        recipe.setFCover(ToolsApi.multipartFile_upload_file(file, null));
+        recipe.setFCover(ToolsApi.multipartFileUploadFile(file, null));
         int saveRecipe = recipeDao.saveInfo(recipe);
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
         if (saveRecipe > 0) {
@@ -92,7 +92,7 @@ public class RecipeServiceImpl implements RecipeService {
                 if (processImg[i] == null || processImg[i].getSize() == 0) {
                     fileName = null;
                 } else {
-                    fileName = ToolsApi.multipartFile_upload_file(processImg[i], null);
+                    fileName = ToolsApi.multipartFileUploadFile(processImg[i], null);
                 }
                 processDao.saveInfo(new Process(recipe.getFId(), stepContent[i], stepTime[i], fileName));
             }
@@ -116,13 +116,13 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public ResApi<Object> deleteInfo(Integer id) {
         Recipe recipe = recipeDao.getInfoById(id);
-        ToolsApi.multipartFile_delete_file(recipe.getFCover());
+        ToolsApi.multipartFileDeleteFile(recipe.getFCover());
         recipe.getProcesses().forEach(item -> {
             if (item.getFCover()!=null){
-                ToolsApi.multipartFile_delete_file(item.getFCover());
+                ToolsApi.multipartFileDeleteFile(item.getFCover());
             }
             if (item.getFVoice()!=null){
-                ToolsApi.multipartFile_delete_file(item.getFVoice());
+                ToolsApi.multipartFileDeleteFile(item.getFVoice());
             }
         });
         processDao.deleteInfoByRid(id);
@@ -181,8 +181,8 @@ public class RecipeServiceImpl implements RecipeService {
                                      String[] stepContent, String[] stepTime, Integer[] stepPreid, HttpServletRequest request) {
         recipe.setFId(id);
         if (file.getSize() != 0) {
-            ToolsApi.multipartFile_delete_file(recipe.getFCover());
-            recipe.setFCover(ToolsApi.multipartFile_upload_file(file, null));
+            ToolsApi.multipartFileDeleteFile(recipe.getFCover());
+            recipe.setFCover(ToolsApi.multipartFileUploadFile(file, null));
         }
         recipeClassifyDao.deleteInfoByRid(id);
         for (Integer item : twoArr) {
@@ -205,10 +205,10 @@ public class RecipeServiceImpl implements RecipeService {
                 hasProcesses.add(item);
             } else {
                 if (item.getFCover()!=null){
-                    ToolsApi.multipartFile_delete_file(item.getFCover());
+                    ToolsApi.multipartFileDeleteFile(item.getFCover());
                 }
                 if (item.getFVoice()!=null){
-                    ToolsApi.multipartFile_delete_file(item.getFVoice());
+                    ToolsApi.multipartFileDeleteFile(item.getFVoice());
                 }
             }
         });
@@ -227,7 +227,7 @@ public class RecipeServiceImpl implements RecipeService {
                 if (processImg[i] == null || processImg[i].getSize() == 0) {
                     fileName = null;
                 } else {
-                    fileName = ToolsApi.multipartFile_upload_file(processImg[i], null);
+                    fileName = ToolsApi.multipartFileUploadFile(processImg[i], null);
                 }
             } else {
                 fileName = customFilename;

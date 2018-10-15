@@ -101,7 +101,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
         for (int i=0;i<adminPermissions.size();i++){
             int flag=0;
             for (int j=0;j<include.getAdminRolePermissions().size();j++){
-                if (adminPermissions.get(i).getFId()==include.getAdminRolePermissions().get(j).getAdminPermission().getFId()){
+                if (adminPermissions.get(i).getFId().equals(include.getAdminRolePermissions().get(j).getAdminPermission().getFId())){
                     flag++;
                     break;
                 }

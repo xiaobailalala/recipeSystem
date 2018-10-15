@@ -21,7 +21,7 @@ public class CommonController {
     @PostMapping("/test")
     public Map<String, Object> test(@RequestParam("file")MultipartFile multipartFile) {
         Map<String, Object> map=new HashMap<>();
-        map.put("result", ToolsApi.multipartFile_upload_file(multipartFile, null));
+        map.put("result", ToolsApi.multipartFileUploadFile(multipartFile, null));
         return map;
     }
 

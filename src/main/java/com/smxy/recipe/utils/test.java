@@ -19,10 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class test {
-    public static void main(String[] args) {
-        Timer timer = new Timer();
-        timer.schedule(new GetDataTask(),0,3000);
-    }
     static String[] getArr(String cmd){
         InputStream fis = null;
         Process process = null;

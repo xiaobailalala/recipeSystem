@@ -33,14 +33,14 @@ public class CommonUserServiceImpl implements CommonUserService {
 	private CommonUserDao commonUserDao;
 
 	@Override
-	public ResApi<CommonUser> commonUserLogin(CommonUser common_user) {
+	public ResApi<CommonUser> commonUserLogin(CommonUser commonUser) {
 		// TODO Auto-generated method stub
 		ResApi<CommonUser> resApi;
-		if (commonUserDao.isUser(common_user)>0) {
-			common_user.setFPassword(ToolsApi.toMD5(common_user.getFPassword()));
-			common_user=commonUserDao.isLogin(common_user);
-			if (common_user!=null) {
-				resApi=new ResApi<>(200,"登录成功",common_user);
+		if (commonUserDao.isUser(commonUser)>0) {
+			commonUser.setFPassword(ToolsApi.toMD5(commonUser.getFPassword()));
+			commonUser=commonUserDao.isLogin(commonUser);
+			if (commonUser!=null) {
+				resApi=new ResApi<>(200,"登录成功",commonUser);
 			}else {
 				resApi=new ResApi<>(401,"密码不正确",null);
 			}
@@ -51,16 +51,16 @@ public class CommonUserServiceImpl implements CommonUserService {
 	}
 
 	@Override
-	public ResApi<String> commonUserReg(CommonUser common_user) {
+	public ResApi<String> commonUserReg(CommonUser commonUser) {
 		// TODO Auto-generated method stub
 		ResApi<String> resApi;
-		if (commonUserDao.isUser(common_user)>0) {
+		if (commonUserDao.isUser(commonUser)>0) {
 			resApi=new ResApi<>(402,"该用户已存在。",null);
 		}else {
-			common_user.setFPassword(ToolsApi.toMD5(common_user.getFPassword()));
-			if (commonUserDao.saveUser(common_user)>0) {
-				common_user.setFUsername("膳客"+common_user.getFId());
-				if (commonUserDao.updateUserInfo(common_user)>0) {
+			commonUser.setFPassword(ToolsApi.toMD5(commonUser.getFPassword()));
+			if (commonUserDao.saveUser(commonUser)>0) {
+				commonUser.setFUsername("膳客"+commonUser.getFId());
+				if (commonUserDao.updateUserInfo(commonUser)>0) {
 					resApi=new ResApi<>(200,"注册成功",null);
 				}else {
 					resApi=new ResApi<>(401,"生成用户名失败。",null);
@@ -76,7 +76,7 @@ public class CommonUserServiceImpl implements CommonUserService {
 	public ResApi<String> commonUsersaveHead(MultipartFile file,int img,String preImg) {
 		// TODO Auto-generated method stub
 		if (ToolsApi.imgLimit(ToolsApi.suffixName(file.getOriginalFilename()))) {
-			String name = ToolsApi.multipartFile_upload_file(file, null);
+			String name = ToolsApi.multipartFileUploadFile(file, null);
 			return new ResApi<>(200,"success",name);
 		}else {
 			return new ResApi<>(400,"头像上传失败",null);
@@ -84,11 +84,11 @@ public class CommonUserServiceImpl implements CommonUserService {
 	}
 
 	@Override
-	public ResApi<CommonUser> commonUserSaveInfo(CommonUser common_user) {
+	public ResApi<CommonUser> commonUserSaveInfo(CommonUser commonUser) {
 		// TODO Auto-generated method stub
-		int res=commonUserDao.updateUserInfo(common_user);
+		int res=commonUserDao.updateUserInfo(commonUser);
 		if (res>0) {
-			return new ResApi<>(200,"保存成功",common_user);
+			return new ResApi<>(200,"保存成功",commonUser);
 		}else {
 			return new ResApi<>(400,"保存失败",null);
 		}

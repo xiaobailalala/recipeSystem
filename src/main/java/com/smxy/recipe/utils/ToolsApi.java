@@ -78,7 +78,7 @@ public class ToolsApi {
 		return result;
 	}
 
-	public static String multipartFile_upload_file(MultipartFile file, NameValuePair[] pairs){
+	public static String multipartFileUploadFile(MultipartFile file, NameValuePair[] pairs){
 		try {
 			InputStream inputStream = file.getInputStream();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -88,7 +88,7 @@ public class ToolsApi {
 				bos.write(bs);
 			}
 			inputStream.close();
-			String res = FastDFSClient.upload_binary_file(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
+			String res = FastDFSClient.uploadBinaryFile(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
 			return res;
 		}catch (Exception e){
 			e.printStackTrace();
@@ -96,9 +96,9 @@ public class ToolsApi {
 		return "failed";
 	}
 
-	public static int multipartFile_delete_file(String fileName){
+	public static int multipartFileDeleteFile(String fileName){
 		try {
-			return FastDFSClient.delete_file(fileName);
+			return FastDFSClient.deleteFile(fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -225,7 +225,7 @@ public class ToolsApi {
 	}
 	public static String reName(String file) {
 		int index = file.lastIndexOf(".");
-		String name = new Date().getTime() + "" + new Random().nextInt(1001)
+		String name = System.currentTimeMillis() + "" + new Random().nextInt(1001)
 				+ file.substring(index);
 		return name;
 	}
@@ -234,23 +234,23 @@ public class ToolsApi {
 		return file.substring(index + 1);
 	}
 	public static boolean imgLimit(String suffix) {
-		if(suffix.equalsIgnoreCase("gif") || suffix.equalsIgnoreCase("jpeg")
-				|| suffix.equalsIgnoreCase("jpg") || suffix.equalsIgnoreCase("png")
-				|| suffix.equalsIgnoreCase("svg")) {
+		if("gif".equalsIgnoreCase(suffix) || "jpeg".equalsIgnoreCase(suffix)
+				|| "jpg".equalsIgnoreCase(suffix) || "png".equalsIgnoreCase(suffix)
+				|| "svg".equalsIgnoreCase(suffix)) {
 			return true;
 		}else {
 			return false;
 		}
 	}
 	public static boolean excelLimit(String suffix) {
-		if(suffix.equalsIgnoreCase("xls")) {
+		if("xls".equalsIgnoreCase(suffix)) {
 			return true;
 		}else {
 			return false;
 		}
 	}
 	public static boolean fileLimit(String suffix) {
-		if(!suffix.equalsIgnoreCase("php")) {
+		if(!"php".equalsIgnoreCase(suffix)) {
 			return true;
 		}else {
 			return false;

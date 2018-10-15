@@ -103,9 +103,9 @@ public class AdminUserServiceImpl implements AdminUserService {
                 return new ResApi<>(501,"failed",false);
             }
         }else{
-            ToolsApi.multipartFile_delete_file(adminUser.getFHead());
+            ToolsApi.multipartFileDeleteFile(adminUser.getFHead());
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
-                String name=ToolsApi.multipartFile_upload_file(multipartFile,null);
+                String name=ToolsApi.multipartFileUploadFile(multipartFile,null);
                 adminUser.setFHead(name);
                 if (adminUserDao.updateInfoByFid(adminUser)>0){
                     request.getSession().setAttribute("aduser",adminUserDao.getAdminUserByFid(adminUser.getFId()));
@@ -216,7 +216,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         for (int i=0;i<adminRoles.size();i++){
             int flag=0;
             for (int j=0;j<include.getAdminUserRoles().size();j++){
-                if (adminRoles.get(i).getFId()==include.getAdminUserRoles().get(j).getAdminRole().getFId()){
+                if (adminRoles.get(i).getFId().equals(include.getAdminUserRoles().get(j).getAdminRole().getFId())){
                     flag++;
                     break;
                 }

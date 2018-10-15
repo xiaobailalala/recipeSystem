@@ -75,7 +75,7 @@ public class Baidu_TTSApi {
         String result = null;
         if (data != null) {
             try {
-                result = FastDFSClient.upload_binary_file(data, "mp3", null);
+                result = FastDFSClient.uploadBinaryFile(data, "mp3", null);
 //              Util.writeBytesToFileSystem(data, "output.mp3");
             } catch (Exception e) {
                 e.printStackTrace();

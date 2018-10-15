@@ -85,7 +85,7 @@ public class AiMarkServiceImpl implements AiMarkService {
     public ResApi<Object> updateInfo(Integer id, AiMark aiMark) {
         aiMark.setFId(id);
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
-        ToolsApi.multipartFile_delete_file(aiMark.getFVoice());
+        ToolsApi.multipartFileDeleteFile(aiMark.getFVoice());
         aiMark.setFVoice(Baidu_TTSApi.sendVoiceData(aiMark.getFContent()));
         if (aiMarkDao.updateInfoById(aiMark)>0){
             resApi = new ResApi<>(200, "success", "success");
