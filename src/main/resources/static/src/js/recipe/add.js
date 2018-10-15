@@ -371,7 +371,10 @@ $(function () {
                 onImg(this.files[0]);
             }
         });
+<<<<<<< HEAD
+=======
 
+>>>>>>> 2d27fcacd9fa26633afcd43b7ab8028b9c24a055
         function onImg(data) {
             var fs = new FileReader();
             fs.readAsDataURL(data);

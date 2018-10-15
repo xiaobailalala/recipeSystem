@@ -97,7 +97,10 @@ public class ToolsApi {
 	}
 
 	public static int multipartFileDeleteFile(String fileName){
-		try {
+        /**
+         * FastDFS 成功返回值为1，失败不返回，故这里返回值为2以示失败
+         */
+        try {
 			return FastDFSClient.deleteFile(fileName);
 		} catch (Exception e) {
 			e.printStackTrace();

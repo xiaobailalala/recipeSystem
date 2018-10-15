@@ -26,4 +26,5 @@ public final class MerchantProduct {
 	private String fCover;
 	private Integer fGood;
 	private double fPrice;
+	private String fCategory;
 }
