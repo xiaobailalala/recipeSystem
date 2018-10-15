@@ -25,22 +25,22 @@ public class CommonUserMobController {
     private CommonUserService commonUserService;
 
     /**
-     * @param common_user 用户实体类
+     * @param commonUser 用户实体类
      * @param request
      * @return
      */
     @PostMapping("/commonUserLogin")
-    public ResApi<CommonUser> commonUserLogin(CommonUser common_user, HttpServletRequest request){
-        return commonUserService.commonUserLogin(common_user);
+    public ResApi<CommonUser> commonUserLogin(CommonUser commonUser, HttpServletRequest request){
+        return commonUserService.commonUserLogin(commonUser);
     }
 
     /**
-     * @param common_user 用户实体类
+     * @param commonUser 用户实体类
      * @return
      */
     @PostMapping("/commonUserReg")
-    public ResApi<String> commonUserReg(CommonUser common_user){
-        return commonUserService.commonUserReg(common_user);
+    public ResApi<String> commonUserReg(CommonUser commonUser){
+        return commonUserService.commonUserReg(commonUser);
     }
 
     /**
@@ -55,11 +55,11 @@ public class CommonUserMobController {
     }
 
     /**
-     * @param common_user 用户实体类
+     * @param commonUser 用户实体类
      * @return
      */
     @PostMapping("/commonUserSaveInfo")
-    public ResApi<CommonUser> commonUserSaveInfo(CommonUser common_user){
-        return commonUserService.commonUserSaveInfo(common_user);
+    public ResApi<CommonUser> commonUserSaveInfo(CommonUser commonUser){
+        return commonUserService.commonUserSaveInfo(commonUser);
     }
 }

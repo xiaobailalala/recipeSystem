@@ -49,7 +49,7 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
             resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
         }else{
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
-                String name = ToolsApi.multipartFile_upload_file(multipartFile, null);
+                String name = ToolsApi.multipartFileUploadFile(multipartFile, null);
                 classifyTwo.setFCover(name);
                 if (classifyTwoDao.saveInfo(classifyTwo)>0){
                     resApi=new ResApi<>(200,"success","success");
@@ -89,9 +89,9 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
                 resApi=new ResApi<>(200,"success","success");
             }
         }else{
-            ToolsApi.multipartFile_delete_file(classifyTwo.getFCover());
+            ToolsApi.multipartFileDeleteFile(classifyTwo.getFCover());
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
-                String name = ToolsApi.multipartFile_upload_file(multipartFile, null);
+                String name = ToolsApi.multipartFileUploadFile(multipartFile, null);
                 classifyTwo.setFCover(name);
                 if (classifyTwoDao.updateInfo(classifyTwo)>0){
                     resApi=new ResApi<>(200,"success","success");

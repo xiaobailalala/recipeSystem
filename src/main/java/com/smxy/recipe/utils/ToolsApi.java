@@ -78,7 +78,7 @@ public class ToolsApi {
 		return result;
 	}
 
-	public static String multipartFile_upload_file(MultipartFile file, NameValuePair[] pairs){
+	public static String multipartFileUploadFile(MultipartFile file, NameValuePair[] pairs){
 		try {
 			InputStream inputStream = file.getInputStream();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -88,7 +88,7 @@ public class ToolsApi {
 				bos.write(bs);
 			}
 			inputStream.close();
-			String res = FastDFSClient.upload_binary_file(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
+			String res = FastDFSClient.uploadBinaryFile(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
 			return res;
 		}catch (Exception e){
 			e.printStackTrace();
@@ -96,12 +96,12 @@ public class ToolsApi {
 		return "failed";
 	}
 
-	public static int multipartFile_delete_file(String fileName){
-		/**
-		 * FastDFS 成功返回值为1，失败不返回，故这里返回值为2以示失败
-		 */
-		try {
-			return FastDFSClient.delete_file(fileName);
+	public static int multipartFileDeleteFile(String fileName){
+        /**
+         * FastDFS 成功返回值为1，失败不返回，故这里返回值为2以示失败
+         */
+        try {
+			return FastDFSClient.deleteFile(fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -238,23 +238,23 @@ public class ToolsApi {
 		return file.substring(index + 1);
 	}
 	public static boolean imgLimit(String suffix) {
-		if(suffix.equalsIgnoreCase("gif") || suffix.equalsIgnoreCase("jpeg")
-				|| suffix.equalsIgnoreCase("jpg") || suffix.equalsIgnoreCase("png")
-				|| suffix.equalsIgnoreCase("svg")) {
+		if("gif".equalsIgnoreCase(suffix) || "jpeg".equalsIgnoreCase(suffix)
+				|| "jpg".equalsIgnoreCase(suffix) || "png".equalsIgnoreCase(suffix)
+				|| "svg".equalsIgnoreCase(suffix)) {
 			return true;
 		}else {
 			return false;
 		}
 	}
 	public static boolean excelLimit(String suffix) {
-		if(suffix.equalsIgnoreCase("xls")) {
+		if("xls".equalsIgnoreCase(suffix)) {
 			return true;
 		}else {
 			return false;
 		}
 	}
 	public static boolean fileLimit(String suffix) {
-		if(!suffix.equalsIgnoreCase("php")) {
+		if(!"php".equalsIgnoreCase(suffix)) {
 			return true;
 		}else {
 			return false;

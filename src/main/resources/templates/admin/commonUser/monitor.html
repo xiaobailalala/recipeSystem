@@ -46,11 +46,44 @@
                                 <div id="fireMonitor" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                             </div>
                             <div class="col-sm-4">
-                                <div class="text-center" style="font-size: 18px;color: #333333;fill: #333333;">异常报表</div>
+                                <div class="text-center" style="font-size: 18px;color: #333333;fill: #333333;">异常报表
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>时间</th>
+                                        <th>正常值</th>
+                                        <th>异常值</th>
+                                        <th>异常率</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="fireUnusualCont"></tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="col-sm-12 padding-t-15">
-                            <button class="btn isMonitoring" type="button">用户未开启数据监控</button>
+                        <div class="form-group">
+                            <div class="col-sm-8 padding-t-15">
+                                <button class="btn isMonitoring margin-r-20" type="button">用户未开启数据监控</button>
+                                <span>
+                                    <span class="fa fa-genderless"></span>
+                                    监控数值 <span class="fa fa-long-arrow-right"></span>
+                                    <span class="text-success padding-r-10">
+                                        正常数值：
+                                        <span class="label label-success">30℃</span>
+                                    </span>
+                                    <span class="text-info padding-r-20">
+                                        当前数值：
+                                        <span class="label label-default">30℃</span>
+                                    </span>
+                                    <span class="fa fa-genderless"></span>
+                                    监控时间 <span class="fa fa-long-arrow-right"></span>
+                                    <span>2015-05-05 22:22:22</span>
+                                </span>
+                            </div>
+                            <div class="col-sm-4 padding-t-15">
+                                <button type="button" class="btn btn-info historyFireData">历史报表</button>&nbsp;
+                                <button type="button" class="btn btn-warning clearFireData">清空</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,11 +104,44 @@
                                 <div id="smogMonitor" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                             </div>
                             <div class="col-sm-4">
-                                <div class="text-center" style="font-size: 18px;color: #333333;fill: #333333;">异常报表</div>
+                                <div class="text-center" style="font-size: 18px;color: #333333;fill: #333333;">异常报表
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>时间</th>
+                                        <th>正常值</th>
+                                        <th>异常值</th>
+                                        <th>异常率</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="smogUnusualCont"></tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="col-sm-12 padding-t-15">
-                            <button class="btn isMonitoring" type="button">用户未开启数据监控</button>
+                        <div class="form-group">
+                            <div class="col-sm-8 padding-t-15">
+                                <button class="btn isMonitoring margin-r-20" type="button">用户未开启数据监控</button>
+                                <span>
+                                    <span class="fa fa-genderless"></span>
+                                    监控数值 <span class="fa fa-long-arrow-right"></span>
+                                    <span class="text-success padding-r-10">
+                                        正常数值：
+                                        <span class="label label-success">30℃</span>
+                                    </span>
+                                    <span class="text-info padding-r-20">
+                                        当前数值：
+                                        <span class="label label-default">30℃</span>
+                                    </span>
+                                    <span class="fa fa-genderless"></span>
+                                    监控时间 <span class="fa fa-long-arrow-right"></span>
+                                    <span>2015-05-05 22:22:22</span>
+                                </span>
+                            </div>
+                            <div class="col-sm-4 padding-t-15">
+                                <button type="button" class="btn btn-info historySmogData">历史报表</button>&nbsp;
+                                <button type="button" class="btn btn-warning clearSmogData">清空</button>
+                            </div>
                         </div>
                     </div>
                 </div>

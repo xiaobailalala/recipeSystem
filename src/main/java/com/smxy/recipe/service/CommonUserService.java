@@ -17,10 +17,10 @@ import com.smxy.recipe.utils.ResApi;
  *
  */
 public interface CommonUserService {
-	ResApi<CommonUser> commonUserLogin(CommonUser common_user);
-	ResApi<String> commonUserReg(CommonUser common_user);
+	ResApi<CommonUser> commonUserLogin(CommonUser commonUser);
+	ResApi<String> commonUserReg(CommonUser commonUser);
 	ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg);
-	ResApi<CommonUser> commonUserSaveInfo(CommonUser common_user);
+	ResApi<CommonUser> commonUserSaveInfo(CommonUser commonUser);
 
     ResApi<Object> getAllInfo();
 

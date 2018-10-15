@@ -19,7 +19,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class test {
-
     static String[] getArr(String cmd){
         InputStream fis = null;
         Process process = null;

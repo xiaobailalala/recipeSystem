@@ -103,9 +103,9 @@ public class AdminUserServiceImpl implements AdminUserService {
                 return new ResApi<>(501,"failed",false);
             }
         }else{
-            ToolsApi.multipartFile_delete_file(adminUser.getFHead());
+            ToolsApi.multipartFileDeleteFile(adminUser.getFHead());
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
-                String name=ToolsApi.multipartFile_upload_file(multipartFile,null);
+                String name=ToolsApi.multipartFileUploadFile(multipartFile,null);
                 adminUser.setFHead(name);
                 if (adminUserDao.updateInfoByFid(adminUser)>0){
                     request.getSession().setAttribute("aduser",adminUserDao.getAdminUserByFid(adminUser.getFId()));

@@ -18,13 +18,13 @@ import java.util.List;
 
 public interface CommonUserDao {
 
-	Integer isUser(CommonUser common_user);
+	Integer isUser(CommonUser commonUser);
 
-	CommonUser isLogin(CommonUser common_user);
+	CommonUser isLogin(CommonUser commonUser);
 	
-	Integer saveUser(CommonUser common_user);
+	Integer saveUser(CommonUser commonUser);
 	
-	Integer updateUserInfo(CommonUser common_user);
+	Integer updateUserInfo(CommonUser commonUser);
 
 	CommonUser getInfoByIdBrief(Integer fId);
 

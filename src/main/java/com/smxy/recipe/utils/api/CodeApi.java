@@ -100,14 +100,15 @@ public class CodeApi {
         BufferedReader reader = null;
         String rs = null;
         try {
+            String currentMethod = "GET";
             StringBuffer sb = new StringBuffer();
-            if(method==null || method.equals("GET")){
+            if(method==null || method.equals(currentMethod)){
                 strUrl = strUrl+"?"+urlencode(params);
             }
             URL url = new URL(strUrl);
             conn = (HttpURLConnection) url.openConnection();
-            if(method==null || method.equals("GET")){
-                conn.setRequestMethod("GET");
+            if(method==null || method.equals(currentMethod)){
+                conn.setRequestMethod(currentMethod);
             }else{
                 conn.setRequestMethod("POST");
                 conn.setDoOutput(true);
@@ -118,7 +119,8 @@ public class CodeApi {
             conn.setReadTimeout(DEF_READ_TIMEOUT);
             conn.setInstanceFollowRedirects(false);
             conn.connect();
-            if (params!= null && method.equals("POST")) {
+            String currentMethodPost = "POST";
+            if (params!= null && method.equals(currentMethodPost)) {
                 try {
                     DataOutputStream out = new DataOutputStream(conn.getOutputStream());
                         out.writeBytes(urlencode(params));

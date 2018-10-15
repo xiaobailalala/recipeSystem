@@ -11,9 +11,14 @@ package com.smxy.recipe.config;
 
 import com.smxy.recipe.filter.XFormAuthenticationFilter;
 import com.smxy.recipe.realm.AdminShiroRealm;
+import com.smxy.recipe.realm.MerchantShiroRealm;
+import com.smxy.recipe.realm.UserModularRealmAuthenticator;
 import com.smxy.recipe.resolver.MyExceptionResolver;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -28,7 +33,9 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.Filter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -148,18 +155,37 @@ public class ShiroConfig {
      * 自定义Realm，可以多个
      */
     @Bean
-    public AdminShiroRealm myShiroRealm() {
+    public AdminShiroRealm adminShiroRealm() {
         AdminShiroRealm adminShiroRealm = new AdminShiroRealm();
         adminShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return adminShiroRealm;
     }
 
     @Bean
+    public MerchantShiroRealm merchantShiroRealm(){
+        MerchantShiroRealm merchantShiroRealm = new MerchantShiroRealm();
+        merchantShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return merchantShiroRealm;
+    }
+
+    @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm());
+//        securityManager.setAuthenticator(modularRealmAuthenticator());
+//        List<Realm> realms = new ArrayList<>();
+//        realms.add(adminShiroRealm());
+//        realms.add(merchantShiroRealm());
+//        securityManager.setRealms(realms);
+        securityManager.setRealm(adminShiroRealm());
         securityManager.setRememberMeManager(cookieRememberMeManager());
         return securityManager;
+    }
+
+    @Bean
+    public ModularRealmAuthenticator modularRealmAuthenticator(){
+        UserModularRealmAuthenticator modularRealmAuthenticator = new UserModularRealmAuthenticator();
+        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        return modularRealmAuthenticator;
     }
 
     @Bean

@@ -32,16 +32,16 @@ public class FastDFSClient {
             logger.error("FastDFS Client Init Fail!",e);
         }
     }
-    public static String upload_file(String fileName, String ext_name, NameValuePair[] pairs) throws Exception{
-        return storageClient.upload_file1(fileName, ext_name, pairs);
+    public static String uploadFile(String fileName, String extName, NameValuePair[] pairs) throws Exception{
+        return storageClient.upload_file1(fileName, extName, pairs);
     }
 
-    public static int delete_file(String fileName) throws Exception {
+    public static int deleteFile(String fileName) throws Exception {
         return storageClient.delete_file1(fileName);
     }
 
-    public static String upload_binary_file(byte[] source, String ext_name, NameValuePair[] pairs) throws Exception{
-        return storageClient.upload_file1(source, ext_name, pairs);
+    public static String uploadBinaryFile(byte[] source, String extName, NameValuePair[] pairs) throws Exception{
+        return storageClient.upload_file1(source, extName, pairs);
     }
 
 }
