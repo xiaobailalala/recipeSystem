@@ -15,19 +15,24 @@ $(function () {
                     isFireOpen = true;
                     temTop = objArr[0].top;
                     if (!isFireListening) {
-                        $(".isMonitoring").addClass("btn-success").text("数据监控中");
+                        $(".isFireMonitoring").addClass("btn-success").text("数据监控中");
                         isFireListening = true;
                         isFireInit = true;
+                        $(".fireMonitorContent").css("display", "inline");
                         initFireMonitor(isFireOpen, temTop);
                     }
                 } else {
                     if (isFireListening) {
-                        $(".isMonitoring").removeClass("btn-success").text("用户未开启数据监控");
+                        $(".isFireMonitoring").removeClass("btn-success").text("用户未开启数据监控");
                         isFireListening = false;
+                        $(".fireMonitorContent").css("display", "none");
                         clearInterval(fireTimer);
                     }
                 }
                 if (!isFireInit) {
+                    if (isFireOpen) {
+                        $(".fireMonitorContent").css("display", "inline");
+                    }
                     initFireMonitor(isFireOpen, temTop);
                     isFireInit = true;
                 }
@@ -42,19 +47,24 @@ $(function () {
                     isSmogOpen = true;
                     pmTop = objArr[0].top;
                     if (!isSmogListening) {
-                        $(".isMonitoring").addClass("btn-success").text("数据监控中");
+                        $(".isSmogMonitoring").addClass("btn-success").text("数据监控中");
                         isSmogListening = true;
                         isSmogInit = true;
+                        $(".smogMonitorContent").css("display", "inline");
                         initSmogMonitor(isSmogOpen, pmTop);
                     }
                 } else {
                     if (isSmogListening) {
-                        $(".isMonitoring").removeClass("btn-success").text("用户未开启数据监控");
+                        $(".isSmogMonitoring").removeClass("btn-success").text("用户未开启数据监控");
                         isSmogListening = false;
+                        $(".smogMonitorContent").css("display", "none");
                         clearInterval(smogTimer);
                     }
                 }
                 if (!isSmogInit) {
+                    if (isSmogOpen) {
+                        $(".smogMonitorContent").css("display", "inline");
+                    }
                     initSmogMonitor(isSmogOpen, pmTop);
                     isSmogInit = true;
                 }
@@ -93,8 +103,13 @@ $(function () {
                                     y = Number(currentTem);
                                 series.addPoint([x, y], true, true);
                                 activeLastPointToolip(chart);
-                                if (y > temTop){
+                                $(".fireMonitorContent .normalContent").text(temTop + "℃");
+                                $(".fireMonitorContent .currentDateTime").text(currentDate() + " " + currentTime());
+                                if (y > temTop) {
                                     sensorUnusual(true, temTop, y);
+                                    $(".fireMonitorContent .currentContent").removeClass("label-default").addClass("label-danger").text(currentTem + "℃");
+                                } else {
+                                    $(".fireMonitorContent .currentContent").removeClass("label-danger").addClass("label-default").text(currentTem + "℃");
                                 }
                             }, 1000);
                         }
@@ -182,8 +197,13 @@ $(function () {
                                     y = Number(currentPm);
                                 series.addPoint([x, y], true, true);
                                 activeLastPointToolip(chart);
-                                if (y > pmTop){
+                                $(".smogMonitorContent .normalContent").text(pmTop + "μg/m³");
+                                $(".smogMonitorContent .currentDateTime").text(currentDate() + " " + currentTime());
+                                if (y > pmTop) {
                                     sensorUnusual(false, pmTop, y);
+                                    $(".smogMonitorContent .currentContent").removeClass("label-default").addClass("label-danger").text(currentPm + "μg/m³");
+                                } else {
+                                    $(".smogMonitorContent .currentContent").removeClass("label-danger").addClass("label-default").text(currentPm + "μg/m³");
                                 }
                             }, 1000);
                         }
@@ -248,17 +268,26 @@ $(function () {
         });
     }
 
-    function sensorUnusual(isFire, normal, unusual) {
+    function currentDate() {
         var currentDate = new Date();
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth() + 1 < 10 ? "0" + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1);
         var day = currentDate.getDate() < 10 ? "0" + currentDate.getDate() : currentDate.getDate();
+        return year + "-" + month + "-" + day;
+    }
+
+    function currentTime() {
+        var currentDate = new Date();
         var hours = currentDate.getHours() < 10 ? "0" + currentDate.getHours() : currentDate.getHours();
         var minutes = currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes();
         var seconds = currentDate.getSeconds() < 10 ? "0" + currentDate.getSeconds() : currentDate.getSeconds();
-        var date_now = year + "-" + month + "-" + day, time_now = hours + ":" + minutes + ":" + seconds;
+        return time_now = hours + ":" + minutes + ":" + seconds;
+    }
+
+    function sensorUnusual(isFire, normal, unusual) {
+        var date_now = currentDate(), time_now = currentTime();
         var showProcess = (((unusual - normal) / normal) * 100).toFixed(2);
-        var process = showProcess > 100 ? 100.00: showProcess;
+        var process = showProcess > 100 ? 100.00 : showProcess;
         var item = '<tr>\n' +
             '           <td>\n' +
             '               <section>' + date_now + '</section>\n' +
@@ -278,21 +307,204 @@ $(function () {
             '               </div>\n' +
             '           </td>\n' +
             '       </tr>';
-        if ($("." + (isFire ? "fireUnusualCont" : "smogUnusualCont") + ">tr").length >= 4){
-            $("." + (isFire ? "fireUnusualCont" : "smogUnusualCont") + ">tr").get(0).remove();
-        }
-        $("." + (isFire ? "fireUnusualCont" : "smogUnusualCont")).append(item);
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+        $.ajax({
+            url: "/sensorUnusual/info",
+            type: "POST",
+            data: {
+                fUid: id,
+                fDate: date_now,
+                fTime: time_now,
+                fNormal: normal,
+                fUnusual: unusual,
+                fProcess: showProcess,
+                fType: isFire ? "fire" : "smog"
+            },
+            success: function (res) {
+                if ($("." + (isFire ? "fireUnusualCont" : "smogUnusualCont") + ">tr").length >= 4) {
+                    $("." + (isFire ? "fireUnusualCont" : "smogUnusualCont") + ">tr").get(0).remove();
+                }
+                $("." + (isFire ? "fireUnusualCont" : "smogUnusualCont")).append(item);
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip()
+                })
+            }
+        });
     }
 
-    (function otherOperation(){
-        $(".clearFireData").click(function(){
+    (function otherOperation() {
+        $(".clearFireData").click(function () {
             $(".fireUnusualCont").html("");
         });
-        $(".clearSmogData").click(function(){
+        $(".clearSmogData").click(function () {
             $(".smogUnusualCont").html("");
         });
+        $(".historyFireData").click(function () {
+            historyDateRender(true);
+        });
+        $(".historySmogData").click(function () {
+            historyDateRender(false);
+        });
+        $("body").on("change", ".fireDateSelect", function () {
+            var date = $(this).val();
+            if (date !== "0") {
+                historyDataRender(true, date);
+            }
+        });
+        $("body").on("change", ".smogDateSelect", function () {
+            var date = $(this).val();
+            if (date !== "0") {
+                historyDataRender(false, date);
+            }
+        });
     }());
+
+    function historyDateRender(isFire) {
+        $.ajax({
+            url: "/sensorUnusual/showDate",
+            type: "GET",
+            data: {
+                fType: isFire ? "fire" : "smog",
+                fUid: id,
+            },
+            success: function (res) {
+                var option = '<option value="0">请选择报表日期</option>';
+                res.data.dateList.forEach(function (item, index) {
+                    option += '<option value="' + item.fdate + '">' + item.fdate + '</option>';
+                });
+                var div = '<div class="modal fade" id="detailInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">\n' +
+                    '        <div class="modal-dialog" role="document">\n' +
+                    '            <div class="modal-content">\n' +
+                    '                <div class="modal-header">\n' +
+                    '                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
+                    '                    <h4 class="modal-title" id="myModalLabel">' + (isFire ? '火力' : '烟雾') + '传感器监控异常数据</h4>\n' +
+                    '                </div>\n' +
+                    '                <div class="modal-body">\n ' +
+                    '                     <form class="form-inline margin-b-10">' +
+                    '                         <div class="form-group">' +
+                    '                             <label for="">异常时间&emsp;</label>' +
+                    '                             <select class="form-control ' + (isFire ? 'fireDateSelect' : 'smogDateSelect') + '">' + option +
+                    '                             </select>' +
+                    '                             <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#detailMonitorData"' +
+                    '                             aria-expanded="false" aria-controls="detailMonitorData">详细数据</button>' +
+                    '                         </div>' +
+                    '                     </form>' +
+                    '                     <div id="reportContainer" style="min-width:400px;height:400px"></div>' +
+                    '                     <div class="collapse" id="detailMonitorData">' +
+                    '                         <table class="table">' +
+                    '                               <thead>' +
+                    '                                   <tr>' +
+                    '                                       <th>时间</th>' +
+                    '                                       <th>正常值</th>' +
+                    '                                       <th>异常值</th>' +
+                    '                                       <th>异常率</th>' +
+                    '                                   </tr>' +
+                    '                               </thead>' +
+                    '                               <tbody class="' + (isFire ? 'historyFireCont' : 'historySmogCont') + '"></tbody>' +
+                    '                         </table>' +
+                    '                     </div>' +
+                    '                </div>\n' +
+                    '                <div class="modal-footer">\n' +
+                    '                    <button type="button" class="btn btn-light" data-dismiss="modal">关闭</button>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '    </div>';
+                $("#temporaryContainer").html(div);
+                $("#detailInfoModal").modal("show");
+            }
+        });
+    }
+
+    function historyDataRender(isFire, date) {
+        var list = '';
+        $.ajax({
+            url: "/sensorUnusual/getDataByUidAndTypeAndDate",
+            type: "POST",
+            data: {
+                fType: isFire ? "fire" : "smog",
+                fUid: id,
+                fDate: date
+            },
+            success: function (res) {
+                var arrData = [{name: "0~3%", y: 0}, {name: "4%~8%", y: 0}, {name: "9~15%", y: 0}, {
+                    name: "16%~30%",
+                    y: 0
+                }, {name: "31%~50%", y: 0}, {name: "50%以上", y: 0}];
+                var scope1 = 0, scope2 = 0, scope3 = 0, scope4 = 0, scope5 = 0, scope6 = 0;
+                res.data.list.forEach(function (item, index) {
+                    if (item.fprocess >= 0 && item.fprocess < 4) {
+                        scope1++;
+                    } else if (item.fprocess >= 4 && item.fprocess < 9) {
+                        scope2++;
+                    } else if (item.fprocess >= 9 && item.fprocess < 16) {
+                        scope3++;
+                    } else if (item.fprocess >= 16 && item.fprocess < 31) {
+                        scope4++;
+                    } else if (item.fprocess >= 31 && item.fprocess < 51) {
+                        scope5++;
+                    } else {
+                        scope6++;
+                    }
+                    var showProcess = (((item.funusual - item.fnormal) / item.fnormal) * 100).toFixed(2);
+                    list += '<tr>\n' +
+                        '           <td>\n' +
+                        '               <section>' + item.fdate + '</section>\n' +
+                        '               <section>' + item.ftime + '</section>\n' +
+                        '           </td>\n' +
+                        '           <td class="text-primary">\n' +
+                        '               ' + item.fnormal + (isFire ? "℃" : "μg/m³") + '\n' +
+                        '           </td>\n' +
+                        '           <td class="text-danger">\n' +
+                        '               ' + item.funusual + (isFire ? "℃" : "μg/m³") + '\n' +
+                        '           </td>\n' +
+                        '           <td>\n' +
+                        '               <div class="progress progress-striped active" style="margin: 0;" data-toggle="tooltip" data-placement="top" title="异常率：' + showProcess + '%">\n' +
+                        '                   <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="' + item.fprocess + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + item.fprocess + '%;">\n' +
+                        '                       ' + showProcess + '%\n' +
+                        '                   </div>\n' +
+                        '               </div>\n' +
+                        '           </td>\n' +
+                        '       </tr>';
+                });
+                var total = scope1 + scope2 + scope3 + scope4 + scope5 + scope6;
+                arrData[0].y = (scope1 / total) * 100;
+                arrData[1].y = (scope2 / total) * 100;
+                arrData[2].y = (scope3 / total) * 100;
+                arrData[3].y = (scope4 / total) * 100;
+                arrData[4].y = (scope5 / total) * 100;
+                arrData[5].y = (scope6 / total) * 100;
+                Highcharts.chart('reportContainer', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: isFire ? '火力监控异常比' : '油烟监控异常比'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [{
+                        name: 'Brands',
+                        colorByPoint: true,
+                        data: arrData
+                    }]
+                });
+                $(".highcharts-credits,.highcharts-exporting-group").remove();
+                $("." + (isFire ? "historyFireCont" : "historySmogCont")).html(list);
+            }
+        });
+    }
 });
