@@ -7,7 +7,7 @@
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity.SensorEntity;
+package com.smxy.recipe.entity.sensor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

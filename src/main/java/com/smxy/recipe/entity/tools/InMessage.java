@@ -27,7 +27,7 @@
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity.ToolsEntity;
+package com.smxy.recipe.entity.tools;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

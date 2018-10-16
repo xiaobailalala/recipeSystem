@@ -23,29 +23,31 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/8 21:54
+ * Build File @date: 2018/10/12 22:11
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.queueMessage;
+package com.smxy.recipe.controller.websocket;
 
-import com.smxy.recipe.dao.RecipeDao;
-import com.smxy.recipe.entity.Recipe;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import com.smxy.recipe.service.socket.CommonUserSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class QmManager {
+public class CommonUserSocket {
 
     @Autowired
-    private RecipeDao recipeDao;
+    private CommonUserSocketService commonUserSocketService;
 
-    @RabbitListener(queues = "recipeCountUpload.queue")
-    public void updateRecipeCount(Integer id){
-        Recipe recipe = recipeDao.getInfoById(id);
-        recipe.setFCount(recipe.getFCount()+1);
-        recipeDao.updateRecipeCount(recipe);
+    @Scheduled(fixedRate = 1000)
+    public void sendFireNumber(){
+        commonUserSocketService.sendFireNumber();
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void sendSmogNumber(){
+        commonUserSocketService.sendSmogNumber();
     }
 
 }

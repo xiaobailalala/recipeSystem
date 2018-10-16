@@ -73,7 +73,7 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
 
     @Override
     public ResApi<Object> getInfoOne(Integer id) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(8);
         map.put("item",classifyTwoDao.getInfoById(id));
         map.put("one",classifyOneDao.getAllInfo());
         return new ResApi<>(200,"success",map);

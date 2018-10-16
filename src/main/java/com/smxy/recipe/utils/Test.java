@@ -18,11 +18,11 @@ import java.net.URLConnection;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class test {
+public class Test {
     static String[] getArr(String cmd){
         InputStream fis = null;
         Process process = null;
-        String arr[]=null;
+        String[] arr=null;
         try {
             process = Runtime.getRuntime().exec(cmd);
             fis = process.getInputStream();
@@ -69,7 +69,7 @@ public class test {
 
         @Override
         public void run() {
-            String arr[]=getArr("/home/pi/recipeLab/dht11");
+            String[] arr = getArr("/home/pi/recipeLab/dht11");
             sendGet("http://192.168.1.110:8080/getDht11Data?rh="+arr[0]+"&tmp="+arr[1]);
         }
     }

@@ -1,9 +1,29 @@
 /**
  * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
+ * <p>
+ * code is far away from bug with the animal protecting
+ * <p>
+ * ┏┓　　　┏┓
+ * ┏┛┻━━━┛┻┓
+ * ┃　　　　　　　┃
+ * ┃　　　━　　　┃
+ * ┃　┳┛　┗┳　┃
+ * ┃　　　　　　　┃
+ * ┃　　　┻　　　┃
+ * ┃　　　　　　　┃
+ * ┗━┓　　　┏━┛
+ * 　　┃　　　┃神兽保佑
+ * 　　┃　　　┃代码无BUG！
+ * 　　┃　　　┗━━━┓
+ * 　　┃　　　　　　　┣┓
+ * 　　┃　　　　　　　┏┛
+ * 　　┗┓┓┏━┳┓┏┛
+ * 　　　┃┫┫　┃┫┫
+ * 　　　┗┻┛　┗┻┛
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/8/20 15:37
+ * Build File @date: 2018/9/30 7:48
  * @Description TODO
  * @version 1.0
  */
@@ -28,10 +48,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.net.UnknownHostException;
 import java.util.List;
 
-//@Configuration
 public class RedisSerializeConfig {
 
-//    @Bean
+    /**
+     * @author zpx
+     * @param connectionFactory
+     * @return
+     * @Bean
+     */
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);

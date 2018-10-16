@@ -23,13 +23,13 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/11 20:34
+ * Build File @date: 2018/9/27 22:26
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.controller.wxapp;
 
-import com.smxy.recipe.service.AiMarkService;
+import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,15 +37,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mob/aiMark")
-public class AiMarkMobController {
+@RequestMapping("/mob/recipe")
+public class RecipeMobController {
 
     @Autowired
-    private AiMarkService aiMarkService;
+    private RecipeService recipeService;
 
-    @GetMapping("/getVoiceForWXReady")
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark){
-        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark);
+    @GetMapping("/getDataByClaId")
+    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){
+        return recipeService.getDataByClaId(twoid, threeid);
+    }
+
+    @GetMapping("/getRecipeById")
+    public ResApi<Object> getRecipeById(Integer id){
+        return recipeService.getDetailInfo(id);
+    }
+
+    @GetMapping("/updateRecipeCount")
+    public ResApi<Object> updateRecipeCount(Integer id){
+        return recipeService.updateRecipeCount(id);
     }
 
 }

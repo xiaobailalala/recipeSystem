@@ -94,7 +94,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     @Override
     public ResApi<Object> toPerm(Integer id) {
         ResApi<Object> resApi=new ResApi<>();
-        Map<String, Object> map=new HashMap<>();
+        Map<String, Object> map=new HashMap<>(8);
         AdminRole include=adminRoleDao.getAdminRoleByFid(id);
         List<AdminPermission> adminPermissions=adminPermissionDao.getAdminPermissionAll();
         List<AdminPermission> exclude=new ArrayList<>();
@@ -123,7 +123,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     public ResApi<Object> deletePerm(Integer[] pid, Integer rid) {
         ResApi<Object> resApi;
         int operationNum=0;
-        Map<String,Integer> map=new HashMap<>();
+        Map<String,Integer> map=new HashMap<>(8);
         map.put("fRid",rid);
         for (int i=0;i<pid.length;i++){
             map.put("fPid",pid[i]);
@@ -144,7 +144,7 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     public ResApi<Object> addPerm(Integer[] pid, Integer rid) {
         ResApi<Object> resApi;
         int operationNum=0;
-        Map<String,Integer> map=new HashMap<>();
+        Map<String,Integer> map=new HashMap<>(8);
         map.put("fRid",rid);
         for (int i=0;i<pid.length;i++){
             map.put("fPid",pid[i]);

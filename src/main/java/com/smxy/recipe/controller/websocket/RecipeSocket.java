@@ -27,9 +27,9 @@
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.websocketOper;
+package com.smxy.recipe.controller.websocket;
 
-import com.smxy.recipe.entity.ToolsEntity.InMessage;
+import com.smxy.recipe.entity.tools.InMessage;
 import com.smxy.recipe.service.socket.CommonUserSocketService;
 import com.smxy.recipe.service.socket.RecipeSocketService;
 import org.springframework.beans.factory.annotation.Autowired;

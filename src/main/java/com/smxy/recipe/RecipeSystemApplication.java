@@ -1,3 +1,32 @@
+/**
+ * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
+ * <p>
+ * code is far away from bug with the animal protecting
+ * <p>
+ * ┏┓　　　┏┓
+ * ┏┛┻━━━┛┻┓
+ * ┃　　　　　　　┃
+ * ┃　　　━　　　┃
+ * ┃　┳┛　┗┳　┃
+ * ┃　　　　　　　┃
+ * ┃　　　┻　　　┃
+ * ┃　　　　　　　┃
+ * ┗━┓　　　┏━┛
+ * 　　┃　　　┃神兽保佑
+ * 　　┃　　　┃代码无BUG！
+ * 　　┃　　　┗━━━┓
+ * 　　┃　　　　　　　┣┓
+ * 　　┃　　　　　　　┏┛
+ * 　　┗┓┓┏━┳┓┏┛
+ * 　　　┃┫┫　┃┫┫
+ * 　　　┗┻┛　┗┻┛
+ *
+ * @Package:
+ * @author: zpx
+ * Build File @date: 2018/9/30 7:48
+ * @Description TODO
+ * @version 1.0
+ */
 package com.smxy.recipe;
 
 import com.smxy.recipe.config.ThymeleafConfig;
@@ -19,7 +48,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 @EnableScheduling
 @SpringBootApplication
-//@Import({YmlConfigUtil.class})
 public class RecipeSystemApplication {
 
     public static void main(String[] args) {

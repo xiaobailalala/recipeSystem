@@ -1,3 +1,32 @@
+/**
+ * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
+ * <p>
+ * code is far away from bug with the animal protecting
+ * <p>
+ * ┏┓　　　┏┓
+ * ┏┛┻━━━┛┻┓
+ * ┃　　　　　　　┃
+ * ┃　　　━　　　┃
+ * ┃　┳┛　┗┳　┃
+ * ┃　　　　　　　┃
+ * ┃　　　┻　　　┃
+ * ┃　　　　　　　┃
+ * ┗━┓　　　┏━┛
+ * 　　┃　　　┃神兽保佑
+ * 　　┃　　　┃代码无BUG！
+ * 　　┃　　　┗━━━┓
+ * 　　┃　　　　　　　┣┓
+ * 　　┃　　　　　　　┏┛
+ * 　　┗┓┓┏━┳┓┏┛
+ * 　　　┃┫┫　┃┫┫
+ * 　　　┗┻┛　┗┻┛
+ *
+ * @Package:
+ * @author: zpx
+ * Build File @date: 2018/9/30 7:48
+ * @Description TODO
+ * @version 1.0
+ */
 package com.smxy.recipe.service.impl;
 
 import com.smxy.recipe.dao.MerchantUserDao;
@@ -12,17 +41,17 @@ import org.springframework.stereotype.Service;
 public class MerchantUserServiceImpl implements MerchantUserService {
 
     @Autowired
-    MerchantUserDao merchant_userDao;
+    MerchantUserDao merchantUserDao;
 
 
     @Override
-    public ResApi<MerchantUser> merchantUserLogin(MerchantUser merchant_user) {
+    public ResApi<MerchantUser> merchantUserLogin(MerchantUser merchantUser) {
         ResApi<MerchantUser> resApi;
-        if (merchant_userDao.isUser(merchant_user) > 0) {
-            merchant_user.setFPassword(ToolsApi.toMD5(merchant_user.getFPassword()));
-            merchant_user = merchant_userDao.isLogin(merchant_user);
-            if (merchant_user != null) {
-                resApi = new ResApi<>(200, "登陆成功", merchant_user);
+        if (merchantUserDao.isUser(merchantUser) > 0) {
+            merchantUser.setFPassword(ToolsApi.toMD5(merchantUser.getFPassword()));
+            merchantUser = merchantUserDao.isLogin(merchantUser);
+            if (merchantUser != null) {
+                resApi = new ResApi<>(200, "登陆成功", merchantUser);
             } else {
                 resApi = new ResApi<>(401, "密码不匹配", null);
             }
@@ -33,15 +62,15 @@ public class MerchantUserServiceImpl implements MerchantUserService {
     }
 
     @Override
-    public ResApi<String> merchantUserReg(MerchantUser merchant_user) {
+    public ResApi<String> merchantUserReg(MerchantUser merchantUser) {
         ResApi<String> resApi;
-        if (merchant_userDao.isUser(merchant_user) > 0) {
+        if (merchantUserDao.isUser(merchantUser) > 0) {
             resApi = new ResApi<>(400, "账户已存在", null);
         } else {
-            merchant_user.setFPassword(ToolsApi.toMD5(merchant_user.getFPassword()));
-            if (merchant_userDao.saveMerchantUser(merchant_user) > 0) {
-                merchant_user.setFUsername("膳客商户" + merchant_user.getFId());
-                if (merchant_userDao.updateUserInfo(merchant_user) > 0) {
+            merchantUser.setFPassword(ToolsApi.toMD5(merchantUser.getFPassword()));
+            if (merchantUserDao.saveMerchantUser(merchantUser) > 0) {
+                merchantUser.setFUsername("膳客商户" + merchantUser.getFId());
+                if (merchantUserDao.updateUserInfo(merchantUser) > 0) {
                     resApi = new ResApi<>(200, "注册成功", null);
                 } else {
                     resApi = new ResApi<>(401, "注册失败", null);

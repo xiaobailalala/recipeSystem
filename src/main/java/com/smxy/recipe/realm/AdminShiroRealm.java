@@ -36,13 +36,6 @@ public class AdminShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         AdminUser adminUser = (AdminUser)principalCollection.getPrimaryPrincipal();
-//        Map<String, Object> map = adminUserService.getRoleAndPermission(adminUser.getfId()).getData();
-//        for (AdminRole adminRole:(List<AdminRole>)map.get("roles")){
-//            authorizationInfo.addRole(adminRole.getfRolename());
-//            for (AdminPermission adminPermission:(List<AdminPermission>)map.get("permissions")){
-//                authorizationInfo.addStringPermission(adminPermission.getfPermissionname());
-//            }
-//        }
         for (AdminRole adminRole:adminUserService.verifyRole(adminUser.getFId())){
             authorizationInfo.addRole(adminRole.getFRolename());
             for (AdminPermission adminPermission:adminUserService.verifyPermission(adminUser.getFId())){

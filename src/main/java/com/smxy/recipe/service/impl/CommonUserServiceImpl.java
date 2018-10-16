@@ -101,7 +101,7 @@ public class CommonUserServiceImpl implements CommonUserService {
 
 	@Override
 	public ResApi<Object> getOneById(Integer id) {
-		Map<String, Object> map = new HashMap();
+		Map<String, Object> map = new HashMap(8);
 		map.put("item", commonUserDao.getInfoByIdBrief(id));
 		return new ResApi<>(200, "success", map);
 	}

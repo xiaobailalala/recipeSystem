@@ -15,8 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-public class FastDFSClient {
-    private static final Logger logger = LoggerFactory.getLogger(FastDFSClient.class);
+public class FastDfsClient {
+    private static final Logger logger = LoggerFactory.getLogger(FastDfsClient.class);
     private static TrackerClient trackerClient;
     private static TrackerServer trackerServer;
     private static StorageClient1 storageClient;

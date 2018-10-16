@@ -29,8 +29,8 @@
  */
 package com.smxy.recipe.service.socket;
 
-import com.smxy.recipe.entity.SensorEntity.Dht11Data;
-import com.smxy.recipe.entity.SensorEntity.Gp2y1051Data;
+import com.smxy.recipe.entity.sensor.Dht11Data;
+import com.smxy.recipe.entity.sensor.Gp2y1051Data;
 import com.smxy.recipe.utils.SensorDataApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

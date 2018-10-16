@@ -61,7 +61,7 @@ public class SensorUnusualServiceImpl implements SensorUnusualService {
                 Collectors.collectingAndThen(Collectors.toCollection(
                         () -> new TreeSet<>(Comparator.comparing(o -> o.getFDate()))), ArrayList::new)
         );
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(8);
         map.put("dateList", dateList);
         return new ResApi<>(200, "success", map);
     }
@@ -69,7 +69,7 @@ public class SensorUnusualServiceImpl implements SensorUnusualService {
     @Override
     public ResApi<Object> getDataByUidAndTypeAndDate(SensorUnusual sensorUnusual) {
         List<SensorUnusual> sensorUnusuals = sensorUnusualDao.getInfoByUidAndTypeAndDate(sensorUnusual);
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(8);
         map.put("list", sensorUnusuals);
         return new ResApi<>(200, "success", map);
     }

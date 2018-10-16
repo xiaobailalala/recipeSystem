@@ -7,7 +7,7 @@
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.utils.api.CodeApi;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,14 +23,15 @@ import java.util.Random;
 public class CommonMobController {
 
     @PostMapping("/getCode")
-    public Map<String, Object> getCode(String num){
+    public Map<String, Object> getCode(String num) {
         Random random = new Random();
-        String code="";
-        for (int i=0;i<6;i++) {
-            code+=random.nextInt(10);
+        String code = "";
+        int codeCount = 6;
+        for (int i = 0; i < codeCount; i++) {
+            code += random.nextInt(10);
         }
-        CodeApi.getRequest2(num,code);
-        Map<String, Object> map=new HashMap<>();
+        CodeApi.getRequest2(num, code);
+        Map<String, Object> map = new HashMap<>(8);
         map.put("code", code);
         return map;
     }

@@ -23,39 +23,28 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/27 22:26
+ * Build File @date: 2018/10/12 20:27
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.controller.wxapp;
 
-import com.smxy.recipe.service.RecipeService;
-import com.smxy.recipe.utils.ResApi;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/mob/recipe")
-public class RecipeMobController {
+@RequestMapping("/mob/test")
+public class TestMobController {
 
-    @Autowired
-    private RecipeService recipeService;
-
-    @GetMapping("/getDataByClaId")
-    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){
-        return recipeService.getDataByClaId(twoid, threeid);
-    }
-
-    @GetMapping("/getRecipeById")
-    public ResApi<Object> getRecipeById(Integer id){
-        return recipeService.getDetailInfo(id);
-    }
-
-    @GetMapping("/updateRecipeCount")
-    public ResApi<Object> updateRecipeCount(Integer id){
-        return recipeService.updateRecipeCount(id);
+    @RequestMapping("/sendMsg")
+    public Map<String, Object> sendMsg(String id, String price){
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("res_id", id);
+        map.put("res_price", price);
+        return map;
     }
 
 }

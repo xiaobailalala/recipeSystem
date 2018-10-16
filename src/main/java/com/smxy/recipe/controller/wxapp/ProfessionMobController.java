@@ -7,7 +7,7 @@
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.entity.Profession;
 import com.smxy.recipe.service.ProfessionService;

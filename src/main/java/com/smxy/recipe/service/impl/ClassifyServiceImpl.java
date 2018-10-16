@@ -71,7 +71,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
     public ResApi<Object> getInfoById(Integer id) {
-        Map<String, Object> map=new HashMap<>();
+        Map<String, Object> map=new HashMap<>(8);
         map.put("item",classifyDao.getInfoById(id));
         map.put("one",classifyOneDao.getAllInfo());
         map.put("two",classifyTwoDao.getInfoAll());

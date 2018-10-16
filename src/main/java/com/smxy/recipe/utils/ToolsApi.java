@@ -88,7 +88,7 @@ public class ToolsApi {
 				bos.write(bs);
 			}
 			inputStream.close();
-			String res = FastDFSClient.uploadBinaryFile(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
+			String res = FastDfsClient.uploadBinaryFile(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
 			return res;
 		}catch (Exception e){
 			e.printStackTrace();
@@ -101,7 +101,7 @@ public class ToolsApi {
          * FastDFS 成功返回值为1，失败不返回，故这里返回值为2以示失败
          */
         try {
-			return FastDFSClient.deleteFile(fileName);
+			return FastDfsClient.deleteFile(fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -238,23 +238,26 @@ public class ToolsApi {
 		return file.substring(index + 1);
 	}
 	public static boolean imgLimit(String suffix) {
-		if("gif".equalsIgnoreCase(suffix) || "jpeg".equalsIgnoreCase(suffix)
-				|| "jpg".equalsIgnoreCase(suffix) || "png".equalsIgnoreCase(suffix)
-				|| "svg".equalsIgnoreCase(suffix)) {
-			return true;
-		}else {
-			return false;
+		String[] limitFormat = {"gif", "jpeg", "jpg", "png", "svg"};
+		for (String s : limitFormat) {
+			if (s.equalsIgnoreCase(suffix)) {
+				return true;
+			}
 		}
+		return false;
 	}
 	public static boolean excelLimit(String suffix) {
-		if("xls".equalsIgnoreCase(suffix)) {
-			return true;
-		}else {
-			return false;
+		String[] limitFormat = {"xls", "xlsx"};
+		for (String s : limitFormat) {
+			if (s.equalsIgnoreCase(suffix)) {
+				return true;
+			}
 		}
+		return false;
 	}
 	public static boolean fileLimit(String suffix) {
-		if(!"php".equalsIgnoreCase(suffix)) {
+		String forbid = "php";
+		if(!forbid.equalsIgnoreCase(suffix)) {
 			return true;
 		}else {
 			return false;
@@ -277,29 +280,14 @@ public class ToolsApi {
 	public static void reImgSize(String path,String suffix,HttpServletRequest request) {
 		try {
 			BufferedInputStream in = new BufferedInputStream(new FileInputStream(path));
-	        //字节流转图片对象
 	        Image bi =ImageIO.read(in);
-	        //获取图像的高度，宽度
-//	        int height=bi.getHeight(null);
-//	        int width =bi.getWidth(null);
-	        //构建图片流
 	        BufferedImage tag = new BufferedImage(548, 332, BufferedImage.TYPE_INT_RGB);
-	        //绘制改变尺寸后的图
-	        tag.getGraphics().drawImage(bi, 0, 0,548, 332, null);  
-	        //输出流
+	        tag.getGraphics().drawImage(bi, 0, 0,548, 332, null);
 	        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path));
-	        //JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-	        //encoder.encode(tag);
 	        ImageIO.write(tag, suffix.toUpperCase(),out);
 	        in.close();
 	        out.close();
-			//转字节流
-			//ByteArrayOutputStream out = new ByteArrayOutputStream();
-			
-			//ImageIO.write(tag, "PNG",out);
-			//InputStream is = new ByteArrayInputStream(out.toByteArray());
 		}catch (Exception e) {
-			// TODO: handle exception
 		}
 	}
 }

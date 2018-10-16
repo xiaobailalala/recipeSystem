@@ -33,7 +33,7 @@ import com.smxy.recipe.dao.ProcessDao;
 import com.smxy.recipe.entity.Process;
 import com.smxy.recipe.service.ProcessService;
 import com.smxy.recipe.utils.ResApi;
-import com.smxy.recipe.utils.api.Baidu_TTSApi;
+import com.smxy.recipe.utils.api.BaiduTtsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,7 @@ public class ProcessServiceImpl implements ProcessService {
     @Override
     public ResApi<Object> produceVoiceForId(Process process) {
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
-        String filePath = Baidu_TTSApi.sendVoiceData(process.getFContent());
+        String filePath = BaiduTtsApi.sendVoiceData(process.getFContent());
         if (filePath != null) {
             process.setFVoice(filePath);
             if (processDao.updateVoiceById(process) > 0) {

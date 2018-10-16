@@ -34,7 +34,7 @@ import com.smxy.recipe.entity.AiMark;
 import com.smxy.recipe.service.AiMarkService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
-import com.smxy.recipe.utils.api.Baidu_TTSApi;
+import com.smxy.recipe.utils.api.BaiduTtsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +58,7 @@ public class AiMarkServiceImpl implements AiMarkService {
         if (aiMarkDao.getInfoByMark(aiMark) != null) {
             resApi = new ResApi<>(501, "该代号已存在，请勿重复添加", "failed");
         } else {
-            aiMark.setFVoice(Baidu_TTSApi.sendVoiceData(aiMark.getFContent()));
+            aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
             if (aiMarkDao.saveInfo(aiMark)>0){
                 resApi = new ResApi<>(200, "success", "success");
             }
@@ -69,7 +69,6 @@ public class AiMarkServiceImpl implements AiMarkService {
     @Override
     public ResApi<Object> deleteInfo(Integer id) {
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "failed");
-//        ToolsApi.multipartFile_delete_file(aiMarkDao.getInfoById(id).getFVoice());
         if (aiMarkDao.deleteInfo(id)>0){
             resApi = new ResApi<>(200, "success", "success");
         }
@@ -86,7 +85,7 @@ public class AiMarkServiceImpl implements AiMarkService {
         aiMark.setFId(id);
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
         ToolsApi.multipartFileDeleteFile(aiMark.getFVoice());
-        aiMark.setFVoice(Baidu_TTSApi.sendVoiceData(aiMark.getFContent()));
+        aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
         if (aiMarkDao.updateInfoById(aiMark)>0){
             resApi = new ResApi<>(200, "success", "success");
         }

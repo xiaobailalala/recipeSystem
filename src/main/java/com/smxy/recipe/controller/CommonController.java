@@ -20,7 +20,7 @@ public class CommonController {
     @ResponseBody
     @PostMapping("/test")
     public Map<String, Object> test(@RequestParam("file")MultipartFile multipartFile) {
-        Map<String, Object> map=new HashMap<>();
+        Map<String, Object> map=new HashMap<>(8);
         map.put("result", ToolsApi.multipartFileUploadFile(multipartFile, null));
         return map;
     }

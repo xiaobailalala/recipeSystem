@@ -152,7 +152,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     public ResApi<Object> sendEmail(String toEmail, String title, String type, String account) {
         Random random = new Random();
         String code="";
-        for (int i=0;i<6;i++) {
+        int codeCount = 6;
+        for (int i=0;i<codeCount;i++) {
             code+=random.nextInt(10);
         }
         toolsApi.sendMail(ToolsApi.MAILTYPE_VERIFY,title,toEmail,account,code);
@@ -209,7 +210,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public ResApi<Object> toUserPerm(Integer id) {
         ResApi<Object> resApi=new ResApi<>();
-        Map<String, Object> map=new HashMap<>();
+        Map<String, Object> map=new HashMap<>(8);
         AdminUser include=adminUserDao.getAdminUserByFid(id);
         List<AdminRole> adminRoles=adminRoleDao.getInfoAll();
         List<AdminRole> exclude=new ArrayList<>();
@@ -238,7 +239,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     public ResApi<Object> deletePerm(Integer[] rid, Integer uid) {
         ResApi<Object> resApi;
         int operationNum=0;
-        Map<String,Integer> map=new HashMap<>();
+        Map<String,Integer> map=new HashMap<>(8);
         map.put("fUid",uid);
         for (int i=0;i<rid.length;i++){
             map.put("fRid",rid[i]);
@@ -259,7 +260,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     public ResApi<Object> addPerm(Integer[] rid, Integer uid) {
         ResApi<Object> resApi;
         int operationNum=0;
-        Map<String,Integer> map=new HashMap<>();
+        Map<String,Integer> map=new HashMap<>(8);
         map.put("fUid",uid);
         for (int i=0;i<rid.length;i++){
             map.put("fRid",rid[i]);

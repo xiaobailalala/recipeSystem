@@ -23,29 +23,29 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/12 20:27
+ * Build File @date: 2018/10/8 21:54
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.controller.queuemessage;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.smxy.recipe.dao.RecipeDao;
+import com.smxy.recipe.entity.Recipe;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import java.util.HashMap;
-import java.util.Map;
+@Controller
+public class QmManager {
 
-@RestController
-@RequestMapping("/mob/test")
-public class TestMobController {
+    @Autowired
+    private RecipeDao recipeDao;
 
-    @RequestMapping("/sendMsg")
-    public Map<String, Object> sendMsg(String id, String price){
-        Map<String, Object> map = new HashMap<>();
-//        System.out.println(username);
-        map.put("res_id", id);
-        map.put("res_price", price);
-        return map;
+    @RabbitListener(queues = "recipeCountUpload.queue")
+    public void updateRecipeCount(Integer id){
+        Recipe recipe = recipeDao.getInfoById(id);
+        recipe.setFCount(recipe.getFCount()+1);
+        recipeDao.updateRecipeCount(recipe);
     }
 
 }

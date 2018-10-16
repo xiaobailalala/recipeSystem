@@ -18,7 +18,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class XFormAuthenticationFilter extends FormAuthenticationFilter {
+public class XformAuthenticationFilter extends FormAuthenticationFilter {
     private static final String DEFAULT_LOGIN_URL="/adm/adLogin";
 
     @Override
@@ -31,7 +31,7 @@ public class XFormAuthenticationFilter extends FormAuthenticationFilter {
         super.setPasswordParam(passwordParam);
     }
 
-    public XFormAuthenticationFilter() {
+    public XformAuthenticationFilter() {
         setLoginUrl(DEFAULT_LOGIN_URL);
     }
     @Override
@@ -47,7 +47,8 @@ public class XFormAuthenticationFilter extends FormAuthenticationFilter {
             }
         } else {
 // 判断session里是否有用户信息
-            if (httpRequest.getHeader("X-Requested-With") != null
+            String requestWith = "X-Requested-With";
+            if (httpRequest.getHeader(requestWith) != null
                     && "XMLHttpRequest".equalsIgnoreCase(httpRequest.getHeader("X-Requested-With"))) {
 // 如果是ajax请求响应头会有，x-requested-with
                 httpResponse.sendError(HttpStatus.UNAUTHORIZED.value());

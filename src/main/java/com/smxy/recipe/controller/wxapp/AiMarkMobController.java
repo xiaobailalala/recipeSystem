@@ -23,14 +23,13 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/30 10:01
+ * Build File @date: 2018/10/11 20:34
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.webApp;
+package com.smxy.recipe.controller.wxapp;
 
-import com.smxy.recipe.entity.Process;
-import com.smxy.recipe.service.ProcessService;
+import com.smxy.recipe.service.AiMarkService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,15 +37,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/mob/process")
-public class ProcessMobController {
+@RequestMapping("/mob/aiMark")
+public class AiMarkMobController {
 
     @Autowired
-    private ProcessService processService;
+    private AiMarkService aiMarkService;
 
-    @GetMapping("/produceVoice")
-    public ResApi<Object> produceVoice(Process process){
-        return processService.produceVoiceForId(process);
+    @GetMapping("/getVoiceForWXReady")
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark){
+        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark);
     }
 
 }

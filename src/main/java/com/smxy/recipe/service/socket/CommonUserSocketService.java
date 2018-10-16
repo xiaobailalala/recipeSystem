@@ -29,9 +29,7 @@
  */
 package com.smxy.recipe.service.socket;
 
-import com.smxy.recipe.entity.SensorEntity.Gp2y1051Data;
-import com.smxy.recipe.entity.ToolsEntity.InMessage;
-import com.smxy.recipe.utils.SensorDataApi;
+import com.smxy.recipe.entity.tools.InMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

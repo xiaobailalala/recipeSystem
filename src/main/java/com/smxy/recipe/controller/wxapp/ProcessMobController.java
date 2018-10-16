@@ -23,31 +23,30 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/12 22:11
+ * Build File @date: 2018/9/30 10:01
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.websocketOper;
+package com.smxy.recipe.controller.wxapp;
 
-import com.smxy.recipe.service.socket.CommonUserSocketService;
+import com.smxy.recipe.entity.Process;
+import com.smxy.recipe.service.ProcessService;
+import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-public class CommonUserSocket {
+@RestController
+@RequestMapping("/mob/process")
+public class ProcessMobController {
 
     @Autowired
-    private CommonUserSocketService commonUserSocketService;
+    private ProcessService processService;
 
-    @Scheduled(fixedRate = 1000)
-    public void sendFireNumber(){
-        commonUserSocketService.sendFireNumber();
-    }
-
-    @Scheduled(fixedRate = 1000)
-    public void sendSmogNumber(){
-        commonUserSocketService.sendSmogNumber();
+    @GetMapping("/produceVoice")
+    public ResApi<Object> produceVoice(Process process){
+        return processService.produceVoiceForId(process);
     }
 
 }

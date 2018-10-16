@@ -12,7 +12,7 @@ package com.smxy.recipe.service.impl;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.entity.Process;
-import com.smxy.recipe.entity.ToolsEntity.RecipeClassifyList;
+import com.smxy.recipe.entity.tools.RecipeClassifyList;
 import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.print.Book;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,7 +51,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public ResApi<Object> getAddData() {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(8);
         List<Tips> tips = tipsDao.getAllInfo();
         List<Tips> tipsData = new ArrayList<>();
         int[] arr = ToolsApi.randomArray(0, tips.size() - 1, 10);
@@ -137,7 +136,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public ResApi<Object> getOneInfo(Integer id) {
         Recipe recipe = recipeDao.getInfoById(id);
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(8);
         List<Tips> tips = tipsDao.getAllInfo();
         List<Tips> tipsData = new ArrayList<>();
         int[] arr = ToolsApi.randomArray(0, tips.size() - 1, 10);
@@ -241,7 +240,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid) {
         List<RecipeClassify> recipeClassifies;
-        Map<String, List<RecipeClassify>> map = new HashMap<>();
+        Map<String, List<RecipeClassify>> map = new HashMap<>(8);
         if (twoid==0){
             recipeClassifies = recipeClassifyDao.getInfoByThreeIdForRecipe(threeid);
         }else{

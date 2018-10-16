@@ -13,7 +13,6 @@ import lombok.*;
 
 import java.io.Serializable;
 
-//@Data
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

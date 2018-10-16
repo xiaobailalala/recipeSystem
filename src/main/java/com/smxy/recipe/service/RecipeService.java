@@ -21,7 +21,6 @@ import java.util.List;
 public interface RecipeService {
 
     ResApi<Object> getAddData();
-
     ResApi<Object> saveInfo(MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime, HttpServletRequest request);

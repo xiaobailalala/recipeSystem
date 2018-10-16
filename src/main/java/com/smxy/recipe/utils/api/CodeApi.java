@@ -32,22 +32,20 @@ public class CodeApi {
     public static final int DEF_CONN_TIMEOUT = 30000;
     public static final int DEF_READ_TIMEOUT = 30000;
     public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
- 
-    //配置您申请的KEY
+
     public static final String APPKEY ="0b93822981d6d671aab5d9cea3605d73";
- 
-    //1.屏蔽词检查测
+
     public static void getRequest1(){
         String result =null;
-        String url ="http://v.juhe.cn/sms/black";//请求接口地址
-        Map params = new HashMap();//请求参数
-        params.put("word","");//需要检测的短信内容，需要UTF8 URLENCODE
-        params.put("key",APPKEY);//应用APPKEY(应用详细页查询)
- 
+        String url ="http://v.juhe.cn/sms/black";
+        Map params = new HashMap(8);
+        params.put("word","");
+        params.put("key",APPKEY);
         try {
+            String errorCode = "error_code";
             result =net(url, params, "GET");
             JSONObject object = JSONObject.fromObject(result);
-            if(object.getInt("error_code")==0){
+            if(object.getInt(errorCode)==0){
                 System.out.println(object.get("result"));
             }else{
                 System.out.println(object.get("error_code")+":"+object.get("reason"));
@@ -56,22 +54,21 @@ public class CodeApi {
             e.printStackTrace();
         }
     }
- 
-    //2.发送短信
+
     public static void getRequest2(String phoneNum,String code){
         String result =null;
-        String url ="http://v.juhe.cn/sms/send";//请求接口地址
-        Map params = new HashMap();//请求参数
-        params.put("mobile",phoneNum);//接收短信的手机号码
-        params.put("tpl_id","81664");//短信模板ID，请参考个人中心短信模板设置
-        params.put("tpl_value","%23code%23%3d"+code);//变量名和变量值对。如果你的变量名或者变量值中带有#&=中的任意一个特殊符号，请先分别进行urlencode编码后再传递，<a href="http://www.juhe.cn/news/index/id/50" target="_blank">详细说明></a>
-        params.put("key",APPKEY);//应用APPKEY(应用详细页查询)
-        params.put("dtype","json");//返回数据的格式,xml或json，默认json
- 
+        String url ="http://v.juhe.cn/sms/send";
+        Map params = new HashMap(8);
+        params.put("mobile",phoneNum);
+        params.put("tpl_id","81664");
+        params.put("tpl_value","%23code%23%3d"+code);
+        params.put("key",APPKEY);
+        params.put("dtype","json");
+        String errorCode = "error_code";
         try {
-            result =net(url, params, "GET");
+            result = net(url, params, "GET");
             JSONObject object = JSONObject.fromObject(result);
-            if(object.getInt("error_code")==0){
+            if(object.getInt(errorCode)==0){
                 System.out.println(object.get("result"));
             }else{
                 System.out.println(object.get("error_code")+":"+object.get("reason"));
@@ -147,8 +144,10 @@ public class CodeApi {
         }
         return rs;
     }
- 
-    //将map型转为请求参数型
+
+    /**
+     * 将map型转为请求参数型
+     */
     public static String urlencode(Map<String,Object>data) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry i : data.entrySet()) {
