@@ -69,8 +69,7 @@
                                     <img style="height: 70px;width: 100px;border-radius: 8px;" th:src="(${fileServerPath})+${item.fCover}" alt="cover">
                                 </td>
                                 <td th:text="${item.fName}"></td>
-                                <td th:if="${item.fAid}==0" th:text="${item.commonUser.fUsername}"></td>
-                                <td th:unless="${item.fAid}==0" th:text="${item.adminUser.fUsername}"></td>
+                                <td th:text="${item.commonUser.fUsername}"></td>
                                 <td th:text="${item.fRelease}"></td>
                                 <td>
                                     <a href="javascript:;" th:text="${item.fType}"

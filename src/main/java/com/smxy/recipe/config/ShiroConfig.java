@@ -117,13 +117,6 @@ public class ShiroConfig {
     }
 
     @Bean
-    public MerchantShiroRealm merchantShiroRealm(){
-        MerchantShiroRealm merchantShiroRealm = new MerchantShiroRealm();
-        merchantShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
-        return merchantShiroRealm;
-    }
-
-    @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(adminShiroRealm());

@@ -30,7 +30,7 @@ public class CommonMobController {
         for (int i = 0; i < codeCount; i++) {
             code += random.nextInt(10);
         }
-        CodeApi.getRequest2(num, code);
+        CodeApi.getRequest(CodeApi.REG_VERIFY, num, code);
         Map<String, Object> map = new HashMap<>(8);
         map.put("code", code);
         return map;

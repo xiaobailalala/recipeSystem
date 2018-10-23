@@ -25,4 +25,6 @@ public interface CommonUserService {
     ResApi<Object> getAllInfo();
 
 	ResApi<Object> getOneById(Integer id);
+
+	ResApi<Object> updateCommonUserPwd(CommonUser commonUser);
 }

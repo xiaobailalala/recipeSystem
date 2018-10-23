@@ -1,45 +1,29 @@
 $(function () {
     (function Add() {
         var account = false, username = false, password = false, repwd = false;
-        $('body').on("input propertychange", "#fAccount", function () {
+        Tools.body.on("input propertychange", "#fAccount", function () {
             var reg = new RegExp("^[a-zA-Z0-9_-]{4,16}$");
-            if (!reg.test($(this).val()) || $(this).val() == null || $(this).val() === "" || $(this).val() === undefined) {
-                account = false;
-            } else {
-                account = true;
-            }
+            account = !(!reg.test($(this).val()) || $(this).val() == null || $(this).val() === "" || $(this).val() === undefined);
         });
-        $('body').on("input propertychange", "#fUsername", function () {
-            if ($(this).val().length === 0 || $(this).val() === undefined) {
-                username = false;
-            } else {
-                username = true;
-            }
+        Tools.body.on("input propertychange", "#fUsername", function () {
+            username = !($(this).val().length === 0 || $(this).val() === undefined);
             if (isSubmit()) {
                 $('input[type=submit]').removeAttr("disabled");
             } else {
                 $('input[type=submit]').attr("disabled", "disabled");
             }
         });
-        $('body').on("input propertychange", "#fPassword", function () {
+        Tools.body.on("input propertychange", "#fPassword", function () {
             var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,16}');
-            if (!regex.test($(this).val()) || $(this).val() == null || $(this).val() === "" || $(this).val() === undefined) {
-                password = false;
-            } else {
-                password = true;
-            }
+            password = !(!regex.test($(this).val()) || $(this).val() == null || $(this).val() === "" || $(this).val() === undefined);
             if (isSubmit()) {
                 $('input[type=submit]').removeAttr("disabled");
             } else {
                 $('input[type=submit]').attr("disabled", "disabled");
             }
         });
-        $('body').on("input propertychange", "#rePwd", function () {
-            if ($(this).val() !== $('#fPassword').val() || $(this).val() == null || $(this).val() === "" || $(this).val() === undefined) {
-                repwd = false;
-            } else {
-                repwd = true;
-            }
+        Tools.body.on("input propertychange", "#rePwd", function () {
+            repwd = !($(this).val() !== $('#fPassword').val() || $(this).val() == null || $(this).val() === "" || $(this).val() === undefined);
             if (isSubmit()) {
                 $('input[type=submit]').removeAttr("disabled");
             } else {
@@ -48,11 +32,7 @@ $(function () {
         });
 
         function isSubmit() {
-            if (account && username && password && repwd) {
-                return true;
-            } else {
-                return false;
-            }
+            return account && username && password && repwd;
         }
 
         $('#verify').click(function () {

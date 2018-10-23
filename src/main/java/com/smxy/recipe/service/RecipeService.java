@@ -9,6 +9,7 @@
  */
 package com.smxy.recipe.service;
 
+import com.smxy.recipe.entity.FoodComment;
 import com.smxy.recipe.entity.Recipe;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.bind.annotation.RequestParam;

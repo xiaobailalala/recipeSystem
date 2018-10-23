@@ -15,6 +15,8 @@ package com.smxy.recipe.utils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.csource.common.NameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -42,6 +44,8 @@ import java.util.Random;
 @Component
 @PropertySource("classpath:custom.properties")
 public class ToolsApi {
+
+	private static final Logger logger = LoggerFactory.getLogger(ToolsApi.class);
 
 	public static final String MAILTYPE_VERIFY="verify";
 	public static final String MAILTYPE_RESET="reset";
@@ -192,6 +196,19 @@ public class ToolsApi {
 			resCode+=ch[(int)Math.floor(Math.random()*16)];
 		}
 		return resCode;
+	}
+
+	public static void main(String[] args) {
+		Object[] ch={1,2,3,4,5,6,7,8,9,0,
+				'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+				'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+		};
+		String resCode="";
+		int top = 16;
+		for (int i=0;i<top;i++){
+			resCode+=ch[(int)Math.floor(Math.random()*62)];
+		}
+		logger.info(resCode);
 	}
 
 	public static String entryptBySaltMd5(String password,String salt) {

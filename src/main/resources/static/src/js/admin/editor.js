@@ -1,7 +1,7 @@
 $(function(){
     (function editorInfo(){
         var username=true,isSelectImg=false,isImg=false;
-        $("body").on("input propertychange","#fUsername",function(){
+        Tools.body.on("input propertychange","#fUsername",function(){
             if ($(this).val().length===0||$(this).val().length>16||$(this).val().length<3){
                 $('#usernameBtn').attr("disabled","disabled");
                 username=false;
@@ -133,12 +133,8 @@ $(function(){
     (function editorEmail(){
         var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
         var email=false,verify=new Date().getTime(),isVerify=false;
-        $("body").on("input propertychange","#fEmail",function(){
-            if ($(this).val().length===0||!reg.test($(this).val())){
-                email=false;
-            }else{
-                email=true;
-            }
+        Tools.body.on("input propertychange","#fEmail",function(){
+            email = !($(this).val().length === 0 || !reg.test($(this).val()));
         });
         $('#verifyBtn').on('click', function () {
             var $btn = $(this).button('loading');
@@ -151,7 +147,7 @@ $(function(){
                             fEmail:$("#fEmail").val()
                         },
                         success:function(res){
-                            if(res.code==200){
+                            if(res.code === 200){
                                 $("#verifyBtn").text("验证通过");
                                 $('#fEmail').attr("readonly","readonly");
                                 $("#verifyBtn").attr("class","btn btn-success btn-block");
@@ -168,7 +164,7 @@ $(function(){
                 $btn.button('reset')
             }
         });
-        $('body').on("input propertychange","#verifyNum",function(){
+        Tools.body.on("input propertychange","#verifyNum",function(){
             if($(this).val().length===6){
                 $('#emailBtn').removeAttr("disabled");
                 isVerify=true;
@@ -234,7 +230,7 @@ $(function(){
     }());
     (function editorPassword(){
         var password=false;
-        $('body').on("input propertychange","#prePassword",function(){
+        Tools.body.on("input propertychange","#prePassword",function(){
             if ($(this).val().length===0){
                 password=false;
             } else{
@@ -270,7 +266,7 @@ $(function(){
         });
         var newPassword=false,rePassword=false;
         var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,16}');
-        $('body').on("blur","#newPassword",function(){
+        Tools.body.on("blur","#newPassword",function(){
             if($(this).val().length===0 || $(this).val().length<6 || $(this).val().length>16 || !regex.test($(this).val())){
                 newPassword=false;
                 Tools.tip("输入的密码不能为空，或输入的密码过于简单，请输入6至16位包含英文，字符，数字的密码。")
@@ -278,12 +274,8 @@ $(function(){
                 newPassword=true;
             }
         });
-        $('body').on("input propertychange","#reNewPassword",function(){
-            if ($(this).val().length===0 || $(this).val()!==$('#newPassword').val()){
-                rePassword=false;
-            } else{
-                rePassword=true;
-            }
+        Tools.body.on("input propertychange","#reNewPassword",function(){
+            rePassword = !($(this).val().length === 0 || $(this).val() !== $('#newPassword').val());
         });
         $('#passwordForm').submit(function(e){
             e.preventDefault();

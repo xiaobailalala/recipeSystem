@@ -1,6 +1,6 @@
 $(function(){
     (function Delete(){
-        $('body').on('click','.deleteInfo',function(){
+        Tools.body.on('click','.deleteInfo',function(){
             var id=$(this).data("id");
             swal({
                 title: "确定删除吗？",
@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/profession/info/"+id,
+                    url:"/commonUser/info/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,
@@ -72,6 +72,31 @@ $(function(){
                         }
                     }else{
                         $(this).addClass("label-custom-bg");
+                    }
+                });
+            });
+        });
+    }());
+    (function ResetPwd(){
+        Tools.body.on("click", ".resetPwd", function(){
+            var account = $(this).data("id");
+            swal({
+                title: "重置密码",
+                text: "系统将会把重置后的密码发送至" + account,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#5bc0de",
+                confirmButtonText: "确认发送",
+                closeOnConfirm: false
+            },function(){
+                $.ajax({
+                    url: "/commonUser/repwd",
+                    type: "POST",
+                    data: {
+                        fAccount: account
+                    },
+                    success: function(res){
+                        swal("发送成功", "用户密码重置成功", "success");
                     }
                 });
             });

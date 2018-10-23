@@ -68,7 +68,7 @@ public class RecipeServiceImpl implements RecipeService {
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime, HttpServletRequest request) {
         AdminUser adminUser = (AdminUser) request.getSession().getAttribute("aduser");
-        recipe.setFUid(adminUser.getFId());
+        recipe.setFUid(0);
         recipe.setFRelease(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
         recipe.setFCover(ToolsApi.multipartFileUploadFile(file, null));
         int saveRecipe = recipeDao.saveInfo(recipe);

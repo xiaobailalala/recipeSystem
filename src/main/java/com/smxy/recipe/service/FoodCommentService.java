@@ -23,39 +23,21 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/27 22:26
+ * Build File @date: 2018/10/23 19:36
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.wxapp;
+package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.FoodComment;
-import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
-@RequestMapping("/mob/recipe")
-public class RecipeMobController {
+public interface FoodCommentService {
 
-    @Autowired
-    private RecipeService recipeService;
+    ResApi<Object> commentImgupload(MultipartFile file);
 
-    @GetMapping("/getDataByClaId")
-    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){
-        return recipeService.getDataByClaId(twoid, threeid);
-    }
+    ResApi<Object> commentSaveInfo(FoodComment foodComment);
 
-    @GetMapping("/getRecipeById")
-    public ResApi<Object> getRecipeById(Integer id){
-        return recipeService.getDetailInfo(id);
-    }
-
-    @GetMapping("/updateRecipeCount")
-    public ResApi<Object> updateRecipeCount(Integer id){
-        return recipeService.updateRecipeCount(id);
-    }
-
+    ResApi<Object> getInfoByRid(Integer rid);
 }

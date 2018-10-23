@@ -7,6 +7,7 @@
  */
 package com.smxy.recipe.service.impl;
 
+import com.smxy.recipe.utils.api.CodeApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +38,7 @@ public class CommonUserServiceImpl implements CommonUserService {
 		// TODO Auto-generated method stub
 		ResApi<CommonUser> resApi;
 		if (commonUserDao.isUser(commonUser)>0) {
-			commonUser.setFPassword(ToolsApi.toMD5(commonUser.getFPassword()));
+			commonUser.setFPassword(ToolsApi.entryptBySaltMd5(commonUser.getFPassword(), commonUser.getFAccount()));
 			commonUser=commonUserDao.isLogin(commonUser);
 			if (commonUser!=null) {
 				resApi=new ResApi<>(200,"登录成功",commonUser);
@@ -57,7 +58,7 @@ public class CommonUserServiceImpl implements CommonUserService {
 		if (commonUserDao.isUser(commonUser)>0) {
 			resApi=new ResApi<>(402,"该用户已存在。",null);
 		}else {
-			commonUser.setFPassword(ToolsApi.toMD5(commonUser.getFPassword()));
+			commonUser.setFPassword(ToolsApi.entryptBySaltMd5(commonUser.getFPassword(), commonUser.getFAccount()));
 			if (commonUserDao.saveUser(commonUser)>0) {
 				commonUser.setFUsername("膳客"+commonUser.getFId());
 				if (commonUserDao.updateUserInfo(commonUser)>0) {
@@ -104,5 +105,13 @@ public class CommonUserServiceImpl implements CommonUserService {
 		Map<String, Object> map = new HashMap(8);
 		map.put("item", commonUserDao.getInfoByIdBrief(id));
 		return new ResApi<>(200, "success", map);
+	}
+
+	@Override
+	public ResApi<Object> updateCommonUserPwd(CommonUser commonUser) {
+		CodeApi.getRequest(CodeApi.RESET_PWD, commonUser.getFAccount(), null);
+		String newPwd = ToolsApi.entryptBySaltMd5("UcJAxskwvJxTNery", commonUser.getFAccount());
+		commonUserDao.updatePwdByAccount(commonUser);
+		return new ResApi<>(200, "success", "success");
 	}
 }

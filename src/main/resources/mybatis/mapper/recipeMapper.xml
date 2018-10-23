@@ -16,12 +16,8 @@
 
     <resultMap id="getRecipeAuthor" type="Recipe">
         <result column="f_uid" property="fUid"/>
-        <result column="f_aid" property="fAid"/>
         <association property="commonUser" column="f_uid"
                      select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
-        </association>
-        <association property="adminUser" column="f_aid"
-                     select="com.smxy.recipe.dao.AdminUserDao.getInfoByIdBrief">
         </association>
     </resultMap>
 
@@ -32,12 +28,8 @@
     <resultMap id="getRecipeDetail" type="Recipe">
         <result column="f_id" property="fId"/>
         <result column="f_uid" property="fUid"/>
-        <result column="f_aid" property="fAid"/>
         <association property="commonUser" column="f_uid"
                     select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
-        </association>
-        <association property="adminUser" column="f_aid"
-                    select="com.smxy.recipe.dao.AdminUserDao.getInfoByIdBrief">
         </association>
         <collection property="recipeClassifies" column="f_id"
                     select="com.smxy.recipe.dao.RecipeClassifyDao.getInfoByRid">

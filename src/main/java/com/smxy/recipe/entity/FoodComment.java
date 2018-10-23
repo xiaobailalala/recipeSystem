@@ -7,12 +7,9 @@
  */
 package com.smxy.recipe.entity;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author zpx
@@ -21,15 +18,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public final class FoodComment {
+public class FoodComment {
 	private Integer fId;
 	private Integer fRid;
 	private Recipe recipe;
 	private Integer fUid;
 	private CommonUser commonUser;
 	private String fContent;
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private Date fRelease;
+	private String fRelease;
 	private Integer fGood;
 	private String fCover;
+	private Integer fReplyid;
+	private FoodComment foodComment;
 }

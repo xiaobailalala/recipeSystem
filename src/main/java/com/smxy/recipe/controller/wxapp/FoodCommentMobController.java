@@ -23,39 +23,38 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/9/27 22:26
+ * Build File @date: 2018/10/23 19:33
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.entity.FoodComment;
-import com.smxy.recipe.service.RecipeService;
+import com.smxy.recipe.service.FoodCommentService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/mob/recipe")
-public class RecipeMobController {
+@RequestMapping("/mob/foodComment")
+public class FoodCommentMobController {
 
     @Autowired
-    private RecipeService recipeService;
+    FoodCommentService foodCommentService;
 
-    @GetMapping("/getDataByClaId")
-    public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){
-        return recipeService.getDataByClaId(twoid, threeid);
+    @PostMapping("/imgupload")
+    public ResApi<Object> commentImgupload(@RequestParam("commentImg") MultipartFile file){
+        return foodCommentService.commentImgupload(file);
     }
 
-    @GetMapping("/getRecipeById")
-    public ResApi<Object> getRecipeById(Integer id){
-        return recipeService.getDetailInfo(id);
+    @PostMapping("/saveInfo")
+    public ResApi<Object> commentSaveInfo(FoodComment foodComment){
+        return foodCommentService.commentSaveInfo(foodComment);
     }
 
-    @GetMapping("/updateRecipeCount")
-    public ResApi<Object> updateRecipeCount(Integer id){
-        return recipeService.updateRecipeCount(id);
+    @GetMapping("/getInfoByRid")
+    public ResApi<Object> getInfoByRid(Integer rid){
+        return foodCommentService.getInfoByRid(rid);
     }
-
 }

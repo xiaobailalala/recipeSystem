@@ -32,6 +32,8 @@ public class CodeApi {
     public static final int DEF_CONN_TIMEOUT = 30000;
     public static final int DEF_READ_TIMEOUT = 30000;
     public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
+    public static final int REG_VERIFY = 0;
+    public static final int RESET_PWD = 1;
 
     public static final String APPKEY ="0b93822981d6d671aab5d9cea3605d73";
 
@@ -55,13 +57,21 @@ public class CodeApi {
         }
     }
 
-    public static void getRequest2(String phoneNum,String code){
+    public static void getRequest(int type, String phoneNum,String code){
         String result =null;
         String url ="http://v.juhe.cn/sms/send";
         Map params = new HashMap(8);
         params.put("mobile",phoneNum);
-        params.put("tpl_id","81664");
-        params.put("tpl_value","%23code%23%3d"+code);
+        switch (type) {
+            case REG_VERIFY:
+                params.put("tpl_id","81664");
+                params.put("tpl_value","%23code%23%3d"+code);
+                break;
+            case RESET_PWD:
+                params.put("tpl_id","108004");
+                break;
+            default:
+        }
         params.put("key",APPKEY);
         params.put("dtype","json");
         String errorCode = "error_code";

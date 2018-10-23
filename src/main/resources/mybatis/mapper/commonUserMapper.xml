@@ -42,4 +42,12 @@
 	<select id="getInfoAll" resultMap="getUserDetail">
 		select * from t_common_user order by f_id ASC;
 	</select>
+
+	<update id="updatePwdByAccount" parameterType="CommonUser">
+		update t_common_user set f_password=#{fPassword} where f_id=#{fId};
+	</update>
+
+	<select id="getInfoById" parameterType="Integer" resultType="CommonUser">
+		select * from t_common_user where f_id=#{fId};
+	</select>
 </mapper>

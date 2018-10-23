@@ -30,5 +30,9 @@ public interface CommonUserDao {
 
 	List<CommonUser> getInfoAll();
 
+	Integer updatePwdByAccount(CommonUser commonUser);
+
+	CommonUser getInfoById(Integer fId);
+
 }
 

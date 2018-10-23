@@ -1,6 +1,6 @@
 $(function(){
     (function resetPwd(){
-        $('body').on('click','.resetPwd',function(){
+        Tools.body.on('click','.resetPwd',function(){
             var id=$(this).data('id');
             var email=$(this).data("email");
             var acc=$(this).data("acc");
@@ -49,7 +49,7 @@ $(function(){
         });
     }());
     (function deleteInfo(){
-        $('body').on('click','.deleteInfo',function(){
+        Tools.body.on('click','.deleteInfo',function(){
             var id=$(this).data('id');
             swal({
                 title: "确定删除吗？",

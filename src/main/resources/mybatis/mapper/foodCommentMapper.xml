@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.FoodCommentDao">
+
+    <insert id="saveInfo" parameterType="FoodComment">
+        insert into t_food_comment (f_rid, f_uid, f_content, f_release, f_cover, f_replyid) values (#{fRid}, #{fUid}, #{fContent}, #{fRelease}, #{fCover}, #{fReplyid});
+    </insert>
+
+    <select id="getInfoByRid" parameterType="Integer" resultMap="getFoodCommentDetail">
+        select * from t_food_comment where f_rid=#{fRid} order by f_id DESC;
+    </select>
+
+    <select id="getInfoByIdBrief" parameterType="Integer" resultMap="getFoodCommentDetailBrief">
+        select * from t_food_comment where f_id=#{fId};
+    </select>
+
+    <resultMap id="getFoodCommentDetail" type="FoodComment">
+        <result column="f_uid" property="fUid"/>
+        <result column="f_replyid" property="fReplyid"/>
+        <association property="commonUser" column="f_uid"
+             select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
+        </association>
+        <association property="foodComment" column="f_replyid"
+             select="com.smxy.recipe.dao.FoodCommentDao.getInfoByIdBrief">
+        </association>
+    </resultMap>
+
+    <resultMap id="getFoodCommentDetailBrief" type="FoodComment">
+        <result column="f_uid" property="fUid"/>
+        <association property="commonUser" column="f_uid"
+             select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
+        </association>
+    </resultMap>
+
+</mapper>
