@@ -71,7 +71,7 @@ $(function(){
             if (name&&oid&&cover&&bg&&color){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/claTwo/info/"+formData.get("fId"),
+                    url:"/manage/claTwo/info/"+formData.get("fId"),
                     type:"post",
                     data:formData,
                     processData:false,
@@ -79,7 +79,7 @@ $(function(){
                     success:function(res){
                         if(res.code===200){
                             setTimeout(function(){
-                                window.location.href="/claTwo/info";
+                                window.location.href="/manage/claTwo/info";
                             },3000);
                             swal({
                                 title:"修改成功",
@@ -89,7 +89,7 @@ $(function(){
                                 confirmButtonText:"确认",
                                 closeOnConfirm:false
                             },function(){
-                                window.location.href="/claTwo/info";
+                                window.location.href="/manage/claTwo/info";
                             });
                         }else{
                             Tools.tip(res.msg);

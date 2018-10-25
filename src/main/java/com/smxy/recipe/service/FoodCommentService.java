@@ -40,4 +40,6 @@ public interface FoodCommentService {
     ResApi<Object> commentSaveInfo(FoodComment foodComment);
 
     ResApi<Object> getInfoByRid(Integer rid);
+
+    ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid);
 }

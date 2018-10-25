@@ -120,7 +120,7 @@ $.ajaxSetup({
         if(sessionstatus === "timeout" || XMLHttpRequest.status === 401){
             swal.close();
             var top = getTopWinow();
-            top.location.href = '/adm/adLogin?timeout=1';
+            top.location.href = '/manage/adm/adLogin?timeout=1';
         }
         if(XMLHttpRequest.status === 500){
             swal({

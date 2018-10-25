@@ -3,7 +3,7 @@ $(function(){
         $('#fOid').change(function(){
             if ($(this).val()!==-1){
                 $.ajax({
-                    url:"/claTwo/getbyoid/"+$(this).val(),
+                    url:"/manage/claTwo/getbyoid/"+$(this).val(),
                     type:"post",
                     success:function(res){
                         var opt='<option value="-1">请先选择一级分类</option>';
@@ -49,7 +49,7 @@ $(function(){
             if (name&&select){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/cla/info",
+                    url:"/manage/cla/info",
                     type:"post",
                     data:formData,
                     processData:false,

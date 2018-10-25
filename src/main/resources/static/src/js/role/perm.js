@@ -22,7 +22,7 @@ $(function(){
                     formData.append("includeArr",includeArr);
                     formData.append("rid",rid);
                     $.ajax({
-                        url:"/adminRole/role/perm/delete",
+                        url:"/manage/adminRole/role/perm/delete",
                         data:formData,
                         processData:false,
                         contentType:false,
@@ -83,7 +83,7 @@ $(function(){
                     formData.append("excludeArr",excludeArr);
                     formData.append("rid",rid);
                     $.ajax({
-                        url:"/adminRole/role/perm/add",
+                        url:"/manage/adminRole/role/perm/add",
                         data:formData,
                         processData:false,
                         contentType:false,

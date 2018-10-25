@@ -308,7 +308,7 @@ $(function () {
             '           </td>\n' +
             '       </tr>';
         $.ajax({
-            url: "/sensorUnusual/info",
+            url: "/manage/sensorUnusual/info",
             type: "POST",
             data: {
                 fUid: id,
@@ -360,7 +360,7 @@ $(function () {
 
     function historyDateRender(isFire) {
         $.ajax({
-            url: "/sensorUnusual/showDate",
+            url: "/manage/sensorUnusual/showDate",
             type: "GET",
             data: {
                 fType: isFire ? "fire" : "smog",
@@ -418,7 +418,7 @@ $(function () {
     function historyDataRender(isFire, date) {
         var list = '';
         $.ajax({
-            url: "/sensorUnusual/getDataByUidAndTypeAndDate",
+            url: "/manage/sensorUnusual/getDataByUidAndTypeAndDate",
             type: "POST",
             data: {
                 fType: isFire ? "fire" : "smog",

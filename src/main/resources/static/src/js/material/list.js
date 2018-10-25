@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/material/info/"+id,
+                    url:"/manage/material/info/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,

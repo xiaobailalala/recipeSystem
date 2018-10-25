@@ -19,7 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/material")
+@RequestMapping("/manage/material")
 public class MaterialController {
 
     @Autowired

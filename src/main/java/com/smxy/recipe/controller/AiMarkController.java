@@ -39,7 +39,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/aiMark")
+@RequestMapping("/manage/aiMark")
 public class AiMarkController {
 
     @Autowired

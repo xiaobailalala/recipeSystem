@@ -17,7 +17,7 @@ import java.util.List;
  *
  */
 @Controller
-@RequestMapping("/profession")
+@RequestMapping("/manage/profession")
 public class ProfessionController {
 	
 	@Autowired

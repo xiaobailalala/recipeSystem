@@ -31,7 +31,7 @@ $(function(){
         $('#verify').click(function(){
             if (name){
                 $.ajax({
-                    url:"/adminPermission/isName",
+                    url:"/manage/adminPermission/isName",
                     type:"post",
                     data:{fPermissionname:$('#fPermissionname').val()},
                     success:function(res){
@@ -60,7 +60,7 @@ $(function(){
             if (isSubmit()){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/adminPermission/perm",
+                    url:"/manage/adminPermission/perm",
                     type:'post',
                     data:formData,
                     processData:false,

@@ -15,7 +15,7 @@ $(function(){
             if (name){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/profession/info/"+formData.get("fId"),
+                    url:"/manage/profession/info/"+formData.get("fId"),
                     type:"post",
                     data:formData,
                     processData:false,
@@ -23,7 +23,7 @@ $(function(){
                     success:function(res){
                         if(res.code===200){
                             setTimeout(function(){
-                                window.location.href="/profession/info";
+                                window.location.href="/manage/profession/info";
                             },3000);
                             swal({
                                 title:"修改成功",
@@ -33,7 +33,7 @@ $(function(){
                                 confirmButtonText:"确认",
                                 closeOnConfirm:false
                             },function(){
-                                window.location.href="/profession/info";
+                                window.location.href="/manage/profession/info";
                             });
                         }else{
                             Tools.tip(res.msg);

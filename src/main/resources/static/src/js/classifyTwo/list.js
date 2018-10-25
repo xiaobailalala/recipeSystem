@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/claTwo/info/"+id,
+                    url:"/manage/claTwo/info/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,

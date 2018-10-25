@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/adminPermission")
+@RequestMapping("/manage/adminPermission")
 public class AdminPermissionController {
 
     @Autowired

@@ -3,7 +3,7 @@ $(function(){
         $('.showPerm').click(function(){
             var id=$(this).data("id");
             $.ajax({
-                url:"/adminRole/role/getPerm/"+id,
+                url:"/manage/adminRole/role/getPerm/"+id,
                 type:"get",
                 success:function(res){
                     var content='';
@@ -66,7 +66,7 @@ $(function(){
                     formData.append("includeArr",includeArr);
                     formData.append("rid",rid);
                     $.ajax({
-                        url:"/adminUser/user/perm/delete",
+                        url:"/manage/adminUser/user/perm/delete",
                         data:formData,
                         processData:false,
                         contentType:false,
@@ -127,7 +127,7 @@ $(function(){
                     formData.append("excludeArr",excludeArr);
                     formData.append("rid",rid);
                     $.ajax({
-                        url:"/adminUser/user/perm/add",
+                        url:"/manage/adminUser/user/perm/add",
                         data:formData,
                         processData:false,
                         contentType:false,

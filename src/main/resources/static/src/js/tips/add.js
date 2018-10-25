@@ -14,7 +14,7 @@ $(function(){
         var formData=new FormData(this);
         if (name){
             $.ajax({
-                url:"/tips/saveInfo",
+                url:"/manage/tips/saveInfo",
                 type:"post",
                 data:formData,
                 processData:false,

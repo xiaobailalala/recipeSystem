@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author zpx
  */
 @Controller
-@RequestMapping("/commonUser")
+@RequestMapping("/manage/commonUser")
 public class CommonUserController {
 
     @Autowired

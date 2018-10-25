@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/adminPermission/perm/"+id,
+                    url:"/manage/adminPermission/perm/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,

@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/sensorUnusual")
+@RequestMapping("/manage/sensorUnusual")
 public class SensorUnusualController {
 
     @Autowired

@@ -2,7 +2,7 @@ $(function () {
     $(".showDetail").click(function () {
         var id = $(this).data("id");
         $.ajax({
-            url: "/recipe/detailInfo/" + id,
+            url: "/manage/recipe/detailInfo/" + id,
             type: "get",
             success: function (res) {
                 var fire = res.data.ffire === '0' ? '无' : res.data.ffire;
@@ -127,7 +127,7 @@ $(function () {
             var formData = new FormData();
             formData.append("_method", "delete");
             $.ajax({
-                url: "/recipe/info/" + id,
+                url: "/manage/recipe/info/" + id,
                 type: "post",
                 processData: false,
                 contentType: false,

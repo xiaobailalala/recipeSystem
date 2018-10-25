@@ -7,7 +7,7 @@
     </div>
     <div id="top" th:fragment="topFixed" class="clearfix">
         <div class="applogo" style="padding: 0;">
-            <a th:href="@{/adm/admin/index}" class="logo">
+            <a th:href="@{/manage/adm/admin/index}" class="logo">
                 <img src="" th:src="@{/src/images/logo-light.png}" width="190" height="60" alt="logo">
             </a>
         </div>
@@ -108,7 +108,7 @@
                             <i class="fa falist fa-lock"></i> Lockscreen</a>
                     </li>
                     <li>
-                        <a th:href="@{/adm/adlogout}">
+                        <a th:href="@{/manage/adm/adlogout}">
                             <i class="fa falist fa-power-off"></i> Logout</a>
                     </li>
                 </ul>
@@ -123,7 +123,7 @@
             <h1 th:text="${session.aduser.fUsername}"></h1>
             <p>
                 <i class="fa fa-map-marker"></i> London</p>
-            <a th:href="@{/adm/editor/}+${session.aduser.fId}" class="btn btn-sm">个人信息</a>
+            <a th:href="@{/manage/adm/editor/}+${session.aduser.fId}" class="btn btn-sm">个人信息</a>
             <ul class="stats widget-inline-list clearfix">
                 <li class="col-4">
                     <span>2.109</span>Followers</li>
@@ -135,7 +135,7 @@
         </div>
         <ul class="sidebar-panel nav">
             <li>
-                <a th:class="${(first==1&&second==1)?'active':''}" th:href="@{/adm/admin/index}">
+                <a th:class="${(first==1&&second==1)?'active':''}" th:href="@{/manage/adm/admin/index}">
                     <span class="icon color5">
                         <i class="fa fa-home"></i>
                     </span>首页
@@ -150,13 +150,13 @@
                 </a>
                 <ul th:style="${first==2?'display: block;':''}">
                     <li>
-                        <a th:class="${(first==2&&second==1)?'active':''}" th:href="@{/adminUser/list}">管理员列表</a>
+                        <a th:class="${(first==2&&second==1)?'active':''}" th:href="@{/manage/adminUser/list}">管理员列表</a>
                     </li>
                     <li>
-                        <a th:class="${(first==2&&second==2)?'active':''}" th:href="@{/adminRole/role}">角色信息管理</a>
+                        <a th:class="${(first==2&&second==2)?'active':''}" th:href="@{/manage/adminRole/role}">角色信息管理</a>
                     </li>
                     <li>
-                        <a th:class="${(first==2&&second==3)?'active':''}" th:href="@{/adminPermission/perm}">权限信息管理</a>
+                        <a th:class="${(first==2&&second==3)?'active':''}" th:href="@{/manage/adminPermission/perm}">权限信息管理</a>
                     </li>
                 </ul>
             </li>
@@ -169,7 +169,7 @@
                 </a>
                 <ul th:style="${first==3?'display: block;':''}">
                     <li>
-                        <a th:class="${(first==3&&second==1)?'active':''}" th:href="@{/profession/info}">职业信息管理</a>
+                        <a th:class="${(first==3&&second==1)?'active':''}" th:href="@{/manage/profession/info}">职业信息管理</a>
                     </li>
                     <li>
                         <a href="data-table.html">Data Tables</a>
@@ -185,22 +185,22 @@
                 </a>
                 <ul th:style="${first==4?'display: block;':''}">
                     <li>
-                        <a th:class="${(first==4&&second==1)?'active':''}" th:href="@{/claOne/info}">一级食谱分类</a>
+                        <a th:class="${(first==4&&second==1)?'active':''}" th:href="@{/manage/claOne/info}">一级食谱分类</a>
                     </li>
                     <li>
-                        <a th:class="${(first==4&&second==2)?'active':''}" th:href="@{/claTwo/info}">二级食谱分类</a>
+                        <a th:class="${(first==4&&second==2)?'active':''}" th:href="@{/manage/claTwo/info}">二级食谱分类</a>
                     </li>
                     <li>
-                        <a th:class="${(first==4&&second==3)?'active':''}" th:href="@{/cla/info}">三级食谱分类</a>
+                        <a th:class="${(first==4&&second==3)?'active':''}" th:href="@{/manage/cla/info}">三级食谱分类</a>
                     </li>
                     <li>
-                        <a th:class="${(first==4&&second==4)?'active':''}" th:href="@{/recipe/info}">食谱管理</a>
+                        <a th:class="${(first==4&&second==4)?'active':''}" th:href="@{/manage/recipe/info}">食谱管理</a>
                     </li>
                     <li>
-                        <a th:class="${(first==4&&second==5)?'active':''}" th:href="@{/tips/info}">食谱/作品标签管理</a>
+                        <a th:class="${(first==4&&second==5)?'active':''}" th:href="@{/manage/tips/info}">食谱/作品标签管理</a>
                     </li>
                     <li>
-                        <a th:class="${(first==4&&second==6)?'active':''}" th:href="@{/material/info}">食材管理</a>
+                        <a th:class="${(first==4&&second==6)?'active':''}" th:href="@{/manage/material/info}">食材管理</a>
                     </li>
                 </ul>
             </li>
@@ -213,7 +213,7 @@
                 </a>
                 <ul th:style="${first==5?'display: block;':''}">
                     <li>
-                        <a th:class="${(first==5&&second==1)?'active':''}" th:href="@{/aiMark/info}">语音代号管理</a>
+                        <a th:class="${(first==5&&second==1)?'active':''}" th:href="@{/manage/aiMark/info}">语音代号管理</a>
                     </li>
                 </ul>
             </li>
@@ -226,7 +226,7 @@
                 </a>
                 <ul th:style="${first==6?'display: block;':''}">
                     <li>
-                        <a th:class="${(first==6&&second==1)?'active':''}" th:href="@{/commonUser/info}">用户信息管理</a>
+                        <a th:class="${(first==6&&second==1)?'active':''}" th:href="@{/manage/commonUser/info}">用户信息管理</a>
                     </li>
                 </ul>
             </li>

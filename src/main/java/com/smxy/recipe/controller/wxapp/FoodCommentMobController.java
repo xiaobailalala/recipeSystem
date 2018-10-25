@@ -57,4 +57,9 @@ public class FoodCommentMobController {
     public ResApi<Object> getInfoByRid(Integer rid){
         return foodCommentService.getInfoByRid(rid);
     }
+
+    @GetMapping("/getInfoByRidAndPage")
+    public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid){
+        return foodCommentService.getInfoByRidAndPage(page, rid);
+    }
 }

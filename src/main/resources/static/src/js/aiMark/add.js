@@ -38,7 +38,7 @@ $(function(){
             if (isSubmit()){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/aiMark/info",
+                    url:"/manage/aiMark/info",
                     type:'post',
                     data:formData,
                     processData:false,

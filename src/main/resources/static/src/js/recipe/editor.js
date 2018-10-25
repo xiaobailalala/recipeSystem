@@ -20,7 +20,7 @@ $(function () {
         var index = window.location.href.lastIndexOf("/");
         var id = window.location.href.substr(index + 1, window.location.href.length);
         $.ajax({
-            url: "/recipe/load/getData/" + id,
+            url: "/manage/recipe/load/getData/" + id,
             type: "get",
             success: function (res) {
                 res.data.item.recipeTips.forEach(function (item, index) {
@@ -44,7 +44,7 @@ $(function () {
 
     (function ClaOne() {
         $.ajax({
-            url: "/claOne/getAllInfo",
+            url: "/manage/claOne/getAllInfo",
             type: "get",
             success: function (res) {
                 res.data.forEach(function (item, index) {
@@ -56,7 +56,7 @@ $(function () {
     (function Operation() {
         $('#refresh').click(function () {
             $.ajax({
-                url: "/recipe/add/refresh",
+                url: "/manage/recipe/add/refresh",
                 type: "get",
                 success: function (res) {
                     var tips = '';
@@ -115,7 +115,7 @@ $(function () {
                 Tools.tip("最多可选两项标签");
             } else {
                 $.ajax({
-                    url: "/tips/saveInfo",
+                    url: "/manage/tips/saveInfo",
                     type: "post",
                     data: {
                         fName: $("#newTip").val()
@@ -142,7 +142,7 @@ $(function () {
                 Tools.tip("标签内容不能为空");
             } else {
                 $.ajax({
-                    url: "/tips/info/searchInfo",
+                    url: "/manage/tips/info/searchInfo",
                     type: "get",
                     data: {fName: $('#searchTipsText').val()},
                     success: function (res) {
@@ -223,7 +223,7 @@ $(function () {
                 $(this).siblings(".twoCont").html('<option value="-1">二级分类</option>');
             } else {
                 $.ajax({
-                    url: "/claTwo/getbyoid/" + $(this).val(),
+                    url: "/manage/claTwo/getbyoid/" + $(this).val(),
                     type: "post",
                     success: res => {
                         var content = '<option value="-1">二级分类</option>';
@@ -240,7 +240,7 @@ $(function () {
                 $(this).siblings(".threeCont").html('<option value="-1">三级分类</option>');
             } else {
                 $.ajax({
-                    url: "/cla/getByTid/" + $(this).val(),
+                    url: "/manage/cla/getByTid/" + $(this).val(),
                     type: "post",
                     success: res => {
                         var content = '<option value="-1">三级分类</option>';
@@ -262,7 +262,7 @@ $(function () {
                     Tools.tip("该食材已添加，请勿重复操作")
                 } else {
                     $.ajax({
-                        url: "/material/getByName",
+                        url: "/manage/material/getByName",
                         type: "get",
                         data: {fName: $("#materialName").val()},
                         success: function (res) {
@@ -472,7 +472,7 @@ $(function () {
                             formData.append("stepTime", stepTime);
                             formData.append("stepPreid", stepPreid);
                             $.ajax({
-                                url: "/recipe/info/"+id,
+                                url: "/manage/recipe/info/"+id,
                                 type: "post",
                                 Accept: 'text/html;charset=UTF-8',
                                 processData: false,
@@ -497,7 +497,7 @@ $(function () {
                                 },
                                 success: function (res) {
                                     setTimeout(function(){
-                                        window.location.href="/recipe/info";
+                                        window.location.href="/manage/recipe/info";
                                     },3000);
                                     swal({
                                         title:"修改成功",
@@ -507,7 +507,7 @@ $(function () {
                                         confirmButtonText:"确认",
                                         closeOnConfirm:false
                                     },function(){
-                                        window.location.href="/recipe/info";
+                                        window.location.href="/manage/recipe/info";
                                     });
                                 }
                             });

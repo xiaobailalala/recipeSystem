@@ -4,14 +4,14 @@ $(function(){
         if ($('#account').val()!==""&&$('#password').val()!==""){
             var formData=new FormData(this);
             $.ajax({
-                url:"/adm/adlogin",
+                url:"/manage/adm/adlogin",
                 type:"POST",
                 data:formData,
                 processData:false,
                 contentType:false,
                 success:function(res){
                     if (res.code===200){
-                        location.href="/adm/admin/index";
+                        location.href="/manage/adm/admin/index";
                     } else{
                         Tools.tip(res.msg);
                     }

@@ -31,7 +31,7 @@ $(function(){
         $('#verify').click(function(){
             if (name){
                 $.ajax({
-                    url:"/adminRole/isName",
+                    url:"/manage/adminRole/isName",
                     type:"post",
                     data:{fRolename:$('#fRolename').val()},
                     success:function(res){
@@ -60,7 +60,7 @@ $(function(){
             if (isSubmit()){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/adminRole/role",
+                    url:"/manage/adminRole/role",
                     type:'post',
                     data:formData,
                     processData:false,

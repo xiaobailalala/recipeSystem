@@ -20,7 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/claOne")
+@RequestMapping("/manage/claOne")
 public class ClassifyOneController {
 
     @Autowired

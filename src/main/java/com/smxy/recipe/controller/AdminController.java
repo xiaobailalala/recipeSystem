@@ -16,6 +16,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/adm")
+@RequestMapping("/manage/adm")
 public class AdminController {
 
     @Autowired
@@ -35,7 +37,7 @@ public class AdminController {
     public String adlogout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "redirect:/adm/adLogin";
+        return "redirect:/manage/adm/adLogin";
     }
 
     @GetMapping("/adLogin")

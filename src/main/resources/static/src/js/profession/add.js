@@ -15,7 +15,7 @@ $(function () {
             if (name){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/profession/info",
+                    url:"/manage/profession/info",
                     type:"post",
                     data:formData,
                     processData:false,

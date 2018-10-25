@@ -38,7 +38,7 @@ $(function () {
         $('#verify').click(function () {
             if (account) {
                 $.ajax({
-                    url: "/adminUser/isAcc",
+                    url: "/manage/adminUser/isAcc",
                     type: "post",
                     data: {fAccount: $('#fAccount').val()},
                     success: function (res) {
@@ -69,7 +69,7 @@ $(function () {
                     if (isSubmit()) {
                         var formData = new FormData(this);
                         $.ajax({
-                            url: "/adminUser/add",
+                            url: "/manage/adminUser/add",
                             type: 'post',
                             data: formData,
                             processData: false,

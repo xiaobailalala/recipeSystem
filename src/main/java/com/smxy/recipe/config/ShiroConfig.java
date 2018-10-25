@@ -21,6 +21,7 @@ import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -31,6 +32,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -41,24 +43,30 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shirFilter(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Map<String, Filter> filters = new LinkedHashMap<>();
-        XformAuthenticationFilter xFormAuthenticationFilter=new XformAuthenticationFilter();
-        xFormAuthenticationFilter.setPasswordParam("fPassword");
-        xFormAuthenticationFilter.setUsernameParam("fAccount");
-        shiroFilterFactoryBean.setLoginUrl("/adm/adLogin");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
-        filters.put("authc",xFormAuthenticationFilter);
+        Map<String, Filter> filters = new LinkedHashMap<>(8);
+        XformAuthenticationFilter xFormAuthenticationFilterAdmin=new XformAuthenticationFilter();
+        xFormAuthenticationFilterAdmin.setUsernameParam("fAccount");
+        xFormAuthenticationFilterAdmin.setPasswordParam("fPassword");
+        xFormAuthenticationFilterAdmin.setLoginUrl("/manage/adm/adLogin");
+        filters.put("authc",xFormAuthenticationFilterAdmin);
+        XformAuthenticationFilter xFormAuthenticationFilterMerchant=new XformAuthenticationFilter();
+        xFormAuthenticationFilterMerchant.setUsernameParam("fAccount");
+        xFormAuthenticationFilterMerchant.setPasswordParam("fPassword");
+        xFormAuthenticationFilterMerchant.setLoginUrl("/merchant/merchantUser/login");
+        filters.put("merchant",xFormAuthenticationFilterMerchant);
         shiroFilterFactoryBean.setFilters(filters);
+        shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/src/**","anon");
         filterChainDefinitionMap.put("/assets/**","anon");
         filterChainDefinitionMap.put("/common/**","anon");
-        filterChainDefinitionMap.put("/adm/adlogin","anon");
+        filterChainDefinitionMap.put("/manage/adm/adlogin","anon");
         filterChainDefinitionMap.put("/mob/**","anon");
         filterChainDefinitionMap.put("/druid/**","anon");
         filterChainDefinitionMap.put("/sensorData/**","anon");
         filterChainDefinitionMap.put("/endpoint-websocket-wxClient","anon");
-        filterChainDefinitionMap.put("/**", "authc");
+        filterChainDefinitionMap.put("/merchant/**", "merchant");
+        filterChainDefinitionMap.put("/manage/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

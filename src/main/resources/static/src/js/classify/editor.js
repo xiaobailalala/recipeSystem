@@ -2,7 +2,7 @@ $(function () {
     (function Select() {
         $('#fOid').change(function () {
             $.ajax({
-                url: "/claTwo/getbyoid/" + $(this).val(),
+                url: "/manage/claTwo/getbyoid/" + $(this).val(),
                 type: "post",
                 success: function (res) {
                     var opt = '<option value="-1">请先选择一级分类</option>';
@@ -50,7 +50,7 @@ $(function () {
             if (name && select) {
                 var formData = new FormData(this);
                 $.ajax({
-                    url: "/cla/info/" + formData.get("fId"),
+                    url: "/manage/cla/info/" + formData.get("fId"),
                     type: "post",
                     data: formData,
                     processData: false,
@@ -58,7 +58,7 @@ $(function () {
                     success: function (res) {
                         if (res.code === 200) {
                             setTimeout(function () {
-                                window.location.href = "/cla/info";
+                                window.location.href = "/manage/cla/info";
                             }, 3000);
                             swal({
                                 title: "修改成功",
@@ -68,7 +68,7 @@ $(function () {
                                 confirmButtonText: "确认",
                                 closeOnConfirm: false
                             }, function () {
-                                window.location.href = "/cla/info";
+                                window.location.href = "/manage/cla/info";
                             });
                         } else {
                             Tools.tip(res.msg);

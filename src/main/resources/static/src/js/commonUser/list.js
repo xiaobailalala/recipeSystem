@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/commonUser/info/"+id,
+                    url:"/manage/commonUser/info/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,
@@ -90,7 +90,7 @@ $(function(){
                 closeOnConfirm: false
             },function(){
                 $.ajax({
-                    url: "/commonUser/repwd",
+                    url: "/manage/commonUser/repwd",
                     type: "POST",
                     data: {
                         fAccount: account

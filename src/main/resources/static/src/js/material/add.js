@@ -14,7 +14,7 @@ $(function(){
         var formData=new FormData(this);
         if (name){
             $.ajax({
-                url:"/material/info",
+                url:"/manage/material/info",
                 type:"post",
                 data:formData,
                 processData:false,

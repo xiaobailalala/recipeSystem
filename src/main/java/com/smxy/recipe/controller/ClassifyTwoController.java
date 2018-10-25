@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/claTwo")
+@RequestMapping("/manage/claTwo")
 public class ClassifyTwoController {
 
     @Autowired

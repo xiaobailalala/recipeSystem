@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/cla/info/"+id,
+                    url:"/manage/cla/info/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,

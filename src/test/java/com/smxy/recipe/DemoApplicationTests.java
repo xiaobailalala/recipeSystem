@@ -1,6 +1,7 @@
 package com.smxy.recipe;
 
 import com.smxy.recipe.service.MaterialService;
+import com.smxy.recipe.utils.ToolsApi;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class DemoApplicationTests {
     public void contextLoads() {
 //        ResApi<Object> data = getData();
 //        System.out.println(data);
+        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFvPOfiAWr7HAAP0AAkuLZg362.png");
     }
 //
 //    @Cacheable(value = {"testList"})

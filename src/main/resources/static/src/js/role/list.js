@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/adminRole/role/"+id,
+                    url:"/manage/adminRole/role/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,
@@ -46,7 +46,7 @@ $(function(){
         $('body').on('click','.showPerm',function(){
             var id=$(this).data("id");
             $.ajax({
-                url:"/adminRole/role/getPerm/"+id,
+                url:"/manage/adminRole/role/getPerm/"+id,
                 type:"get",
                 success:function(res){
                     var content='';

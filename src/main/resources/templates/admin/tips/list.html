@@ -14,7 +14,7 @@
         </ol>
         <div class="right">
             <div class="btn-group" role="group" aria-label="...">
-                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a th:href="@{/manage/adm/admin/index}" class="btn btn-light">Home</a>
                 <a class="btn btn-light" disabled="disabled">食谱资料管理</a>
                 <a class="btn btn-light" disabled="disabled">食谱/作品标签管理</a>
                 <a href="javascript:history.go(-1);" class="btn btn-light">
@@ -32,7 +32,7 @@
                 <div class="panel panel-default">
                     <div class="panel-title">
                         信息列表
-                        <a type="button" th:href="@{/tips/add}" class="btn btn-info"
+                        <a type="button" th:href="@{/manage/tips/add}" class="btn btn-info"
                            style="float: right;color: #ffffff;">新增标签</a>
                     </div>
                     <div class="panel-body table-responsive">
@@ -59,7 +59,7 @@
                                     <button th:text="${item.fName}" th:class="${item.fStyle}+' btn btn-sm'"></button>
                                 </td>
                                 <td>
-                                    <a th:href="@{/tips/editor/}+${item.fId}" th:data-id="${item.fId}"
+                                    <a th:href="@{/manage/tips/editor/}+${item.fId}" th:data-id="${item.fId}"
                                        class="btn btn-default">
                                         <i class="fa fa-edit"></i>
                                         编辑

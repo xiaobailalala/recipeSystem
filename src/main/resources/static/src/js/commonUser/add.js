@@ -29,7 +29,7 @@ $(function () {
             if (isSubmit()) {
                 var formData = new FormData(this);
                 $.ajax({
-                    url: "/commonUser/info",
+                    url: "/manage/commonUser/info",
                     type: "post",
                     data: formData,
                     processData: false,

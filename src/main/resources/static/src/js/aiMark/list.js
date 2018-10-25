@@ -14,7 +14,7 @@ $(function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/aiMark/info/"+id,
+                    url:"/manage/aiMark/info/"+id,
                     type:"post",
                     processData:false,
                     contentType:false,

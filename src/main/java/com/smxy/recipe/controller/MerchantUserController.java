@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping(value = "/merchant")
+@RequestMapping(value = "/merchant/merchantUser")
 public class MerchantUserController {
 
     @Autowired
@@ -52,7 +52,7 @@ public class MerchantUserController {
         return "merchant/index";
     }
 
-    @GetMapping(value = "login")
+    @GetMapping(value = "/login")
     public String goLogin(){
         return "merchant/login";
     }

@@ -35,7 +35,7 @@ $(function(){
             $('#progressBar').attr("aria-valuenow","0").css("width","0%");
             $('#progressCont').show();
             $.ajax({
-                url:"/adm/editor/name/"+formdata.get("fId"),
+                url:"/manage/adm/editor/name/"+formdata.get("fId"),
                 type:"post",
                 data:formdata,
                 Accept:'text/html;charset=UTF-8',
@@ -70,7 +70,7 @@ $(function(){
                             confirmButtonText:"返回首页",
                             closeOnConfirm:false
                         },function(){
-                            location.href="/adm/admin/index";
+                            location.href="/manage/adm/admin/index";
                         });
                     }else{
                         Tools.tip(res.msg);
@@ -141,7 +141,7 @@ $(function(){
             if (email){
                 setTimeout(function(){
                     $.ajax({
-                        url:"/adm/verify/email",
+                        url:"/manage/adm/verify/email",
                         type:"post",
                         data:{
                             fEmail:$("#fEmail").val()
@@ -178,7 +178,7 @@ $(function(){
             if (isVerify&&$("#verifyNum").val()===verify){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/adm/verify/email/"+formData.get("fId"),
+                    url:"/manage/adm/verify/email/"+formData.get("fId"),
                     type:"post",
                     data:formData,
                     processData:false,
@@ -193,7 +193,7 @@ $(function(){
                                 confirmButtonText:"返回首页",
                                 closeOnConfirm:false
                             },function(){
-                                location.href="/adm/admin/index";
+                                location.href="/manage/adm/admin/index";
                             });
                         } else{
                             Tools.tip(res.msg);
@@ -209,7 +209,7 @@ $(function(){
             Tools.tip("验证通过，已向邮箱："+$('#fEmail').val()+"发送邮件，请在以下输入框输入邮件中的验证码以完成验证。");
             $('#verifyInput').collapse("show");
             $.ajax({
-                url:"/adm/verify/email/send",
+                url:"/manage/adm/verify/email/send",
                 type:"get",
                 data:{
                     email:$('#fEmail').val(),
@@ -242,7 +242,7 @@ $(function(){
                 var formData=new FormData(document.getElementById("passwordForm"));
                 formData.append("isRe",true);
                 $.ajax({
-                    url:"/adm/reset/"+formData.get("fId"),
+                    url:"/manage/adm/reset/"+formData.get("fId"),
                     type:"post",
                     processData:false,
                     contentType:false,
@@ -283,7 +283,7 @@ $(function(){
             formData.append("isRe",false);
             if (newPassword && rePassword){
                 $.ajax({
-                    url:"/adm/reset/"+formData.get("fId"),
+                    url:"/manage/adm/reset/"+formData.get("fId"),
                     type:"post",
                     processData:false,
                     contentType:false,
@@ -298,7 +298,7 @@ $(function(){
                                 confirmButtonText:"返回首页",
                                 closeOnConfirm:false
                             },function(){
-                                location.href="/adm/admin/index";
+                                location.href="/manage/adm/admin/index";
                             });
                         }else{
                             Tools.tip(res.msg);

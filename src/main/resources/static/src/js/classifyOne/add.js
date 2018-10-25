@@ -15,7 +15,7 @@ $(function(){
             if (name){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/claOne/info",
+                    url:"/manage/claOne/info",
                     type:"post",
                     data:formData,
                     processData:false,

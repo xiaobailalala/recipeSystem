@@ -19,7 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/cla")
+@RequestMapping("/manage/cla")
 public class ClassifyController {
 
     @Autowired

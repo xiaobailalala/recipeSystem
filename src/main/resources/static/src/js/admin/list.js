@@ -22,7 +22,7 @@ $(function(){
                     formData.append("fEmail",email);
                     formData.append("fAccount",acc);
                     $.ajax({
-                        url:"/adminUser/list/"+id,
+                        url:"/manage/adminUser/list/"+id,
                         type:"post",
                         data:formData,
                         processData:false,
@@ -64,7 +64,7 @@ $(function(){
                 formData.append("fId",id);
                 formData.append("_method","delete");
                 $.ajax({
-                    url:"/adminUser/list/"+id,
+                    url:"/manage/adminUser/list/"+id,
                     type:"post",
                     data:formData,
                     processData:false,

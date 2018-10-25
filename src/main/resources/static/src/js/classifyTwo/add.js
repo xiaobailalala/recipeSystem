@@ -63,7 +63,7 @@ $(function(){
             if (name&&oid&&cover&&bg&&color){
                 var formData=new FormData(this);
                 $.ajax({
-                    url:"/claTwo/info",
+                    url:"/manage/claTwo/info",
                     type:"post",
                     data:formData,
                     processData:false,

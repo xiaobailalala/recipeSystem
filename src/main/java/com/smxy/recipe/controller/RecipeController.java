@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/recipe")
+@RequestMapping("/manage/recipe")
 public class RecipeController {
 
     @Autowired

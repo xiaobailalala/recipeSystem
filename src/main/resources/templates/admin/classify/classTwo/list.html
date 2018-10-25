@@ -14,7 +14,7 @@
         </ol>
         <div class="right">
             <div class="btn-group" role="group" aria-label="...">
-                <a th:href="@{/adm/admin/index}" class="btn btn-light">Home</a>
+                <a th:href="@{/manage/adm/admin/index}" class="btn btn-light">Home</a>
                 <a class="btn btn-light" disabled="disabled">食谱资料管理</a>
                 <a class="btn btn-light" disabled="disabled">二级食谱分类</a>
                 <a href="javascript:history.go(-1);" class="btn btn-light">
@@ -32,7 +32,7 @@
                 <div class="panel panel-default">
                     <div class="panel-title">
                         信息列表
-                        <a type="button" th:href="@{/claTwo/add}" class="btn btn-info"
+                        <a type="button" th:href="@{/manage/claTwo/add}" class="btn btn-info"
                            style="float: right;color: #ffffff;">新增二级分类</a>
                     </div>
                     <div class="panel-body table-responsive">
@@ -67,7 +67,7 @@
                                 <td th:text="${item.fName}"></td>
                                 <td th:text="${item.classifyOne.fName}"></td>
                                 <td>
-                                    <a th:href="@{/claTwo/editor/}+${item.fId}" th:data-id="${item.fId}"
+                                    <a th:href="@{/manage/claTwo/editor/}+${item.fId}" th:data-id="${item.fId}"
                                        class="btn btn-default">
                                         <i class="fa fa-edit"></i>
                                         编辑
