@@ -23,25 +23,23 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/23 19:39
+ * Build File @date: 2018/10/25 16:00
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.dao;
+package com.smxy.recipe.entity;
 
-import com.smxy.recipe.entity.FoodComment;
-import org.apache.ibatis.annotations.Param;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-public interface FoodCommentDao {
-
-    Integer saveInfo(FoodComment foodComment);
-
-    List<FoodComment> getInfoByRid(Integer fRid);
-
-    Integer saveInfoGreat(@Param("fCid") Integer cid, @Param("fUid") Integer uid);
-
-    Integer deleteInfoGreat(@Param("fCid") Integer cid, @Param("fUid") Integer uid);
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class FoodCommentGreat {
+    private Integer fId;
+    private Integer fCid;
+    private FoodComment foodComment;
+    private Integer fUid;
+    private CommonUser commonUser;
 }

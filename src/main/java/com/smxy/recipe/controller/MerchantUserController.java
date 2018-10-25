@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MerchantUserController {
 
     @Autowired
-    MerchantUserService merchantUserService;
+    private MerchantUserService merchantUserService;
 
     @GetMapping(value = "hello")
     public String testPage1(){

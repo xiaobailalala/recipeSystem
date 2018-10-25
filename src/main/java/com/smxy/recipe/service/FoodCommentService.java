@@ -39,7 +39,9 @@ public interface FoodCommentService {
 
     ResApi<Object> commentSaveInfo(FoodComment foodComment);
 
-    ResApi<Object> getInfoByRid(Integer rid);
+    ResApi<Object> getInfoByRid(Integer rid, Integer uid);
 
-    ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid);
+    ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid);
+
+    ResApi<Object> greatOperation(Integer open, Integer cid, Integer uid);
 }

@@ -41,7 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FoodCommentMobController {
 
     @Autowired
-    FoodCommentService foodCommentService;
+    private FoodCommentService foodCommentService;
 
     @PostMapping("/imgupload")
     public ResApi<Object> commentImgupload(@RequestParam("commentImg") MultipartFile file){
@@ -54,12 +54,17 @@ public class FoodCommentMobController {
     }
 
     @GetMapping("/getInfoByRid")
-    public ResApi<Object> getInfoByRid(Integer rid){
-        return foodCommentService.getInfoByRid(rid);
+    public ResApi<Object> getInfoByRid(Integer rid, Integer uid){
+        return foodCommentService.getInfoByRid(rid, uid);
     }
 
     @GetMapping("/getInfoByRidAndPage")
-    public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid){
-        return foodCommentService.getInfoByRidAndPage(page, rid);
+    public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid){
+        return foodCommentService.getInfoByRidAndPage(page, rid, uid);
+    }
+
+    @GetMapping("/greatOperation")
+    public ResApi<Object> greatOperation(Integer open, Integer cid, Integer uid) {
+        return foodCommentService.greatOperation(open, cid, uid);
     }
 }

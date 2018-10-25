@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
 public class MerchantUserServiceImpl implements MerchantUserService {
 
     @Autowired
-    MerchantUserDao merchantUserDao;
+    private MerchantUserDao merchantUserDao;
 
 
     @Override

@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DemoApplicationTests {
 
     @Autowired
-    MaterialService materialService;
+    private MaterialService materialService;
 
     @Test
     public void contextLoads() {

@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author zpx
  *
@@ -30,4 +32,6 @@ public class FoodComment {
 	private String fCover;
 	private Integer fReplyid;
 	private FoodComment foodComment;
+	private Integer userGreat;
+	private List<FoodCommentGreat> foodCommentGreats;
 }

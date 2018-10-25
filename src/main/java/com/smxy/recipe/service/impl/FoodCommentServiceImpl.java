@@ -31,9 +31,13 @@ package com.smxy.recipe.service.impl;
 
 import com.smxy.recipe.dao.FoodCommentDao;
 import com.smxy.recipe.entity.FoodComment;
+import com.smxy.recipe.entity.FoodCommentGreat;
 import com.smxy.recipe.service.FoodCommentService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,12 +45,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service("foodCommentService")
 public class FoodCommentServiceImpl implements FoodCommentService {
 
+    private static final Logger logger = LoggerFactory.getLogger(FoodCommentServiceImpl.class);
+
     @Autowired
-    FoodCommentDao foodCommentDao;
+    private FoodCommentDao foodCommentDao;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public ResApi<Object> commentImgupload(MultipartFile file) {
@@ -65,7 +74,7 @@ public class FoodCommentServiceImpl implements FoodCommentService {
     }
 
     @Override
-    public ResApi<Object> getInfoByRid(Integer rid) {
+    public ResApi<Object> getInfoByRid(Integer rid, Integer uid) {
         Map<String, Object> map = new HashMap<>(8);
         List<FoodComment> foodComments = foodCommentDao.getInfoByRid(rid);
         map.put("dataLen", foodComments.size());
@@ -75,12 +84,25 @@ public class FoodCommentServiceImpl implements FoodCommentService {
         } else {
             map.put("isAll", 1);
         }
+        isContain(uid, foodComments);
         map.put("dataList", foodComments);
         return new ResApi<>(200, "success", map);
     }
 
+    private void isContain(Integer uid, List<FoodComment> foodComments) {
+        foodComments.forEach(item -> {
+            item.setFGood(item.getFoodCommentGreats().size());
+            Optional<FoodCommentGreat> foodCommentGreatOptional = item.getFoodCommentGreats().stream().filter(greats -> greats.getFUid().equals(uid)).findFirst();
+            if (foodCommentGreatOptional.isPresent()){
+                item.setUserGreat(1);
+            } else {
+                item.setUserGreat(0);
+            }
+        });
+    }
+
     @Override
-    public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid) {
+    public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid) {
         Map<String, Object> map = new HashMap<>(8);
         List<FoodComment> foodComments = foodCommentDao.getInfoByRid(rid);
         map.put("dataLen", foodComments.size());
@@ -93,13 +115,25 @@ public class FoodCommentServiceImpl implements FoodCommentService {
             }
         } else {
             if (foodComments.size() > (page * 10)) {
-                foodComments = foodComments.subList(0, page * 10);
+                foodComments = foodComments.subList((page - 1) * 10, page * 10);
                 map.put("isAll", 0);
             } else {
+                foodComments = foodComments.subList((page - 1) * 10, foodComments.size());
                 map.put("isAll", 1);
             }
         }
+        isContain(uid, foodComments);
         map.put("dataList", foodComments);
         return new ResApi<>(200, "success", map);
+    }
+
+    @Override
+    public ResApi<Object> greatOperation(Integer open, Integer cid, Integer uid) {
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("open", open);
+        map.put("cid", cid);
+        map.put("uid", uid);
+        rabbitTemplate.convertAndSend("recipeSystem.direct", "recipeCommentGreatUpload.queue", map);
+        return new ResApi<>(200, "success", "success");
     }
 }

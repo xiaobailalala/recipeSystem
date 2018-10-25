@@ -18,19 +18,35 @@
     <resultMap id="getFoodCommentDetail" type="FoodComment">
         <result column="f_uid" property="fUid"/>
         <result column="f_replyid" property="fReplyid"/>
+        <result column="f_id" property="fId"/>
         <association property="commonUser" column="f_uid"
-             select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
         </association>
         <association property="foodComment" column="f_replyid"
-             select="com.smxy.recipe.dao.FoodCommentDao.getInfoByIdBrief">
+                     select="com.smxy.recipe.dao.FoodCommentDao.getInfoByIdBrief">
+        </association>
+        <association property="foodCommentGreats" column="f_id"
+                     select="getGreatCount">
         </association>
     </resultMap>
+
+    <select id="getGreatCount" resultType="FoodCommentGreat" parameterType="Integer">
+        select * from t_food_comment_great where f_cid=#{fId};
+    </select>
 
     <resultMap id="getFoodCommentDetailBrief" type="FoodComment">
         <result column="f_uid" property="fUid"/>
         <association property="commonUser" column="f_uid"
-             select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
         </association>
     </resultMap>
+
+    <insert id="saveInfoGreat">
+        insert into t_food_comment_great (f_uid, f_cid) values (#{fUid}, #{fCid});
+    </insert>
+
+    <delete id="deleteInfoGreat">
+        delete from t_food_comment_great where f_uid=#{fUid} and f_cid=#{fCid};
+    </delete>
 
 </mapper>
