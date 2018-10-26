@@ -66,6 +66,7 @@ public class FoodCommentServiceImpl implements FoodCommentService {
     @Override
     public ResApi<Object> commentSaveInfo(FoodComment foodComment) {
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
+        foodComment.setFContent(ToolsApi.base64Encode(foodComment.getFContent()));
         Integer result = foodCommentDao.saveInfo(foodComment);
         if (result > 0) {
             resApi = new ResApi<>(200, "success", "success");
@@ -92,6 +93,10 @@ public class FoodCommentServiceImpl implements FoodCommentService {
     private void isContain(Integer uid, List<FoodComment> foodComments) {
         foodComments.forEach(item -> {
             item.setFGood(item.getFoodCommentGreats().size());
+            item.setFContent(ToolsApi.base64Decode(item.getFContent()));
+            if (!item.getFReplyid().equals(-1)) {
+                item.getFoodComment().setFContent(ToolsApi.base64Decode(item.getFoodComment().getFContent()));
+            }
             Optional<FoodCommentGreat> foodCommentGreatOptional = item.getFoodCommentGreats().stream().filter(greats -> greats.getFUid().equals(uid)).findFirst();
             if (foodCommentGreatOptional.isPresent()){
                 item.setUserGreat(1);

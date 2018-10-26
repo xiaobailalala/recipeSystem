@@ -101,4 +101,10 @@ public class AdminController {
         return adminUserService.resetPwd(isRe, id, adminUser, prePassword);
     }
 
+    @RequiresRoles("sysAdmin")
+    @GetMapping("/fileManage")
+    public String fileManage() {
+        return "admin/adminUser/filemanage";
+    }
+
 }
