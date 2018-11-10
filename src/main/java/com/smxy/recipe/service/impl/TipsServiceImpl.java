@@ -17,6 +17,7 @@ import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -75,12 +76,23 @@ public class TipsServiceImpl implements TipsService {
     public ResApi<Object> searchInfo(String fName) {
         ResApi<Object> resApi;
         List<Tips> tips=tipsDao.searchInfo(fName);
-        if (tips.size()==0 || tips==null){
+        if (tips.size() == 0){
             resApi=new ResApi<>(501,"不存在该项","failed");
         }else{
             resApi=new ResApi<>(200,"success",tips);
         }
         return resApi;
+    }
+
+    @Override
+    public ResApi<Object> getInfoRandom() {
+        List<Tips> tips = tipsDao.getAllInfo();
+        int[] arr = ToolsApi.randomArray(0, tips.size() - 1, 10);
+        List<Tips> tipsData = new ArrayList<>();
+        for (int item : arr) {
+            tipsData.add(tips.get(item));
+        }
+        return new ResApi<>(200, "success", tipsData);
     }
 
 }

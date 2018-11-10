@@ -9,9 +9,11 @@ package com.smxy.recipe.utils;
 
 /**
  * @author zpx
- *
  */
 
+import com.smxy.recipe.dao.SysResourceDao;
+import com.smxy.recipe.entity.SysResource;
+import com.smxy.recipe.service.SysResourceService;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.csource.common.NameValuePair;
@@ -59,6 +61,13 @@ public class ToolsApi {
     @Autowired(required = true)
     public void setMailSender(JavaMailSenderImpl mailSender) {
         ToolsApi.mailSender = mailSender;
+    }
+
+    private static SysResourceService sysResourceService;
+
+    @Autowired(required = true)
+    public void setSysResourceService(SysResourceService sysResourceService) {
+        ToolsApi.sysResourceService = sysResourceService;
     }
 
     private static String senderAddress;
@@ -125,24 +134,36 @@ public class ToolsApi {
                 bos.write(bs);
             }
             inputStream.close();
-            String res = FastDfsClient.uploadBinaryFile(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()), pairs);
-            return res;
+            String result = FastDfsClient.uploadBinaryFile(bos.toByteArray(), ToolsApi.suffixName(file.getOriginalFilename()).toLowerCase(), pairs);
+            sysResourceService.saveInfo(new SysResource(0, result, ToolsApi.suffixName(file.getOriginalFilename()).toLowerCase()));
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "failed";
     }
 
-    public static int multipartFileDeleteFile(String fileName) {
-        /**
-         * FastDFS 成功返回值为1，失败不返回，故这里返回值为2以示失败
-         */
+    public static String binaryFileUploadFile(byte[] file, String suffixName) {
+        String result = "failed";
         try {
-            return FastDfsClient.deleteFile(fileName);
+            result = FastDfsClient.uploadBinaryFile(file, suffixName.toLowerCase(), null);
+            sysResourceService.saveInfo(new SysResource(0, result, suffixName.toLowerCase()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 2;
+        return result;
+    }
+
+    /**
+     * FastDFS 成功返回值为1，失败不返回，故这里返回值为2以示失败
+     */
+    public static void multipartFileDeleteFile(String fileName) {
+        try {
+            sysResourceService.deleteInfo(fileName);
+            FastDfsClient.deleteFile(fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static String getUndertint() {

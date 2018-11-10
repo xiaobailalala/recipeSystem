@@ -9,6 +9,8 @@
  */
 package com.smxy.recipe.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.entity.Process;
@@ -48,6 +50,8 @@ public class RecipeServiceImpl implements RecipeService {
     private ClassifyDao classifyDao;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private MaterialDao materialDao;
 
     @Override
     public ResApi<Object> getAddData() {
@@ -66,8 +70,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public ResApi<Object> saveInfo(MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
-                                   String[] stepContent, String[] stepTime, HttpServletRequest request) {
-        AdminUser adminUser = (AdminUser) request.getSession().getAttribute("aduser");
+                                   String[] stepContent, String[] stepTime) {
         recipe.setFUid(0);
         recipe.setFRelease(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
         recipe.setFCover(ToolsApi.multipartFileUploadFile(file, null));
@@ -117,10 +120,10 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe recipe = recipeDao.getInfoById(id);
         ToolsApi.multipartFileDeleteFile(recipe.getFCover());
         recipe.getProcesses().forEach(item -> {
-            if (item.getFCover()!=null){
+            if (item.getFCover() != null) {
                 ToolsApi.multipartFileDeleteFile(item.getFCover());
             }
-            if (item.getFVoice()!=null){
+            if (item.getFVoice() != null) {
                 ToolsApi.multipartFileDeleteFile(item.getFVoice());
             }
         });
@@ -203,17 +206,17 @@ public class RecipeServiceImpl implements RecipeService {
             if (Arrays.asList(stepPreid).contains(item.getFId())) {
                 hasProcesses.add(item);
             } else {
-                if (item.getFCover()!=null){
+                if (item.getFCover() != null) {
                     ToolsApi.multipartFileDeleteFile(item.getFCover());
                 }
-                if (item.getFVoice()!=null){
+                if (item.getFVoice() != null) {
                     ToolsApi.multipartFileDeleteFile(item.getFVoice());
                 }
             }
         });
         processDao.deleteInfoByRid(id);
         for (int i = 0; i < stepTime.length; i++) {
-            String fileName, customFilename=null;
+            String fileName, customFilename = null;
             int flag = 0;
             for (Process hasProcess : hasProcesses) {
                 if (stepPreid[i].equals(hasProcess.getFId())) {
@@ -241,9 +244,9 @@ public class RecipeServiceImpl implements RecipeService {
     public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid) {
         List<RecipeClassify> recipeClassifies;
         Map<String, List<RecipeClassify>> map = new HashMap<>(8);
-        if (twoid==0){
+        if (twoid == 0) {
             recipeClassifies = recipeClassifyDao.getInfoByThreeIdForRecipe(threeid);
-        }else{
+        } else {
             recipeClassifies = recipeClassifyDao.getInfoByTwoIdForRecipe(twoid);
             recipeClassifies.addAll(recipeClassifyDao.getInfoByThreeIdNextForRecipe(twoid));
             recipeClassifies = recipeClassifies.stream().collect(
@@ -278,6 +281,45 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public ResApi<Object> updateRecipeCount(Integer id) {
         rabbitTemplate.convertAndSend("recipeSystem.direct", "recipeCountUpload.queue", id);
+        return new ResApi<>(200, "success", "success");
+    }
+
+    @Override
+    public ResApi<Object> uploadProcessCover(MultipartFile multipartFile, String index) {
+        String filePath = ToolsApi.multipartFileUploadFile(multipartFile, null);
+        return new ResApi<>(200, "success", filePath);
+    }
+
+    @Override
+    public ResApi<Object> uploadRecipeInfo(MultipartFile multipartFile, Recipe recipe, String jsonArr) {
+        recipe.setFCover(ToolsApi.multipartFileUploadFile(multipartFile, null));
+        JSONObject json = JSONObject.parseObject(jsonArr);
+        recipeDao.saveInfo(recipe);
+        JSONArray tipIdArr = json.getJSONArray("tipIdArr"),
+                twoArr = json.getJSONArray("twoArr"),
+                threeArr = json.getJSONArray("threeArr"),
+                materialNumArr = json.getJSONArray("materialNumArr"),
+                materialNameArr = json.getJSONArray("materialNameArr"),
+                processCover = json.getJSONArray("processCover"),
+                processContent = json.getJSONArray("processContent"),
+                processTime = json.getJSONArray("processTime");
+        for (Object aTipIdArr : tipIdArr) {
+            recipeTipsDao.saveInfo(new RecipeTips(recipe.getFId(), Integer.parseInt(aTipIdArr.toString())));
+        }
+        for (int i = 0; i < twoArr.size(); i++) {
+            recipeClassifyDao.saveInfo(new RecipeClassify(recipe.getFId(), Integer.parseInt(twoArr.get(i).toString()), Integer.parseInt(threeArr.get(i).toString())));
+        }
+        for (int i = 0; i < materialNumArr.size(); i++) {
+            Integer mid = 0;
+            Material material = materialDao.getInfoByName(materialNameArr.get(i).toString());
+            if (material != null) {
+                mid = material.getFId();
+            }
+            recipeMaterialDao.saveInfo(new RecipeMaterial(recipe.getFId(), mid, materialNumArr.get(i).toString(), materialNameArr.get(i).toString()));
+        }
+        for (int i = 0; i < processCover.size(); i++) {
+            processDao.saveInfo(new Process(recipe.getFId(), processContent.get(i).toString(), processTime.get(i).toString(), processCover.get(i).toString()));
+        }
         return new ResApi<>(200, "success", "success");
     }
 

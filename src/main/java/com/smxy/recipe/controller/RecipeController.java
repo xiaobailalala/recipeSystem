@@ -53,8 +53,8 @@ public class RecipeController {
     @ResponseBody
     public ResApi<Object> saveInfo(@RequestParam("file") MultipartFile file, @RequestParam("processImg") MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
-                                   String[] stepContent, String[] stepTime, HttpServletRequest request){
-        return recipeService.saveInfo(file, processImg, recipe, twoArr, threeArr, tipArr, materialNumber, materialId, materialName, stepContent, stepTime, request);
+                                   String[] stepContent, String[] stepTime){
+        return recipeService.saveInfo(file, processImg, recipe, twoArr, threeArr, tipArr, materialNumber, materialId, materialName, stepContent, stepTime);
     }
 
     @RequiresPermissions("recipe:select")

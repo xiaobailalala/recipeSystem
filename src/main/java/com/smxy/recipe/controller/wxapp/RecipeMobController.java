@@ -29,7 +29,7 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
-import com.smxy.recipe.entity.FoodComment;
+import com.smxy.recipe.entity.Recipe;
 import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +56,16 @@ public class RecipeMobController {
     @GetMapping("/updateRecipeCount")
     public ResApi<Object> updateRecipeCount(Integer id){
         return recipeService.updateRecipeCount(id);
+    }
+
+    @PostMapping("/uploadProcessCover")
+    public ResApi<Object> uploadProcessCover(@RequestParam("process")MultipartFile multipartFile, String index){
+        return recipeService.uploadProcessCover(multipartFile, index);
+    }
+
+    @PostMapping("/uploadRecipeInfo")
+    public ResApi<Object> uploadRecipeInfo(@RequestParam("cover")MultipartFile multipartFile, Recipe recipe, String jsonArr) {
+        return recipeService.uploadRecipeInfo(multipartFile, recipe, jsonArr);
     }
 
 }

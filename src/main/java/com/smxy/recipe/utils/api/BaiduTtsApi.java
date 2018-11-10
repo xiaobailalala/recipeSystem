@@ -32,6 +32,7 @@ package com.smxy.recipe.utils.api;
 import com.baidu.aip.speech.AipSpeech;
 import com.baidu.aip.speech.TtsResponse;
 import com.smxy.recipe.utils.FastDfsClient;
+import com.smxy.recipe.utils.ToolsApi;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -62,7 +63,7 @@ public class BaiduTtsApi {
         String result = null;
         if (data != null) {
             try {
-                result = FastDfsClient.uploadBinaryFile(data, "mp3", null);
+                result = ToolsApi.binaryFileUploadFile(data, "mp3");
             } catch (Exception e) {
                 e.printStackTrace();
             }

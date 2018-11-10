@@ -19,9 +19,10 @@ public class DemoApplicationTests {
 
     @Test
     public void contextLoads() {
+        com.smxy.recipe.utils.Test.execute();
 //        ResApi<Object> data = getData();
 //        System.out.println(data);
-        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFvPOfiAWr7HAAP0AAkuLZg362.png");
+//        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFvPOfiAWr7HAAP0AAkuLZg362.png");
     }
 //
 //    @Cacheable(value = {"testList"})

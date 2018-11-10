@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.SysResourceDao">
+
+    <insert id="saveInfo" parameterType="SysResource">
+        insert into t_sys_resource (f_res, f_type) values (#{fRes}, #{fType});
+    </insert>
+
+    <delete id="deleteInfo" parameterType="String">
+        delete from t_sys_resource where f_res=#{fRes};
+    </delete>
+
+    <select id="getInfoByType" parameterType="String" resultType="SysResource">
+        select * from t_sys_resource where f_type=#{fType};
+    </select>
+
+</mapper>

@@ -3,70 +3,78 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/common/commonHeader::header('文件存储中心')}"></head>
 <body>
-    <div th:replace="~{admin/common/nav::loading}"></div>
-    <div th:replace="~{admin/common/nav::topFixed}"></div>
-    <div th:replace="~{admin/common/nav::sideFixed(2,4)}"></div>
-    <div class="content">
-        <div class="page-header">
-            <h1 class="title">文件存储中心</h1>
-            <ol class="breadcrumb">
-                <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
-            </ol>
-            <div class="right">
-                <div class="btn-group" role="group" aria-label="...">
-                    <a th:href="@{/manage/adm/admin/index}" class="btn btn-light">Home</a>
-                    <a class="btn btn-light" disabled="disabled">管理员监管区</a>
-                    <a class="btn btn-light" disabled="disabled">文件存储中心</a>
-                    <a href="javascript:history.go(-1);" class="btn btn-light">
-                        <i class="fa fa-reply"></i>
-                    </a>
-                    <a href="javascript:location.reload();" class="btn btn-light">
-                        <i class="fa fa-refresh"></i>
-                    </a>
-                </div>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(2,4)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">文件存储中心</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/manage/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">管理员监管区</a>
+                <a class="btn btn-light" disabled="disabled">文件存储中心</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
             </div>
         </div>
-        <div class="container-widget">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-title">
-                            信息列表
-                            <a type="button" th:href="@{/manage/adminUser/toadd}" class="btn btn-info" style="float: right;color: #ffffff;">新增管理员</a>
-                        </div>
-                        <div class="panel-body table-responsive">
-
-                            <table id="example0" class="table display table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>序号</th>
-                                        <th>管理员账号</th>
-                                        <th>用户名</th>
-                                        <th>权限</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>序号</th>
-                                    <th>管理员账号</th>
-                                    <th>用户名</th>
-                                    <th>权限</th>
-                                    <th>操作</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                </tbody>
-                            </table>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12 padding-0">
+                <div class="panel panel-transparent">
+                    <div class="panel-title">
+                        文件存储管理
+                    </div>
+                    <div class="panel-body">
+                        <div role="tabpanel">
+                            <ul class="nav nav-pills" role="tablist">
+                                <li class="active imgSource"><a href="javascript:;">图片资源</a></li>
+                                <li class="voiceSource"><a href="javascript:;">音频文件</a></li>
+                                <li class="otherSource"><a href="javascript:;">Messages</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="imgSource">
+                                    <div class="imgItem" th:each="item:${lists.data.imgList}">
+                                        <img class="lazy" th:src="(${fileServerPath})+${item.fRes}" alt="...">
+                                        <p style="color: #666666;word-break: break-word;" class="padding-t-10">路径参考：
+                                            <span th:text="${item.fRes}"></span>
+                                        </p>
+                                        <button th:data-name="${item.fRes}" class="btn btn-danger deleteImg" style="float: right;">删除</button>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="voiceSource">
+                                    <div class="voiceItem" th:each="item:${lists.data.voiceList}">
+                                        <a th:href="(${fileServerPath})+${item.fRes}">
+                                            <img class="lazy" th:src="@{/src/images/voice.png}" alt="...">
+                                        </a>
+                                        <p style="color: #666666;word-break: break-word;" class="padding-t-10">路径参考：
+                                            <span th:text="${item.fRes}"></span>
+                                        </p>
+                                        <button th:data-name="${item.fRes}" class="btn btn-danger deleteImg" style="float: right;align-self: flex-end;">删除</button>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="messages2">
+                                    <p>Duis ac enim diam</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div th:replace="~{admin/common/nav::copyright}"></div>
     </div>
-    <div th:replace="~{admin/common/nav::tabpanel}"></div>
-    <div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
 </body>
-<script th:src="@{/src/js/admin/list.js}"></script>
+<script th:src="@{/src/js/admin/filemanage.js}"></script>
 </html>

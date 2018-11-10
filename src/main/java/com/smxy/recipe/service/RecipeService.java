@@ -24,7 +24,7 @@ public interface RecipeService {
     ResApi<Object> getAddData();
     ResApi<Object> saveInfo(MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
-                                   String[] stepContent, String[] stepTime, HttpServletRequest request);
+                                   String[] stepContent, String[] stepTime);
 
     ResApi<Object> getAllInfo();
 
@@ -39,4 +39,8 @@ public interface RecipeService {
     ResApi<Object> getDataByClaId(Integer twoid, Integer threeid);
 
     ResApi<Object> updateRecipeCount(Integer id);
+
+    ResApi<Object> uploadProcessCover(MultipartFile multipartFile, String index);
+
+    ResApi<Object> uploadRecipeInfo(MultipartFile multipartFile, Recipe recipe, String jsonArr);
 }

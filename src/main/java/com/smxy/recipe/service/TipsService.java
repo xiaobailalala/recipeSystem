@@ -25,4 +25,6 @@ public interface TipsService {
     ResApi<Object> updateInfo(Integer id, Tips tips);
 
     ResApi<Object> searchInfo(String fName);
+
+    ResApi<Object> getInfoRandom();
 }

@@ -342,7 +342,7 @@ $(function () {
             fs.readAsDataURL(data);
             fs.onload = function () {
                 var image = '<img src="' + fs.result + '" style="height: 150px;max-width: 230px;" alt="cover">';
-                doc.html(image);
+                // doc.html(image);
             }
         }
     }());
