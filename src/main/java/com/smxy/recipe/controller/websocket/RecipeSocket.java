@@ -46,39 +46,71 @@ public class RecipeSocket {
     private CommonUserSocketService commonUserSocketService;
 
     @Scheduled(fixedRate = 1500)
-    public void getSensorFireData(){
+    public void getSensorFireData() {
         recipeSocketService.getSensorFireData();
     }
 
     @Scheduled(fixedRate = 1500)
-    public void getSensorSmogData(){
+    public void getSensorSmogData() {
         recipeSocketService.getSensorSmogData();
     }
 
+    @Scheduled(fixedRate = 1500)
+    public void getSensorInfraredData() {
+        recipeSocketService.getSensorInfraredData();
+    }
+
+    @Scheduled(fixedRate = 1500)
+    public void getSensorDistanceData() {
+        recipeSocketService.getSensorDistanceData();
+    }
+
     @MessageMapping("/fireListenStart")
-    public void fireListenStart(InMessage inMessage){
+    public void fireListenStart(InMessage inMessage) {
         commonUserSocketService.fireNumberPush(inMessage);
     }
 
+    @MessageMapping("/fireListenStop")
+    public void fireListenStop(Integer uid) {
+        commonUserSocketService.fireNumberPop(uid);
+    }
+
     @MessageMapping("/smogListenStart")
-    public void smogListenStart(InMessage inMessage){
+    public void smogListenStart(InMessage inMessage) {
         commonUserSocketService.smogNumberPush(inMessage);
     }
 
-    @MessageMapping("/fireListenStop")
-    public void fireListenStop(Integer uid){
-        commonUserSocketService.fireNumberPop(uid);
+    @MessageMapping("/smogListenStop")
+    public void smogListenStop(Integer uid) {
+        commonUserSocketService.smogNumberPop(uid);
     }
 
-    @MessageMapping("/smogListenStop")
-    public void smogListenStop(Integer uid){
-        commonUserSocketService.smogNumberPop(uid);
+    @MessageMapping("/infraredListenStart")
+    public void infraredListenStart(InMessage inMessage) {
+        commonUserSocketService.infraredNumberPush(inMessage);
+    }
+
+    @MessageMapping("/infraredListenStop")
+    public void infraredListenStop(Integer uid) {
+        commonUserSocketService.infraredNumberPop(uid);
+    }
+
+    @MessageMapping("/distanceListenStart")
+    public void distanceListenStart(InMessage inMessage) {
+        commonUserSocketService.distanceNumberPush(inMessage);
+    }
+
+    @MessageMapping("/distanceListenStop")
+    public void distanceListenStop(Integer uid) {
+        commonUserSocketService.distanceNumberPop(uid);
     }
 
     @MessageMapping("/allListenStop")
-    public void allListenStop(Integer uid){
+    public void allListenStop(Integer uid) {
         commonUserSocketService.fireNumberPop(uid);
         commonUserSocketService.smogNumberPop(uid);
+        commonUserSocketService.infraredNumberPop(uid);
+        commonUserSocketService.distanceNumberPop(uid);
     }
-    
+
 }
