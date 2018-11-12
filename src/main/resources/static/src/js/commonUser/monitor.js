@@ -1,6 +1,7 @@
 $(function () {
     var stompClient = null;
-    var fireTimer, smogTimer, distanceTimer, isFireListening = false, isSmogListening = false, isFireInit = false, isSmogInit = false;
+    var fireTimer, smogTimer, distanceTimer, isFireListening = false, isSmogListening = false, isFireInit = false,
+        isSmogInit = false;
     var temTop = 0, pmTop = 0, disTop = 0, currentTem = 0, currentPm = 0, currentInfrared = 0, currentDistance = 0;
     var id = Number($("#itemId").val());
     (function SocketConnect() {
@@ -212,7 +213,7 @@ $(function () {
                                     activeLastPointToolip(chart);
                                     $(".distanceMonitorContent .normalContent").text(disTop + "cm");
                                     $(".distanceMonitorContent .currentDateTime").text(currentDate() + " " + currentTime());
-                                    if (y > disTop) {
+                                    if (y < disTop) {
                                         sensorUnusual(1, disTop, y);
                                         $(".distanceMonitorContent .currentContent").removeClass("label-default").addClass("label-danger").text(currentDistance + "cm");
                                     } else {
@@ -397,7 +398,7 @@ $(function () {
 
     function sensorUnusual(isFire, normal, unusual) {
         var date_now = currentDate(), time_now = currentTime();
-        var showProcess = (((unusual - normal) / normal) * 100).toFixed(2);
+        var showProcess = ((Math.abs(unusual - normal) / normal) * 100).toFixed(2);
         var process = showProcess > 100 ? 100.00 : showProcess;
         var item = '<tr>\n' +
             '           <td>\n' +
@@ -430,7 +431,7 @@ $(function () {
                 fProcess: showProcess,
                 fType: isFire === 0 ? "fire" : (isFire === 1 ? "distance" : "smog")
             },
-            success: res=> {
+            success: res => {
                 if ($("." + (isFire === 0 ? "fireUnusualCont" : (isFire === 1 ? "distanceUnusualCont" : "smogUnusualCont")) + ">tr").length >= 4) {
                     $("." + (isFire === 0 ? "fireUnusualCont" : (isFire === 1 ? "distanceUnusualCont" : "smogUnusualCont")) + ">tr").get(0).remove();
                 }
@@ -449,25 +450,36 @@ $(function () {
         $(".clearSmogData").click(function () {
             $(".smogUnusualCont").html("");
         });
+        $(".clearDistanceData").click(function () {
+            $(".distanceUnusualCont").html("");
+        });
         $(".historyFireData").click(function () {
-            historyDateRender(true);
+            historyDateRender(0);
         });
         $(".historySmogData").click(function () {
-            historyDateRender(false);
+            historyDateRender(2);
+        });
+        $(".historyDistanceData").click(function () {
+            historyDateRender(1);
         });
         Tools.body.on("change", ".fireDateSelect", function () {
             const date = $(this).val();
             if (date !== "0") {
-                historyDataRender(true, date);
+                historyDataRender(0, date);
             }
         });
         Tools.body.on("change", ".smogDateSelect", function () {
             const date = $(this).val();
             if (date !== "0") {
-                historyDataRender(false, date);
+                historyDataRender(2, date);
             }
         });
-        // Tools.body.on("change", ".");
+        Tools.body.on("change", ".distanceDateSelect", function () {
+            const date = $(this).val();
+            if (date !== "0") {
+                historyDataRender(1, date);
+            }
+        });
     }());
 
     function historyDateRender(isFire) {
@@ -475,8 +487,8 @@ $(function () {
             url: "/manage/sensorUnusual/showDate",
             type: "GET",
             data: {
-                fType: isFire ? "fire" : "smog",
-                fUid: id,
+                fType: isFire === 0 ? "fire" : (isFire === 1 ? "distance" : "smog"),
+                fUid: id
             },
             success: function (res) {
                 var option = '<option value="0">请选择报表日期</option>';
@@ -488,13 +500,13 @@ $(function () {
                     '            <div class="modal-content">\n' +
                     '                <div class="modal-header">\n' +
                     '                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
-                    '                    <h4 class="modal-title" id="myModalLabel">' + (isFire ? '火力' : '烟雾') + '传感器监控异常数据</h4>\n' +
+                    '                    <h4 class="modal-title" id="myModalLabel">' + (isFire === 0 ? '火力' : (isFire === 1 ? '红外-超声波' : '烟雾')) + '传感器监控异常数据</h4>\n' +
                     '                </div>\n' +
                     '                <div class="modal-body">\n ' +
                     '                     <form class="form-inline margin-b-10">' +
                     '                         <div class="form-group">' +
                     '                             <label for="">异常时间&emsp;</label>' +
-                    '                             <select class="form-control ' + (isFire ? 'fireDateSelect' : 'smogDateSelect') + '">' + option +
+                    '                             <select class="form-control ' + (isFire === 0 ? 'fireDateSelect' : (isFire === 1 ? 'distanceDateSelect' : 'smogDateSelect')) + '">' + option +
                     '                             </select>' +
                     '                             <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#detailMonitorData"' +
                     '                             aria-expanded="false" aria-controls="detailMonitorData">详细数据</button>' +
@@ -511,7 +523,7 @@ $(function () {
                     '                                       <th>异常率</th>' +
                     '                                   </tr>' +
                     '                               </thead>' +
-                    '                               <tbody class="' + (isFire ? 'historyFireCont' : 'historySmogCont') + '"></tbody>' +
+                    '                               <tbody class="' + (isFire === 0 ? 'historyFireCont' : (isFire === 1 ? 'historyDistanceCont' : 'historySmogCont')) + '"></tbody>' +
                     '                         </table>' +
                     '                     </div>' +
                     '                </div>\n' +
@@ -533,7 +545,7 @@ $(function () {
             url: "/manage/sensorUnusual/getDataByUidAndTypeAndDate",
             type: "POST",
             data: {
-                fType: isFire ? "fire" : "smog",
+                fType: isFire === 0 ? "fire" : (isFire === 1 ? "distance" : "smog"),
                 fUid: id,
                 fDate: date
             },
@@ -557,17 +569,17 @@ $(function () {
                     } else {
                         scope6++;
                     }
-                    var showProcess = (((item.funusual - item.fnormal) / item.fnormal) * 100).toFixed(2);
+                    var showProcess = ((Math.abs(item.funusual - item.fnormal) / item.fnormal) * 100).toFixed(2);
                     list += '<tr>\n' +
                         '           <td>\n' +
                         '               <section>' + item.fdate + '</section>\n' +
                         '               <section>' + item.ftime + '</section>\n' +
                         '           </td>\n' +
                         '           <td class="text-primary">\n' +
-                        '               ' + item.fnormal + (isFire ? "℃" : "μg/m³") + '\n' +
+                        '               ' + item.fnormal + (isFire === 0 ? "℃" : (isFire === 1 ? "cm" : "μg/m³")) + '\n' +
                         '           </td>\n' +
                         '           <td class="text-danger">\n' +
-                        '               ' + item.funusual + (isFire ? "℃" : "μg/m³") + '\n' +
+                        '               ' + item.funusual + (isFire === 0 ? "℃" : (isFire === 1 ? "cm" : "μg/m³")) + '\n' +
                         '           </td>\n' +
                         '           <td>\n' +
                         '               <div class="progress progress-striped active" style="margin: 0;" data-toggle="tooltip" data-placement="top" title="异常率：' + showProcess + '%">\n' +
@@ -593,7 +605,7 @@ $(function () {
                         type: 'pie'
                     },
                     title: {
-                        text: isFire ? '火力监控异常比' : '油烟监控异常比'
+                        text: isFire === 0 ? '火力监控异常比' : (isFire === 1 ? '人体距离监控异常比' : '油烟监控异常比')
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
@@ -615,7 +627,7 @@ $(function () {
                     }]
                 });
                 $(".highcharts-credits,.highcharts-exporting-group").remove();
-                $("." + (isFire ? "historyFireCont" : "historySmogCont")).html(list);
+                $("." + (isFire === 0 ? "historyFireCont" : (isFire === 1 ? "historyDistanceCont" : "historySmogCont"))).html(list);
             }
         });
     }
