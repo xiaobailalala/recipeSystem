@@ -9,6 +9,7 @@
  */
 package com.smxy.recipe.controller;
 
+import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.AdminUser;
 import com.smxy.recipe.service.AdminUserService;
 import com.smxy.recipe.utils.ResApi;
@@ -16,18 +17,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
-@RequestMapping("/manage/adm")
+@PathController("/manage/adm")
 public class AdminController {
 
     @Autowired

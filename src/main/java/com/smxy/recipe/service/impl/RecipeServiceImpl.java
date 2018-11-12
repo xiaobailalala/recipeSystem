@@ -59,7 +59,7 @@ public class RecipeServiceImpl implements RecipeService {
         List<Tips> tips = tipsDao.getAllInfo();
         List<Tips> tipsData = new ArrayList<>();
         int[] arr = ToolsApi.randomArray(0, tips.size() - 1, 10);
-        for (int item : arr) {
+        for (int item : Objects.requireNonNull(arr)) {
             tipsData.add(tips.get(item));
         }
         map.put("tips", tipsData);

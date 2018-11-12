@@ -29,15 +29,13 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.service.TipsService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/mob/tips")
+@PathRestController("/mob/tips")
 public class TipsMobController {
 
     @Autowired

@@ -9,15 +9,13 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.service.ClassifyOneService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/mob/cla")
+@PathRestController("/mob/cla")
 public class ClassifyMobController {
 
     @Autowired

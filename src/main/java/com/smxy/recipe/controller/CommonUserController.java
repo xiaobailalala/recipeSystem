@@ -1,19 +1,21 @@
 package com.smxy.recipe.controller;
 
+import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.CommonUser;
 import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author zpx
  */
-@Controller
-@RequestMapping("/manage/commonUser")
+@PathController("/manage/commonUser")
 public class CommonUserController {
 
     @Autowired
@@ -36,20 +38,20 @@ public class CommonUserController {
     @RequiresPermissions("commonUser:select")
     @GetMapping("/add")
     public String add() {
-	    return "admin/commonUser/add";
+        return "admin/commonUser/add";
     }
 
     @RequiresPermissions("commonUser:insert")
     @PostMapping("/info")
     @ResponseBody
-    public ResApi<String> saveInfo(CommonUser commonUser){
+    public ResApi<String> saveInfo(CommonUser commonUser) {
         return commonUserService.commonUserReg(commonUser);
     }
 
     @RequiresPermissions("commonUser:update")
     @PostMapping("/repwd")
     @ResponseBody
-    public ResApi<Object> rePwd(CommonUser commonUser){
+    public ResApi<Object> rePwd(CommonUser commonUser) {
         return commonUserService.updateCommonUserPwd(commonUser);
     }
 

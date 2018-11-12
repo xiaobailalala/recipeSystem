@@ -73,7 +73,7 @@
                                     </span>
                                     <span class="text-info padding-r-20">
                                         当前数值：
-                                        <span class="label label-default currentContent">30℃</span>
+                                        <span class="label label-default currentContent">--</span>
                                     </span>
                                     <span class="fa fa-genderless"></span>
                                     监控时间 <span class="fa fa-long-arrow-right"></span>
@@ -83,6 +83,65 @@
                             <div class="col-sm-4 padding-t-15">
                                 <button type="button" class="btn btn-info historyFireData">历史报表</button>&nbsp;
                                 <button type="button" class="btn btn-warning clearFireData">清空</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        用户信息管理——监控中心
+                        <ul class="panel-tools">
+                            <li><a class="icon minimise-tool"><i class="fa fa-minus"></i></a></li>
+                            <li><a class="icon expand-tool"><i class="fa fa-expand"></i></a></li>
+                            <li><a class="icon closed-tool"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <div id="distanceMonitor" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="text-center" style="font-size: 18px;color: #333333;fill: #333333;">异常报表
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>时间</th>
+                                        <th>正常值</th>
+                                        <th>异常值</th>
+                                        <th>异常率</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="distanceUnusualCont"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 padding-t-15">
+                                <button class="btn isDistanceMonitoring margin-r-20" type="button">用户未开启数据监控</button>
+                                <button class="btn isBodyMonitoring margin-r-20 btn-danger" type="button" style="display: none;">未检测到人体</button>
+                                <span class="distanceMonitorContent" style="display: none;">
+                                    <span class="fa fa-genderless"></span>
+                                    监控数值 <span class="fa fa-long-arrow-right"></span>
+                                    <span class="text-success padding-r-10">
+                                        安全距离：
+                                        <span class="label label-success normalContent">50cm</span>
+                                    </span>
+                                    <span class="text-info padding-r-20">
+                                        当前距离：
+                                        <span class="label label-default currentContent">--</span>
+                                    </span>
+                                    <span class="fa fa-genderless"></span>
+                                    监控时间 <span class="fa fa-long-arrow-right"></span>
+                                    <span class="currentDateTime">2015-05-05 22:22:22</span>
+                                </span>
+                            </div>
+                            <div class="col-sm-4 padding-t-15">
+                                <button type="button" class="btn btn-info historyDistanceData">历史报表</button>&nbsp;
+                                <button type="button" class="btn btn-warning clearDistanceData">清空</button>
                             </div>
                         </div>
                     </div>
@@ -131,7 +190,7 @@
                                     </span>
                                     <span class="text-info padding-r-20">
                                         当前数值：
-                                        <span class="label label-default currentContent">30℃</span>
+                                        <span class="label label-default currentContent">--</span>
                                     </span>
                                     <span class="fa fa-genderless"></span>
                                     监控时间 <span class="fa fa-long-arrow-right"></span>

@@ -93,7 +93,7 @@ public class AiMarkServiceImpl implements AiMarkService {
     }
 
     @Override
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark) {
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark) {
         List<String> strings = new ArrayList<>();
         AiMark aiMark = new AiMark();
         aiMark.setFMark(readyMark);
@@ -101,6 +101,8 @@ public class AiMarkServiceImpl implements AiMarkService {
         aiMark.setFMark(fireMark);
         strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
         aiMark.setFMark(smogMark);
+        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
+        aiMark.setFMark(distanceMark);
         strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
         return new ResApi<>(200, "success", strings);
     }

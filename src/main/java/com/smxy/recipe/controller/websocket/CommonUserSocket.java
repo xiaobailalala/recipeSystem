@@ -41,13 +41,23 @@ public class CommonUserSocket {
     private CommonUserSocketService commonUserSocketService;
 
     @Scheduled(fixedRate = 1000)
-    public void sendFireNumber(){
+    public void sendFireNumber() {
         commonUserSocketService.sendFireNumber();
     }
 
     @Scheduled(fixedRate = 1000)
-    public void sendSmogNumber(){
+    public void sendSmogNumber() {
         commonUserSocketService.sendSmogNumber();
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void sendInfraredNumber() {
+        commonUserSocketService.sendInfraredNumber();
+    }
+
+    @Scheduled(fixedRate = 1000)
+    public void sendDistanceNumber() {
+        commonUserSocketService.sendDistanceNumber();
     }
 
 }

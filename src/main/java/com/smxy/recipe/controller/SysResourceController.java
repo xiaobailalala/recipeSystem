@@ -29,19 +29,17 @@
  */
 package com.smxy.recipe.controller;
 
+import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.service.SysResourceService;
 import com.smxy.recipe.utils.ResApi;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
-@RequestMapping("/manage/sysResource")
+@PathController("/manage/sysResource")
 public class SysResourceController {
 
     @Autowired
@@ -57,7 +55,7 @@ public class SysResourceController {
     @RequiresRoles("sysAdmin")
     @DeleteMapping("/fileManage")
     @ResponseBody
-    public ResApi<Object> deleteInfo(String name){
+    public ResApi<Object> deleteInfo(String name) {
         return sysResourceService.deleteInfo(name);
     }
 

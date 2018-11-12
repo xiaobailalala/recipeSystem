@@ -29,6 +29,7 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.entity.Recipe;
 import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
@@ -36,8 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
-@RequestMapping("/mob/recipe")
+@PathRestController("/mob/recipe")
 public class RecipeMobController {
 
     @Autowired

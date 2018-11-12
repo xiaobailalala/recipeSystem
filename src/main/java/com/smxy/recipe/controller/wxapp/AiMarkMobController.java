@@ -29,6 +29,7 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.service.AiMarkService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +37,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/mob/aiMark")
+@RequestMapping
+@PathRestController("/mob/aiMark")
 public class AiMarkMobController {
 
     @Autowired
     private AiMarkService aiMarkService;
 
     @GetMapping("/getVoiceForWXReady")
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark){
-        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark);
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark){
+        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark, distanceMark);
     }
 
 }

@@ -1,7 +1,7 @@
 $(function () {
     var stompClient = null;
-    var fireTimer, smogTimer, isFireListening = false, isSmogListening = false, isFireInit = false, isSmogInit = false;
-    var temTop = 0, pmTop = 0, currentTem = 0, currentPm = 0;
+    var fireTimer, smogTimer, distanceTimer, isFireListening = false, isSmogListening = false, isFireInit = false, isSmogInit = false;
+    var temTop = 0, pmTop = 0, disTop = 0, currentTem = 0, currentPm = 0, currentInfrared = 0, currentDistance = 0;
     var id = Number($("#itemId").val());
     (function SocketConnect() {
         var socket = new SockJS('/endpoint-websocket-webClient');
@@ -16,29 +16,49 @@ $(function () {
                     temTop = objArr[0].top;
                     if (!isFireListening) {
                         $(".isFireMonitoring").addClass("btn-success").text("数据监控中");
+                        $(".isDistanceMonitoring").addClass("btn-success").text("数据监控中");
                         isFireListening = true;
                         isFireInit = true;
                         $(".fireMonitorContent").css("display", "inline");
+                        $(".distanceMonitorContent").css("display", "inline");
                         initFireMonitor(isFireOpen, temTop);
                     }
                 } else {
                     if (isFireListening) {
                         $(".isFireMonitoring").removeClass("btn-success").text("用户未开启数据监控");
+                        $(".isDistanceMonitoring").removeClass("btn-success").text("用户未开启数据监控");
                         isFireListening = false;
                         $(".fireMonitorContent").css("display", "none");
+                        $(".distanceMonitorContent").css("display", "none");
+                        $(".isBodyMonitoring").css("display", "none");
                         clearInterval(fireTimer);
+                        clearInterval(distanceTimer);
                     }
                 }
                 if (!isFireInit) {
                     if (isFireOpen) {
                         $(".fireMonitorContent").css("display", "inline");
+                        $(".distanceMonitorContent").css("display", "inline");
                     }
                     initFireMonitor(isFireOpen, temTop);
                     isFireInit = true;
                 }
             });
+            stompClient.subscribe("/sensorData/sendInfraredNumber", function (result) {
+                var objArr = JSON.parse(result.body);
+                var isExist = objArr.find(({uid}) => id === uid);
+                if (isExist) {
+                    disTop = objArr[0].top;
+                }
+            });
             stompClient.subscribe('/sensorData/fire', function (result) {
                 currentTem = JSON.parse(result.body).tmp;
+            });
+            stompClient.subscribe("/sensorData/infrared", function (result) {
+                currentInfrared = JSON.parse(result.body).body;
+            });
+            stompClient.subscribe("/sensorData/distance", function (result) {
+                currentDistance = Number(JSON.parse(result.body).distance) * 100;
             });
             stompClient.subscribe('/sensorData/sendSmogNumber', function (result) {
                 var objArr = JSON.parse(result.body);
@@ -106,7 +126,7 @@ $(function () {
                                 $(".fireMonitorContent .normalContent").text(temTop + "℃");
                                 $(".fireMonitorContent .currentDateTime").text(currentDate() + " " + currentTime());
                                 if (y > temTop) {
-                                    sensorUnusual(true, temTop, y);
+                                    sensorUnusual(0, temTop, y);
                                     $(".fireMonitorContent .currentContent").removeClass("label-default").addClass("label-danger").text(currentTem + "℃");
                                 } else {
                                     $(".fireMonitorContent .currentContent").removeClass("label-danger").addClass("label-default").text(currentTem + "℃");
@@ -172,6 +192,97 @@ $(function () {
                 }())
             }]
         });
+        Highcharts.chart('distanceMonitor', {
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg,
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        $(".highcharts-credits").remove();
+                        var series = this.series[0];
+                        var chart = this;
+                        activeLastPointToolip(chart);
+                        if (isOpen) {
+                            distanceTimer = setInterval(function () {
+                                var x = (new Date()).getTime(),
+                                    y = Number(currentDistance);
+                                if (Number(currentInfrared) === 1) {
+                                    series.addPoint([x, y], true, true);
+                                    activeLastPointToolip(chart);
+                                    $(".distanceMonitorContent .normalContent").text(disTop + "cm");
+                                    $(".distanceMonitorContent .currentDateTime").text(currentDate() + " " + currentTime());
+                                    if (y > disTop) {
+                                        sensorUnusual(1, disTop, y);
+                                        $(".distanceMonitorContent .currentContent").removeClass("label-default").addClass("label-danger").text(currentDistance + "cm");
+                                    } else {
+                                        $(".distanceMonitorContent .currentContent").removeClass("label-danger").addClass("label-default").text(currentDistance + "cm");
+                                    }
+                                    $(".isBodyMonitoring").css("display", "none");
+                                } else {
+                                    $(".isBodyMonitoring").css("display", "inline-block");
+                                }
+                            }, 1000);
+                        }
+                    }
+                }
+            },
+            title: {
+                text: '红外-超声波距离传感器监控数据'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
+            },
+            yAxis: {
+                title: {
+                    text: '距离'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2) + ' cm';
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{
+                name: '人体距离',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        time = (new Date()).getTime(),
+                        i;
+                    if (isOpen) {
+                        for (i = -19; i <= 0; i += 1) {
+                            data.push({
+                                x: time + i * 1000,
+                                y: 50
+                            });
+                        }
+                    } else {
+                        for (i = -19; i <= 0; i += 1) {
+                            data.push({
+                                x: time + i * 1000,
+                                y: 0
+                            });
+                        }
+                    }
+                    return data;
+                }())
+            }]
+        });
     }
 
     function initSmogMonitor(isOpen, top) {
@@ -200,7 +311,7 @@ $(function () {
                                 $(".smogMonitorContent .normalContent").text(pmTop + "μg/m³");
                                 $(".smogMonitorContent .currentDateTime").text(currentDate() + " " + currentTime());
                                 if (y > pmTop) {
-                                    sensorUnusual(false, pmTop, y);
+                                    sensorUnusual(2, pmTop, y);
                                     $(".smogMonitorContent .currentContent").removeClass("label-default").addClass("label-danger").text(currentPm + "μg/m³");
                                 } else {
                                     $(".smogMonitorContent .currentContent").removeClass("label-danger").addClass("label-default").text(currentPm + "μg/m³");
@@ -281,7 +392,7 @@ $(function () {
         var hours = currentDate.getHours() < 10 ? "0" + currentDate.getHours() : currentDate.getHours();
         var minutes = currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes();
         var seconds = currentDate.getSeconds() < 10 ? "0" + currentDate.getSeconds() : currentDate.getSeconds();
-        return time_now = hours + ":" + minutes + ":" + seconds;
+        return hours + ":" + minutes + ":" + seconds;
     }
 
     function sensorUnusual(isFire, normal, unusual) {
@@ -294,10 +405,10 @@ $(function () {
             '               <section>' + time_now + '</section>\n' +
             '           </td>\n' +
             '           <td class="text-primary">\n' +
-            '               ' + normal + (isFire ? "℃" : "μg/m³") + '\n' +
+            '               ' + normal + (isFire === 0 ? "℃" : (isFire === 1 ? "cm" : "μg/m³")) + '\n' +
             '           </td>\n' +
             '           <td class="text-danger">\n' +
-            '               ' + unusual + (isFire ? "℃" : "μg/m³") + '\n' +
+            '               ' + unusual + (isFire === 0 ? "℃" : (isFire === 1 ? "cm" : "μg/m³")) + '\n' +
             '           </td>\n' +
             '           <td>\n' +
             '               <div class="progress progress-striped active" style="margin: 0;" data-toggle="tooltip" data-placement="top" title="异常率：' + showProcess + '%">\n' +
@@ -317,13 +428,13 @@ $(function () {
                 fNormal: normal,
                 fUnusual: unusual,
                 fProcess: showProcess,
-                fType: isFire ? "fire" : "smog"
+                fType: isFire === 0 ? "fire" : (isFire === 1 ? "distance" : "smog")
             },
-            success: function (res) {
-                if ($("." + (isFire ? "fireUnusualCont" : "smogUnusualCont") + ">tr").length >= 4) {
-                    $("." + (isFire ? "fireUnusualCont" : "smogUnusualCont") + ">tr").get(0).remove();
+            success: res=> {
+                if ($("." + (isFire === 0 ? "fireUnusualCont" : (isFire === 1 ? "distanceUnusualCont" : "smogUnusualCont")) + ">tr").length >= 4) {
+                    $("." + (isFire === 0 ? "fireUnusualCont" : (isFire === 1 ? "distanceUnusualCont" : "smogUnusualCont")) + ">tr").get(0).remove();
                 }
-                $("." + (isFire ? "fireUnusualCont" : "smogUnusualCont")).append(item);
+                $("." + (isFire === 0 ? "fireUnusualCont" : (isFire === 1 ? "distanceUnusualCont" : "smogUnusualCont"))).append(item);
                 $(function () {
                     $('[data-toggle="tooltip"]').tooltip()
                 })
@@ -344,18 +455,19 @@ $(function () {
         $(".historySmogData").click(function () {
             historyDateRender(false);
         });
-        $("body").on("change", ".fireDateSelect", function () {
-            var date = $(this).val();
+        Tools.body.on("change", ".fireDateSelect", function () {
+            const date = $(this).val();
             if (date !== "0") {
                 historyDataRender(true, date);
             }
         });
-        $("body").on("change", ".smogDateSelect", function () {
-            var date = $(this).val();
+        Tools.body.on("change", ".smogDateSelect", function () {
+            const date = $(this).val();
             if (date !== "0") {
                 historyDataRender(false, date);
             }
         });
+        // Tools.body.on("change", ".");
     }());
 
     function historyDateRender(isFire) {

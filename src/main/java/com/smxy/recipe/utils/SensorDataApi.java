@@ -97,6 +97,7 @@ public class SensorDataApi {
             hcsr501DataList.remove(hcsr501DataList.get(0));
         }
         hcsr501DataList.add(new Hcsr501Data(body));
+        System.out.println(body + " " + dis);
         return map;
     }
 
@@ -112,7 +113,6 @@ public class SensorDataApi {
     public List<Gp2y1051Data> test2() {
         return SensorDataApi.gp2y1051DataList;
     }
-
 
 
 }

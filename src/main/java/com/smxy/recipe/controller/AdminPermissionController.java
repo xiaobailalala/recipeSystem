@@ -9,20 +9,16 @@
  */
 package com.smxy.recipe.controller;
 
+import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.AdminPermission;
 import com.smxy.recipe.service.AdminPermissionService;
 import com.smxy.recipe.utils.ResApi;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
-@RequestMapping("/manage/adminPermission")
+@PathController("/manage/adminPermission")
 public class AdminPermissionController {
 
     @Autowired

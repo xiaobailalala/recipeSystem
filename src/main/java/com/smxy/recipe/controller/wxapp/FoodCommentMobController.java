@@ -29,15 +29,17 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.entity.FoodComment;
 import com.smxy.recipe.service.FoodCommentService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
-@RequestMapping("/mob/foodComment")
+@PathRestController("/mob/foodComment")
 public class FoodCommentMobController {
 
     @Autowired

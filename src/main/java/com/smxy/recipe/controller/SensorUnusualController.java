@@ -29,18 +29,16 @@
  */
 package com.smxy.recipe.controller;
 
+import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.SensorUnusual;
 import com.smxy.recipe.service.SensorUnusualService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller
-@RequestMapping("/manage/sensorUnusual")
+@PathController("/manage/sensorUnusual")
 public class SensorUnusualController {
 
     @Autowired
@@ -48,19 +46,19 @@ public class SensorUnusualController {
 
     @PostMapping("/info")
     @ResponseBody
-    public ResApi<Object> saveInfo(SensorUnusual sensorUnusual){
+    public ResApi<Object> saveInfo(SensorUnusual sensorUnusual) {
         return sensorUnusualService.saveInfo(sensorUnusual);
     }
 
     @GetMapping("/showDate")
     @ResponseBody
-    public ResApi<Object> showDate(SensorUnusual sensorUnusual){
+    public ResApi<Object> showDate(SensorUnusual sensorUnusual) {
         return sensorUnusualService.showDate(sensorUnusual);
     }
 
     @PostMapping("/getDataByUidAndTypeAndDate")
     @ResponseBody
-    public ResApi<Object> getDataByUidAndTypeAndDate(SensorUnusual sensorUnusual){
+    public ResApi<Object> getDataByUidAndTypeAndDate(SensorUnusual sensorUnusual) {
         return sensorUnusualService.getDataByUidAndTypeAndDate(sensorUnusual);
     }
 

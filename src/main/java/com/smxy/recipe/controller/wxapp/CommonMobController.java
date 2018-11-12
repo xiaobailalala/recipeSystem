@@ -9,17 +9,15 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.utils.api.CodeApi;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-@RestController
-@RequestMapping("/mob/common")
+@PathRestController("/mob/common")
 public class CommonMobController {
 
     @PostMapping("/getCode")

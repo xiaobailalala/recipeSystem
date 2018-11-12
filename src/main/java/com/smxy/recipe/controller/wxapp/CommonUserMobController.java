@@ -9,17 +9,18 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.entity.CommonUser;
 import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RestController
-@RequestMapping("/mob/commonUser")
+@PathRestController("/mob/commonUser")
 public class CommonUserMobController {
     @Autowired
     private CommonUserService commonUserService;

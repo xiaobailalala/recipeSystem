@@ -29,14 +29,13 @@
  */
 package com.smxy.recipe.controller.wxapp;
 
+import com.smxy.recipe.config.template.PathRestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/mob/test")
+@PathRestController("/mob/test")
 public class TestMobController {
 
     @RequestMapping("/sendMsg")
