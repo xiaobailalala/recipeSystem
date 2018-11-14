@@ -29,21 +29,63 @@
  */
 package com.smxy.recipe.realm;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import com.smxy.recipe.dao.MerchantUserDao;
+import com.smxy.recipe.entity.AdminPermission;
+import com.smxy.recipe.entity.AdminRole;
+import com.smxy.recipe.entity.AdminUser;
+import com.smxy.recipe.entity.MerchantUser;
+import com.smxy.recipe.service.AdminUserService;
+import com.smxy.recipe.service.MerchantUserService;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 public class MerchantShiroRealm extends AuthorizingRealm {
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
-    }
+    @Lazy
+    @Autowired
+    AdminUserService adminUserService;
+    @Lazy
+    @Autowired
+    MerchantUserService merchantUserService;
+    @Lazy
+    @Autowired
+    MerchantUserDao merchantUserDao;
 
     @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        if (principalCollection.getPrimaryPrincipal() instanceof MerchantUser) {
+            MerchantUser merchantUser = (MerchantUser) principalCollection.getPrimaryPrincipal();
+            for (AdminRole adminRole : adminUserService.verifyRole(merchantUser.getFId())) {
+                authorizationInfo.addRole(adminRole.getFRolename());
+                for (AdminPermission adminPermission : adminUserService.verifyPermission(merchantUser.getFId())) {
+                    authorizationInfo.addStringPermission(adminPermission.getFPermissionname());
+                }
+            }
+        }
+        return authorizationInfo;
+    }
+
+    /**
+     * 身份认证
+     */
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        return null;
+        UserToken token = (UserToken) authenticationToken;
+        String account = token.getUsername();
+        MerchantUser merchantUser = merchantUserDao.isMerchantUser(account);
+        if (merchantUser == null) {
+            return null;
+        }
+        Object principal = merchantUser;
+        Object credentials = merchantUser.getFPassword();
+        String realmName = getName();
+        ByteSource credentialsSalt = ByteSource.Util.bytes(account);
+        return new SimpleAuthenticationInfo(principal, credentials, credentialsSalt, realmName);
     }
 }

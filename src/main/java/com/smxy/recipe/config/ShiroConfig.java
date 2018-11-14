@@ -18,6 +18,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -71,6 +72,13 @@ public class ShiroConfig {
     }
 
     @Bean
+    public ModularRealmAuthenticator modularRealmAuthenticator() {
+        UserModularRealmAuthenticator modularRealmAuthenticator = new UserModularRealmAuthenticator();
+        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        return modularRealmAuthenticator;
+    }
+
+    @Bean
     public HandlerExceptionResolver solver() {
         HandlerExceptionResolver handlerExceptionResolver = new MyExceptionResolver();
         return handlerExceptionResolver;
@@ -99,9 +107,9 @@ public class ShiroConfig {
      * 开启Shiro的注解
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
 
@@ -116,7 +124,6 @@ public class ShiroConfig {
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
     }
-
     /**
      * 自定义Realm，可以多个
      */
@@ -127,8 +134,11 @@ public class ShiroConfig {
         return adminShiroRealm;
     }
 
+    /**
+     * 商家自定义Realm
+     */
     @Bean
-    public MerchantShiroRealm merchantShiroRealm() {
+    public MerchantShiroRealm merchantShiroRealm(){
         MerchantShiroRealm merchantShiroRealm = new MerchantShiroRealm();
         merchantShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return merchantShiroRealm;
@@ -138,19 +148,11 @@ public class ShiroConfig {
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         Collection<Realm> realms = new ArrayList<>();
-        realms.add(adminShiroRealm());
         realms.add(merchantShiroRealm());
-//        securityManager.setRealm(adminShiroRealm());
+        realms.add(adminShiroRealm());
         securityManager.setRealms(realms);
         securityManager.setRememberMeManager(cookieRememberMeManager());
         return securityManager;
-    }
-
-    @Bean
-    public ModularRealmAuthenticator modularRealmAuthenticator() {
-        UserModularRealmAuthenticator modularRealmAuthenticator = new UserModularRealmAuthenticator();
-        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
-        return modularRealmAuthenticator;
     }
 
     @Bean

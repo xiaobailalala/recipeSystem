@@ -4,10 +4,10 @@ $(function () {
         function (jasondata) {
             jasondata.forEach(element => {
                 var province = element.name;
-            var op = $('<option/>');
-            op.html(province);
-            $('#province').append(op);
-        })
+                var op = $('<option/>');
+                op.html(province);
+                $('#province').append(op);
+            })
             ;
             layui.use('form', function () {
                 var form = layui.form;
@@ -17,19 +17,18 @@ $(function () {
                     $('#area>option').remove();
                     $('#area').append('<option value="">请选择地区</option>');
                     jasondata.forEach(element => {
-                        if(data.value == element.name
-                )
-                    {
-                        element.city.forEach(element => {
-                            var city = element.name;
-                        // console.log(city);
-                        var oc = $('<option/>');
-                        oc.html(city);
-                        $('#city').append(oc);
+                        if (data.value == element.name
+                        ) {
+                            element.city.forEach(element => {
+                                var city = element.name;
+                                // console.log(city);
+                                var oc = $('<option/>');
+                                oc.html(city);
+                                $('#city').append(oc);
+                            })
+                            ;
+                        }
                     })
-                        ;
-                    }
-                })
                     ;
                     form.render();
                 });
@@ -38,20 +37,19 @@ $(function () {
                     $('#area').append('<option value="">请选择地区</option>');
                     jasondata.forEach(element => {
                         element.city.forEach(element => {
-                        if(data.value == element.name
-                )
-                    {
-                        element.area.forEach(element => {
-                            var area = element;
-                        var oa = $('<option/>');
-                        oa.html(area);
-                        $('#area').append(oa);
-                    })
+                            if (data.value == element.name
+                            ) {
+                                element.area.forEach(element => {
+                                    var area = element;
+                                    var oa = $('<option/>');
+                                    oa.html(area);
+                                    $('#area').append(oa);
+                                })
+                                ;
+                            }
+                        })
                         ;
-                    }
-                })
-                    ;
-                })
+                    })
                     ;
                     form.render();
                 });
@@ -91,17 +89,42 @@ $(function () {
 
         form.on('submit(login)', function (data) {
             layer.msg(JSON.stringify(data.field));
+            $.ajax({
+                url: "/merchant/merchantUser/register",
+                type: "POST",
+                data: data.field,
+                success: function (res) {
+                    if (res.code === 200) {
+                        layer.confirm('是否直接跳转主页', {
+                            btn: ['确定', '取消'] //按钮
+                        }, function () {
+                            location.href="/merchant/merchantUser/index";
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        var msg = res.msg;
+                        layer.msg(msg);
+                        // Tools.tip(res.msg)
+                    }
+                }
+            })
             return false;
         });
 
         form.verify({
             account: function (value, item) {
                 if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(value)) {
-                    if (!/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(value)) {
-                        return '请输入正确的邮箱或手机号';
-                    }
+                    return '请输入正确的手机号';
                 }
             }
+            // account: function (value, item) {
+            //     if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(value)) {
+            //         if (!/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(value)) {
+            //             return '请输入正确的邮箱或手机号';
+            //         }
+            //     }
+            // }
             , password: function (value, item) {
                 //密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
                 //123456Y&y123

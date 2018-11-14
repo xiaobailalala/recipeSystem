@@ -371,6 +371,7 @@ $(function () {
                 onImg(this.files[0]);
             }
         });
+
         function onImg(data) {
             var fs = new FileReader();
             fs.readAsDataURL(data);
@@ -381,106 +382,106 @@ $(function () {
                 isSub();
             }
         }
-        $("#fireMonitor").change(function(){
-            if($("#fireMonitor:checked").val()){
-                fire=true;
-            }else{
-                fire=false;
+
+        $("#fireMonitor").change(function () {
+            if ($("#fireMonitor:checked").val()) {
+                fire = true;
+            } else {
+                fire = false;
             }
         });
-        $("#subForm").submit(function(e){
+        $("#subForm").submit(function (e) {
             e.preventDefault();
-            if (isSub()){
-                if (threeArr.length!==0 || twoArr.length!==0){
-                     if (materialNumber.length!==0 && materialId.length!==0 && materialName.length!==0 && materialNumber.length===materialName.length){
-                         var fireFlag=0;
-                         if (fire){
-                             if ($(".fireSelect:checked").val()){
-                                 fireFlag=$(".fireSelect:checked").val();
-                             }else{
-                                 Tools.tip("请选择监控火候");
-                                 return false;
-                             }
-                         } else{
-                             fireFlag=0;
-                         }
-                         var stepContent=new Array(),stepTime=new Array();
-                         $("textarea[name=recipeContent]").each(function(){
-                             if ($(this).val()){
-                                 stepContent.push($(this).val());
-                             }
-                         });
-                         $("input[name=recipeTime]").each(function(){
-                             if ($(this).val() && /^[0-9]+.?[0-9]*$/.test($(this).val())){
-                                 stepTime.push($(this).val());
-                             }
-                         });
-                         if (stepContent.length===0 || stepTime.length===0 ||
-                             $("textarea[name=recipeContent]").length!==$("input[name=recipeTime]").length ||
-                             $("textarea[name=recipeContent]").length!==stepContent.length ||
-                             $("input[name=recipeTime]").length!==stepTime.length){
-                             Tools.tip("请完善烹饪流程的内容");
-                             return false;
-                         }else{
-                             $('input[type=submit]').attr("disabled","disabled");
-                             $('#progressBar').attr("aria-valuenow","0").css("width","0%");
-                             $('#progressCont').show();
-                             var formData=new FormData(this);
-                             formData.append("fIntroduction",((formData.get("fIntroduction").replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;")).replace(/\n/gi,"|"));
-                             formData.append("twoArr", twoArr);
-                             formData.append("threeArr", threeArr);
-                             formData.append("tipArr",tipArr);
-                             formData.append("materialNumber",materialNumber);
-                             formData.append("materialId",materialId);
-                             formData.append("materialName",materialName);
-                             formData.append("fFire",fireFlag);
-                             formData.append("stepContent",stepContent);
-                             formData.append("stepTime",stepTime);
-                             $.ajax({
-                                 url:"/manage/recipe/info",
-                                 type:"post",
-                                 Accept:'text/html;charset=UTF-8',
-                                 processData:false,
-                                 contentType:false,
-                                 data:formData,
-                                 xhr:function(e){
-                                     var xhr = $.ajaxSettings.xhr();
-                                     if(xhr.upload){ // check if upload property exists
-                                         xhr.upload.addEventListener('progress',function(e){
-                                             var loaded = e.loaded;
-                                             var total = e.total;
-                                             var percent = Math.floor(100*loaded/total);
-                                             if (percent === 100){
-                                                 $('input[type=submit]').val("资源已上传，保存中...").
-                                                 removeClass("btn-default").addClass("btn-success");
-                                                 $('#progressBar').attr("aria-valuenow",percent).css("width",percent + "%").
-                                                 addClass("progress-bar-success");
-                                             } else{
-                                                 $('#progressBar').attr("aria-valuenow",percent).css("width",percent + "%");
-                                             }
-                                         }, false);
-                                     }
-                                     return xhr;
-                                 },
-                                 success:function(res){
-                                     console.log(123);
-                                     if (res.code===200){
-                                         Tools.successAddTimeoutTip(res,3);
-                                     }else{
-                                         Tools.tip(res.msg);
-                                     }
-                                 }
-                             });
-                         }
-                     }else{
-                         Tools.tip("请至少添加一项食材");
-                     }
-                }else{
+            if (isSub()) {
+                if (threeArr.length !== 0 || twoArr.length !== 0) {
+                    if (materialNumber.length !== 0 && materialId.length !== 0 && materialName.length !== 0 && materialNumber.length === materialName.length) {
+                        var fireFlag = 0;
+                        if (fire) {
+                            if ($(".fireSelect:checked").val()) {
+                                fireFlag = $(".fireSelect:checked").val();
+                            } else {
+                                Tools.tip("请选择监控火候");
+                                return false;
+                            }
+                        } else {
+                            fireFlag = 0;
+                        }
+                        var stepContent = new Array(), stepTime = new Array();
+                        $("textarea[name=recipeContent]").each(function () {
+                            if ($(this).val()) {
+                                stepContent.push($(this).val());
+                            }
+                        });
+                        $("input[name=recipeTime]").each(function () {
+                            if ($(this).val() && /^[0-9]+.?[0-9]*$/.test($(this).val())) {
+                                stepTime.push($(this).val());
+                            }
+                        });
+                        if (stepContent.length === 0 || stepTime.length === 0 ||
+                            $("textarea[name=recipeContent]").length !== $("input[name=recipeTime]").length ||
+                            $("textarea[name=recipeContent]").length !== stepContent.length ||
+                            $("input[name=recipeTime]").length !== stepTime.length) {
+                            Tools.tip("请完善烹饪流程的内容");
+                            return false;
+                        } else {
+                            $('input[type=submit]').attr("disabled", "disabled");
+                            $('#progressBar').attr("aria-valuenow", "0").css("width", "0%");
+                            $('#progressCont').show();
+                            var formData = new FormData(this);
+                            formData.append("fIntroduction", ((formData.get("fIntroduction").replace(/<(.+?)>/gi, "&lt;$1&gt;")).replace(/ /gi, "&nbsp;")).replace(/\n/gi, "|"));
+                            formData.append("twoArr", twoArr);
+                            formData.append("threeArr", threeArr);
+                            formData.append("tipArr", tipArr);
+                            formData.append("materialNumber", materialNumber);
+                            formData.append("materialId", materialId);
+                            formData.append("materialName", materialName);
+                            formData.append("fFire", fireFlag);
+                            formData.append("stepContent", stepContent);
+                            formData.append("stepTime", stepTime);
+                            $.ajax({
+                                url: "/manage/recipe/info",
+                                type: "post",
+                                Accept: 'text/html;charset=UTF-8',
+                                processData: false,
+                                contentType: false,
+                                data: formData,
+                                xhr: function (e) {
+                                    var xhr = $.ajaxSettings.xhr();
+                                    if (xhr.upload) { // check if upload property exists
+                                        xhr.upload.addEventListener('progress', function (e) {
+                                            var loaded = e.loaded;
+                                            var total = e.total;
+                                            var percent = Math.floor(100 * loaded / total);
+                                            if (percent === 100) {
+                                                $('input[type=submit]').val("资源已上传，保存中...").removeClass("btn-default").addClass("btn-success");
+                                                $('#progressBar').attr("aria-valuenow", percent).css("width", percent + "%").addClass("progress-bar-success");
+                                            } else {
+                                                $('#progressBar').attr("aria-valuenow", percent).css("width", percent + "%");
+                                            }
+                                        }, false);
+                                    }
+                                    return xhr;
+                                },
+                                success: function (res) {
+                                    console.log(123);
+                                    if (res.code === 200) {
+                                        Tools.successAddTimeoutTip(res, 3);
+                                    } else {
+                                        Tools.tip(res.msg);
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        Tools.tip("请至少添加一项食材");
+                    }
+                } else {
                     Tools.tip("请至少添加一项二级分类");
                 }
-            } else{
+            } else {
                 Tools.tip("请完善食谱基本信息后尝试");
             }
+            
         });
     }());
 });

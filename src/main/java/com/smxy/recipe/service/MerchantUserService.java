@@ -1,38 +1,31 @@
-/**
- * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
- * <p>
- * code is far away from bug with the animal protecting
- * <p>
- * ┏┓　　　┏┓
- * ┏┛┻━━━┛┻┓
- * ┃　　　　　　　┃
- * ┃　　　━　　　┃
- * ┃　┳┛　┗┳　┃
- * ┃　　　　　　　┃
- * ┃　　　┻　　　┃
- * ┃　　　　　　　┃
- * ┗━┓　　　┏━┛
- * 　　┃　　　┃神兽保佑
- * 　　┃　　　┃代码无BUG！
- * 　　┃　　　┗━━━┓
- * 　　┃　　　　　　　┣┓
- * 　　┃　　　　　　　┏┛
- * 　　┗┓┓┏━┳┓┏┛
- * 　　　┃┫┫　┃┫┫
- * 　　　┗┻┛　┗┻┛
- *
- * @Package:
- * @author: zpx
- * Build File @date: 2018/9/30 7:48
- * @Description TODO
- * @version 1.0
- */
 package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.utils.ResApi;
 
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * Demo MerchantUserService
+ *
+ * @author Yangyihui
+ * @date 2018/11/12 0012 21:30
+ */
 public interface MerchantUserService {
-    ResApi<MerchantUser> merchantUserLogin(MerchantUser merchantUser);
-    ResApi<String> merchantUserReg(MerchantUser merchantUser);
+    /**
+     * 功能描述: 商家用户登陆
+     * @param merchantUser 商家用户信息类
+     * @return ResApi值
+     * @auther: yangyihui
+     * @date: 2018/11/12 0012 21:33
+     */
+    ResApi<String> userLogin(MerchantUser merchantUser, HttpServletRequest request);
+    /**
+     * 功能描述:商家用户注册
+     * @param merchantUser 商家用户信息类
+     * @return ResApi值
+     * @auther: yangyihui
+     * @date: 2018/11/12 0012 21:35
+     */
+    ResApi<String> userRegister(MerchantUser merchantUser,HttpServletRequest request);
 }

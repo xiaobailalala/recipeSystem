@@ -11,7 +11,7 @@ public enum  LoginType {
     }
 
     @Override
-    public String toString() {
+    public String toString()     {
         return this.type.toString();
     }
 }
