@@ -13,6 +13,8 @@ import com.smxy.recipe.dao.AdminRoleDao;
 import com.smxy.recipe.dao.AdminUserDao;
 import com.smxy.recipe.dao.AdminUserRoleDao;
 import com.smxy.recipe.entity.*;
+import com.smxy.recipe.realm.LoginType;
+import com.smxy.recipe.realm.UserToken;
 import com.smxy.recipe.service.AdminUserService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
@@ -44,6 +46,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Autowired
     private AdminUserRoleDao adminUserRoleDao;
 
+    private static final String ADMIN_LOGIN_TYPE = LoginType.ADMIN.toString();
+
     @Override
     public ResApi<String> isAdminUser(String fAccount) {
         ResApi<String> resApi;
@@ -61,7 +65,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         Subject currentUser = SecurityUtils.getSubject();
         try {
             if (!currentUser.isAuthenticated()){
-                UsernamePasswordToken token=new UsernamePasswordToken(adminUser.getFAccount(),adminUser.getFPassword());
+//                UsernamePasswordToken token=new UsernamePasswordToken(adminUser.getFAccount(),adminUser.getFPassword());
+                UserToken token = new UserToken(adminUser.getFAccount(), adminUser.getFPassword(), ADMIN_LOGIN_TYPE);
                 token.setRememberMe(rememberMe);
                 try {
                     currentUser.login(token);

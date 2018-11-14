@@ -18,6 +18,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -32,9 +33,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.Filter;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 public class ShiroConfig {
@@ -44,27 +43,27 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String, Filter> filters = new LinkedHashMap<>(8);
-        XformAuthenticationFilter xFormAuthenticationFilterAdmin=new XformAuthenticationFilter();
+        XformAuthenticationFilter xFormAuthenticationFilterAdmin = new XformAuthenticationFilter();
         xFormAuthenticationFilterAdmin.setUsernameParam("fAccount");
         xFormAuthenticationFilterAdmin.setPasswordParam("fPassword");
         xFormAuthenticationFilterAdmin.setLoginUrl("/manage/adm/adLogin");
-        filters.put("authc",xFormAuthenticationFilterAdmin);
-        XformAuthenticationFilter xFormAuthenticationFilterMerchant=new XformAuthenticationFilter();
+        filters.put("authc", xFormAuthenticationFilterAdmin);
+        XformAuthenticationFilter xFormAuthenticationFilterMerchant = new XformAuthenticationFilter();
         xFormAuthenticationFilterMerchant.setUsernameParam("fAccount");
         xFormAuthenticationFilterMerchant.setPasswordParam("fPassword");
         xFormAuthenticationFilterMerchant.setLoginUrl("/merchant/merchantUser/login");
-        filters.put("merchant",xFormAuthenticationFilterMerchant);
+        filters.put("merchant", xFormAuthenticationFilterMerchant);
         shiroFilterFactoryBean.setFilters(filters);
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/src/**","anon");
-        filterChainDefinitionMap.put("/assets/**","anon");
-        filterChainDefinitionMap.put("/common/**","anon");
-        filterChainDefinitionMap.put("/manage/adm/adlogin","anon");
-        filterChainDefinitionMap.put("/mob/**","anon");
-        filterChainDefinitionMap.put("/druid/**","anon");
-        filterChainDefinitionMap.put("/sensorData/**","anon");
-        filterChainDefinitionMap.put("/endpoint-websocket-wxClient","anon");
+        filterChainDefinitionMap.put("/src/**", "anon");
+        filterChainDefinitionMap.put("/assets/**", "anon");
+        filterChainDefinitionMap.put("/common/**", "anon");
+        filterChainDefinitionMap.put("/manage/adm/adlogin", "anon");
+        filterChainDefinitionMap.put("/mob/**", "anon");
+        filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/sensorData/**", "anon");
+        filterChainDefinitionMap.put("/endpoint-websocket-wxClient", "anon");
         filterChainDefinitionMap.put("/merchant/**", "merchant");
         filterChainDefinitionMap.put("/manage/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -72,8 +71,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public HandlerExceptionResolver solver(){
-        HandlerExceptionResolver handlerExceptionResolver=new MyExceptionResolver();
+    public HandlerExceptionResolver solver() {
+        HandlerExceptionResolver handlerExceptionResolver = new MyExceptionResolver();
         return handlerExceptionResolver;
     }
 
@@ -81,28 +80,31 @@ public class ShiroConfig {
      * 配置Shiro生命周期处理器
      */
     @Bean
-    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
+
     /**
      * 自动创建代理类，若不添加，Shiro的注解可能不会生效。
      */
     @Bean
     @DependsOn({"lifecycleBeanPostProcessor"})
-    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
+    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
         advisorAutoProxyCreator.setProxyTargetClass(true);
         return advisorAutoProxyCreator;
     }
+
     /**
      * 开启Shiro的注解
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
         return authorizationAttributeSourceAdvisor;
     }
+
     /**
      * 配置加密匹配，使用MD5的方式，进行1024次加密
      */
@@ -114,6 +116,7 @@ public class ShiroConfig {
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
     }
+
     /**
      * 自定义Realm，可以多个
      */
@@ -125,23 +128,34 @@ public class ShiroConfig {
     }
 
     @Bean
+    public MerchantShiroRealm merchantShiroRealm() {
+        MerchantShiroRealm merchantShiroRealm = new MerchantShiroRealm();
+        merchantShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return merchantShiroRealm;
+    }
+
+    @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(adminShiroRealm());
+        Collection<Realm> realms = new ArrayList<>();
+        realms.add(adminShiroRealm());
+        realms.add(merchantShiroRealm());
+//        securityManager.setRealm(adminShiroRealm());
+        securityManager.setRealms(realms);
         securityManager.setRememberMeManager(cookieRememberMeManager());
         return securityManager;
     }
 
     @Bean
-    public ModularRealmAuthenticator modularRealmAuthenticator(){
+    public ModularRealmAuthenticator modularRealmAuthenticator() {
         UserModularRealmAuthenticator modularRealmAuthenticator = new UserModularRealmAuthenticator();
         modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
         return modularRealmAuthenticator;
     }
 
     @Bean
-    public CookieRememberMeManager cookieRememberMeManager(){
-        CookieRememberMeManager cookieRememberMeManager=new CookieRememberMeManager();
+    public CookieRememberMeManager cookieRememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         byte[] cipherKey = Base64.decode("Y1JxNSPXVwMkyvES/kJGeQ==");
         cookieRememberMeManager.setCipherKey(cipherKey);
         cookieRememberMeManager.setCookie(simpleCookie());
@@ -149,8 +163,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SimpleCookie simpleCookie(){
-        SimpleCookie simpleCookie=new SimpleCookie("rememberMe");
+    public SimpleCookie simpleCookie() {
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         simpleCookie.setMaxAge(86400);
         simpleCookie.setHttpOnly(true);
         return simpleCookie;

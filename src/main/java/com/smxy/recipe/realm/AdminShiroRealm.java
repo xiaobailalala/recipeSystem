@@ -35,27 +35,29 @@ public class AdminShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        AdminUser adminUser = (AdminUser)principalCollection.getPrimaryPrincipal();
-        for (AdminRole adminRole:adminUserService.verifyRole(adminUser.getFId())){
+        AdminUser adminUser = (AdminUser) principalCollection.getPrimaryPrincipal();
+        for (AdminRole adminRole : adminUserService.verifyRole(adminUser.getFId())) {
             authorizationInfo.addRole(adminRole.getFRolename());
-            for (AdminPermission adminPermission:adminUserService.verifyPermission(adminUser.getFId())){
+            for (AdminPermission adminPermission : adminUserService.verifyPermission(adminUser.getFId())) {
                 authorizationInfo.addStringPermission(adminPermission.getFPermissionname());
             }
         }
         return authorizationInfo;
     }
+
     /**
      * 身份认证
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        UsernamePasswordToken token= (UsernamePasswordToken) authenticationToken;
-        String account= token.getUsername();
-        AdminUser adminUser=adminUserDao.isAdminUser(account);
-        if (adminUser==null){
+//        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        UserToken token = (UserToken) authenticationToken;
+        String account = token.getUsername();
+        AdminUser adminUser = adminUserDao.isAdminUser(account);
+        if (adminUser == null) {
             return null;
         }
-        Object principal=adminUser;
+        Object principal = adminUser;
         Object credentials = adminUser.getFPassword();
         String realmName = getName();
         ByteSource credentialsSalt = ByteSource.Util.bytes(account);
