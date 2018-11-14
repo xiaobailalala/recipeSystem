@@ -21,8 +21,20 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResApi<T> implements Serializable {
+	/**
+	 * 状态码
+	 * int id
+	 */
 	private int code;
+	/**
+	 * 信息
+	 * String msg
+	 */
 	private String msg;
+	/**
+	 * 数据（泛型）
+	 * T data
+	 */
 	private T data;
 }
 

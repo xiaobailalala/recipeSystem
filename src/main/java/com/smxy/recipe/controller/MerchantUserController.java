@@ -1,66 +1,58 @@
-
-/**
- * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
- * <p>
- * code is far away from bug with the animal protecting
- * <p>
- * ┏┓　　　┏┓
- * ┏┛┻━━━┛┻┓
- * ┃　　　　　　　┃
- * ┃　　　━　　　┃
- * ┃　┳┛　┗┳　┃
- * ┃　　　　　　　┃
- * ┃　　　┻　　　┃
- * ┃　　　　　　　┃
- * ┗━┓　　　┏━┛
- * 　　┃　　　┃神兽保佑
- * 　　┃　　　┃代码无BUG！
- * 　　┃　　　┗━━━┓
- * 　　┃　　　　　　　┣┓
- * 　　┃　　　　　　　┏┛
- * 　　┗┓┓┏━┳┓┏┛
- * 　　　┃┫┫　┃┫┫
- * 　　　┗┻┛　┗┻┛
- *
- * @Package:
- * @author: zpx
- * Build File @date: 2018/9/30 7:48
- * @Description TODO
- * @version 1.0
- */
 package com.smxy.recipe.controller;
 
-
-import com.smxy.recipe.config.template.PathController;
+import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.MerchantUserService;
+import com.smxy.recipe.utils.ResApi;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 
-@PathController(value = "/merchant/merchantUser")
+/**
+ * Demo MerchantUserController
+ *
+ * @author Yangyihui
+ * @date 2018/11/11 0011 14:50
+ */
+@Controller("merchantUserController")
+@RequestMapping("/merchant/merchantUser")
 public class MerchantUserController {
 
     @Autowired
     private MerchantUserService merchantUserService;
 
-    @GetMapping(value = "hello")
-    public String testPage1() {
-        return "merchant/index";
-    }
-
-    @GetMapping(value = "/login")
+    @GetMapping("/login")
     public String goLogin() {
         return "merchant/login";
     }
 
-    @GetMapping(value = "register")
-    public String goRegsiter() {
+    @GetMapping("/register")
+    public String goRegister() {
         return "merchant/pages/register";
     }
 
-//    @RequestMapping(value = "/merchantLogin")
-//    public ResApi<Object> merchantLogin(MerchantUser merchant_user){
-//
-//    }
+    @RequiresRoles(value = "merchant", logical = Logical.OR)
+    @GetMapping("/index")
+    public String goIndex() {
+        return "merchant/index";
+    }
 
+
+    @ResponseBody
+    @PostMapping("/login")
+    public ResApi userLogin(MerchantUser merchantUser, HttpServletRequest request) {
+        return merchantUserService.userLogin(merchantUser, request);
+    }
+
+    @ResponseBody
+    @PostMapping("/register")
+    public ResApi userRegister(MerchantUser merchantUser, HttpServletRequest request) {
+        return merchantUserService.userRegister(merchantUser, request);
+    }
 }

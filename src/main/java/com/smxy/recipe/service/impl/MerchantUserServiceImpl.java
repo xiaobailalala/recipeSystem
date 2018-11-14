@@ -1,85 +1,96 @@
-/**
- * Copyright © 2018 eSunny Info. Developer Stu. All rights reserved.
- * <p>
- * code is far away from bug with the animal protecting
- * <p>
- * ┏┓　　　┏┓
- * ┏┛┻━━━┛┻┓
- * ┃　　　　　　　┃
- * ┃　　　━　　　┃
- * ┃　┳┛　┗┳　┃
- * ┃　　　　　　　┃
- * ┃　　　┻　　　┃
- * ┃　　　　　　　┃
- * ┗━┓　　　┏━┛
- * 　　┃　　　┃神兽保佑
- * 　　┃　　　┃代码无BUG！
- * 　　┃　　　┗━━━┓
- * 　　┃　　　　　　　┣┓
- * 　　┃　　　　　　　┏┛
- * 　　┗┓┓┏━┳┓┏┛
- * 　　　┃┫┫　┃┫┫
- * 　　　┗┻┛　┗┻┛
- *
- * @Package:
- * @author: zpx
- * Build File @date: 2018/9/30 7:48
- * @Description TODO
- * @version 1.0
- */
 package com.smxy.recipe.service.impl;
 
+import com.smxy.recipe.dao.AdminRoleDao;
+import com.smxy.recipe.dao.AdminUserRoleDao;
 import com.smxy.recipe.dao.MerchantUserDao;
+import com.smxy.recipe.entity.AdminRole;
+import com.smxy.recipe.entity.AdminUserRole;
 import com.smxy.recipe.entity.MerchantUser;
+import com.smxy.recipe.realm.LoginType;
+import com.smxy.recipe.realm.UserToken;
 import com.smxy.recipe.service.MerchantUserService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Demo MerchantUserServiceImpl
+ *
+ * @author Yangyihui
+ * @date 2018/11/12 0012 21:36
+ */
 @Service("merchantUserService")
 public class MerchantUserServiceImpl implements MerchantUserService {
-
     @Autowired
     private MerchantUserDao merchantUserDao;
+    @Autowired
+    private ToolsApi toolsApi;
+    @Autowired
+    private AdminUserRoleDao adminUserRoleDao;
+    @Autowired
+    private AdminRoleDao adminRoleDao;
 
-
-    @Override
-    public ResApi<MerchantUser> merchantUserLogin(MerchantUser merchantUser) {
-        ResApi<MerchantUser> resApi;
-        if (merchantUserDao.isUser(merchantUser) > 0) {
-            merchantUser.setFPassword(ToolsApi.toMD5(merchantUser.getFPassword()));
-            merchantUser = merchantUserDao.isLogin(merchantUser);
-            if (merchantUser != null) {
-                resApi = new ResApi<>(200, "登陆成功", merchantUser);
-            } else {
-                resApi = new ResApi<>(401, "密码不匹配", null);
-            }
-        } else {
-            resApi = new ResApi<>(400, "用户不存在,请先注册", null);
-        }
-        return resApi;
-    }
+    private static final String MERCHANT_LOGIN_TYPE = LoginType.MERCHANT.toString();
 
     @Override
-    public ResApi<String> merchantUserReg(MerchantUser merchantUser) {
-        ResApi<String> resApi;
-        if (merchantUserDao.isUser(merchantUser) > 0) {
-            resApi = new ResApi<>(400, "账户已存在", null);
-        } else {
-            merchantUser.setFPassword(ToolsApi.toMD5(merchantUser.getFPassword()));
-            if (merchantUserDao.saveMerchantUser(merchantUser) > 0) {
-                merchantUser.setFUsername("膳客商户" + merchantUser.getFId());
-                if (merchantUserDao.updateUserInfo(merchantUser) > 0) {
-                    resApi = new ResApi<>(200, "注册成功", null);
-                } else {
-                    resApi = new ResApi<>(401, "注册失败", null);
+    public ResApi<String> userLogin(MerchantUser merchantUser, HttpServletRequest request) {
+        ResApi<String> resApi = new ResApi<>(500, "aaaaaa", "error");
+        Subject currentUser = SecurityUtils.getSubject();
+        try {
+            if (!currentUser.isAuthenticated()) {
+                UserToken token = new UserToken(merchantUser.getFAccount(), merchantUser.getFPassword(), MERCHANT_LOGIN_TYPE);
+                try {
+                    currentUser.login(token);
+                    merchantUser = (MerchantUser) currentUser.getPrincipal();
+                    request.getSession().setAttribute("merUser", merchantUser);
+                } catch (UnknownAccountException ae) {
+                    resApi = new ResApi<>(501, "该账号不存在。", "failed");
+                    return resApi;
+                } catch (IncorrectCredentialsException ice) {
+                    resApi = new ResApi<>(502, "您输入的密码不正确。", "failed");
+                    return resApi;
                 }
-            } else {
-                resApi = new ResApi<>(400, "添加用户失败，请重试", null);
             }
+            return new ResApi<>(200, "success", "success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return resApi;
         }
-        return resApi;
+
     }
 
+    @Override
+    public ResApi<String> userRegister(MerchantUser merchantUser, HttpServletRequest request) {
+        ResApi<String> resApi = new ResApi<>(500, "系统出错", "error");
+        if (merchantUserDao.isAccount(merchantUser.getFAccount()) > 0) {
+            return new ResApi<>(501, "手机号已存在", "phoneError");
+        } else {
+            int coverNum = (int) (Math.random()*10+1);
+            merchantUser.setFPassword(ToolsApi.entryptBySaltMd5(merchantUser.getFPassword(), merchantUser.getFAccount()));
+            merchantUser.setFCover("/src/images/merchant_head/shengxiao_" + coverNum + ".jpg");
+            if (merchantUserDao.saveUserInfo(merchantUser) > 0) {
+                resApi = new ResApi<>(200, "注册成功", "success");
+                request.getSession().setAttribute("merUser", merchantUser);
+                Map<String, Integer> map = new HashMap<>(16);
+                map.put("fUid", merchantUser.getFId());
+                AdminRole role = new AdminRole();
+                role.setFRolename("merchant");
+                AdminRole adminRole = adminRoleDao.getAdminRoleByName(role);
+                map.put("fRid",adminRole.getFId());
+                adminUserRoleDao.saveInfo(map);
+            }
+            return resApi;
+        }
+    }
 }

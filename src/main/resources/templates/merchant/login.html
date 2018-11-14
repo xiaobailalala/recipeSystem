@@ -24,14 +24,14 @@
                 <div class="project-title">
                     <h1>登录膳食膳房</h1>
                 </div>
-                <form action="" class="layui-form">
+                <form action="" class="layui-form" method="post">
                     <div class="layui-row layui-form-item">
                         <div class="layui-col-md3">
                             <label class="layui-form-label mylayui-form-label">用户名：</label>
                         </div>
                         <div class="layui-col-md9 mylayui-form-div">
                             <i class="layui-icon layui-icon-username mylayui-input-icon"></i>
-                            <input type="text" name="account" id="account" required lay-verify="required" placeholder="手机号/邮箱"
+                            <input type="text" name="fAccount" id="account" required lay-verify="required" placeholder="手机号/邮箱"
                                 autocomplete="off" class="layui-input mylayui-input">
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div class="layui-col-md9 mylayui-form-div">
                             <i class="layui-icon layui-icon-password mylayui-input-icon"></i>
                             <i class="showpwd iconfont icon-yanjing"></i>
-                            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码"
+                            <input type="password" name="fPassword" required lay-verify="required" placeholder="请输入密码"
                                 autocomplete="off" class="layui-input mylayui-input" id="password">
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="layui-form-item layui-row">
                         <div class="layui-col-md4 layui-col-md-offset8 mylayui-form-a">
-                            <a href="/merchant/register">注册</a>
+                            <a href="/merchant/merchantUser/register">注册</a>
                             <a href="">忘记密码</a>
                         </div>
                     </div>

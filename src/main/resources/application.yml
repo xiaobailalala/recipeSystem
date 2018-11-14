@@ -2,11 +2,13 @@
 #ServerHostIp: 172.21.91.21
 #ServerHostIp: 192.168.0.108
 ServerHostIp: 172.20.10.10
+#ServerHostIp: localhost
 spring:
   # 配置数据库连接信息以及改变数据源为Druid
   datasource:
     username: root
     password: devmysql.960314
+#    password: 123456
     url: jdbc:mysql://${ServerHostIp}:3306/recipe?useSSL=false
 #    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
@@ -38,6 +40,7 @@ spring:
       cluster-nodes: ${ServerHostIp}:9301
   redis:
     host: ${ServerHostIp}
+#    password:
     password: devredis.960314
   mail:
     password: fziqpvgpiemvbcdi
