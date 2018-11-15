@@ -51,7 +51,6 @@ public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
         for (Realm realm : realms) {
             if (realm.getName().contains(loginType)) {
                 typeRealms.add(realm);
-                break;
             }
         }
         if (typeRealms.size() == 1) {
