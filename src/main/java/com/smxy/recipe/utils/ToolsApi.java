@@ -101,7 +101,7 @@ public class ToolsApi {
     }
 
     public static void main(String[] args) {
-        System.out.println(ToolsApi.base64Encode("测试评论"));
+        System.out.println(ToolsApi.entryptBySaltMd5("123456YYHyyh", "15080557852"));
     }
 
     public static int[] randomArray(int min, int max, int n) {

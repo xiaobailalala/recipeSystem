@@ -46,20 +46,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 public class MerchantShiroRealm extends AuthorizingRealm {
-    @Lazy
     @Autowired
+    @Lazy
     AdminUserService adminUserService;
-    @Lazy
     @Autowired
+    @Lazy
     MerchantUserService merchantUserService;
-    @Lazy
     @Autowired
+    @Lazy
     MerchantUserDao merchantUserDao;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        merchantAuthorization(principalCollection, authorizationInfo, adminUserService);
+        AdminShiroRealm.adminAuthorizationInfo(principalCollection, authorizationInfo, adminUserService);
+        return authorizationInfo;
+    }
+
+    static void merchantAuthorization(PrincipalCollection principalCollection, SimpleAuthorizationInfo authorizationInfo, AdminUserService adminUserService) {
         if (principalCollection.getPrimaryPrincipal() instanceof MerchantUser) {
+            System.out.println("------MerchantUser");
             MerchantUser merchantUser = (MerchantUser) principalCollection.getPrimaryPrincipal();
             for (AdminRole adminRole : adminUserService.verifyRole(merchantUser.getFId())) {
                 authorizationInfo.addRole(adminRole.getFRolename());
@@ -68,7 +75,6 @@ public class MerchantShiroRealm extends AuthorizingRealm {
                 }
             }
         }
-        return authorizationInfo;
     }
 
     /**

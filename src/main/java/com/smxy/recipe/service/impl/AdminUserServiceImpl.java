@@ -65,13 +65,13 @@ public class AdminUserServiceImpl implements AdminUserService {
         Subject currentUser = SecurityUtils.getSubject();
         try {
             if (!currentUser.isAuthenticated()){
-//                UsernamePasswordToken token=new UsernamePasswordToken(adminUser.getFAccount(),adminUser.getFPassword());
                 UserToken token = new UserToken(adminUser.getFAccount(), adminUser.getFPassword(), ADMIN_LOGIN_TYPE);
                 token.setRememberMe(rememberMe);
                 try {
                     currentUser.login(token);
                     adminUser= (AdminUser) currentUser.getPrincipal();
-                    request.getSession().setAttribute("aduser",adminUser);
+                    SecurityUtils.getSubject().getSession().setAttribute("aduser", adminUser);
+//                    request.getSession().setAttribute("aduser",adminUser);
                 }catch (UnknownAccountException ae){
                     resApi=new ResApi<>(501,"该管理员账号不存在。","failed");
                     return resApi;

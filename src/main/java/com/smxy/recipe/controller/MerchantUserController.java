@@ -1,5 +1,6 @@
 package com.smxy.recipe.controller;
 
+import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.MerchantUserService;
 import com.smxy.recipe.utils.ResApi;
@@ -20,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Yangyihui
  * @date 2018/11/11 0011 14:50
  */
-@Controller("merchantUserController")
-@RequestMapping("/merchant/merchantUser")
+
+@PathController("/merchant/merchantUser")
 public class MerchantUserController {
 
     @Autowired
@@ -37,7 +38,7 @@ public class MerchantUserController {
         return "merchant/pages/register";
     }
 
-    @RequiresRoles(value = "merchant", logical = Logical.OR)
+    @RequiresRoles("merchant")
     @GetMapping("/index")
     public String goIndex() {
         return "merchant/index";

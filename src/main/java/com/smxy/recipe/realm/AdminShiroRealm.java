@@ -13,6 +13,7 @@ import com.smxy.recipe.dao.AdminUserDao;
 import com.smxy.recipe.entity.AdminPermission;
 import com.smxy.recipe.entity.AdminRole;
 import com.smxy.recipe.entity.AdminUser;
+import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.AdminUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -35,7 +36,14 @@ public class AdminShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        adminAuthorizationInfo(principalCollection, authorizationInfo, adminUserService);
+        MerchantShiroRealm.merchantAuthorization(principalCollection, authorizationInfo, adminUserService);
+        return authorizationInfo;
+    }
+
+    static void adminAuthorizationInfo(PrincipalCollection principalCollection, SimpleAuthorizationInfo authorizationInfo, AdminUserService adminUserService) {
         if (principalCollection.getPrimaryPrincipal() instanceof AdminUser) {
+            System.out.println("------AdminUser");
             AdminUser adminUser = (AdminUser) principalCollection.getPrimaryPrincipal();
             for (AdminRole adminRole : adminUserService.verifyRole(adminUser.getFId())) {
                 authorizationInfo.addRole(adminRole.getFRolename());
@@ -44,7 +52,6 @@ public class AdminShiroRealm extends AuthorizingRealm {
                 }
             }
         }
-        return authorizationInfo;
     }
 
     /**

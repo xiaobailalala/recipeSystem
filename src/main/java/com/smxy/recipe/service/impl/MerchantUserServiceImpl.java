@@ -50,10 +50,12 @@ public class MerchantUserServiceImpl implements MerchantUserService {
         try {
             if (!currentUser.isAuthenticated()) {
                 UserToken token = new UserToken(merchantUser.getFAccount(), merchantUser.getFPassword(), MERCHANT_LOGIN_TYPE);
+                token.setRememberMe(false);
                 try {
                     currentUser.login(token);
                     merchantUser = (MerchantUser) currentUser.getPrincipal();
-                    request.getSession().setAttribute("merUser", merchantUser);
+                    SecurityUtils.getSubject().getSession().setAttribute("merUser", merchantUser);
+//                    request.getSession().setAttribute("merUser", merchantUser);
                 } catch (UnknownAccountException ae) {
                     resApi = new ResApi<>(501, "该账号不存在。", "failed");
                     return resApi;

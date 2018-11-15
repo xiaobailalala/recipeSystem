@@ -9,7 +9,7 @@
  */
 package com.smxy.recipe.config;
 
-import com.smxy.recipe.filter.XformAuthenticationFilter;
+import com.smxy.recipe.realm.XformAuthenticationFilter;
 import com.smxy.recipe.realm.AdminShiroRealm;
 import com.smxy.recipe.realm.MerchantShiroRealm;
 import com.smxy.recipe.realm.UserModularRealmAuthenticator;
@@ -23,7 +23,6 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -145,11 +144,12 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager() {
+    public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator modularRealmAuthenticator) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setAuthenticator(modularRealmAuthenticator);
         Collection<Realm> realms = new ArrayList<>();
-        realms.add(merchantShiroRealm());
         realms.add(adminShiroRealm());
+        realms.add(merchantShiroRealm());
         securityManager.setRealms(realms);
         securityManager.setRememberMeManager(cookieRememberMeManager());
         return securityManager;
