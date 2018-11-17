@@ -1,14 +1,13 @@
 #ServerHostIp: 192.168.1.108
 #ServerHostIp: 172.21.91.21
 #ServerHostIp: 192.168.0.108
-#ServerHostIp: 172.20.10.10
-ServerHostIp: localhost
+ServerHostIp: 172.20.10.10
 spring:
   # 配置数据库连接信息以及改变数据源为Druid
   datasource:
     username: root
-#    password: devmysql.960314
-    password: 123456
+    password: devmysql.960314
+#    password: 123456
     url: jdbc:mysql://${ServerHostIp}:3306/recipe?useSSL=false
 #    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
@@ -39,10 +38,10 @@ spring:
       cluster-name: elasticsearch
       cluster-nodes: ${ServerHostIp}:9301
   redis:
-#    host: ${ServerHostIp}
-    host: 192.168.43.126
-    password:
-#    password: devredis.960314
+    host: ${ServerHostIp}
+#    host: 192.168.43.126
+#    password:
+    password: devredis.960314
   mail:
     password: fziqpvgpiemvbcdi
     username: 1051973784@qq.com
@@ -68,5 +67,3 @@ server:
     timeout: 3600
 #logging:
 #  level: debug
-
-

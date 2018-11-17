@@ -50,7 +50,7 @@ public class ArticleMobController {
     }
 
     @PostMapping("/uploadCover")
-    public ResApi<Object> uploadCover(@RequestParam("cover")MultipartFile multipartFile) {
+    public ResApi<Object> uploadCover(@RequestParam("cover") MultipartFile multipartFile) {
         return articleService.uploadCover(multipartFile);
     }
 

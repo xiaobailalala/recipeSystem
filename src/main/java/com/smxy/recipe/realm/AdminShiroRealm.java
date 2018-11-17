@@ -47,7 +47,6 @@ public class AdminShiroRealm extends AuthorizingRealm {
 
     static void adminAuthorizationInfo(PrincipalCollection principalCollection, SimpleAuthorizationInfo authorizationInfo, AdminUserService adminUserService) {
         if (principalCollection.getPrimaryPrincipal() instanceof AdminUser) {
-            System.out.println("------AdminUser");
             AdminUser adminUser = (AdminUser) principalCollection.getPrimaryPrincipal();
             for (AdminRole adminRole : adminUserService.verifyRole(adminUser.getFId())) {
                 authorizationInfo.addRole(adminRole.getFRolename());

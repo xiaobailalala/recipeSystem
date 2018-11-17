@@ -50,7 +50,7 @@ public class AdminController {
 
     @RequiresRoles(value = {"sysAdmin", "pubAdmim"}, logical = Logical.OR)
     @GetMapping("/admin/index")
-    public String adminIndex() {
+    public String adminIndex(HttpServletRequest request) {
         return "admin/index";
     }
 
