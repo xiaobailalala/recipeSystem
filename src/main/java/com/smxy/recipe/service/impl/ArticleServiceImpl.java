@@ -33,6 +33,7 @@ import com.smxy.recipe.dao.ArticleDao;
 import com.smxy.recipe.entity.Article;
 import com.smxy.recipe.service.ArticleService;
 import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,13 +46,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ResApi<Object> saveInfo(Article article) {
-        System.out.println(article);
-        return null;
+        article.setFContent(ToolsApi.base64Encode(article.getFContent()));
+        articleDao.saveInfo(article);
+        return new ResApi<>(200, "success", "success");
     }
 
     @Override
     public ResApi<Object> uploadCover(MultipartFile multipartFile) {
-        System.out.println(multipartFile.getSize());
-        return new ResApi<>(200, "success", "success");
+        String filePath = ToolsApi.multipartFileUploadFile(multipartFile, null);
+        return new ResApi<>(200, "success", filePath);
     }
 }

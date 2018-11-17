@@ -79,8 +79,7 @@ public class ShiroConfig {
 
     @Bean
     public HandlerExceptionResolver solver() {
-        HandlerExceptionResolver handlerExceptionResolver = new MyExceptionResolver();
-        return handlerExceptionResolver;
+        return new MyExceptionResolver();
     }
 
     /**
@@ -123,6 +122,7 @@ public class ShiroConfig {
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
     }
+
     /**
      * 自定义Realm，可以多个
      */

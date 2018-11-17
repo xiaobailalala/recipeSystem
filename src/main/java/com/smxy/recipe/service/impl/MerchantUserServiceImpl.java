@@ -66,7 +66,6 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             }
             return new ResApi<>(200, "success", "success");
         } catch (Exception e) {
-            e.printStackTrace();
             return resApi;
         }
 

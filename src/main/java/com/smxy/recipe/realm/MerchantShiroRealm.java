@@ -66,7 +66,6 @@ public class MerchantShiroRealm extends AuthorizingRealm {
 
     static void merchantAuthorization(PrincipalCollection principalCollection, SimpleAuthorizationInfo authorizationInfo, AdminUserService adminUserService) {
         if (principalCollection.getPrimaryPrincipal() instanceof MerchantUser) {
-            System.out.println("------MerchantUser");
             MerchantUser merchantUser = (MerchantUser) principalCollection.getPrimaryPrincipal();
             for (AdminRole adminRole : adminUserService.verifyRole(merchantUser.getFId())) {
                 authorizationInfo.addRole(adminRole.getFRolename());
