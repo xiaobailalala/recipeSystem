@@ -10,7 +10,6 @@
 package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.AdminUserRole;
-import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,15 @@ public interface AdminUserRoleDao {
      * @return 数据库更新数
      */
     Integer saveInfo(Map<String, Integer> map);
+
+    /**
+     * 功能描述:增加 商家-角色 表信息
+     * @param map 集合包含商家用户ID 和角色ID
+     * @return 数据库更新数
+     * @auther: yangyihui
+     * @date: 2018/11/17 0017 19:10
+     */
+    Integer saveMerchantInfo(Map<String, Integer> map);
 
     /**
      * 根据管理员id删除管理员信息

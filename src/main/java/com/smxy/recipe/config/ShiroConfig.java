@@ -47,7 +47,7 @@ public class ShiroConfig {
         xFormAuthenticationFilterAdmin.setUsernameParam("fAccount");
         xFormAuthenticationFilterAdmin.setPasswordParam("fPassword");
         xFormAuthenticationFilterAdmin.setLoginUrl("/manage/adm/adLogin");
-        filters.put("authc", xFormAuthenticationFilterAdmin);
+        filters.put("admin", xFormAuthenticationFilterAdmin);
         XformAuthenticationFilter xFormAuthenticationFilterMerchant = new XformAuthenticationFilter();
         xFormAuthenticationFilterMerchant.setUsernameParam("fAccount");
         xFormAuthenticationFilterMerchant.setPasswordParam("fPassword");
@@ -64,8 +64,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/sensorData/**", "anon");
         filterChainDefinitionMap.put("/endpoint-websocket-wxClient", "anon");
+        filterChainDefinitionMap.put("/merchant/merchantUser/register", "anon");
         filterChainDefinitionMap.put("/merchant/**", "merchant");
-        filterChainDefinitionMap.put("/manage/**", "authc");
+        filterChainDefinitionMap.put("/manage/**", "admin");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

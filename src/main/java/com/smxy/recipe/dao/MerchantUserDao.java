@@ -3,6 +3,11 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.MerchantUser;
 
+/**
+ * Demo MerchantUserDao
+ * @auther yangyihui
+ * @date 2018/11/17 0017 21:33
+ */
 public interface MerchantUserDao {
 
     /**

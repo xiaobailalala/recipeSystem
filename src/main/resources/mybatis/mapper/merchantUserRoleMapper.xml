@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantUserRoleDao">
+
+    <resultMap id="getMerchantRolePermissionDetail" type="AdminUserRole">
+        <result property="fRid" column="f_rid"/>
+        <association property="adminRole" column="f_rid" select="com.smxy.recipe.dao.AdminRoleDao.getAdminRoleByFid">
+        </association>
+    </resultMap>
+
+    <select id="getMerchantUserRoleByFmid" parameterType="int" resultMap="getMerchantRolePermissionDetail">
+        SELECT *
+        FROM t_merchant_user_role
+        WHERE f_mid = #{fMid};
+    </select>
+
+</mapper>

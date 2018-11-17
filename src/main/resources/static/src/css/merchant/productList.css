@@ -79,10 +79,6 @@ textarea {
     overflow: auto;
 }
 
-div.clear-float{
-    clear: both;
-}
-
 .container {
     background-color: #EBF5DF;
     min-height: 100%;
@@ -90,7 +86,7 @@ div.clear-float{
 
 .header {
     height: 50px;
-    background-color: #FFB20F;
+    background-color: #FFD151;
 }
 
 .logo {
@@ -150,6 +146,7 @@ div.clear-float{
     background-color: #FBFFFE;
     min-width: 100%;
     top: 53px;
+
 }
 
 .mylayui-head-nav .layui-nav-child a:hover {
@@ -162,7 +159,10 @@ div.clear-float{
 
 /* 第二个导航栏样式 */
 .top-nav {
-    background-color: #FFD151;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    background-color: #FFB20F;
 }
 
 .top-nav-middle {
@@ -183,9 +183,13 @@ div.clear-float{
 .mylayui-top-nav .layui-nav-bar {
     background-color: #070707;
 }
+.mylayui-top-nav .layui-nav-child{
+    z-index: 999;
+}
 .mylayui-top-nav .layui-nav-child a:hover {
     background-color: #FFB20F;
 }
+
 .mylayui-div-control .mylayui-form-label {
     width: 100px;
 }
@@ -243,51 +247,31 @@ div.clear-float{
 }
 
 
-
-
-
-
-
-
-.merchant-info{
-    width: 80%;
-    margin: 0 auto;
+/* 商品表样式 */
+.product-div {
+    width: 95%;
+    margin: 80px auto;
 }
 
-.merchant-info .layui-card{
-    margin: 15px 10px;
-    display: inline-block;
-    width: 200px;
-    height: 200px;
-    vertical-align: top;
-}
-.merchant-info .layui-card .info-num{
-    width: 75px;
-    height: 40px;
-    margin: 0px auto;
-    margin-bottom: 15px;
-    line-height: 40px;
+.product-div h3 {
     text-align: center;
-    border-radius: 5px;
 }
-.project-by-mark{
-    width: 80%;
-    margin: 0 auto;
+.layui-table-tips-c:before {
+    position: relative;
+    right: 1px;
+    top: -3px;
 }
-.project-by-mark .layui-card{
-    height: 360px;
-}
-.project-by-mark .layui-card .layui-card-img img{
-    width: 100%;
-}
-.project-by-mark .layui-card .layui-card-header a:hover{
-    color: #6B0504;
-}
-.info-num span{
-    font-size: 25px;
-    color: #FBFFFE;
-    width: 100%;
-}
+
+/*
+.product-div .layui-table-cell{
+    height:auto;
+    overflow:visible;
+   text-overflow:inherit;
+  white-space:normal;
+ } */
+
+
+
 
 
 

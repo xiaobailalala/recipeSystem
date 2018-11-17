@@ -88,7 +88,7 @@ $(function () {
         });
 
         form.on('submit(login)', function (data) {
-            layer.msg(JSON.stringify(data.field));
+            // layer.msg(JSON.stringify(data.field));
             $.ajax({
                 url: "/merchant/merchantUser/register",
                 type: "POST",

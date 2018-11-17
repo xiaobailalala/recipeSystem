@@ -15,6 +15,7 @@ import com.smxy.recipe.entity.AdminRole;
 import com.smxy.recipe.entity.AdminUser;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.AdminUserService;
+import com.smxy.recipe.service.MerchantUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -32,12 +33,15 @@ public class AdminShiroRealm extends AuthorizingRealm {
     @Autowired
     @Lazy
     private AdminUserService adminUserService;
+    @Autowired
+    @Lazy
+    private MerchantUserService merchantUserService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         adminAuthorizationInfo(principalCollection, authorizationInfo, adminUserService);
-        MerchantShiroRealm.merchantAuthorization(principalCollection, authorizationInfo, adminUserService);
+        MerchantShiroRealm.merchantAuthorization(principalCollection, authorizationInfo,merchantUserService, adminUserService);
         return authorizationInfo;
     }
 

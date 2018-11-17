@@ -42,7 +42,7 @@ spring:
 #    host: ${ServerHostIp}
     host: 192.168.43.126
     password:
-  #    password: devredis.960314
+#    password: devredis.960314
   mail:
     password: fziqpvgpiemvbcdi
     username: 1051973784@qq.com
@@ -68,3 +68,5 @@ server:
     timeout: 3600
 #logging:
 #  level: debug
+
+

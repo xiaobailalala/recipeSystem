@@ -32,11 +32,13 @@ package com.smxy.recipe.realm;
 import com.smxy.recipe.dao.MerchantUserDao;
 import com.smxy.recipe.entity.AdminPermission;
 import com.smxy.recipe.entity.AdminRole;
-import com.smxy.recipe.entity.AdminUser;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.AdminUserService;
 import com.smxy.recipe.service.MerchantUserService;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -59,16 +61,16 @@ public class MerchantShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        merchantAuthorization(principalCollection, authorizationInfo, adminUserService);
+        merchantAuthorization(principalCollection, authorizationInfo, merchantUserService,adminUserService);
         AdminShiroRealm.adminAuthorizationInfo(principalCollection, authorizationInfo, adminUserService);
         return authorizationInfo;
     }
 
-    static void merchantAuthorization(PrincipalCollection principalCollection, SimpleAuthorizationInfo authorizationInfo, AdminUserService adminUserService) {
+    static void merchantAuthorization(PrincipalCollection principalCollection, SimpleAuthorizationInfo authorizationInfo, MerchantUserService merchantUserService,AdminUserService adminUserService) {
         if (principalCollection.getPrimaryPrincipal() instanceof MerchantUser) {
             System.out.println("------MerchantUser");
             MerchantUser merchantUser = (MerchantUser) principalCollection.getPrimaryPrincipal();
-            for (AdminRole adminRole : adminUserService.verifyRole(merchantUser.getFId())) {
+            for (AdminRole adminRole : merchantUserService.verifyRole(merchantUser.getFId())) {
                 authorizationInfo.addRole(adminRole.getFRolename());
                 for (AdminPermission adminPermission : adminUserService.verifyPermission(merchantUser.getFId())) {
                     authorizationInfo.addStringPermission(adminPermission.getFPermissionname());
