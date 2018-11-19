@@ -22,6 +22,8 @@ public final class Collect {
 	private Integer fId;
 	private Integer fUid;
 	private Integer fRid;
+	private Integer fType;
 	private CommonUser commonUser;
 	private Recipe recipe;
+	private Article article;
 }

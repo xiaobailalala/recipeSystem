@@ -17,48 +17,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service("adminPermissionService")
 public class AdminPermissionServiceImpl implements AdminPermissionService {
 
-    @Autowired
     private AdminPermissionDao adminPermissionDao;
+
+    @Autowired
+    public AdminPermissionServiceImpl(AdminPermissionDao adminPermissionDao) {
+        this.adminPermissionDao = adminPermissionDao;
+    }
 
     @Override
     public ResApi<Object> permissionList() {
-        return new ResApi<>(200,"success",adminPermissionDao.getAdminPermissionAll());
+        return ResApi.getSuccess(adminPermissionDao.getAdminPermissionAll());
     }
 
     @Override
-    public ResApi<Object> isName(AdminPermission adminPermission) {
-        ResApi<Object> resApi;
+    public ResApi<String> isName(AdminPermission adminPermission) {
         if (adminPermissionDao.getAdminPermissionByName(adminPermission.getFPermissionname())!=null){
-            resApi=new ResApi<>(501,"该权限代号已存在，请重新提交。","failed");
+            return ResApi.getError(501, "该权限代号已存在，请重新提交。");
         }else{
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
     }
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> saveInfo(AdminPermission adminPermission) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错了。","error");
+    public ResApi<String> saveInfo(AdminPermission adminPermission) {
         if (adminPermissionDao.saveInfo(adminPermission)>0){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> deleteInfo(Integer id) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错了。","error");
+    public ResApi<String> deleteInfo(Integer id) {
         if (adminPermissionDao.deleteInfo(id)>0){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -68,17 +66,16 @@ public class AdminPermissionServiceImpl implements AdminPermissionService {
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> updateInfo(Integer id, AdminPermission adminPermission) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错了。","error");
+    public ResApi<String> updateInfo(Integer id, AdminPermission adminPermission) {
         adminPermission.setFId(id);
         if (!adminPermission.getFPermissionname().equals(adminPermissionDao.getAdminPermissionByFid(adminPermission.getFId()).getFPermissionname())&&
                 adminPermissionDao.getAdminPermissionByName(adminPermission.getFPermissionname())!=null){
-            resApi=new ResApi<>(501,"该权限代号已存在，请重新提交。","failed");
+            return ResApi.getError(501, "该权限代号已存在，请重新提交。");
         }else{
             if (adminPermissionDao.updateInfo(adminPermission)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 }

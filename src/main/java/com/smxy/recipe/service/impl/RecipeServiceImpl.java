@@ -30,28 +30,36 @@ import java.util.stream.Collectors;
 @Service("recipeService")
 public class RecipeServiceImpl implements RecipeService {
 
-    @Autowired
     private TipsDao tipsDao;
-    @Autowired
     private ClassifyOneDao classifyOneDao;
-    @Autowired
     private RecipeClassifyDao recipeClassifyDao;
-    @Autowired
     private RecipeDao recipeDao;
-    @Autowired
     private RecipeTipsDao recipeTipsDao;
-    @Autowired
     private RecipeMaterialDao recipeMaterialDao;
-    @Autowired
     private ProcessDao processDao;
-    @Autowired
     private ClassifyTwoDao classifyTwoDao;
-    @Autowired
     private ClassifyDao classifyDao;
-    @Autowired
     private RabbitTemplate rabbitTemplate;
-    @Autowired
     private MaterialDao materialDao;
+    private CollectDao collectDao;
+
+    @Autowired
+    public RecipeServiceImpl(TipsDao tipsDao, ClassifyOneDao classifyOneDao, RecipeClassifyDao recipeClassifyDao, RecipeDao recipeDao,
+                             RecipeTipsDao recipeTipsDao, RecipeMaterialDao recipeMaterialDao,ProcessDao processDao, ClassifyTwoDao classifyTwoDao,
+                             ClassifyDao classifyDao, RabbitTemplate rabbitTemplate, MaterialDao materialDao, CollectDao collectDao) {
+        this.tipsDao = tipsDao;
+        this.classifyOneDao = classifyOneDao;
+        this.recipeClassifyDao = recipeClassifyDao;
+        this.recipeDao = recipeDao;
+        this.recipeTipsDao = recipeTipsDao;
+        this.recipeMaterialDao = recipeMaterialDao;
+        this.processDao = processDao;
+        this.classifyTwoDao = classifyTwoDao;
+        this.classifyDao = classifyDao;
+        this.rabbitTemplate = rabbitTemplate;
+        this.materialDao = materialDao;
+        this.collectDao = collectDao;
+    }
 
     @Override
     public ResApi<Object> getAddData() {
@@ -64,18 +72,17 @@ public class RecipeServiceImpl implements RecipeService {
         }
         map.put("tips", tipsData);
         map.put("clas", classifyOneDao.getAllInfo());
-        return new ResApi<>(200, "success", map);
+        return ResApi.getSuccess(map);
     }
 
     @Override
-    public ResApi<Object> saveInfo(MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
+    public ResApi<String> saveInfo(MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime) {
         recipe.setFUid(0);
         recipe.setFRelease(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
         recipe.setFCover(ToolsApi.multipartFileUploadFile(file, null));
         int saveRecipe = recipeDao.saveInfo(recipe);
-        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
         if (saveRecipe > 0) {
             for (Integer item : tipArr) {
                 recipeTipsDao.saveInfo(new RecipeTips(recipe.getFId(), item));
@@ -98,25 +105,40 @@ public class RecipeServiceImpl implements RecipeService {
                 }
                 processDao.saveInfo(new Process(recipe.getFId(), stepContent[i], stepTime[i], fileName));
             }
-            resApi = new ResApi<>(200, "success", "success");
+            return ResApi.getSuccess();
         } else {
-            resApi = new ResApi<>(501, "基本信息保存出错，请重新尝试", "failed");
+            return ResApi.getError(501, "基本信息保存出错，请重新尝试");
         }
-        return resApi;
     }
 
     @Override
     public ResApi<Object> getAllInfo() {
-        return new ResApi<>(200, "success", recipeDao.getAllInfoBre());
+        return ResApi.getSuccess(recipeDao.getAllInfoBre());
+    }
+
+    @Override
+    public ResApi<Object> getDetailInfo(Collect collect) {
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("item", recipeDao.getInfoById(collect.getFRid()));
+        if (collect.getFUid().equals(0)) {
+            map.put("isCollect", false);
+        } else {
+            if (collectDao.findByAllBrief(collect).size() != 0) {
+                map.put("isCollect", true);
+            } else {
+                map.put("isCollect", false);
+            }
+        }
+        return ResApi.getSuccess(map);
     }
 
     @Override
     public ResApi<Object> getDetailInfo(Integer id) {
-        return new ResApi<>(200, "success", recipeDao.getInfoById(id));
+        return ResApi.getSuccess(recipeDao.getInfoById(id));
     }
 
     @Override
-    public ResApi<Object> deleteInfo(Integer id) {
+    public ResApi<String> deleteInfo(Integer id) {
         Recipe recipe = recipeDao.getInfoById(id);
         ToolsApi.multipartFileDeleteFile(recipe.getFCover());
         recipe.getProcesses().forEach(item -> {
@@ -133,7 +155,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeTipsDao.deleteInfoByRid(id);
         recipeDao.deleteInfoById(id);
         processDao.deleteInfoByRid(id);
-        return new ResApi<>(200, "success", "success");
+        return ResApi.getSuccess();
     }
 
     @Override
@@ -143,6 +165,7 @@ public class RecipeServiceImpl implements RecipeService {
         List<Tips> tips = tipsDao.getAllInfo();
         List<Tips> tipsData = new ArrayList<>();
         int[] arr = ToolsApi.randomArray(0, tips.size() - 1, 10);
+        assert arr != null;
         for (int item : arr) {
             tipsData.add(tips.get(item));
         }
@@ -174,11 +197,11 @@ public class RecipeServiceImpl implements RecipeService {
         map.put("clas", recipeClassifyLists);
         map.put("materials", recipeMaterialDao.getInfoByRid(recipe.getFId()));
         map.put("processes", processDao.getInfoByRid(recipe.getFId()));
-        return new ResApi<>(200, "success", map);
+        return ResApi.getSuccess(map);
     }
 
     @Override
-    public ResApi<Object> updateInfo(Integer id, MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr,
+    public ResApi<String> updateInfo(Integer id, MultipartFile file, MultipartFile[] processImg, Recipe recipe, Integer[] twoArr,
                                      Integer[] threeArr, Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                      String[] stepContent, String[] stepTime, Integer[] stepPreid, HttpServletRequest request) {
         recipe.setFId(id);
@@ -237,7 +260,7 @@ public class RecipeServiceImpl implements RecipeService {
             processDao.saveInfo(new Process(id, stepContent[i], stepTime[i], fileName));
         }
         recipeDao.updateInfoById(recipe);
-        return new ResApi<>(200, "success", "success");
+        return ResApi.getSuccess();
     }
 
     @Override
@@ -251,47 +274,32 @@ public class RecipeServiceImpl implements RecipeService {
             recipeClassifies.addAll(recipeClassifyDao.getInfoByThreeIdNextForRecipe(twoid));
             recipeClassifies = recipeClassifies.stream().collect(
                     Collectors.collectingAndThen(Collectors.toCollection(
-                            () -> new TreeSet<>(Comparator.comparing(o -> o.getFRid()))), ArrayList::new)
+                            () -> new TreeSet<>(Comparator.comparing(RecipeClassify::getFRid))), ArrayList::new)
             );
         }
-        Collections.sort(recipeClassifies, new Comparator<RecipeClassify>() {
-            @Override
-            public int compare(RecipeClassify o1, RecipeClassify o2) {
-                return o2.getRecipe().getFCount().compareTo(o1.getRecipe().getFCount());
-            }
-        });
+        recipeClassifies.sort((o1, o2) -> o2.getRecipe().getFCount().compareTo(o1.getRecipe().getFCount()));
         map.put("counts", recipeClassifies);
-        Collections.sort(recipeClassifies, new Comparator<RecipeClassify>() {
-            @Override
-            public int compare(RecipeClassify o1, RecipeClassify o2) {
-                return o2.getFId().compareTo(o1.getFId());
-            }
-        });
+        recipeClassifies.sort((o1, o2) -> o2.getFId().compareTo(o1.getFId()));
         map.put("news", recipeClassifies);
-        Collections.sort(recipeClassifies, new Comparator<RecipeClassify>() {
-            @Override
-            public int compare(RecipeClassify o1, RecipeClassify o2) {
-                return o2.getRecipe().getFGood().compareTo(o1.getRecipe().getFGood());
-            }
-        });
+        recipeClassifies.sort((o1, o2) -> o2.getRecipe().getFGood().compareTo(o1.getRecipe().getFGood()));
         map.put("goods", recipeClassifies);
-        return new ResApi<>(200, "success", map);
+        return ResApi.getSuccess(map);
     }
 
     @Override
-    public ResApi<Object> updateRecipeCount(Integer id) {
+    public ResApi<String> updateRecipeCount(Integer id) {
         rabbitTemplate.convertAndSend("recipeSystem.direct", "recipeCountUpload.queue", id);
-        return new ResApi<>(200, "success", "success");
+        return ResApi.getSuccess();
     }
 
     @Override
     public ResApi<Object> uploadProcessCover(MultipartFile multipartFile, String index) {
         String filePath = ToolsApi.multipartFileUploadFile(multipartFile, null);
-        return new ResApi<>(200, "success", filePath);
+        return ResApi.getSuccess(filePath);
     }
 
     @Override
-    public ResApi<Object> uploadRecipeInfo(MultipartFile multipartFile, Recipe recipe, String jsonArr) {
+    public ResApi<String> uploadRecipeInfo(MultipartFile multipartFile, Recipe recipe, String jsonArr) {
         recipe.setFCover(ToolsApi.multipartFileUploadFile(multipartFile, null));
         JSONObject json = JSONObject.parseObject(jsonArr);
         recipeDao.saveInfo(recipe);
@@ -320,7 +328,23 @@ public class RecipeServiceImpl implements RecipeService {
         for (int i = 0; i < processCover.size(); i++) {
             processDao.saveInfo(new Process(recipe.getFId(), processContent.get(i).toString(), processTime.get(i).toString(), processCover.get(i).toString()));
         }
-        return new ResApi<>(200, "success", "success");
+        return ResApi.getSuccess();
+    }
+
+    @Override
+    public ResApi<String> saveRecipeCollection(Collect collect) {
+        if (collectDao.saveInfo(collect) > 0) {
+            return ResApi.getSuccess();
+        }
+        return ResApi.getError();
+    }
+
+    @Override
+    public ResApi<String> deleteRecipeCollect(Collect collect) {
+        if (collectDao.deleteInfo(collect) > 0) {
+            return ResApi.getSuccess();
+        }
+        return ResApi.getError();
     }
 
 }

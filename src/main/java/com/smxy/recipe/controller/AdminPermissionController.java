@@ -40,21 +40,21 @@ public class AdminPermissionController {
     @RequiresPermissions("adminPermission:select")
     @ResponseBody
     @PostMapping("/isName")
-    public ResApi<Object> isName(AdminPermission adminPermission){
+    public ResApi<String> isName(AdminPermission adminPermission){
         return adminPermissionService.isName(adminPermission);
     }
 
     @RequiresPermissions("adminPermission:insert")
     @ResponseBody
     @PostMapping("/perm")
-    public ResApi<Object> saveInfo(AdminPermission adminPermission){
+    public ResApi<String> saveInfo(AdminPermission adminPermission){
         return adminPermissionService.saveInfo(adminPermission);
     }
 
     @RequiresPermissions("adminPermission:delete")
     @ResponseBody
     @DeleteMapping("/perm/{id}")
-    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id){
+    public ResApi<String> deleteInfo(@PathVariable("id") Integer id){
         return adminPermissionService.deleteInfo(id);
     }
 
@@ -68,7 +68,7 @@ public class AdminPermissionController {
     @RequiresPermissions("adminPermission:update")
     @ResponseBody
     @PutMapping("/perm/{id}")
-    public ResApi<Object> updateInfo(@PathVariable("id") Integer id, AdminPermission adminPermission){
+    public ResApi<String> updateInfo(@PathVariable("id") Integer id, AdminPermission adminPermission){
         return adminPermissionService.updateInfo(id,adminPermission);
     }
 

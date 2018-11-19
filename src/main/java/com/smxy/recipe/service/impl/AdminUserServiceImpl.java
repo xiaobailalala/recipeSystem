@@ -21,7 +21,6 @@ import com.smxy.recipe.utils.ToolsApi;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -35,33 +34,33 @@ import java.util.*;
 
 @Service("adminUserService")
 public class AdminUserServiceImpl implements AdminUserService {
-    @Autowired
+
     private AdminUserDao adminUserDao;
-    @Autowired
-    private JavaMailSenderImpl mailSender;
-    @Autowired
     private ToolsApi toolsApi;
-    @Autowired
     private AdminRoleDao adminRoleDao;
-    @Autowired
     private AdminUserRoleDao adminUserRoleDao;
+
+    @Autowired
+    public AdminUserServiceImpl(AdminUserDao adminUserDao, ToolsApi toolsApi, AdminRoleDao adminRoleDao, AdminUserRoleDao adminUserRoleDao) {
+        this.adminUserDao = adminUserDao;
+        this.toolsApi = toolsApi;
+        this.adminRoleDao = adminRoleDao;
+        this.adminUserRoleDao = adminUserRoleDao;
+    }
 
     private static final String ADMIN_LOGIN_TYPE = LoginType.ADMIN.toString();
 
     @Override
     public ResApi<String> isAdminUser(String fAccount) {
-        ResApi<String> resApi;
         if (adminUserDao.isAdminUser(fAccount)!=null){
-            resApi=new ResApi<>(501,"该账号已存在。","failed");
+            return ResApi.getError(501, "该账号已存在。");
         }else{
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
     }
 
     @Override
     public ResApi<String> userLogin(AdminUser adminUser, HttpServletRequest request,boolean rememberMe) {
-        ResApi<String> resApi=new ResApi<>(500,"系统出错。","error");
         Subject currentUser = SecurityUtils.getSubject();
         try {
             if (!currentUser.isAuthenticated()){
@@ -71,31 +70,26 @@ public class AdminUserServiceImpl implements AdminUserService {
                     currentUser.login(token);
                     adminUser= (AdminUser) currentUser.getPrincipal();
                     SecurityUtils.getSubject().getSession().setAttribute("aduser", adminUser);
-//                    request.getSession().setAttribute("aduser",adminUser);
                 }catch (UnknownAccountException ae){
-                    resApi=new ResApi<>(501,"该管理员账号不存在。","failed");
-                    return resApi;
+                    return ResApi.getError(501,"该管理员账号不存在。");
                 }catch (IncorrectCredentialsException ice){
-                    resApi=new ResApi<>(502,"您输入的密码不正确。","failed");
-                    return resApi;
+                    return ResApi.getError(502, "您输入的密码不正确。");
                 }
             }
-            return new ResApi<>(200,"success。","success");
+            return ResApi.getSuccess();
         }catch (Exception e){
-            return resApi;
+            return ResApi.getError();
         }
     }
 
     @Override
     public ResApi<Object> userList() {
-        List<AdminUser> adminUsers=adminUserDao.getAdminUserAll();
-        ResApi<Object> resApi=new ResApi<>(200,"success",adminUsers);
-        return resApi;
+        return ResApi.getSuccess(adminUserDao.getAdminUserAll());
     }
 
     @Override
     public ResApi<Object> userById(Integer id) {
-        return new ResApi<>(200,"success",adminUserDao.getAdminUserByFid(id));
+        return ResApi.getSuccess(adminUserDao.getAdminUserByFid(id));
     }
 
     @Override

@@ -41,19 +41,23 @@ import org.springframework.web.multipart.MultipartFile;
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 
-    @Autowired
     private ArticleDao articleDao;
 
+    @Autowired
+    public ArticleServiceImpl(ArticleDao articleDao) {
+        this.articleDao = articleDao;
+    }
+
     @Override
-    public ResApi<Object> saveInfo(Article article) {
+    public ResApi<String> saveInfo(Article article) {
         article.setFContent(ToolsApi.base64Encode(article.getFContent()));
         articleDao.saveInfo(article);
-        return new ResApi<>(200, "success", "success");
+        return ResApi.getSuccess();
     }
 
     @Override
     public ResApi<Object> uploadCover(MultipartFile multipartFile) {
         String filePath = ToolsApi.multipartFileUploadFile(multipartFile, null);
-        return new ResApi<>(200, "success", filePath);
+        return ResApi.getSuccess(filePath);
     }
 }

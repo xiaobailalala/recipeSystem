@@ -30,6 +30,7 @@
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.entity.Collect;
 import com.smxy.recipe.entity.Recipe;
 import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
@@ -49,12 +50,12 @@ public class RecipeMobController {
     }
 
     @GetMapping("/getRecipeById")
-    public ResApi<Object> getRecipeById(Integer id){
-        return recipeService.getDetailInfo(id);
+    public ResApi<Object> getRecipeById(Collect collect){
+        return recipeService.getDetailInfo(collect);
     }
 
     @GetMapping("/updateRecipeCount")
-    public ResApi<Object> updateRecipeCount(Integer id){
+    public ResApi<String> updateRecipeCount(Integer id){
         return recipeService.updateRecipeCount(id);
     }
 
@@ -64,8 +65,18 @@ public class RecipeMobController {
     }
 
     @PostMapping("/uploadRecipeInfo")
-    public ResApi<Object> uploadRecipeInfo(@RequestParam("cover")MultipartFile multipartFile, Recipe recipe, String jsonArr) {
+    public ResApi<String> uploadRecipeInfo(@RequestParam("cover")MultipartFile multipartFile, Recipe recipe, String jsonArr) {
         return recipeService.uploadRecipeInfo(multipartFile, recipe, jsonArr);
+    }
+
+    @GetMapping("/collectRecipe")
+    public ResApi<String> collectRecipe(Collect collect){
+        return recipeService.saveRecipeCollection(collect);
+    }
+
+    @DeleteMapping("/collectRecipe")
+    public ResApi<String> deleteRecipeCollect(Collect collect){
+        return recipeService.deleteRecipeCollect(collect);
     }
 
 }

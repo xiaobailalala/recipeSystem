@@ -16,13 +16,13 @@ public interface AiMarkService {
 
     ResApi<Object> getAllInfo();
 
-    ResApi<Object> saveInfo(AiMark aiMark);
+    ResApi<String> saveInfo(AiMark aiMark);
 
-    ResApi<Object> deleteInfo(Integer id);
+    ResApi<String> deleteInfo(Integer id);
 
     AiMark getInfoById(Integer id);
 
-    ResApi<Object> updateInfo(Integer id, AiMark aiMark);
+    ResApi<String> updateInfo(Integer id, AiMark aiMark);
 
     ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark);
 }

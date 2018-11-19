@@ -44,14 +44,14 @@ public class AdminRoleController {
     @RequiresPermissions("adminRole:select")
     @ResponseBody
     @PostMapping("/isName")
-    public ResApi<Object> isNmae(AdminRole adminRole) {
+    public ResApi<String> isNmae(AdminRole adminRole) {
         return adminRoleService.isName(adminRole);
     }
 
     @RequiresPermissions("adminRole:insert")
     @ResponseBody
     @PostMapping("/role")
-    public ResApi<Object> saveRole(AdminRole adminRole) {
+    public ResApi<String> saveRole(AdminRole adminRole) {
         return adminRoleService.saveRole(adminRole);
     }
 
@@ -65,14 +65,14 @@ public class AdminRoleController {
     @RequiresPermissions("adminRole:update")
     @ResponseBody
     @PutMapping("/role/{id}")
-    public ResApi<Object> updateInfo(@PathVariable("id") Integer id, AdminRole adminRole) {
+    public ResApi<String> updateInfo(@PathVariable("id") Integer id, AdminRole adminRole) {
         return adminRoleService.updateRole(id, adminRole);
     }
 
     @RequiresPermissions("adminRole:delete")
     @ResponseBody
     @DeleteMapping("/role/{id}")
-    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id) {
+    public ResApi<String> deleteInfo(@PathVariable("id") Integer id) {
         return adminRoleService.deleteRole(id);
     }
 
@@ -93,14 +93,14 @@ public class AdminRoleController {
     @RequiresPermissions("adminRole:delete")
     @ResponseBody
     @PostMapping("/role/perm/delete")
-    public ResApi<Object> permDelete(@RequestParam("includeArr") Integer[] includeArr, @RequestParam("rid") Integer rid) {
+    public ResApi<String> permDelete(@RequestParam("includeArr") Integer[] includeArr, @RequestParam("rid") Integer rid) {
         return adminRoleService.deletePerm(includeArr, rid);
     }
 
     @RequiresPermissions("adminRole:insert")
     @ResponseBody
     @PostMapping("/role/perm/add")
-    public ResApi<Object> permAdd(@RequestParam("excludeArr") Integer[] excludeArr, @RequestParam("rid") Integer rid) {
+    public ResApi<String> permAdd(@RequestParam("excludeArr") Integer[] excludeArr, @RequestParam("rid") Integer rid) {
         return adminRoleService.addPerm(excludeArr, rid);
     }
 

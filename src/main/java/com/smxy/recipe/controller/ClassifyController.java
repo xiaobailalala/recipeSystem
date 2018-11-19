@@ -41,14 +41,14 @@ public class ClassifyController {
     @RequiresPermissions("recipeClassify:insert")
     @ResponseBody
     @PostMapping("/info")
-    public ResApi<Object> saveInfo(Classify classify) {
+    public ResApi<String> saveInfo(Classify classify) {
         return classifyService.saveInfo(classify);
     }
 
     @RequiresPermissions("recipeClassify:delete")
     @ResponseBody
     @DeleteMapping("/info/{id}")
-    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id) {
+    public ResApi<String> deleteInfo(@PathVariable("id") Integer id) {
         return classifyService.deleteInfo(id);
     }
 
@@ -62,7 +62,7 @@ public class ClassifyController {
     @RequiresPermissions("recipeClassify:update")
     @ResponseBody
     @PutMapping("/info/{id}")
-    public ResApi<Object> updateInfo(@PathVariable("id") Integer id, Classify classify) {
+    public ResApi<String> updateInfo(@PathVariable("id") Integer id, Classify classify) {
         return classifyService.updateInfo(id, classify);
     }
 

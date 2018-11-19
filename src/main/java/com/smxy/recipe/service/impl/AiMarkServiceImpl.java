@@ -44,35 +44,37 @@ import java.util.List;
 @Service("aiMarkService")
 public class AiMarkServiceImpl implements AiMarkService {
 
-    @Autowired
     private AiMarkDao aiMarkDao;
+
+    @Autowired
+    public AiMarkServiceImpl(AiMarkDao aiMarkDao) {
+        this.aiMarkDao = aiMarkDao;
+    }
 
     @Override
     public ResApi<Object> getAllInfo() {
-        return new ResApi<>(200, "success", aiMarkDao.getAllInfo());
+        return ResApi.getSuccess(aiMarkDao.getAllInfo());
     }
 
     @Override
-    public ResApi<Object> saveInfo(AiMark aiMark) {
-        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
+    public ResApi<String> saveInfo(AiMark aiMark) {
         if (aiMarkDao.getInfoByMark(aiMark) != null) {
-            resApi = new ResApi<>(501, "该代号已存在，请勿重复添加", "failed");
+            return ResApi.getError(501, "该代号已存在，请勿重复添加");
         } else {
             aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
             if (aiMarkDao.saveInfo(aiMark)>0){
-                resApi = new ResApi<>(200, "success", "success");
+                return ResApi.getSuccess();
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
-    public ResApi<Object> deleteInfo(Integer id) {
-        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "failed");
+    public ResApi<String> deleteInfo(Integer id) {
         if (aiMarkDao.deleteInfo(id)>0){
-            resApi = new ResApi<>(200, "success", "success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -81,15 +83,14 @@ public class AiMarkServiceImpl implements AiMarkService {
     }
 
     @Override
-    public ResApi<Object> updateInfo(Integer id, AiMark aiMark) {
+    public ResApi<String> updateInfo(Integer id, AiMark aiMark) {
         aiMark.setFId(id);
-        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
         ToolsApi.multipartFileDeleteFile(aiMark.getFVoice());
         aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
         if (aiMarkDao.updateInfoById(aiMark)>0){
-            resApi = new ResApi<>(200, "success", "success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -104,6 +105,6 @@ public class AiMarkServiceImpl implements AiMarkService {
         strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
         aiMark.setFMark(distanceMark);
         strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
-        return new ResApi<>(200, "success", strings);
+        return ResApi.getSuccess(strings);
     }
 }

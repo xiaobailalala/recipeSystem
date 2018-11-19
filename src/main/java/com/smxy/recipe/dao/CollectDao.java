@@ -23,18 +23,20 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/11/14 16:14
+ * Build File @date: 2018/11/19 8:53
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.service;
+package com.smxy.recipe.dao;
 
-import com.smxy.recipe.entity.Article;
-import com.smxy.recipe.utils.ResApi;
-import org.springframework.web.multipart.MultipartFile;
+import com.smxy.recipe.entity.Collect;
 
-public interface ArticleService {
-    ResApi<String> saveInfo(Article article);
+import java.util.List;
 
-    ResApi<Object> uploadCover(MultipartFile multipartFile);
+public interface CollectDao {
+    Integer saveInfo(Collect collect);
+
+    Integer deleteInfo(Collect collect);
+
+    List<Collect> findByAllBrief(Collect collect);
 }

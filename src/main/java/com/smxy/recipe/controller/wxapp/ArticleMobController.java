@@ -45,7 +45,7 @@ public class ArticleMobController {
     private ArticleService articleService;
 
     @PostMapping("/saveInfo")
-    public ResApi<Object> saveInfo(Article article) {
+    public ResApi<String> saveInfo(Article article) {
         return articleService.saveInfo(article);
     }
 
