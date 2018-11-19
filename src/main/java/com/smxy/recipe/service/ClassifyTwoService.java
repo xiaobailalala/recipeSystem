@@ -22,13 +22,13 @@ public interface ClassifyTwoService {
 
     List<ClassifyOne> getClassifyOne();
 
-    ResApi<Object> saveInfo(MultipartFile multipartFile, ClassifyTwo classifyTwo);
+    ResApi<String> saveInfo(MultipartFile multipartFile, ClassifyTwo classifyTwo);
 
-    ResApi<Object> deleteInfo(Integer id);
+    ResApi<String> deleteInfo(Integer id);
 
     ResApi<Object> getInfoOne(Integer id);
 
-    ResApi<Object> updateInfo(MultipartFile multipartFile, Integer id, ClassifyTwo classifyTwo);
+    ResApi<String> updateInfo(MultipartFile multipartFile, Integer id, ClassifyTwo classifyTwo);
 
     ResApi<Object> getInfoByOid(Integer oid);
 

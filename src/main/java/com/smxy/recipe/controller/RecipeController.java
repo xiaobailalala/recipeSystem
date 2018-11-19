@@ -44,7 +44,7 @@ public class RecipeController {
     @RequiresPermissions("recipe:insert")
     @PostMapping("/info")
     @ResponseBody
-    public ResApi<Object> saveInfo(@RequestParam("file") MultipartFile file, @RequestParam("processImg") MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
+    public ResApi<String> saveInfo(@RequestParam("file") MultipartFile file, @RequestParam("processImg") MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime) {
         return recipeService.saveInfo(file, processImg, recipe, twoArr, threeArr, tipArr, materialNumber, materialId, materialName, stepContent, stepTime);
@@ -67,7 +67,7 @@ public class RecipeController {
     @RequiresPermissions("recipe:delete")
     @DeleteMapping("/info/{id}")
     @ResponseBody
-    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id) {
+    public ResApi<String> deleteInfo(@PathVariable("id") Integer id) {
         return recipeService.deleteInfo(id);
     }
 
@@ -88,7 +88,7 @@ public class RecipeController {
     @RequiresPermissions("recipe:update")
     @PutMapping("/info/{id}")
     @ResponseBody
-    public ResApi<Object> updateInfo(@PathVariable("id") Integer id, @RequestParam(value = "file", required = false) MultipartFile file,
+    public ResApi<String> updateInfo(@PathVariable("id") Integer id, @RequestParam(value = "file", required = false) MultipartFile file,
                                      @RequestParam(value = "processImg", required = false) MultipartFile[] processImg, Recipe recipe, Integer[] twoArr, Integer[] threeArr,
                                      Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                      String[] stepContent, String[] stepTime, Integer[] stepPreid, HttpServletRequest request) {

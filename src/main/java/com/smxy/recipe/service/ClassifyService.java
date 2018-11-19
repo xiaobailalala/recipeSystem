@@ -12,21 +12,19 @@ package com.smxy.recipe.service;
 import com.smxy.recipe.entity.Classify;
 import com.smxy.recipe.utils.ResApi;
 
-import java.util.List;
-
 public interface ClassifyService {
 
     ResApi<Object> getAllInfo();
 
     ResApi<Object> getClaOneAllInfo();
 
-    ResApi<Object> saveInfo(Classify classify);
+    ResApi<String> saveInfo(Classify classify);
 
-    ResApi<Object> deleteInfo(Integer id);
+    ResApi<String> deleteInfo(Integer id);
 
     ResApi<Object> getInfoById(Integer id);
 
-    ResApi<Object> updateInfo(Integer id, Classify classify);
+    ResApi<String> updateInfo(Integer id, Classify classify);
 
     ResApi<Object> getInfoByTid(Integer id);
 }

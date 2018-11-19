@@ -21,37 +21,39 @@ import org.springframework.stereotype.Service;
 @Service("classifyOneService")
 public class ClassifyOneServiceImpl implements ClassifyOneService {
 
-    @Autowired
     private ClassifyOneDao classifyOneDao;
+
+    @Autowired
+    public ClassifyOneServiceImpl(ClassifyOneDao classifyOneDao) {
+        this.classifyOneDao = classifyOneDao;
+    }
 
     @Cacheable(value = "recipeAllClassify")
     @Override
     public ResApi<Object> getAllInfo() {
-        return new ResApi<>(200,"success",classifyOneDao.getAllInfo());
+        return ResApi.getSuccess(classifyOneDao.getAllInfo());
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> saveInfo(String name) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> saveInfo(String name) {
         if (classifyOneDao.getInfoByName(name)!=null){
-            resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
+            return ResApi.getError(501,"该分类已存在，请勿重复添加");
         }else{
             if (classifyOneDao.saveInfo(name)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> deleteInfo(Integer id) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> deleteInfo(Integer id) {
         if (classifyOneDao.deleteInfoById(id)>0){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -61,15 +63,14 @@ public class ClassifyOneServiceImpl implements ClassifyOneService {
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> updateInfo(Classify classify) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> updateInfo(Classify classify) {
         if (classifyOneDao.getInfoByName(classify.getFName())!=null){
-            resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
+            return ResApi.getError(501,"该分类已存在，请勿重复添加");
         }else{
             if (classifyOneDao.updateInfoById(classify)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 }

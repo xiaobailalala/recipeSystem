@@ -42,14 +42,14 @@ public class ClassifyTwoController {
     @RequiresPermissions("recipeClassify:insert")
     @ResponseBody
     @PostMapping("/info")
-    public ResApi<Object> saveInfo(@RequestParam("file") MultipartFile multipartFile, ClassifyTwo classifyTwo) {
+    public ResApi<String> saveInfo(@RequestParam("file") MultipartFile multipartFile, ClassifyTwo classifyTwo) {
         return classifyTwoService.saveInfo(multipartFile, classifyTwo);
     }
 
     @RequiresPermissions("recipeClassify:delete")
     @ResponseBody
     @DeleteMapping("/info/{id}")
-    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id) {
+    public ResApi<String> deleteInfo(@PathVariable("id") Integer id) {
         return classifyTwoService.deleteInfo(id);
     }
 
@@ -63,7 +63,7 @@ public class ClassifyTwoController {
     @RequiresPermissions("recipeClassify:update")
     @ResponseBody
     @PutMapping("/info/{id}")
-    public ResApi<Object> updateInfo(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
+    public ResApi<String> updateInfo(@RequestParam(value = "file", required = false) MultipartFile multipartFile,
                                      @PathVariable("id") Integer id, ClassifyTwo classifyTwo) {
         return classifyTwoService.updateInfo(multipartFile, id, classifyTwo);
     }

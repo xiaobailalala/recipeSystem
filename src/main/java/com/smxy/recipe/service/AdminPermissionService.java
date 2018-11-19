@@ -12,20 +12,18 @@ package com.smxy.recipe.service;
 import com.smxy.recipe.entity.AdminPermission;
 import com.smxy.recipe.utils.ResApi;
 
-import java.util.List;
-
 public interface AdminPermissionService {
 
     ResApi<Object> permissionList();
 
-    ResApi<Object> isName(AdminPermission adminPermission);
+    ResApi<String> isName(AdminPermission adminPermission);
 
-    ResApi<Object> saveInfo(AdminPermission adminPermission);
+    ResApi<String> saveInfo(AdminPermission adminPermission);
 
-    ResApi<Object> deleteInfo(Integer id);
+    ResApi<String> deleteInfo(Integer id);
 
     AdminPermission getOneByFid(Integer id);
 
-    ResApi<Object> updateInfo(Integer id,AdminPermission adminPermission);
+    ResApi<String> updateInfo(Integer id, AdminPermission adminPermission);
 
 }

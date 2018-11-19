@@ -21,20 +21,37 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResApi<T> implements Serializable {
-	/**
-	 * 状态码
-	 * int id
-	 */
 	private int code;
-	/**
-	 * 信息
-	 * String msg
-	 */
 	private String msg;
-	/**
-	 * 数据（泛型）
-	 * T data
-	 */
 	private T data;
+
+	public ResApi(T data) {
+		this.data = data;
+	}
+
+	public ResApi(int code, String msg) {
+		this.code = code;
+		this.msg = msg;
+	}
+
+	public static ResApi<String> getSuccess(){
+		return new ResApi<>(200, "success", "success");
+	}
+
+	public static ResApi<Object> getSuccess(Object o){
+		return new ResApi<>(200, "success", o);
+	}
+
+	public static ResApi<Object> getData(Object o){
+		return new ResApi<>(o);
+	}
+
+	public static ResApi<String> getError(int code, String msg){
+		return new ResApi<>(code, msg);
+	}
+
+	public static ResApi<String> getError(){
+		return new ResApi<>(500, "系统出错", "failed");
+	}
 }
 

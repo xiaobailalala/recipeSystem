@@ -26,46 +26,48 @@ import java.util.Map;
 @Service("classifyService")
 public class ClassifyServiceImpl implements ClassifyService {
 
-    @Autowired
     private ClassifyDao classifyDao;
-    @Autowired
     private ClassifyOneDao classifyOneDao;
-    @Autowired
     private ClassifyTwoDao classifyTwoDao;
+
+    @Autowired
+    public ClassifyServiceImpl(ClassifyDao classifyDao, ClassifyOneDao classifyOneDao, ClassifyTwoDao classifyTwoDao) {
+        this.classifyDao = classifyDao;
+        this.classifyOneDao = classifyOneDao;
+        this.classifyTwoDao = classifyTwoDao;
+    }
 
     @Cacheable(value = "recipeClassify")
     @Override
     public ResApi<Object> getAllInfo() {
-        return new ResApi<>(200,"success",classifyDao.getAllInfo());
+        return ResApi.getSuccess(classifyDao.getAllInfo());
     }
 
     @Override
     public ResApi<Object> getClaOneAllInfo() {
-        return new ResApi<>(200,"success",classifyOneDao.getAllInfo());
+        return ResApi.getSuccess(classifyOneDao.getAllInfo());
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> saveInfo(Classify classify) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> saveInfo(Classify classify) {
         if (classifyDao.getInfoByNameAndTid(classify)==null){
             if (classifyDao.saveInfo(classify)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }else{
-            resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
+            return ResApi.getError(501,"该分类已存在，请勿重复添加");
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> deleteInfo(Integer id) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> deleteInfo(Integer id) {
         if (classifyDao.deleteInfo(id)>0){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
@@ -75,26 +77,25 @@ public class ClassifyServiceImpl implements ClassifyService {
         map.put("item",classifyDao.getInfoById(id));
         map.put("one",classifyOneDao.getAllInfo());
         map.put("two",classifyTwoDao.getInfoAll());
-        return new ResApi<>(200,"success",map);
+        return ResApi.getSuccess(map);
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> updateInfo(Integer id, Classify classify) {
+    public ResApi<String> updateInfo(Integer id, Classify classify) {
         classify.setFId(id);
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
         if (classifyDao.getInfoByNameAndTid(classify)==null){
             if (classifyDao.updateInfo(classify)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }else{
-            resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
+            return ResApi.getError(501,"该分类已存在，请勿重复添加");
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
     public ResApi<Object> getInfoByTid(Integer id) {
-        return new ResApi<>(200,"success",classifyDao.getInfoByTid(id));
+        return ResApi.getSuccess(classifyDao.getInfoByTid(id));
     }
 }

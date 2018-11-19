@@ -16,11 +16,11 @@ public interface ClassifyOneService {
 
     ResApi<Object> getAllInfo();
 
-    ResApi<Object> saveInfo(String name);
+    ResApi<String> saveInfo(String name);
 
-    ResApi<Object> deleteInfo(Integer id);
+    ResApi<String> deleteInfo(Integer id);
 
     Classify getInfoById(Integer id);
 
-    ResApi<Object> updateInfo(Classify classify);
+    ResApi<String> updateInfo(Classify classify);
 }

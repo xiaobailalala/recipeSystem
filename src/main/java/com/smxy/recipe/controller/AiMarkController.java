@@ -60,14 +60,14 @@ public class AiMarkController {
     @RequiresPermissions("aiMark:insert")
     @PostMapping("/info")
     @ResponseBody
-    public ResApi<Object> saveInfo(AiMark aiMark) {
+    public ResApi<String> saveInfo(AiMark aiMark) {
         return aiMarkService.saveInfo(aiMark);
     }
 
     @RequiresPermissions("aiMark:delete")
     @DeleteMapping("/info/{id}")
     @ResponseBody
-    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id) {
+    public ResApi<String> deleteInfo(@PathVariable("id") Integer id) {
         return aiMarkService.deleteInfo(id);
     }
 
@@ -81,7 +81,7 @@ public class AiMarkController {
     @RequiresPermissions("aiMark:update")
     @PutMapping("/info/{id}")
     @ResponseBody
-    public ResApi<Object> updateInfo(@PathVariable("id") Integer id, AiMark aiMark) {
+    public ResApi<String> updateInfo(@PathVariable("id") Integer id, AiMark aiMark) {
         return aiMarkService.updateInfo(id, aiMark);
     }
 

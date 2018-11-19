@@ -27,13 +27,19 @@ import java.util.Map;
 
 @Service("classifyTwoService")
 public class ClassifyTwoServiceImpl implements ClassifyTwoService {
-    @Autowired
+
     private ClassifyTwoDao classifyTwoDao;
-    @Autowired
     private ClassifyOneDao classifyOneDao;
+
+    @Autowired
+    public ClassifyTwoServiceImpl(ClassifyTwoDao classifyTwoDao, ClassifyOneDao classifyOneDao) {
+        this.classifyTwoDao = classifyTwoDao;
+        this.classifyOneDao = classifyOneDao;
+    }
+
     @Override
     public ResApi<Object> getInfoAll() {
-        return new ResApi<>(200,"success",classifyTwoDao.getInfoAll());
+        return ResApi.getSuccess(classifyTwoDao.getInfoAll());
     }
 
     @Override
@@ -43,32 +49,30 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> saveInfo(MultipartFile multipartFile, ClassifyTwo classifyTwo) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> saveInfo(MultipartFile multipartFile, ClassifyTwo classifyTwo) {
         if (classifyTwoDao.getInfoByNameAndOid(classifyTwo)!=null){
-            resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
+            return ResApi.getError(501,"该分类已存在，请勿重复添加");
         }else{
             if (ToolsApi.imgLimit(ToolsApi.suffixName(multipartFile.getOriginalFilename()))){
                 String name = ToolsApi.multipartFileUploadFile(multipartFile, null);
                 classifyTwo.setFCover(name);
                 if (classifyTwoDao.saveInfo(classifyTwo)>0){
-                    resApi=new ResApi<>(200,"success","success");
+                    return ResApi.getSuccess();
                 }
             }else{
-                resApi=new ResApi<>(502,"上传的封面格式不符合要求。","failed");
+                ResApi.getError(502,"上传的封面格式不符合要求。");
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> deleteInfo(Integer id) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> deleteInfo(Integer id) {
         if (classifyTwoDao.deleteInfo(id)>0){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -76,17 +80,16 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
         Map<String, Object> map = new HashMap<>(8);
         map.put("item",classifyTwoDao.getInfoById(id));
         map.put("one",classifyOneDao.getAllInfo());
-        return new ResApi<>(200,"success",map);
+        return ResApi.getSuccess(map);
     }
 
     @CacheEvict(value = {"recipeClassify","recipeAllClassify"}, allEntries = true)
     @Override
-    public ResApi<Object> updateInfo(MultipartFile multipartFile, Integer id, ClassifyTwo classifyTwo) {
+    public ResApi<String> updateInfo(MultipartFile multipartFile, Integer id, ClassifyTwo classifyTwo) {
         classifyTwo.setFId(id);
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错。","error");
         if (multipartFile==null||multipartFile.getSize()==0){
             if (classifyTwoDao.updateInfo(classifyTwo)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }else{
             ToolsApi.multipartFileDeleteFile(classifyTwo.getFCover());
@@ -94,17 +97,17 @@ public class ClassifyTwoServiceImpl implements ClassifyTwoService {
                 String name = ToolsApi.multipartFileUploadFile(multipartFile, null);
                 classifyTwo.setFCover(name);
                 if (classifyTwoDao.updateInfo(classifyTwo)>0){
-                    resApi=new ResApi<>(200,"success","success");
+                    return ResApi.getSuccess();
                 }
             }else{
-                resApi=new ResApi<>(502,"上传的头像格式不符合要求。","failed");
+                ResApi.getError(502,"上传的头像格式不符合要求。");
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
     public ResApi<Object> getInfoByOid(Integer oid) {
-        return new ResApi<>(200,"success",classifyTwoDao.getInfoByOid(oid));
+        return ResApi.getSuccess(classifyTwoDao.getInfoByOid(oid));
     }
 }

@@ -12,12 +12,10 @@ package com.smxy.recipe.service.impl;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.AdminPermission;
 import com.smxy.recipe.entity.AdminRole;
-import com.smxy.recipe.entity.AdminUserRole;
 import com.smxy.recipe.service.AdminRoleService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,37 +25,39 @@ import java.util.Map;
 
 @Service("adminRoleService")
 public class AdminRoleServiceImpl implements AdminRoleService {
-    @Autowired
+
     private AdminRoleDao adminRoleDao;
-    @Autowired
     private AdminRolePermissionDao adminRolePermissionDao;
-    @Autowired
     private AdminPermissionDao adminPermissionDao;
 
-    @Override
-    public ResApi<Object> roleList() {
-        return new ResApi<>(200,"success",adminRoleDao.getInfoAll());
+    @Autowired
+    public AdminRoleServiceImpl(AdminRoleDao adminRoleDao, AdminRolePermissionDao adminRolePermissionDao, AdminPermissionDao adminPermissionDao) {
+        this.adminRoleDao = adminRoleDao;
+        this.adminRolePermissionDao = adminRolePermissionDao;
+        this.adminPermissionDao = adminPermissionDao;
     }
 
     @Override
-    public ResApi<Object> isName(AdminRole adminRole) {
-        ResApi<Object> resApi;
+    public ResApi<Object> roleList() {
+        return ResApi.getSuccess(adminRoleDao.getInfoAll());
+    }
+
+    @Override
+    public ResApi<String> isName(AdminRole adminRole) {
         if (adminRoleDao.getAdminRoleByName(adminRole)!=null){
-            resApi=new ResApi<>(501,"该角色已添加，请勿重复添加。","failed");
+            return ResApi.getError(501, "该角色已添加，请勿重复添加。");
         }else{
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
     }
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> saveRole(AdminRole adminRole) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错。","error");
+    public ResApi<String> saveRole(AdminRole adminRole) {
         if (adminRoleDao.saveInfo(adminRole)>0){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -67,96 +67,88 @@ public class AdminRoleServiceImpl implements AdminRoleService {
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> updateRole(Integer id, AdminRole adminRole) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错了。","error");
+    public ResApi<String> updateRole(Integer id, AdminRole adminRole) {
         adminRole.setFId(id);
         if (!adminRole.getFRolename().equals(adminRoleDao.getAdminRoleByFid(adminRole.getFId()).getFRolename())&&
                 adminRoleDao.getAdminRoleByName(adminRole)!=null){
-            resApi=new ResApi<>(501,"该权限代号已存在，请重新提交。","failed");
+            return ResApi.getError(501, "该权限代号已存在，请重新提交。");
         }else{
             if (adminRoleDao.updateInfo(adminRole)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> deleteRole(Integer id) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错。","error");
+    public ResApi<String> deleteRole(Integer id) {
         if (adminRolePermissionDao.deleteInfoByRid(id)>0&&adminRoleDao.deleteInfo(id)>0){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
     public ResApi<Object> toPerm(Integer id) {
-        ResApi<Object> resApi=new ResApi<>();
         Map<String, Object> map=new HashMap<>(8);
         AdminRole include=adminRoleDao.getAdminRoleByFid(id);
         List<AdminPermission> adminPermissions=adminPermissionDao.getAdminPermissionAll();
         List<AdminPermission> exclude=new ArrayList<>();
-        for (int i=0;i<adminPermissions.size();i++){
-            int flag=0;
-            for (int j=0;j<include.getAdminRolePermissions().size();j++){
-                if (adminPermissions.get(i).getFId().equals(include.getAdminRolePermissions().get(j).getAdminPermission().getFId())){
+        for (AdminPermission adminPermission : adminPermissions) {
+            int flag = 0;
+            for (int j = 0; j < include.getAdminRolePermissions().size(); j++) {
+                if (adminPermission.getFId().equals(include.getAdminRolePermissions().get(j).getAdminPermission().getFId())) {
                     flag++;
                     break;
                 }
             }
-            if (flag==0){
-                exclude.add(adminPermissions.get(i));
+            if (flag == 0) {
+                exclude.add(adminPermission);
             }
         }
         map.put("include",include);
         map.put("exclude",exclude);
         map.put("includeSize",include.getAdminRolePermissions().size());
         map.put("excludeSize",exclude.size());
-        resApi.setData(map);
-        return resApi;
+        return ResApi.getSuccess(map);
     }
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> deletePerm(Integer[] pid, Integer rid) {
-        ResApi<Object> resApi;
+    public ResApi<String> deletePerm(Integer[] pid, Integer rid) {
         int operationNum=0;
         Map<String,Integer> map=new HashMap<>(8);
         map.put("fRid",rid);
-        for (int i=0;i<pid.length;i++){
-            map.put("fPid",pid[i]);
-            if (adminRolePermissionDao.deleteInfoByRidAndPid(map)>0){
+        for (Integer aPid : pid) {
+            map.put("fPid", aPid);
+            if (adminRolePermissionDao.deleteInfoByRidAndPid(map) > 0) {
                 operationNum++;
             }
         }
         if (operationNum==pid.length){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }else{
-            resApi=new ResApi<>(501,"删除失败，请刷新重试。","failed");
+            return ResApi.getError(501, "删除失败，请刷新重试。");
         }
-        return resApi;
     }
 
     @CacheEvict(value = {"verifyRole", "verifyPermission"}, allEntries = true)
     @Override
-    public ResApi<Object> addPerm(Integer[] pid, Integer rid) {
-        ResApi<Object> resApi;
+    public ResApi<String> addPerm(Integer[] pid, Integer rid) {
         int operationNum=0;
         Map<String,Integer> map=new HashMap<>(8);
         map.put("fRid",rid);
-        for (int i=0;i<pid.length;i++){
-            map.put("fPid",pid[i]);
-            if (adminRolePermissionDao.saveInfo(map)>0){
+        for (Integer aPid : pid) {
+            map.put("fPid", aPid);
+            if (adminRolePermissionDao.saveInfo(map) > 0) {
                 operationNum++;
             }
         }
         if (operationNum==pid.length){
-            resApi=new ResApi<>(200,"success","success");
+            return ResApi.getSuccess();
         }else{
-            resApi=new ResApi<>(501,"添加失败，请刷新重试。","failed");
+            return ResApi.getError(501, "添加失败，请刷新重试。");
         }
-        return resApi;
     }
 }
