@@ -1,5 +1,6 @@
 package com.smxy.recipe.service;
 
+import com.smxy.recipe.entity.AdminPermission;
 import com.smxy.recipe.entity.AdminRole;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.utils.ResApi;
@@ -39,4 +40,6 @@ public interface MerchantUserService {
      * @date: 2018/11/17 0017 20:36
      */
     List<AdminRole> verifyRole(Integer mid);
+
+    List<AdminPermission> verifyPermission(Integer mid);
 }

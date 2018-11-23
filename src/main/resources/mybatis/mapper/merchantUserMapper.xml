@@ -27,7 +27,7 @@
         SELECT *
         FROM t_merchant_user
         WHERE f_account = #{fAccount}
-        AND f_password = #{fPassword};
+          AND f_password = #{fPassword};
     </select>
 
     <delete id="deleteUser" parameterType="Integer">

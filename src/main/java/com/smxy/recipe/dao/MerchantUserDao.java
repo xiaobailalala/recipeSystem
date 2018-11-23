@@ -68,4 +68,13 @@ public interface MerchantUserDao {
      */
     Integer getMerchantIdByAccount(String fAccount);
 
+    /**
+     * 功能描述: 更新商家用户的店铺名
+     * @param merchantUser 商家用户实体类
+     * @return
+     * @auther yangyihui
+     * @date 2018/11/19 0019 20:28
+     */
+    Integer updateMerchantUser(MerchantUser merchantUser);
+
 }

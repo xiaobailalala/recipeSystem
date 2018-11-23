@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantProductMarqueClassifyDao">
+    <select id="getAllMarqueClassify" resultType="com.smxy.recipe.entity.MerchantProductMarqueClassify">
+        SELECT *
+        FROM t_product_marque_classify;
+    </select>
+
+    <insert id="saveMarqueClassify" parameterType="com.smxy.recipe.entity.MerchantProductMarqueClassify" useGeneratedKeys="true" keyProperty="fId">
+        INSERT INTO t_product_marque_classify (f_id, f_marquename)
+        VALUES (#{fId}, #{fMarquename});
+    </insert>
+
+    <delete id="deleteMarqueClassifyById" parameterType="Integer">
+        DELETE
+        FROM t_product_marque_classify
+        WHERE f_id = #{fId};
+    </delete>
+
+    <update id="updateMarqueClassify" parameterType="com.smxy.recipe.entity.MerchantProductMarqueClassify">
+        UPDATE t_product_marque_classify SET f_marquename = #{fMarquename};
+    </update>
+</mapper>

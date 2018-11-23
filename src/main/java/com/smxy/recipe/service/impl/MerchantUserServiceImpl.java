@@ -4,9 +4,7 @@ import com.smxy.recipe.dao.AdminRoleDao;
 import com.smxy.recipe.dao.AdminUserRoleDao;
 import com.smxy.recipe.dao.MerchantUserDao;
 import com.smxy.recipe.dao.MerchantUserRoleDao;
-import com.smxy.recipe.entity.AdminRole;
-import com.smxy.recipe.entity.AdminUserRole;
-import com.smxy.recipe.entity.MerchantUser;
+import com.smxy.recipe.entity.*;
 import com.smxy.recipe.realm.LoginType;
 import com.smxy.recipe.realm.UserToken;
 import com.smxy.recipe.service.MerchantUserService;
@@ -58,9 +56,7 @@ public class MerchantUserServiceImpl implements MerchantUserService {
                 try {
                     currentUser.login(token);
                     merchantUser = (MerchantUser) currentUser.getPrincipal();
-                    System.out.println(SecurityUtils.getSubject().getSession());
                     SecurityUtils.getSubject().getSession().setAttribute("merUser", merchantUser);
-                    System.out.println(merchantUser);
                 } catch (UnknownAccountException ae) {
                     resApi = new ResApi<>(501, "该账号不存在。", "failed");
                     return resApi;
@@ -108,5 +104,17 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             adminRoles.add(adminUserRole.getAdminRole());
         }
         return adminRoles;
+    }
+
+    @Cacheable(value = "MerchantVerifyPermission", key = "#mid")
+    @Override
+    public List<AdminPermission> verifyPermission(Integer mid) {
+        List<AdminPermission> adminPermissions = new ArrayList<>();
+        for (AdminUserRole adminUserRole:merchantUserRoleDao.getMerchantUserRoleByFmid(mid)){
+            for (AdminRolePermission adminRolePermission:adminUserRole.getAdminRole().getAdminRolePermissions()){
+                adminPermissions.add(adminRolePermission.getAdminPermission());
+            }
+        }
+        return adminPermissions;
     }
 }

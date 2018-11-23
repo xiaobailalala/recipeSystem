@@ -32,10 +32,6 @@ $(function () {
             page: true,
             cols: [
                 [{
-                    fixed: 'left',
-                    type: 'checkbox',
-                    style: 'height:120px;'
-                }, {
                     field: 'id',
                     title: 'ID',
                     align: 'center',

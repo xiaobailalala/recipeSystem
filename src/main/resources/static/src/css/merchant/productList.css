@@ -86,7 +86,7 @@ textarea {
 
 .header {
     height: 50px;
-    background-color: #FFD151;
+    background-color: #FFB20F;
 }
 
 .logo {
@@ -162,7 +162,7 @@ textarea {
     position: fixed;
     z-index: 999;
     width: 100%;
-    background-color: #FFB20F;
+    background-color: #FFD151;
 }
 
 .top-nav-middle {
