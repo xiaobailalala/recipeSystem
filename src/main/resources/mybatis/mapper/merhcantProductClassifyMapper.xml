@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantProductClassifyDao">
+    <select id="getAllProductClassify" resultType="com.smxy.recipe.entity.MerchantProductClassify">
+        SELECT *
+        FROM t_product_classify;
+    </select>
+
+    <insert id="saveProductClassify" parameterType="com.smxy.recipe.entity.MerchantProductClassify">
+        INSERT INTO t_product_classify (f_name)
+        VALUE (#{fName});
+    </insert>
+
+    <delete id="deleteProductClassify" parameterType="Integer">
+        DELETE
+        FROM t_product_classify
+        WHERE f_id = #{fId};
+    </delete>
+</mapper>

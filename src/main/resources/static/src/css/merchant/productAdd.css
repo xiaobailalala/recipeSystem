@@ -1,0 +1,699 @@
+html,
+body,
+div,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ol,
+form,
+input,
+textarea,
+th,
+td,
+select {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+    color: #333;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    color: #232323;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+input,
+textarea {
+    outline: none;
+    border: none;
+}
+
+textarea {
+    resize: none;
+    overflow: auto;
+}
+
+div.clear-float {
+    clear: both;
+}
+
+.container {
+    background-color: #FFFFFF;
+    min-height: 100%;
+}
+
+.header {
+    height: 50px;
+    background-color: #FFB20F;
+}
+
+.logo {
+    display: inline-block;
+    width: 235px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.logo img {
+    border: 0px none;
+    width: 100%;
+    height: 100%;
+}
+
+.mylayui-div-inline-block {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.mylayui-bg-recipe-yellow {
+    background-color: #FFD151;
+}
+
+.mylayui-bg-recipe-yellow-dark {
+    background-color: #FFB20F;
+}
+
+.header-middle .mylayui-div-control {
+    float: right;
+}
+
+.mylayui-head-nav .mylayui-nav-item {
+    line-height: 50px;
+    margin-right: 10px;
+}
+
+.mylayui-head-nav .mylayui-nav-item a {
+    color: rgba(7, 7, 7, 0.65);
+}
+
+.mylayui-head-nav .mylayui-nav-item a>.layui-nav-more {
+    border-color: #070707 transparent transparent;
+}
+
+.mylayui-head-nav .mylayui-nav-item a>.layui-nav-mored {
+    border-color: transparent transparent #070707;
+}
+
+.mylayui-head-nav .layui-this::after,
+.mylayui-head-nav .layui-nav-bar {
+    height: 0px;
+}
+
+.mylayui-head-nav .layui-nav-child {
+    background-color: #FBFFFE;
+    min-width: 100%;
+    top: 53px;
+}
+
+.mylayui-head-nav .layui-nav-child a:hover {
+    background-color: #FFB20F;
+}
+
+.mylayui-head-nav .mylayui-nav-item a:hover {
+    color: #070707;
+}
+
+/* 第二个导航栏样式 */
+.top-nav {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    background-color: #FFD151;
+}
+
+.top-nav-middle {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.top-nav .mylayui-nav-item a {
+    color: #1A090D;
+}
+
+.mylayui-top-nav>.mylayui-div-control {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.mylayui-top-nav .layui-this::after,
+.mylayui-top-nav .layui-nav-bar {
+    background-color: #070707;
+}
+
+.mylayui-top-nav .layui-nav-child a:hover {
+    background-color: #FFB20F;
+}
+
+.mylayui-div-control .mylayui-form-label {
+    width: 100px;
+}
+
+.mylayui-from-search {
+    float: left;
+    margin-left: 230px;
+}
+
+.mylayui-from-search .mylayui-form-div {
+    display: inline-block;
+}
+
+.mylayui-form-div {
+    height: 60px;
+    line-height: 60px;
+}
+
+.mylayui-div-control .layui-input {
+    display: inline-block;
+    height: 30px;
+}
+
+.mylayui-form-div>.mylayui-div-control {
+    display: inline-block;
+    vertical-align: bottom;
+    height: 60px;
+    line-height: 60px;
+}
+
+.mylayui-form-label {
+    color: #070707;
+}
+
+.btn-search {
+    height: 30px;
+    line-height: 30px;
+    background-color: #1A090D;
+}
+
+.mylayui-top-nav .mylayui-nav-item a>.layui-nav-more {
+    border-color: #070707 transparent transparent;
+}
+
+.mylayui-top-nav .mylayui-nav-item a>.layui-nav-mored {
+    border-color: transparent transparent #070707;
+}
+
+.mylayui-top-nav .mylayui-nav-item a:hover>.layui-nav-more {
+    border-color: #FFF transparent transparent;
+}
+
+.mylayui-top-nav .mylayui-nav-item a:hover>.layui-nav-mored {
+    border-color: transparent transparent #FFF;
+}
+
+
+
+.main {
+    margin-top: 100px;
+}
+
+#moreImgupload {
+    color: #000000;
+    margin-left: 25px;
+}
+
+/* upload 上传div */
+.editimg {
+    display: inline-block;
+    position: relative;
+    margin: 5px;
+}
+
+.editimg>.imgs>a {
+    position: absolute;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+    right: 3px;
+    top: 5px;
+    background-color: transparent;
+}
+
+.productAdd-form>.layui-upload {
+    margin-bottom: 35px;
+}
+
+.product-name {
+    padding: 15px;
+    height: 80px;
+}
+
+.product-price {
+    padding-left: 15px;
+    width: 200px;
+    display: inline-block;
+}
+
+.productTitle-div>.layui-input-block {
+    position: relative;
+}
+
+.productTitle-div>.layui-input-block>p {
+    color: #999999;
+    position: absolute;
+    bottom: 5px;
+    right: 8px;
+}
+
+.product-div-model-title {
+    position: relative;
+}
+
+.product-card {
+    border: 1px solid #dddddd;
+}
+
+.product-card .product-div-model-title {
+    height: 50px;
+    background-color: #f1f1f1;
+    line-height: 50px;
+}
+
+.product-card .closeModel {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    cursor: pointer;
+    background-color: #666;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bolder;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.product-card:hover .closeModel {
+    opacity: 1;
+}
+
+.product-card:hover .closeModel::before {
+    position: relative;
+    top: -17px;
+    right: 0px;
+}
+
+.product-card .layui-card-body {
+    min-height: 150px;
+}
+
+.addModel-btn-div {
+    padding-left: 15px;
+}
+
+
+#showModel {
+    box-sizing: content-box;
+    min-height: 150px;
+    padding: 10px;
+}
+
+
+/* layui默认样式 */
+/* 下拉选择框的子项目颜色 */
+.layui-form-select dl dd.layui-this {
+    background-color: #000000;
+}
+
+/* table的悬浮颜色 */
+/* .layui-table tbody tr:hover {
+    background-color: transparent;
+} */
+
+
+/* 添加型号面板样式 */
+.addModelImg>.layui-form-onswitch {
+    border-color: #bdbbbb;
+    background-color: #bdbbbb;
+}
+
+.addModelImg>.layui-form-switch {
+    margin: 0px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.addModelImg>.layui-form-switch i {
+    top: 6px;
+}
+
+.model-li {
+    float: left;
+    position: relative;
+    margin-right: 15px;
+}
+
+.li-div-modelname .li-span-name {
+    text-align: center;
+    padding: 0 10px;
+    display: inline-block;
+    width: 80px;
+    line-height: 35px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid #d1d1d1;
+}
+
+.li-span-name i.model-li-close {
+    opacity: 0;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.li-span-name:hover i.model-li-close {
+    opacity: 1;
+    transition: all 0.5s linear;
+}
+
+.li-span-name i.model-li-close::before {
+    position: absolute;
+    top: -6px;
+    right: 2px;
+}
+
+.model-li-add {
+    line-height: 35px;
+    width: 80px;
+}
+
+.upload-img-preview {
+    width: 80px;
+    height: 80px;
+    border: 1px dashed #dddddd;
+    margin-bottom: 30px;
+    cursor: pointer;
+    position: relative;
+}
+
+.upload-img-preview:hover {
+    border: 1px dashed #a3a3a3;
+}
+
+.upload-img-preview i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    color: #a3a3a3;
+}
+
+.upload-img-preview img {
+    width: 100%;
+    height: 100%;
+}
+
+.showimgpreview {
+    display: none;
+}
+
+.have-img:hover .upload-ops {
+    opacity: 1;
+}
+
+.upload-ops {
+    display: none;
+    transition: all linear 0.3s;
+    z-index: 10;
+    opacity: 0;
+    width: 78px;
+    height: 78px;
+    position: absolute;
+    top: 45px;
+    right: 0px;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.upload-ops a {
+    color: #ffffff;
+    line-height: 80px;
+    display: block;
+    width: 80px;
+    text-align: center;
+}
+
+.upload-ops a:hover {
+    text-decoration: underline;
+}
+
+/* 单击+添加型号下的div样式   */
+.addModel-div {
+    background-color: #FFFFFF;
+    width: 450px;
+    padding: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+    margin-top: 15px;
+    position: relative;
+    display: none;
+    z-index: 100;
+}
+
+.section-model-li {
+    float: left;
+    position: relative;
+}
+
+.section-model-li>i {
+    opacity: 0;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.section-model-li:hover>i {
+    opacity: 1;
+    transition: all 0.5s linear;
+}
+
+.section-model-li>i::before {
+    position: absolute;
+    right: 2px;
+    top: -6px;
+}
+
+.model-li-add {
+    position: relative;
+}
+
+.model-name-div {
+    position: relative;
+    padding: 10px 0px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.model-name-div>.layui-form-checkbox i {
+    box-sizing: content-box;
+}
+
+.model-name-div>.layui-form-checked span,
+.model-name-div>.layui-form-checked:hover span {
+    background-color: #6D676E;
+}
+
+.model-name-div>.layui-form-checked i,
+.layui-form-checked:hover i {
+    color: #6D676E;
+}
+
+.addmodel-name-btn {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.addModel-footer {
+    text-align: right;
+    height: 55px;
+    line-height: 55px;
+    background-color: #f1f1f1;
+    padding: 0px 15px;
+    margin-top: 15px;
+}
+
+#arrow {
+    position: absolute;
+    font-size: 25px;
+    top: -18px;
+    left: 25px;
+    height: 0;
+    width: 0;
+    color: #f1f1f1;
+}
+
+/* 商品类型数据表格样式 */
+.showtable {
+    margin-top: 35px;
+    display: block;
+}
+.noshowtable {
+    display: none;
+}
+
+/* 运费及其他设计 */
+
+.cell-time .layui-form-radio>i:hover, .layui-form-radioed>i{
+    color: #000000;
+}
+
+.other-set-div>.layui-form-checked[lay-skin=primary] i{
+    border-color: #000000;
+    background-color: #000000;
+    color: #fff;
+}
+
+.other-set-div>.layui-form-checkbox[lay-skin=primary]:hover i{
+    border-color: #000000;
+}
+/* 商品详情 */
+.pro_details{
+    border: 1px solid #dddddd;
+}
+.pro_details .layui-card-header{
+    height: 50px;
+    background-color: #f1f1f1;
+    line-height: 50px;
+    position: relative;
+}
+.pro_details .layui-card-header i{
+    background-color: #000000;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: #ffffff;
+    font-weight: bolder;
+    font-size: 18px;
+    opacity: 0;
+    transition: all 0.5s linear;
+}
+.pro_details .layui-card-header:hover i{
+    opacity: 1;
+}
+
+.pro_details_image .upload-img-preview{
+    width: 222px;
+    height: 222px;
+    border: 1px dashed #dddddd;
+    margin-bottom: 30px;
+    cursor: pointer;
+    position: relative;
+}
+
+.pro_details_image .upload-ops{
+    width: 222px;
+    height: 222px;
+    position: absolute;
+    top: 45px;
+    left: 17px;
+    background-color: rgba(0, 0, 0, .5);
+}
+.pro_details_image .upload-ops a{
+    color: #ffffff;
+    line-height: 222px;
+    display: block;
+    width: 222px;
+    text-align: center;
+}
+
+
+div.footer {
+    margin-top: 30px;
+}
+
+div.foot-link {
+    padding: 20px;
+    text-align: center;
+}
+
+div.foot-link>ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+div.foot-link>ul>li {
+    display: inline-block;
+}
+
+div.foot-link>ul>i {
+    color: #999999;
+}
+
+div.foot-link>ul>li>a {
+    color: #999999;
+}
+
+div.foot-link>ul>li>a:hover {
+    color: #ff1f5a;
+    text-decoration: underline;
+}

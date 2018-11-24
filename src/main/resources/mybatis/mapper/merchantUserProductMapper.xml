@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantUserProductDao">
+    <insert id="saveMerchantUserProductInfo" parameterType="com.smxy.recipe.entity.MerchantUserProduct" useGeneratedKeys="true" keyProperty="fId">
+        INSERT INTO t_merchant_user_product (f_mid, f_pid)
+        VALUES (#{fMid},#{fPid});
+    </insert>
+</mapper>

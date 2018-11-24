@@ -3,6 +3,11 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.MerchantUser;
 
+/**
+ * Demo MerchantUserDao
+ * @auther yangyihui
+ * @date 2018/11/17 0017 21:33
+ */
 public interface MerchantUserDao {
 
     /**
@@ -62,5 +67,14 @@ public interface MerchantUserDao {
      * @date: 2018/11/14 0014 8:23
      */
     Integer getMerchantIdByAccount(String fAccount);
+
+    /**
+     * 功能描述: 更新商家用户的店铺名
+     * @param merchantUser 商家用户实体类
+     * @return
+     * @auther yangyihui
+     * @date 2018/11/19 0019 20:28
+     */
+    Integer updateMerchantUser(MerchantUser merchantUser);
 
 }

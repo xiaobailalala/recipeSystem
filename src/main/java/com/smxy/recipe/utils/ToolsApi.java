@@ -124,6 +124,13 @@ public class ToolsApi {
         return result;
     }
 
+    /**
+     * 功能描述: 文件上传
+     * @param [file, pairs] 文件，文件描述
+     * @return java.lang.String
+     * @auther yangyihui
+     * @date 2018/11/20 0020 22:04
+     */
     public static String multipartFileUploadFile(MultipartFile file, NameValuePair[] pairs) {
         try {
             InputStream inputStream = file.getInputStream();
@@ -143,6 +150,13 @@ public class ToolsApi {
         return "failed";
     }
 
+    /**
+     * 功能描述: 上传二进制文件
+     * @param [file, suffixName]
+     * @return java.lang.String
+     * @auther yangyihui
+     * @date 2018/11/20 0020 22:18
+     */
     public static String binaryFileUploadFile(byte[] file, String suffixName) {
         String result = "failed";
         try {
@@ -155,7 +169,11 @@ public class ToolsApi {
     }
 
     /**
-     * FastDFS 成功返回值为1，失败不返回，故这里返回值为2以示失败
+     * 功能描述: 删除文件
+     * @param [fileName] 文件名
+     * @return void
+     * @auther yangyihui
+     * @date 2018/11/20 0020 22:16
      */
     public static void multipartFileDeleteFile(String fileName) {
         try {

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{merchant/common/commonHeader::header('所有商品',~{::link})}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/productList.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{merchant/common/commonNav::common_nav}"></div>
+    <div class="produce-list-all">
+        <div class="product-div">
+            <h3>所有商品</h3>
+            <table id="produceAllList" lay-filter="test"></table>
+        </div>
+    </div>
+    <div>
+        <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},false)}">
+            <script th:src="@{/src/js/merchant/product/list.js}"></script>
+            <script type="text/html" id="product-control">
+                <div class="layui-btn-group">
+                    <a class="layui-btn layui-btn-sm shelve" lay-event="shelve">
+                        <i class="layui-icon layui-icon-up"></i>
+                    </a>
+                    <a class="layui-btn layui-btn-sm layui-btn-normal unshelve" lay-event="unshelve">
+                        <i class="layui-icon layui-icon-down"></i>
+                    </a>
+                    <a class="layui-btn layui-btn-sm layui-btn-danger delete" lay-event="delete">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </a>
+                    <a class="layui-btn layui-btn-sm layui-btn-warm edit" lay-event="edit">
+                        <i class="layui-icon layui-icon-edit"></i>
+                    </a>
+                </div>
+            </script>
+            <script type="text/html" id="showimg">
+                <img src="\images\timg.jpg" alt="" style="width:100px;hight:100px;">
+            </script>
+            <script type="text/html" id="products-control">
+                <div class="layui-btn-group">
+                    <a class="layui-btn layui-btn-sm more-shelve" lay-event="more-shelve">
+                        <i class="layui-icon layui-icon-up"></i>
+                    </a>
+                    <a class="layui-btn layui-btn-sm layui-btn-normal more-unshelve" lay-event="more-unshelve">
+                        <i class="layui-icon layui-icon-down"></i>
+                    </a>
+                    <a class="layui-btn layui-btn-sm layui-btn-danger more-delete" lay-event="more-delete">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </a>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

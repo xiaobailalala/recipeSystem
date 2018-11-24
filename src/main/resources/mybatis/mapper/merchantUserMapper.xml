@@ -7,7 +7,7 @@
         <result property="fId" column="f_id"/>
         <collection
                 property="adminUserRoles" column="f_id"
-                select="com.smxy.recipe.dao.AdminUserRoleDao.getAdminUserRoleByFuid">
+                select="com.smxy.recipe.dao.MerchantUserRoleDao.getMerchantUserRoleByFmid">
         </collection>
     </resultMap>
 

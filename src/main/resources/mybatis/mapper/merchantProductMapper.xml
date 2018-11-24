@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantProductDao">
+    <select id="getAllProduct" resultMap="getMerchantProductDetails">
+        SELECT *
+        FROM t_merchant_product
+        ORDER BY f_id ASC;
+    </select>
+    <resultMap id="getMerchantProductDetails" type="com.smxy.recipe.entity.MerchantProduct">
+        <id property="fId" column="f_id"/>
+        <result property="fMarqueclaid" column="f_marqueclaid"/>
+        <collection
+                property="merchantProductMarques" column="{fMarqueclaid:fMarqueclaid,fPid:fId}"
+                select="com.smxy.recipe.dao.MerchantProductMarqueDao.getMarqueByClassifyIdAndProductId">
+        </collection>
+    </resultMap>
+
+    <select id="getProductById" parameterType="Integer" resultMap="getMerchantProductDetails">
+        SELECT *
+        FROM t_merchant_product
+        WHERE f_id = #{fId};
+    </select>
+
+    <insert id="saveProductInfo" parameterType="com.smxy.recipe.entity.MerchantProduct">
+        INSERT INTO t_merchant_product (f_name,
+                                        f_category,
+                                        f_state,
+                                        f_sales,
+                                        f_marqueclaid,
+                                        f_addtime,
+                                        f_grosssales,
+                                        f_freightid)
+        VALUES (#{fName},
+                #{fCategory},
+                #{fState},
+                #{fSales},
+                #{fMarqueclaid},
+                #{fAddtime},
+                #{fGrosssales},
+                #{fFreightid});
+    </insert>
+</mapper>

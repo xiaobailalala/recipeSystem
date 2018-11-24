@@ -11,12 +11,18 @@
         </association>
     </resultMap>
 
+
+
     <delete id="deleteInfoByUidAndRid" parameterType="Map">
         delete from t_admin_user_role where f_rid=#{fRid} and f_uid=#{fUid};
     </delete>
 
     <insert id="saveInfo" parameterType="Map">
         insert into t_admin_user_role(f_rid,f_uid) values (#{fRid},#{fUid});
+    </insert>
+
+    <insert id="saveMerchantInfo" parameterType="Map">
+        INSERT INTO t_merchant_user_role(f_mid, f_rid) VALUES (#{fMid},#{fRid});
     </insert>
 
     <delete id="deleteInfoByUid" parameterType="Integer">

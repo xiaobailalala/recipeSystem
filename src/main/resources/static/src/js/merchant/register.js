@@ -88,21 +88,16 @@ $(function () {
         });
 
         form.on('submit(login)', function (data) {
-            layer.msg(JSON.stringify(data.field));
+            // layer.msg(JSON.stringify(data.field));
             $.ajax({
                 url: "/merchant/merchantUser/register",
                 type: "POST",
                 data: data.field,
                 success: function (res) {
                     if (res.code === 200) {
-                        layer.confirm('是否直接跳转主页', {
-                            btn: ['确定', '取消'] //按钮
-                        }, function () {
-                            location.href="/merchant/merchantUser/index";
-                        }, function () {
-                            location.reload();
-                        });
-                    } else {
+                        layer.msg("注册成功")
+                    }
+                     else {
                         var msg = res.msg;
                         layer.msg(msg);
                         // Tools.tip(res.msg)

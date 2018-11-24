@@ -288,7 +288,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public ResApi<Object> saveInfo(AdminUser adminUser) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错。","error");
+        ResApi<Object> resApi=new ResApi<>(500,"系统  出错。","error");
         adminUser.setFPassword(ToolsApi.entryptBySaltMd5(adminUser.getFPassword(), adminUser.getFAccount()));
         if (adminUserDao.saveInfo(adminUser)>0){
             resApi=new ResApi<>(200,"success","success");

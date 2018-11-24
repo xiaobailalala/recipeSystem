@@ -7,11 +7,10 @@ import com.smxy.recipe.utils.ResApi;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,9 +34,21 @@ public class MerchantUserController {
         return "merchant/login";
     }
 
+    @GetMapping("/merchantLogout")
+    public String merchantLogout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:/merchant/merchantUser/login";
+    }
+
     @GetMapping("/register")
     public String goRegister() {
-        return "merchant/pages/register";
+        return "merchant/register";
+    }
+
+    @GetMapping("/productList")
+    public String goProductList(){
+        return "merchant/pages/product/list";
     }
 
     @RequiresRoles("merchant")
@@ -54,7 +65,7 @@ public class MerchantUserController {
 
     @ResponseBody
     @PostMapping("/register")
-    public ResApi userRegister(MerchantUser merchantUser, HttpServletRequest request) {
+    public ResApi<String> userRegister(MerchantUser merchantUser, HttpServletRequest request) {
         return merchantUserService.userRegister(merchantUser, request);
     }
 }
