@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/material")
 public class MaterialController {
 
+    @SuppressWarnings("all")
     @Autowired
     private MaterialService materialService;
 

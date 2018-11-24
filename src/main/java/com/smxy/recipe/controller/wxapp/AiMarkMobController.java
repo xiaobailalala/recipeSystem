@@ -43,6 +43,7 @@ import java.util.Map;
 @PathRestController("/mob/aiMark")
 public class AiMarkMobController {
 
+    @SuppressWarnings("all")
     @Autowired
     private AiMarkService aiMarkService;
 

@@ -42,11 +42,12 @@ public class RecipeServiceImpl implements RecipeService {
     private RabbitTemplate rabbitTemplate;
     private MaterialDao materialDao;
     private CollectDao collectDao;
+    private ArticleDao articleDao;
 
     @Autowired
     public RecipeServiceImpl(TipsDao tipsDao, ClassifyOneDao classifyOneDao, RecipeClassifyDao recipeClassifyDao, RecipeDao recipeDao,
                              RecipeTipsDao recipeTipsDao, RecipeMaterialDao recipeMaterialDao,ProcessDao processDao, ClassifyTwoDao classifyTwoDao,
-                             ClassifyDao classifyDao, RabbitTemplate rabbitTemplate, MaterialDao materialDao, CollectDao collectDao) {
+                             ClassifyDao classifyDao, RabbitTemplate rabbitTemplate, MaterialDao materialDao, CollectDao collectDao, ArticleDao articleDao) {
         this.tipsDao = tipsDao;
         this.classifyOneDao = classifyOneDao;
         this.recipeClassifyDao = recipeClassifyDao;
@@ -59,6 +60,7 @@ public class RecipeServiceImpl implements RecipeService {
         this.rabbitTemplate = rabbitTemplate;
         this.materialDao = materialDao;
         this.collectDao = collectDao;
+        this.articleDao = articleDao;
     }
 
     @Override
@@ -345,6 +347,36 @@ public class RecipeServiceImpl implements RecipeService {
             return ResApi.getSuccess();
         }
         return ResApi.getError();
+    }
+
+    @Override
+    public ResApi<Object> clientIndexData() {
+        Map<String, Object> map = new HashMap<>(8);
+        List<Recipe> recipeList = recipeDao.getAllInfoBre();
+        List<Article> articleList = articleDao.findAllInfo();
+        articleList.forEach(item -> {
+            item.setFName(ToolsApi.base64Decode(item.getFName()));
+        });
+        map.put("randomRecipe", randomRecipe(recipeList));
+        map.put("articleList", articleList);
+        return ResApi.getSuccess(map);
+    }
+
+    @Override
+    public ResApi<Object> randomRecipe() {
+        List<Recipe> recipeList = recipeDao.getAllInfoBre();
+        return ResApi.getSuccess(randomRecipe(recipeList));
+    }
+
+    private List<Recipe> randomRecipe(List<Recipe> recipeList){
+        int[] index = ToolsApi.randomArray(0, recipeList.size()-1, 8);
+        List<Recipe> recipes = new ArrayList<>();
+        assert index != null;
+        for (int in : index) {
+            recipes.add(recipeList.get(in));
+        }
+        recipes.sort((o1, o2) -> o2.getFCount().compareTo(o1.getFCount()));
+        return recipes;
     }
 
 }

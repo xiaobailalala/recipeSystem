@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/process")
 public class ProcessMobController {
 
+    @SuppressWarnings("all")
     @Autowired
     private ProcessService processService;
 

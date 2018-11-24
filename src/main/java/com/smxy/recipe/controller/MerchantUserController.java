@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @PathController("/merchant/merchantUser")
 public class MerchantUserController {
 
+    @SuppressWarnings("all")
     @Autowired
     private MerchantUserService merchantUserService;
 

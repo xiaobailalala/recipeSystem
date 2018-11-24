@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ArticleGreatDao">
+    <insert id="saveInfo">
+        insert into t_food_article_great (f_aid, f_uid) values (#{fAid}, #{fUid});
+    </insert>
+
+    <delete id="deleteInfo">
+        delete from t_food_article_great where f_aid=#{fAid} and  f_uid=#{fUid};
+    </delete>
+
+    <select id="getCountByAid" parameterType="Integer" resultType="Integer">
+        select count(*) from t_food_article_great where f_aid=#{fAid};
+    </select>
+
+    <select id="getByAidAndUid" resultType="ArticleGreat">
+        select * from t_food_article_great where f_uid=#{fUid} and f_aid=#{fAid};
+    </select>
+
+</mapper>

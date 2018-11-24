@@ -31,8 +31,16 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.Article;
 
+import java.util.List;
+
 public interface ArticleDao {
 
     Integer saveInfo(Article article);
+
+    List<Article> findAllInfo();
+
+    Article findInfoById(Integer fId);
+
+    Integer updateCount(Article article);
 
 }

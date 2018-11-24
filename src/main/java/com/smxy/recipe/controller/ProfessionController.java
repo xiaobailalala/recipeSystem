@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/profession")
 public class ProfessionController {
 
+    @SuppressWarnings("all")
     @Autowired
     private ProfessionService professionService;
 

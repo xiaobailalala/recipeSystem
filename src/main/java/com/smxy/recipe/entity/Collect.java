@@ -26,4 +26,10 @@ public final class Collect {
 	private CommonUser commonUser;
 	private Recipe recipe;
 	private Article article;
+
+	public Collect(Integer fUid, Integer fRid, Integer fType) {
+		this.fUid = fUid;
+		this.fRid = fRid;
+		this.fType = fType;
+	}
 }

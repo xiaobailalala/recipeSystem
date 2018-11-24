@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @PathController("/manage/adm")
 public class AdminController {
 
+    @SuppressWarnings("all")
     @Autowired
     private AdminUserService adminUserService;
 

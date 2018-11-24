@@ -39,4 +39,8 @@ public interface CollectDao {
     Integer deleteInfo(Collect collect);
 
     List<Collect> findByAllBrief(Collect collect);
+
+    Integer getCountByRidAndTypeForRecipe(Integer fRid);
+
+    Integer getCountByRidAndTypeForArticle(Integer fRid);
 }

@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @PathController("/manage/sysResource")
 public class SysResourceController {
 
+    @SuppressWarnings("all")
     @Autowired
     private SysResourceService sysResourceService;
 

@@ -16,9 +16,13 @@
 
     <resultMap id="getRecipeAuthor" type="Recipe">
         <result column="f_uid" property="fUid"/>
+        <result column="f_id" property="fId"/>
         <association property="commonUser" column="f_uid"
                      select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
         </association>
+        <collection property="fGood" column="f_id"
+                    select="com.smxy.recipe.dao.CollectDao.getCountByRidAndTypeForRecipe">
+        </collection>
     </resultMap>
 
     <select id="getInfoById" resultMap="getRecipeDetail" parameterType="Integer">
@@ -42,6 +46,9 @@
         </collection>
         <collection property="processes" column="f_id"
                     select="com.smxy.recipe.dao.ProcessDao.getInfoByRid">
+        </collection>
+        <collection property="fGood" column="f_id"
+                    select="com.smxy.recipe.dao.CollectDao.getCountByRidAndTypeForRecipe">
         </collection>
     </resultMap>
     <delete id="deleteInfoById" parameterType="Integer">

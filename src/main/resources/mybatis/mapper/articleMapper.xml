@@ -8,4 +8,30 @@
         values (#{fName}, #{fContent}, #{fUid}, #{fCover}, #{fType},#{fRelease});
     </insert>
 
+    <select id="findAllInfo" resultMap="getArticleDetail">
+        select * from t_food_article order by f_id desc;
+    </select>
+
+    <resultMap id="getArticleDetail" type="Article">
+        <result column="f_uid" property="fUid"/>
+        <result column="f_id" property="fId"/>
+        <association property="commonUser" column="f_uid"
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <collection property="fGood" column="f_id"
+                    select="com.smxy.recipe.dao.ArticleGreatDao.getCountByAid">
+        </collection>
+        <collection property="fCollect" column="f_id"
+                    select="com.smxy.recipe.dao.CollectDao.getCountByRidAndTypeForArticle">
+        </collection>
+    </resultMap>
+
+    <select id="findInfoById" parameterType="Integer" resultMap="getArticleDetail">
+        select * from t_food_article where f_id=#{fId};
+    </select>
+
+    <update id="updateCount" parameterType="Article">
+        update t_food_article set f_count=#{fCount} where f_id=#{fId};
+    </update>
+
 </mapper>

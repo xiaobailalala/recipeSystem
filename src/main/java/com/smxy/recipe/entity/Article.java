@@ -41,9 +41,11 @@ public class Article {
     private String fName;
     private String fContent;
     private Integer fUid;
+    private CommonUser commonUser;
     private String fCover;
     private Integer fGood;
     private Integer fCount;
+    private Integer fCollect;
     private String fType;
     private String fRelease;
 }

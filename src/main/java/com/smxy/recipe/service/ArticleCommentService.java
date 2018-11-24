@@ -23,25 +23,24 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/23 19:36
+ * Build File @date: 2018/11/23 20:21
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.service;
 
-import com.smxy.recipe.entity.FoodComment;
+import com.smxy.recipe.entity.ArticleComment;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface FoodCommentService {
-
-    ResApi<Object> commentImgupload(MultipartFile file);
-
-    ResApi<String> commentSaveInfo(FoodComment foodComment);
-
+public interface ArticleCommentService {
     ResApi<Object> getInfoByRid(Integer rid, Integer uid);
+
+    ResApi<String> greatOperation(Integer open, Integer cid, Integer uid);
 
     ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid);
 
-    ResApi<String> greatOperation(Integer open, Integer cid, Integer uid);
+    ResApi<String> commentSaveInfo(ArticleComment articleComment);
+
+    ResApi<Object> commentImgUpload(MultipartFile file);
 }

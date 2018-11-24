@@ -46,4 +46,11 @@ public interface RecipeService {
     ResApi<String> saveRecipeCollection(Collect collect);
 
     ResApi<String> deleteRecipeCollect(Collect collect);
+
+    ResApi<Object> clientIndexData();
+
+    ResApi<Object> randomRecipe();
+
+
+
 }

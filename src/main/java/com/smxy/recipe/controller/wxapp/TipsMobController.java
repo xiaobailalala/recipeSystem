@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/tips")
 public class TipsMobController {
 
+    @SuppressWarnings("all")
     @Autowired
     TipsService tipsService;
 

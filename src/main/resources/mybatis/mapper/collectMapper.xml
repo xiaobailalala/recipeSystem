@@ -13,4 +13,13 @@
     <select id="findByAllBrief" parameterType="Collect" resultType="Collect">
         select * from t_common_collect where f_rid=#{fRid} and f_uid=#{fUid} and f_type=#{fType};
     </select>
+
+    <select id="getCountByRidAndTypeForRecipe" parameterType="Integer" resultType="Integer">
+        select count(*) from t_common_collect where f_rid=#{fRid} and f_type=1;
+    </select>
+
+    <select id="getCountByRidAndTypeForArticle" parameterType="Integer" resultType="Integer">
+        select count(*) from t_common_collect where f_rid=#{fRid} and f_type=2;
+    </select>
+
 </mapper>

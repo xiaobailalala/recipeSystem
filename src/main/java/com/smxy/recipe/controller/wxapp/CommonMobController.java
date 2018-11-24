@@ -10,7 +10,11 @@
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.service.RecipeService;
+import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.api.CodeApi;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.HashMap;
@@ -19,6 +23,10 @@ import java.util.Random;
 
 @PathRestController("/mob/common")
 public class CommonMobController {
+
+    @SuppressWarnings("all")
+    @Autowired
+    RecipeService recipeService;
 
     @PostMapping("/getCode")
     public Map<String, Object> getCode(String num) {
@@ -33,5 +41,17 @@ public class CommonMobController {
         map.put("code", code);
         return map;
     }
+
+    @GetMapping("/index")
+    public ResApi<Object> clientIndex(){
+        return recipeService.clientIndexData();
+    }
+
+    @GetMapping("/randomRecipe")
+    public ResApi<Object> randomRecipe(){
+        return recipeService.randomRecipe();
+    }
+
+
 
 }

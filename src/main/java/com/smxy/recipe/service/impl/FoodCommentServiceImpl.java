@@ -42,10 +42,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service("foodCommentService")
 public class FoodCommentServiceImpl implements FoodCommentService {
@@ -60,18 +57,17 @@ public class FoodCommentServiceImpl implements FoodCommentService {
     @Override
     public ResApi<Object> commentImgupload(MultipartFile file) {
         String filePath = ToolsApi.multipartFileUploadFile(file, null);
-        return new ResApi<>(200, "success", filePath);
+        return ResApi.getSuccess(filePath);
     }
 
     @Override
-    public ResApi<Object> commentSaveInfo(FoodComment foodComment) {
-        ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
+    public ResApi<String> commentSaveInfo(FoodComment foodComment) {
         foodComment.setFContent(ToolsApi.base64Encode(foodComment.getFContent()));
         Integer result = foodCommentDao.saveInfo(foodComment);
         if (result > 0) {
-            resApi = new ResApi<>(200, "success", "success");
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -87,7 +83,7 @@ public class FoodCommentServiceImpl implements FoodCommentService {
         }
         isContain(uid, foodComments);
         map.put("dataList", foodComments);
-        return new ResApi<>(200, "success", map);
+        return ResApi.getSuccess(map);
     }
 
     private void isContain(Integer uid, List<FoodComment> foodComments) {
@@ -106,39 +102,43 @@ public class FoodCommentServiceImpl implements FoodCommentService {
         });
     }
 
-    @Override
-    public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid) {
-        Map<String, Object> map = new HashMap<>(8);
-        List<FoodComment> foodComments = foodCommentDao.getInfoByRid(rid);
-        map.put("dataLen", foodComments.size());
+    static void getPagingData(Integer page, List list, Map<String, Object> map){
         if (page.equals(1)) {
-            if (foodComments.size() > 10) {
-                foodComments = foodComments.subList(0, 10);
+            if (list.size() > 10) {
+                list = list.subList(0, 10);
                 map.put("isAll", 0);
             } else {
                 map.put("isAll", 1);
             }
         } else {
-            if (foodComments.size() > (page * 10)) {
-                foodComments = foodComments.subList((page - 1) * 10, page * 10);
+            if (list.size() > (page * 10)) {
+                list = list.subList((page - 1) * 10, page * 10);
                 map.put("isAll", 0);
             } else {
-                foodComments = foodComments.subList((page - 1) * 10, foodComments.size());
+                list = list.subList((page - 1) * 10, list.size());
                 map.put("isAll", 1);
             }
         }
-        isContain(uid, foodComments);
-        map.put("dataList", foodComments);
-        return new ResApi<>(200, "success", map);
     }
 
     @Override
-    public ResApi<Object> greatOperation(Integer open, Integer cid, Integer uid) {
+    public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid) {
+        Map<String, Object> map = new HashMap<>(8);
+        List<FoodComment> foodComments = foodCommentDao.getInfoByRid(rid);
+        map.put("dataLen", foodComments.size());
+        FoodCommentServiceImpl.getPagingData(page, foodComments, map);
+        isContain(uid, foodComments);
+        map.put("dataList", foodComments);
+        return ResApi.getSuccess(map);
+    }
+
+    @Override
+    public ResApi<String> greatOperation(Integer open, Integer cid, Integer uid) {
         Map<String, Object> map = new HashMap<>(8);
         map.put("open", open);
         map.put("cid", cid);
         map.put("uid", uid);
         rabbitTemplate.convertAndSend("recipeSystem.direct", "recipeCommentGreatUpload.queue", map);
-        return new ResApi<>(200, "success", "success");
+        return ResApi.getSuccess();
     }
 }

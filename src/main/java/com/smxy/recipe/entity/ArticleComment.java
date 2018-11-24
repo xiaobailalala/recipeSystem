@@ -23,27 +23,32 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/12 20:27
+ * Build File @date: 2018/11/23 19:58
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.wxapp;
+package com.smxy.recipe.entity;
 
-import com.smxy.recipe.config.template.PathRestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-@PathRestController("/mob/test")
-public class TestMobController {
-
-    @RequestMapping("/sendMsg")
-    public Map<String, Object> sendMsg(String id, String price){
-        Map<String, Object> map = new HashMap<>(8);
-        map.put("res_id", id);
-        map.put("res_price", price);
-        return map;
-    }
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ArticleComment {
+    private Integer fId;
+    private Integer fAid;
+    private Integer fUid;
+    private CommonUser commonUser;
+    private String fContent;
+    private String fRelease;
+    private Integer fGood;
+    private String fCover;
+    private Integer fReplyid;
+    private ArticleComment articleComment;
+    private Integer userGreat;
+    private List<ArticleCommentGreat> articleCommentGreats;
 }

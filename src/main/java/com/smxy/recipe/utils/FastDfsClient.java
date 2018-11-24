@@ -36,11 +36,11 @@ public class FastDfsClient {
         return storageClient.upload_file1(fileName, extName, pairs);
     }
 
-    public static int deleteFile(String fileName) throws Exception {
-        return storageClient.delete_file1(fileName);
+    static void deleteFile(String fileName) throws Exception {
+        storageClient.delete_file1(fileName);
     }
 
-    public static String uploadBinaryFile(byte[] source, String extName, NameValuePair[] pairs) throws Exception{
+    static String uploadBinaryFile(byte[] source, String extName, NameValuePair[] pairs) throws Exception{
         return storageClient.upload_file1(source, extName, pairs);
     }
 

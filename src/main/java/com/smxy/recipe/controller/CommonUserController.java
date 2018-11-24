@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @PathController("/manage/commonUser")
 public class CommonUserController {
 
+    @SuppressWarnings("all")
     @Autowired
     private CommonUserService commonUserService;
 

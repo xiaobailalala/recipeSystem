@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 @PathController("/manage/recipe")
 public class RecipeController {
 
+    @SuppressWarnings("all")
     @Autowired
     private RecipeService recipeService;
 

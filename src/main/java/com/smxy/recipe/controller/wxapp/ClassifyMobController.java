@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/cla")
 public class ClassifyMobController {
 
+    @SuppressWarnings("all")
     @Autowired
     private ClassifyOneService classifyOneService;
 

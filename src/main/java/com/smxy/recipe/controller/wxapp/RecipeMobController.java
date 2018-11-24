@@ -41,6 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 @PathRestController("/mob/recipe")
 public class RecipeMobController {
 
+    @SuppressWarnings("all")
     @Autowired
     private RecipeService recipeService;
 

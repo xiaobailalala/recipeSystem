@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @PathController("/manage/claTwo")
 public class ClassifyTwoController {
 
+    @SuppressWarnings("all")
     @Autowired
     private ClassifyTwoService classifyTwoService;
 

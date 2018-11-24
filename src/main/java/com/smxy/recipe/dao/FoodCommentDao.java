@@ -30,6 +30,7 @@
 package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.FoodComment;
+import com.smxy.recipe.entity.FoodCommentGreat;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -43,5 +44,9 @@ public interface FoodCommentDao {
     Integer saveInfoGreat(@Param("fCid") Integer cid, @Param("fUid") Integer uid);
 
     Integer deleteInfoGreat(@Param("fCid") Integer cid, @Param("fUid") Integer uid);
+
+    FoodComment getInfoByIdBrief(Integer fId);
+
+    List<FoodCommentGreat> getGreatCount(Integer fId);
 
 }

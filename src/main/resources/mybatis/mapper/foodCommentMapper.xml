@@ -26,7 +26,7 @@
                      select="com.smxy.recipe.dao.FoodCommentDao.getInfoByIdBrief">
         </association>
         <association property="foodCommentGreats" column="f_id"
-                     select="getGreatCount">
+                     select="com.smxy.recipe.dao.FoodCommentDao.getGreatCount">
         </association>
     </resultMap>
 

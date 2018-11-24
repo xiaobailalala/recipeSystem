@@ -23,25 +23,25 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/23 19:36
+ * Build File @date: 2018/11/23 8:45
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.service;
+package com.smxy.recipe.dao;
 
-import com.smxy.recipe.entity.FoodComment;
-import com.smxy.recipe.utils.ResApi;
-import org.springframework.web.multipart.MultipartFile;
+import com.smxy.recipe.entity.ArticleGreat;
+import org.apache.ibatis.annotations.Param;
 
-public interface FoodCommentService {
+import java.util.List;
 
-    ResApi<Object> commentImgupload(MultipartFile file);
+public interface ArticleGreatDao {
 
-    ResApi<String> commentSaveInfo(FoodComment foodComment);
+    Integer saveInfo(@Param("fAid") Integer aid, @Param("fUid") Integer uid);
 
-    ResApi<Object> getInfoByRid(Integer rid, Integer uid);
+    Integer deleteInfo(@Param("fAid") Integer aid, @Param("fUid") Integer uid);
 
-    ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid);
+    Integer getCountByAid(Integer fAid);
 
-    ResApi<String> greatOperation(Integer open, Integer cid, Integer uid);
+    List<ArticleGreat> getByAidAndUid(@Param("fAid") Integer aid, @Param("fUid") Integer uid);
+
 }

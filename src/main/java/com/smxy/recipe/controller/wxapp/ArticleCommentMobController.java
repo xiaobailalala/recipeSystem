@@ -23,15 +23,16 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/10/23 19:33
+ * Build File @date: 2018/11/23 20:02
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.entity.ArticleComment;
 import com.smxy.recipe.entity.FoodComment;
-import com.smxy.recipe.service.FoodCommentService;
+import com.smxy.recipe.service.ArticleCommentService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,35 +40,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-@PathRestController("/mob/foodComment")
-public class FoodCommentMobController {
+@PathRestController("/mob/articleComment")
+public class ArticleCommentMobController {
 
     @SuppressWarnings("all")
     @Autowired
-    private FoodCommentService foodCommentService;
-
-    @PostMapping("/imgupload")
-    public ResApi<Object> commentImgupload(@RequestParam("commentImg") MultipartFile file){
-        return foodCommentService.commentImgupload(file);
-    }
-
-    @PostMapping("/saveInfo")
-    public ResApi<String> commentSaveInfo(FoodComment foodComment){
-        return foodCommentService.commentSaveInfo(foodComment);
-    }
+    private ArticleCommentService articleCommentService;
 
     @GetMapping("/getInfoByRid")
     public ResApi<Object> getInfoByRid(Integer rid, Integer uid){
-        return foodCommentService.getInfoByRid(rid, uid);
+        return articleCommentService.getInfoByRid(rid, uid);
+    }
+
+    @GetMapping("/greatOperation")
+    public ResApi<String> greatOperation(Integer cid, Integer uid, Integer open){
+        return articleCommentService.greatOperation(open, cid, uid);
     }
 
     @GetMapping("/getInfoByRidAndPage")
     public ResApi<Object> getInfoByRidAndPage(Integer page, Integer rid, Integer uid){
-        return foodCommentService.getInfoByRidAndPage(page, rid, uid);
+        return articleCommentService.getInfoByRidAndPage(page, rid, uid);
     }
 
-    @GetMapping("/greatOperation")
-    public ResApi<String> greatOperation(Integer open, Integer cid, Integer uid) {
-        return foodCommentService.greatOperation(open, cid, uid);
+    @PostMapping("/imgupload")
+    public ResApi<Object> commentImgUpload(@RequestParam("commentImg")MultipartFile file){
+        return articleCommentService.commentImgUpload(file);
     }
+
+    @PostMapping("/saveInfo")
+    public ResApi<String> commentSaveInfo(ArticleComment articleComment){
+        System.out.println(articleComment);
+        return articleCommentService.commentSaveInfo(articleComment);
+    }
+
 }

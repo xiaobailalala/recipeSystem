@@ -28,10 +28,14 @@ import java.util.List;
 @PathController("/manage/adminUser")
 public class AdminUserController {
 
-    @Autowired
     private AdminUserService adminUserService;
-    @Autowired
     private AdminRoleService adminRoleService;
+
+    @Autowired
+    public AdminUserController(AdminUserService adminUserService, AdminRoleService adminRoleService) {
+        this.adminUserService = adminUserService;
+        this.adminRoleService = adminRoleService;
+    }
 
     @RequiresPermissions("adminUser:select")
     @GetMapping("/list")

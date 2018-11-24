@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/tips")
 public class TipsController {
 
+    @SuppressWarnings("all")
     @Autowired
     private TipsService tipsService;
 

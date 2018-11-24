@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ArticleCommentDao">
+
+    <select id="getInfoByAid" parameterType="Integer" resultMap="getArticleCommentDetail">
+        select * from t_food_article_comment where f_aid=#{fAid} order by f_id DESC;
+    </select>
+
+    <select id="getInfoByIdBrief" parameterType="Integer" resultType="ArticleComment">
+        select * from t_food_article_comment where f_id=#{fId};
+    </select>
+
+    <resultMap id="getArticleCommentDetail" type="ArticleComment">
+        <result column="f_uid" property="fUid"/>
+        <result column="f_replyid" property="fReplyid"/>
+        <result column="f_id" property="fId"/>
+        <association property="commonUser" column="f_uid"
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
+        </association>
+        <association property="articleComment" column="f_replyid"
+                     select="com.smxy.recipe.dao.ArticleCommentDao.getInfoByIdBrief">
+        </association>
+        <association property="articleCommentGreats" column="f_id"
+                     select="com.smxy.recipe.dao.ArticleCommentDao.getGreatCount">
+        </association>
+    </resultMap>
+
+    <select id="getGreatCount" resultType="ArticleCommentGreat" parameterType="Integer">
+        select * from t_food_comment_great where f_cid=#{fId};
+    </select>
+
+    <insert id="saveInfoGreat">
+        insert into t_food_article_great (f_uid, f_cid) values (#{fUid}, #{fCid});
+    </insert>
+
+    <delete id="deleteInfoGreat">
+        delete from t_food_article_great where f_uid=#{fUid} and f_cid=#{fCid};
+    </delete>
+
+    <insert id="saveInfo" parameterType="ArticleComment">
+        insert into t_food_article_comment (f_aid, f_uid, f_content, f_release, f_cover, f_replyid)
+        values (#{fAid}, #{fUid}, #{fContent}, #{fRelease}, #{fCover}, #{fReplyid});
+    </insert>
+</mapper>

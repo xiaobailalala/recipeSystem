@@ -30,6 +30,7 @@
 package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.Article;
+import com.smxy.recipe.entity.Collect;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,4 +38,10 @@ public interface ArticleService {
     ResApi<String> saveInfo(Article article);
 
     ResApi<Object> uploadCover(MultipartFile multipartFile);
+
+    ResApi<Object> articleIndex(Integer aid, Integer uid);
+
+    ResApi<String> greatOperation(Integer open, Integer aid, Integer uid);
+
+    ResApi<String> collectArticle(Integer open, Collect collect);
 }

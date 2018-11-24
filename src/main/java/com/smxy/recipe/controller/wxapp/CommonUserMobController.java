@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @PathRestController("/mob/commonUser")
 public class CommonUserMobController {
+
+    @SuppressWarnings("all")
     @Autowired
     private CommonUserService commonUserService;
 

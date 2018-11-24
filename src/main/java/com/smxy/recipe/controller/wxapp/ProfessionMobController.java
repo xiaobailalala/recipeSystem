@@ -21,6 +21,7 @@ import java.util.List;
 @PathRestController("/mob/profession")
 public class ProfessionMobController {
 
+    @SuppressWarnings("all")
     @Autowired
     private ProfessionService professionService;
 
