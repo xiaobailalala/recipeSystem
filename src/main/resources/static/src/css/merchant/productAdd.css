@@ -163,7 +163,7 @@ div.clear-float {
 /* 第二个导航栏样式 */
 .top-nav {
     position: fixed;
-    z-index: 999;
+    z-index: 99;
     width: 100%;
     background-color: #FFD151;
 }

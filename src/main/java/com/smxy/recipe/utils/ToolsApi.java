@@ -11,7 +11,6 @@ package com.smxy.recipe.utils;
  * @author zpx
  */
 
-import com.smxy.recipe.dao.SysResourceDao;
 import com.smxy.recipe.entity.SysResource;
 import com.smxy.recipe.service.SysResourceService;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -126,7 +125,7 @@ public class ToolsApi {
 
     /**
      * 功能描述: 文件上传
-     * @param [file, pairs] 文件，文件描述
+     * @param file, pairs 文件，文件描述
      * @return java.lang.String
      * @auther yangyihui
      * @date 2018/11/20 0020 22:04
@@ -152,7 +151,7 @@ public class ToolsApi {
 
     /**
      * 功能描述: 上传二进制文件
-     * @param [file, suffixName]
+     * @param file, suffixName
      * @return java.lang.String
      * @auther yangyihui
      * @date 2018/11/20 0020 22:18
@@ -170,7 +169,7 @@ public class ToolsApi {
 
     /**
      * 功能描述: 删除文件
-     * @param [fileName] 文件名
+     * @param fileName 文件名
      * @return void
      * @auther yangyihui
      * @date 2018/11/20 0020 22:16

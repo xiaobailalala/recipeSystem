@@ -4,6 +4,12 @@
 <mapper namespace="com.smxy.recipe.dao.MerchantProductDetailsDao">
     <insert id="saveProductDetailsInfo" parameterType="com.smxy.recipe.entity.MerchantProductDetails">
         INSERT INTO t_product_details (f_pid, f_detailimg, f_detailcontents)
-        VALUES (#{fPid},#{fDetailimg},#{fDetailcontents});
+        VALUES (#{fPid}, #{fDetailimg}, #{fDetailcontents});
     </insert>
+
+    <delete id="deleteProductDetailsByFPid" parameterType="Integer">
+        DELETE
+        FROM t_product_details
+        WHERE f_pid = #{fPid};
+    </delete>
 </mapper>

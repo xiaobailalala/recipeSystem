@@ -19,10 +19,10 @@ import java.util.Map;
 @Configuration
 public class ThymeleafConfig {
 
-//    private String serverHost="192.168.1.108";
+    private String serverHost="192.168.1.108";
 //    private String serverHost="172.21.91.21";
 //    private String serverHost="192.168.0.108";
-    private String serverHost="172.20.10.10";
+//    private String serverHost="172.20.10.10";
 
     @Resource
     private void configureThymeleafStaticVars(ThymeleafViewResolver viewResolver) {

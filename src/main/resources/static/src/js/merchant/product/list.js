@@ -9,11 +9,16 @@ $(function () {
 
     });
 
-    layui.use(['element', 'table'], function () {
+    layui.use(['element', 'table', 'laytpl'], function () {
         var element = layui.element;
         var table = layui.table;
-
         var util = layui.util;
+
+        $('#haha').click(function (e) {
+            e.preventDefault();
+            var tabledata = table.checkStatus('produceAllList');
+            console.log(tabledata.data)
+        });
 
         //执行
         util.fixbar({
@@ -24,169 +29,111 @@ $(function () {
                     alert('点击了bar1')
                 }
             }
-        })
-
+        });
         table.render({
             elem: '#produceAllList',
             toolbar: '#products-control',
             page: true,
+            url: "/merchant/merchantProduct/list",
+            text: {
+                error: "现在还没有任何商品哦~快去添加吧！"
+            },
+            title: "商品目录",
+            parseDate: function (res) {
+                return {}
+            },
+            response: {
+                statusCode: 200,
+                dataName: 'item'
+            },
             cols: [
                 [{
-                    field: 'id',
+                    fixed: 'left',
+                    type: 'checkbox',
+                    style: 'height:120px;'
+                }, {
+                    field: 'fid',
                     title: 'ID',
                     align: 'center',
                     width: 80,
-                },
-                {
-                    field: 'f_cover',
+                    style: 'height:120px;'
+                }, {
+                    field: 'fcover',
                     title: '商品图片',
                     align: 'center',
                     width: 120,
-                    templet: '#showimg'
-                },
-                {
-                    field: 'f_name',
+                    templet: function (d) {
+                        return "<img src=" + Tools.fileServerPath + d.fcover + " style=width:100px;height:100px;>"
+                    },
+                    style: 'height:120px;'
+                }, {
+                    field: 'fname',
                     title: '标题',
                     align: 'center',
-                    minWidth: 150
-                },
-                {
-                    field: 'f_price',
+                    minWidth: 150,
+                    style: 'height:120px;'
+                }, {
+                    field: 'd.merchantProductMarques.fprice',
                     title: '价格',
                     align: 'center',
-                    width: 100,
-                    sort: true
-                },
-                {
-                    field: 'f_repertory',
+                    width: 80,
+                    sort: true,
+                    templet: function (d) {
+                        return "<span>" + d.merchantProductMarques[0].fprice + "</span>";
+                    },
+                    style: 'height:120px;'
+                }, {
+                    field: 'd.merchantProductMarques.frepository',
                     title: '库存',
                     align: 'center',
                     width: 80,
-                    sort: true
-                },
-                {
-                    field: 'f_state',
+                    sort: true,
+                    templet: function (d) {
+                        return "<span>" + d.merchantProductMarques[0].frepository + "</span>";
+                    },
+                    style: 'height:120px;'
+                }, {
+                    field: 'fstate',
                     title: '商品状态',
                     align: 'center',
                     width: 100
-                },
-                {
-                    field: 'f_good',
+                }, {
+                    field: 'fgood',
                     title: '获赞数',
                     align: 'center',
                     width: 80,
-                    sort: true
+                    sort: true,
+                    style: 'height:120px;'
                 }, {
-                    field: 'f_category',
+                    field: 'fcategory',
                     title: '商品分类',
                     align: 'center',
                     width: 110
                 }, {
-                    field: 'f_sales',
+                    field: 'fsales',
                     title: '商品销售量',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    style: 'height:120px;'
+                }, {
+                    field: 'freview',
+                    title: '商品审核状态',
+                    align: 'center',
+                    width: 100,
+                    style: 'height:120px;'
                 }, {
                     field: 'control',
                     fixed: 'right',
                     title: '操作',
                     toolbar: '#product-control',
-                    width: 180,
+                    width: 200,
                     style: 'height:120px;text-align:center;'
                 }
                 ]
             ],
-            data: [{
-                "id": "10001",
-                "f_cover": "杜甫",
-                "f_name": "销售中销售中销售中销售中销售中销售中销售中销售中销售中销售中销售中销售中销售中销售中销售中销售中",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "9999.00",
-                "f_good": "116",
-                "f_category": "厨具",
-                "f_sales": "108",
-                "joinTime": "2016-10-14"
-            }, {
-                "id": "10002",
-                "f_cover": "李白",
-                "f_name": "xianxin@layui.com",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "80",
-                "f_good": "12",
-                "f_category": "厨具",
-                "f_sales": "106",
-                "joinTime": "2016-10-14"
-            }, {
-                "id": "10003",
-                "f_cover": "王勃",
-                "f_name": "xianxin@layui.comxianxin@layui.comxianxin@layui.comxianxin@layui.comxianxin@layui.comxianxin@layui.comxianxin@layui.com",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "80",
-                "f_good": "65",
-                "f_category": "厨具",
-                "f_sales": "106",
-                "joinTime": "2016-10-14"
-            }, {
-                "id": "10004",
-                "f_cover": "贤心",
-                "f_name": "xianxin@layui.com",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "80",
-                "f_good": "666",
-                "f_category": "厨具",
-                "f_sales": "106",
-                "joinTime": "2016-10-14"
-            }, {
-                "id": "10005",
-                "f_cover": "贤心",
-                "f_name": "xianxin@layui.com",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "80",
-                "f_good": "86",
-                "f_category": "厨具",
-                "f_sales": "106",
-                "joinTime": "2016-10-14"
-            }, {
-                "id": "10006",
-                "f_cover": "贤心",
-                "f_name": "xianxin@layui.com",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "80",
-                "f_good": "12",
-                "f_category": "厨具",
-                "f_sales": "106",
-                "joinTime": "2016-10-14"
-            }, {
-                "id": "10007",
-                "f_cover": "贤心",
-                "f_name": "xianxin@layui.com",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "80",
-                "f_good": "16",
-                "f_category": "厨具",
-                "f_sales": "106",
-                "joinTime": "2016-10-14"
-            }, {
-                "id": "10008",
-                "f_cover": "贤心",
-                "f_name": "xianxin@layui.com",
-                "f_repertory": "11",
-                "f_state": "销售中",
-                "f_price": "80",
-                "f_good": "106",
-                "f_category": "厨具",
-                "f_sales": "106",
-                "joinTime": "2016-10-14"
-            }],
             done: function () {
-                $("td[data-field='f_cover']").each(function () {
+                //取消layui表格默认样式
+                $("td[data-field='fcover']").each(function () {
                     $(this).find(".layui-table-cell").removeClass('layui-table-cell');
                 });
                 $("td[data-field='control']").each(function () {
@@ -257,5 +204,122 @@ $(function () {
                 });
             }
         });
+        table.on('tool(produceList_table)', function (obj) {
+            var data = obj.data;
+            var event = obj.event;
+            switch (event) {
+                case 'shelve':
+                    console.log('shelve');
+                    console.log(data.fid);
+                    $.ajax({
+                        url: "/merchant/merchantProduct/update/" + data.fid + "/shelve",
+                        type: "PUT",
+                        success: function (res) {
+                            if (res.code === 200) {
+                                layer.msg("商品上架成功");
+                                table.reload('produceAllList');
+                            }
+                        }
+                    });
+                    break;
+                case 'unshelve':
+                    console.log('unshelve');
+                    $.ajax({
+                        url: "/merchant/merchantProduct/update/" + data.fid + "/unshelve",
+                        type: "PUT",
+                        success: function (res) {
+                            if (res.code === 200) {
+                                layer.msg("商品下架成功");
+                                table.reload('produceAllList');
+                            }
+                        }
+                    });
+                    break;
+                case 'delete':
+                    layer.confirm('你确定要删除这件商品嘛？', {
+                        btn: ['确定', '取消'],
+                        btn1: function (index, layero) {
+                            $.ajax({
+                                url: "/merchant/merchantProduct/delete/" + data.fid,
+                                type: "DELETE",
+                                success: function (res) {
+                                    if (res.code === 200) {
+                                        layer.msg("删除商品成功");
+                                        table.reload('produceAllList');
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    break;
+                case 'edit':
+                    console.log('edit');
+                    break;
+            }
+        });
+        table.on('toolbar(produceList_table)', function (obj) {
+            var checkdata = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'more-shelve':
+                    if (checkdata.data.length === 0) {
+                        layer.msg("请先选择数据!!!");
+                    } else {
+                        $.each(checkdata.data, function (index, item) {
+                            $.ajax({
+                                url: "/merchant/merchantProduct/update/" + item.fid + "/shelve",
+                                type: "PUT",
+                                success: function (res) {
+                                    if (res.code === 200) {
+                                        layer.msg("商品上架成功");
+                                        table.reload('produceAllList');
+                                    }
+                                }
+                            });
+                        });
+                    }
+                    break;
+                case 'more-unshelve':
+                    if (checkdata.data.length === 0) {
+                        layer.msg("请先选择数据!!!");
+                    } else {
+                        $.each(checkdata.data, function (index, item) {
+                            $.ajax({
+                                url: "/merchant/merchantProduct/update/" + item.fid + "/unshelve",
+                                type: "PUT",
+                                success: function (res) {
+                                    if (res.code === 200) {
+                                        layer.msg("商品上架成功");
+                                        table.reload('produceAllList');
+                                    }
+                                }
+                            });
+                        });
+                    }
+                    break;
+                case 'more-delete':
+                    if (checkdata.data.length === 0) {
+                        layer.msg("请先选择数据!!!");
+                    } else {
+                        layer.confirm('你确定要删除这件商品嘛？', {
+                            btn: ['确定', '取消'],
+                            btn1: function (index, layero) {
+                                $.each(checkdata.data, function (index, item) {
+                                    $.ajax({
+                                        url: "/merchant/merchantProduct/delete/" + item.fid,
+                                        type: "DELETE",
+                                        success: function (res) {
+                                            if (res.code === 200) {
+                                                layer.msg("删除商品成功");
+                                                table.reload('produceAllList');
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    }
+                    break;
+            }
+        })
     });
 });

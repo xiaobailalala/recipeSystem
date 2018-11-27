@@ -1,7 +1,7 @@
 #ServerHostIp: 192.168.1.108
 #ServerHostIp: 172.21.91.21
-#ServerHostIp: 192.168.0.108
-ServerHostIp: 172.20.10.10
+ServerHostIp: 192.168.1.108
+#ServerHostIp: 172.20.10.10
 spring:
   # 配置数据库连接信息以及改变数据源为Druid
   datasource:

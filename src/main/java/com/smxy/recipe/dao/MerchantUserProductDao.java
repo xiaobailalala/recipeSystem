@@ -19,4 +19,13 @@ public interface MerchantUserProductDao {
      * @date 2018/11/23 0023 18:44
      */
     Integer saveMerchantUserProductInfo(MerchantUserProduct merchantUserProduct);
+
+    /**
+     * 功能描述: 根据商品ID删除数据
+     * @param fPid 商品ID
+     * @return 数据更新数
+     * @auther yangyihui
+     * @date 2018/11/26 0026 20:42
+     */
+    Integer deleteMerchantUserProductByFPid(Integer fPid);
 }

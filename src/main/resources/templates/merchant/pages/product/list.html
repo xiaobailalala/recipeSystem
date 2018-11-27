@@ -9,8 +9,9 @@
     <div class="produce-list-all">
         <div class="product-div">
             <h3>所有商品</h3>
-            <table id="produceAllList" lay-filter="test"></table>
+            <table id="produceAllList" lay-filter="produceList_table"></table>
         </div>
+        <button type="button" id="haha">TEST</button>
     </div>
     <div>
         <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},false)}">
@@ -31,9 +32,9 @@
                     </a>
                 </div>
             </script>
-            <script type="text/html" id="showimg">
-                <img src="\images\timg.jpg" alt="" style="width:100px;hight:100px;">
-            </script>
+            <!--<script type="text/html" id="showimg">-->
+                <!--<img src="<%d.fcover%>" alt="<%d.LAY_INDEX%>" style="width:100px;hight:100px;">-->
+            <!--</script>-->
             <script type="text/html" id="products-control">
                 <div class="layui-btn-group">
                     <a class="layui-btn layui-btn-sm more-shelve" lay-event="more-shelve">
