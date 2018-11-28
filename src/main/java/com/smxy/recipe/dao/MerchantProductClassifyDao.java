@@ -41,4 +41,13 @@ public interface MerchantProductClassifyDao{
      * @date 2018/11/22 0022 9:15
      */
     List<MerchantProductClassify> getAllProductClassify();
+
+    /**
+     * 功能描述: 通过ID获取商品类型
+     * @param fId 商品类型ID
+     * @return 商品类型实体类
+     * @auther yangyihui
+     * @date 2018/11/26 0026 8:17
+     */
+    MerchantProductClassify getProductClassifyById(Integer fId);
 }

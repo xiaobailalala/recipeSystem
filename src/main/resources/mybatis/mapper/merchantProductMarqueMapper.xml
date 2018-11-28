@@ -2,15 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.MerchantProductMarqueDao">
-    <select id="getMarqueByClassifyIdAndProductId" parameterType="Map" resultType="com.smxy.recipe.entity.MerchantProductMarque">
+    <select id="getMarqueByClassifyIdAndProductId" parameterType="Map"
+            resultType="com.smxy.recipe.entity.MerchantProductMarque">
         SELECT *
         FROM t_product_marque
         WHERE f_marqueclaid = #{fMarqueclaid}
-        AND f_pid = #{fPid};
+          AND f_pid = #{fPid}
+        ORDER BY f_price ASC;
     </select>
 
-    <insert id="saveMarqueInfo" parameterType="com.smxy.recipe.entity.MerchantProductMarque" keyProperty="fId" useGeneratedKeys="true">
+    <insert id="saveMarqueInfo" parameterType="com.smxy.recipe.entity.MerchantProductMarque" keyProperty="fId"
+            useGeneratedKeys="true">
         INSERT INTO t_product_marque (f_marquename, f_marqueimage, f_price, f_repository, f_marqueclaid, f_pid)
-        VALUES (#{fMarquename},#{fMarqueimage},#{fPrice},#{fRepository},#{fMarqueclaid},#{fPid});
+        VALUES (#{fMarquename}, #{fMarqueimage}, #{fPrice}, #{fRepository}, #{fMarqueclaid}, #{fPid});
     </insert>
+
+    <delete id="deleteMarqueByFPid" parameterType="Integer">
+        DELETE
+        FROM t_product_marque
+        WHERE f_pid = #{fPid};
+    </delete>
 </mapper>

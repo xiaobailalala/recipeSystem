@@ -42,4 +42,13 @@ public interface MerchantProductMarqueClassifyDao {
      * @date 2018/11/19 0019 20:26
      */
     Integer updateMarqueClassify(MerchantProductMarqueClassify merchantProductMarqueClassify);
+
+    /**
+     * 功能描述: 通过ID过去商品型号类型
+     * @param fId 商品型号类型ID
+     * @return 商品型号类型实体类
+     * @auther yangyihui
+     * @date 2018/11/26 0026 7:46
+     */
+    MerchantProductMarqueClassify getMarqueClassifyById(Integer fId);
 }

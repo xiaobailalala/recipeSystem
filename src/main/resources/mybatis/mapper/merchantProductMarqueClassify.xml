@@ -7,7 +7,15 @@
         FROM t_product_marque_classify;
     </select>
 
-    <insert id="saveMarqueClassify" parameterType="com.smxy.recipe.entity.MerchantProductMarqueClassify" useGeneratedKeys="true" keyProperty="fId">
+    <select id="getMarqueClassifyById" parameterType="Integer"
+            resultType="com.smxy.recipe.entity.MerchantProductMarqueClassify">
+        SELECT *
+        FROM t_product_marque_classify
+        WHERE f_id = #{fId};
+    </select>
+
+    <insert id="saveMarqueClassify" parameterType="com.smxy.recipe.entity.MerchantProductMarqueClassify"
+            useGeneratedKeys="true" keyProperty="fId">
         INSERT INTO t_product_marque_classify (f_id, f_marquename)
         VALUES (#{fId}, #{fMarquename});
     </insert>
@@ -19,6 +27,7 @@
     </delete>
 
     <update id="updateMarqueClassify" parameterType="com.smxy.recipe.entity.MerchantProductMarqueClassify">
-        UPDATE t_product_marque_classify SET f_marquename = #{fMarquename};
+        UPDATE t_product_marque_classify
+        SET f_marquename = #{fMarquename};
     </update>
 </mapper>

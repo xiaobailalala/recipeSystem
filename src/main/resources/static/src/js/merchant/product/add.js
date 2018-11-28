@@ -219,7 +219,7 @@ $(function () {
         }());
 
         (function marqueClassify() {
-            var select = $("select[name=fMarque]");
+            var select = $("select[name=fMarqueclaid]");
             var marclassify = '';
             $.ajax({
                 url: "/merchant/productMarqueClassify/getAllMarqueClassify",
@@ -542,9 +542,10 @@ $(function () {
                 productImages[pro_index] = item;
                 pro_index++;
             });
-            var kk = Object.setPrototypeOf(productImages,FileList.prototype);
-            console.log(kk);
-            console.log(productImages);
+            // var kk = Object.setPrototypeOf(productImages,FileList.prototype);
+            // console.log(kk);
+            var len = getJsonLength(_productImages);
+            console.log(len)
         });
 
         var demoListView = $('#demo2'),
@@ -650,74 +651,80 @@ $(function () {
                 marqueRepository = new Array(),
                 productDetailsText = new Array(),
                 marqueName = new Array();
-            $('.li-span-name span').each(function (indexInArray, valueOfElement) {
-                var spantext = $(this).text();
-                marqueName.push(spantext);
-            });
-            formdata.append("marqueName",marqueName);
-            $.each(_productImages,function (index,item) {
-                formdata.append("productImage",item);
-                // productImages[pro_index] = item;
-                // pro_index++;
-            });
-            // Object.setPrototypeOf(productImages,FileList.prototype);
-
-            // productImages.forEach(element => {
-            //     // formdata.append("productImage",element);
-            //     console.log(element);
-            // });
-            // formdata.append("productImage",productImages);
-            $('textarea[name=pro_details_content]').each(function (index, item) {
-                if ($(this).val()) {
-                    productDetailsText.push($(this).val());
-                }
-            });
-            formdata.append("productDetailsContent", productDetailsText);
-            if ($('input[name=manager_hot]').is(':checked')) {
-                formdata.append("pro_title", "#店长推荐#" + $('textarea[name=fName]').val());
-            } else {
-                formdata.append("pro_title", $('textarea[name=fName]').val());
-            }
-            if ($('#modeldefault').css('display') === 'block') {
-                formdata.append("pro_price", $('input[name=price]').val());
-                formdata.append("pro_repertory", $('input[name=repertory]').val());
-            } else {
-
-                $('input[name=table_input_price]').each(function () {
-                    marquePrice.push($(this).val());
+            var len = getJsonLength(_productImages);
+            if (len === 0){
+                layer.alert("请添加商品主图!!!!!");
+            }else {
+                $('.li-span-name span').each(function (indexInArray, valueOfElement) {
+                    var spantext = $(this).text();
+                    marqueName.push(spantext);
                 });
-                formdata.append("pro_price", marquePrice);
-                $('input[name=table_input_repertory]').each(function () {
-                    marqueRepository.push($(this).val());
+                formdata.append("marqueName",marqueName);
+
+                $.each(_productImages,function (index,item) {
+                    formdata.append("productImage",item);
+                    // productImages[pro_index] = item;
+                    // pro_index++;
                 });
-                formdata.append("pro_repertory", marqueRepository);
-            }
-            $.ajax({
-                url: "/merchant/merchantProduct/add",
-                data: formdata,
-                type: "POST",
-                processData: false,
-                contentType: false,
-                success: res => {
-                    if (res.code === 200) {
-                        layer.alert('商品上传成功！', {
-                            icon: 1,
-                            skin: 'layer-ext-moon',
-                            yes:function(index, layero){
-                                window.location.reload();
-                                layer.close(index); //如果设定了yes回调，需进行手工关闭
-                            }
-                        });
-                    }else{
-                        var msg = res.msg;
-                        layer.msg(msg);
+                // Object.setPrototypeOf(productImages,FileList.prototype);
+
+                // productImages.forEach(element => {
+                //     // formdata.append("productImage",element);
+                //     console.log(element);
+                // });
+                // formdata.append("productImage",productImages);
+                $('textarea[name=pro_details_content]').each(function (index, item) {
+                    if ($(this).val()) {
+                        productDetailsText.push($(this).val());
                     }
+                });
+                formdata.append("productDetailsContent", productDetailsText);
+                if ($('input[name=manager_hot]').is(':checked')) {
+                    formdata.append("pro_title", "#店长推荐#" + $('textarea[name=fName]').val());
+                } else {
+                    formdata.append("pro_title", $('textarea[name=fName]').val());
                 }
-            });
-            // var i =formdata.entries();
-            // for(var i of formdata.entries()){
-            //     console.log(i[0]+ ', '+ i[1]);//i[0],i[1],下标为零是键，为1是值
-            // }
+                if ($('#modeldefault').css('display') === 'block') {
+                    formdata.append("pro_price", $('input[name=price]').val());
+                    formdata.append("pro_repertory", $('input[name=repertory]').val());
+                } else {
+
+                    $('input[name=table_input_price]').each(function () {
+                        marquePrice.push($(this).val());
+                    });
+                    formdata.append("pro_price", marquePrice);
+                    $('input[name=table_input_repertory]').each(function () {
+                        marqueRepository.push($(this).val());
+                    });
+                    formdata.append("pro_repertory", marqueRepository);
+                }
+                $.ajax({
+                    url: "/merchant/merchantProduct/add",
+                    data: formdata,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    success: res => {
+                        if (res.code === 200) {
+                            layer.alert('商品上传成功！', {
+                                icon: 1,
+                                skin: 'layer-ext-moon',
+                                yes:function(index, layero){
+                                    window.location.reload();
+                                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                                }
+                            });
+                        }else{
+                            var msg = res.msg;
+                            layer.msg(msg);
+                        }
+                    }
+                });
+                // var i =formdata.entries();
+                // for(var i of formdata.entries()){
+                //     console.log(i[0]+ ', '+ i[1]);//i[0],i[1],下标为零是键，为1是值
+                // }
+            }
             return false;
         });
 

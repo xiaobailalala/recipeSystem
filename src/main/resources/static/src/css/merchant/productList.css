@@ -261,7 +261,10 @@ textarea {
     right: 1px;
     top: -3px;
 }
-
+td[data-field=fcover] div{  /*最后的pic为字段的field*/
+    height: 100%;
+    max-width: 100%;
+}
 /*
 .product-div .layui-table-cell{
     height:auto;

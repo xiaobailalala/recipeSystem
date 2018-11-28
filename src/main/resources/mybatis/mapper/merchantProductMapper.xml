@@ -8,10 +8,10 @@
         ORDER BY f_id ASC;
     </select>
     <resultMap id="getMerchantProductDetails" type="com.smxy.recipe.entity.MerchantProduct">
-        <id property="fId" column="f_id"/>
+        <result property="fId" column="f_id"/>
         <result property="fMarqueclaid" column="f_marqueclaid"/>
         <collection
-                property="merchantProductMarques" column="{fMarqueclaid:fMarqueclaid,fPid:fId}"
+                property="merchantProductMarques" column="{fMarqueclaid=f_marqueclaid,fPid=f_id}"
                 select="com.smxy.recipe.dao.MerchantProductMarqueDao.getMarqueByClassifyIdAndProductId">
         </collection>
     </resultMap>
@@ -22,22 +22,39 @@
         WHERE f_id = #{fId};
     </select>
 
-    <insert id="saveProductInfo" parameterType="com.smxy.recipe.entity.MerchantProduct">
+    <delete id="deleteProductByFId" parameterType="Integer">
+        DELETE
+        FROM t_merchant_product
+        WHERE f_id = #{fId};
+    </delete>
+
+    <update id="updateProductStatusById">
+        UPDATE t_merchant_product
+        SET f_state = #{fState}
+        WHERE f_id = #{fId};
+    </update>
+
+    <insert id="saveProductInfo" parameterType="com.smxy.recipe.entity.MerchantProduct" keyProperty="fId"
+            useGeneratedKeys="true">
         INSERT INTO t_merchant_product (f_name,
+                                        f_cover,
                                         f_category,
                                         f_state,
                                         f_sales,
                                         f_marqueclaid,
                                         f_addtime,
                                         f_grosssales,
-                                        f_freightid)
+                                        f_freightid,
+                                        f_review)
         VALUES (#{fName},
+                #{fCover},
                 #{fCategory},
                 #{fState},
                 #{fSales},
                 #{fMarqueclaid},
                 #{fAddtime},
                 #{fGrosssales},
-                #{fFreightid});
+                #{fFreightid},
+                #{fReview});
     </insert>
 </mapper>

@@ -86,7 +86,7 @@
                             <div class="layui-card product-card">
                                 <div class="layui-card-header product-div-model-title">
                                     <div class="div_select" style="width:150px; display: inline-block;">
-                                        <select name="fMarque">
+                                        <select name="fMarqueclaid">
                                             <option value="">请选择型号分类</option>
                                         </select>
                                     </div>
@@ -145,8 +145,8 @@
                     <div class="noshowtable layui-form-item">
                         <label class="layui-form-label" style="box-sizing: content-box; padding-right: 0;width: 85px;;">价格与库存：</label>
                         <div class="layui-input-block">
-                            <table id="modeltable" style="padding:0 10px;" lay-filter="parse-table"
-                                   lay-data="{id: 'idTable'}">
+                            <table id="modeltable" style="padding:0 10px;" lay-filter="parse-table">
+                                <!-- lay-data="{id: 'idTable'}"-->
                                 <thead id="table_data_head">
                                 <tr>
                                     <th id="thisTop"

@@ -7,6 +7,12 @@
         FROM t_product_classify;
     </select>
 
+    <select id="getProductClassifyById" parameterType="Integer" resultType="com.smxy.recipe.entity.MerchantProductClassify">
+        SELECT *
+        FROM t_product_classify
+        WHERE f_id = #{fId};
+    </select>
+
     <insert id="saveProductClassify" parameterType="com.smxy.recipe.entity.MerchantProductClassify">
         INSERT INTO t_product_classify (f_name)
         VALUE (#{fName});

@@ -21,4 +21,9 @@ public class MerchantProductImage implements Serializable {
     private Integer fId;
     private Integer fPid;
     private String fImg;
+
+    public MerchantProductImage(Integer fPid, String fImg) {
+        this.fPid = fPid;
+        this.fImg = fImg;
+    }
 }
