@@ -20,6 +20,8 @@ public interface RecipeDao {
 
     List<Recipe> getAllInfoBre();
 
+    Recipe getInfoByIdBrief(Integer fId);
+
     Recipe getInfoById(Integer fId);
 
     Integer deleteInfoById(Integer fId);
@@ -27,4 +29,6 @@ public interface RecipeDao {
     Integer updateInfoById(Recipe recipe);
 
     Integer updateRecipeCount(Recipe recipe);
+
+    List<Recipe> getInfoByUidBrief(Integer fUid);
 }

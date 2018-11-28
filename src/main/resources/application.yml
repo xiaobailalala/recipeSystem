@@ -53,6 +53,7 @@ spring:
             enable: true
   thymeleaf:
     mode: HTML
+    cache: false
   rabbitmq:
     host: ${ServerHostIp}
     username: guest

@@ -63,7 +63,7 @@ public class ArticleMobController {
     }
 
     @GetMapping("/greatOperation")
-    public ResApi<String> greatOperation(Integer open, Integer aid, Integer uid){
+    public ResApi<String> greatOperation(Integer open, @RequestParam("fAid") Integer aid, @RequestParam("fUid") Integer uid){
         return articleService.greatOperation(open, aid, uid);
     }
 

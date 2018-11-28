@@ -49,10 +49,14 @@ public class FoodCommentServiceImpl implements FoodCommentService {
 
     private static final Logger logger = LoggerFactory.getLogger(FoodCommentServiceImpl.class);
 
-    @Autowired
     private FoodCommentDao foodCommentDao;
-    @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    public FoodCommentServiceImpl(FoodCommentDao foodCommentDao, RabbitTemplate rabbitTemplate) {
+        this.foodCommentDao = foodCommentDao;
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     @Override
     public ResApi<Object> commentImgupload(MultipartFile file) {

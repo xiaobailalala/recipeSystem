@@ -23,33 +23,27 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/11/14 15:05
+ * Build File @date: 2018/11/25 20:53
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.smxy.recipe.entity.CommonAttention;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Article {
-    private Integer fId;
-    private String fName;
-    private String fContent;
-    private Integer fUid;
-    private CommonUser commonUser;
-    private String fCover;
-    private Integer fGood;
-    private Integer fCount;
-    private Integer fCollect;
-    private String fType;
-    private String fRelease;
-    private List<ArticleComment> articleComments;
-    private Integer commentCount;
+public interface CommonAttentionDao {
+
+    Integer saveInfo(CommonAttention commonAttention);
+
+    Integer findInfoByUidAndOidAndType(@Param("fUid") Integer uid, @Param("fOid") Integer oid, @Param("fType") Integer type);
+
+    Integer deleteInfo(CommonAttention commonAttention);
+
+    List<CommonAttention> findInfoByUidAndType(@Param("fUid") Integer uid, @Param("fType") Integer type);
+
+    List<CommonAttention> findInfoByOidAndType(@Param("fOid") Integer oid, @Param("fType") Integer type);
+
 }

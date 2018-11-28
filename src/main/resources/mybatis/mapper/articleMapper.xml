@@ -24,11 +24,39 @@
         <collection property="fCollect" column="f_id"
                     select="com.smxy.recipe.dao.CollectDao.getCountByRidAndTypeForArticle">
         </collection>
+        <collection property="articleComments" column="f_id"
+                    select="com.smxy.recipe.dao.ArticleCommentDao.getInfoByAid">
+        </collection>
     </resultMap>
 
     <select id="findInfoById" parameterType="Integer" resultMap="getArticleDetail">
         select * from t_food_article where f_id=#{fId};
     </select>
+
+    <select id="findInfoByUidBrief" parameterType="Integer" resultMap="getArticleDetailBrief">
+        select * from t_food_article where f_uid=#{fUid};
+    </select>
+
+    <select id="findInfoByIdBrief" parameterType="Integer" resultMap="getArticleDetailBrief">
+        select * from t_food_article where f_id=#{fId};
+    </select>
+
+    <resultMap id="getArticleDetailBrief" type="Article">
+        <result column="f_id" property="fId"/>
+        <result column="f_uid" property="fUid"/>
+        <association property="commonUser" column="f_uid"
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <collection property="fGood" column="f_id"
+                    select="com.smxy.recipe.dao.ArticleGreatDao.getCountByAid">
+        </collection>
+        <collection property="fCollect" column="f_id"
+                    select="com.smxy.recipe.dao.CollectDao.getCountByRidAndTypeForArticle">
+        </collection>
+        <collection property="commentCount" column="f_id"
+                    select="com.smxy.recipe.dao.ArticleCommentDao.getCountByAid">
+        </collection>
+    </resultMap>
 
     <update id="updateCount" parameterType="Article">
         update t_food_article set f_count=#{fCount} where f_id=#{fId};

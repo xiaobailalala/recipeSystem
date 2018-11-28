@@ -14,6 +14,7 @@ import com.smxy.recipe.entity.CommonUser;
 import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,4 +66,10 @@ public class CommonUserMobController {
     public ResApi<CommonUser> commonUserSaveInfo(CommonUser commonUser){
         return commonUserService.commonUserSaveInfo(commonUser);
     }
+
+    @GetMapping("/collectionInfo")
+    public ResApi<Object> collectionInfo(Integer uid){
+        return commonUserService.collectionInfo(uid);
+    }
+
 }

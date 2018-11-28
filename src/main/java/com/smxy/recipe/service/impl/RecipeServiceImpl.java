@@ -43,11 +43,13 @@ public class RecipeServiceImpl implements RecipeService {
     private MaterialDao materialDao;
     private CollectDao collectDao;
     private ArticleDao articleDao;
+    private CommonAttentionDao commonAttentionDao;
 
     @Autowired
     public RecipeServiceImpl(TipsDao tipsDao, ClassifyOneDao classifyOneDao, RecipeClassifyDao recipeClassifyDao, RecipeDao recipeDao,
                              RecipeTipsDao recipeTipsDao, RecipeMaterialDao recipeMaterialDao,ProcessDao processDao, ClassifyTwoDao classifyTwoDao,
-                             ClassifyDao classifyDao, RabbitTemplate rabbitTemplate, MaterialDao materialDao, CollectDao collectDao, ArticleDao articleDao) {
+                             ClassifyDao classifyDao, RabbitTemplate rabbitTemplate, MaterialDao materialDao, CollectDao collectDao, ArticleDao articleDao,
+                             CommonAttentionDao commonAttentionDao) {
         this.tipsDao = tipsDao;
         this.classifyOneDao = classifyOneDao;
         this.recipeClassifyDao = recipeClassifyDao;
@@ -61,6 +63,7 @@ public class RecipeServiceImpl implements RecipeService {
         this.materialDao = materialDao;
         this.collectDao = collectDao;
         this.articleDao = articleDao;
+        this.commonAttentionDao = commonAttentionDao;
     }
 
     @Override
@@ -82,7 +85,7 @@ public class RecipeServiceImpl implements RecipeService {
                                    Integer[] tipArr, String[] materialNumber, Integer[] materialId, String[] materialName,
                                    String[] stepContent, String[] stepTime) {
         recipe.setFUid(0);
-        recipe.setFRelease(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
+        recipe.setFRelease(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow().substring(0, 5));
         recipe.setFCover(ToolsApi.multipartFileUploadFile(file, null));
         int saveRecipe = recipeDao.saveInfo(recipe);
         if (saveRecipe > 0) {
@@ -121,14 +124,21 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public ResApi<Object> getDetailInfo(Collect collect) {
         Map<String, Object> map = new HashMap<>(8);
-        map.put("item", recipeDao.getInfoById(collect.getFRid()));
+        Recipe recipe = recipeDao.getInfoById(collect.getFRid());
+        map.put("item", recipe);
         if (collect.getFUid().equals(0)) {
             map.put("isCollect", false);
+            map.put("isAttention", false);
         } else {
             if (collectDao.findByAllBrief(collect).size() != 0) {
                 map.put("isCollect", true);
             } else {
                 map.put("isCollect", false);
+            }
+            if (commonAttentionDao.findInfoByUidAndOidAndType(collect.getFUid(), recipe.getCommonUser().getFId(), 1) != 0) {
+                map.put("isAttention", true);
+            } else {
+                map.put("isAttention", false);
             }
         }
         return ResApi.getSuccess(map);

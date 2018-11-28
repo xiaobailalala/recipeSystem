@@ -23,33 +23,19 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/11/14 15:05
+ * Build File @date: 2018/11/25 20:54
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.smxy.recipe.entity.CommonAttention;
+import com.smxy.recipe.utils.ResApi;
 
-import java.util.List;
+public interface CommonAttentionService {
+    ResApi<String> addAttention(CommonAttention commonAttention);
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Article {
-    private Integer fId;
-    private String fName;
-    private String fContent;
-    private Integer fUid;
-    private CommonUser commonUser;
-    private String fCover;
-    private Integer fGood;
-    private Integer fCount;
-    private Integer fCollect;
-    private String fType;
-    private String fRelease;
-    private List<ArticleComment> articleComments;
-    private Integer commentCount;
+    ResApi<String> deleteAttention(CommonAttention commonAttention);
+
+    ResApi<Object> attentionInfo(Integer uid);
 }

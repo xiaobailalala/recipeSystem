@@ -36,4 +36,5 @@ public final class Recipe {
 	private List<RecipeTips> recipeTips;
 	private List<RecipeMaterial> recipeMaterials;
 	private List<Process> processes;
+	private Integer commentCount;
 }

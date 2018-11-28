@@ -39,6 +39,8 @@ public interface ArticleCommentDao {
 
     List<ArticleComment> getInfoByAid(Integer fAid);
 
+    Integer getCountByAid(Integer fAid);
+
     ArticleComment getInfoByIdBrief(Integer fId);
 
     List<ArticleCommentGreat> getGreatCount(Integer fId);

@@ -25,6 +25,14 @@
         </collection>
     </resultMap>
 
+    <select id="getInfoByIdBrief" resultMap="getRecipeDetailBrief" parameterType="Integer">
+        select * from t_food_recipe where f_id=#{fId};
+    </select>
+
+    <select id="getInfoByUidBrief" resultMap="getRecipeDetailBrief" parameterType="Integer">
+        select * from t_food_recipe where f_uid=#{fUid};
+    </select>
+
     <select id="getInfoById" resultMap="getRecipeDetail" parameterType="Integer">
         select * from t_food_recipe where f_id=#{fId};
     </select>
@@ -49,6 +57,26 @@
         </collection>
         <collection property="fGood" column="f_id"
                     select="com.smxy.recipe.dao.CollectDao.getCountByRidAndTypeForRecipe">
+        </collection>
+        <collection property="commentCount" column="f_id"
+                    select="com.smxy.recipe.dao.FoodCommentDao.getCountByRid">
+        </collection>
+    </resultMap>
+
+    <resultMap id="getRecipeDetailBrief" type="Recipe">
+        <result column="f_id" property="fId"/>
+        <result column="f_uid" property="fUid"/>
+        <association property="commonUser" column="f_uid"
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <collection property="recipeMaterials" column="f_id"
+                    select="com.smxy.recipe.dao.RecipeMaterialDao.getInfoByRid">
+        </collection>
+        <collection property="fGood" column="f_id"
+                    select="com.smxy.recipe.dao.CollectDao.getCountByRidAndTypeForRecipe">
+        </collection>
+        <collection property="commentCount" column="f_id"
+                    select="com.smxy.recipe.dao.FoodCommentDao.getCountByRid">
         </collection>
     </resultMap>
     <delete id="deleteInfoById" parameterType="Integer">

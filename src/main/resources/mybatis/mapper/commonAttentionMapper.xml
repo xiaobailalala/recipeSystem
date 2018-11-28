@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.CommonAttentionDao">
+
+    <insert id="saveInfo" parameterType="CommonAttention">
+        insert into t_common_attention (f_uid, f_oid, f_type) values (#{fUid}, #{fOid}, #{fType});
+    </insert>
+
+    <select id="findInfoByUidAndOidAndType" resultType="Integer">
+        select count(*) from t_common_attention where f_uid=#{fUid} and f_oid=#{fOid} and f_type=#{fType};
+    </select>
+
+    <delete id="deleteInfo" parameterType="CommonAttention">
+        delete from t_common_attention where f_uid=#{fUid} and f_oid=#{fOid} and f_type=#{fType};
+    </delete>
+    
+    <select id="findInfoByUidAndType" resultMap="findInfoByUidAndTypeResultMap">
+        select * from t_common_attention where f_uid=#{fUid} and f_type=#{fType};
+    </select>
+    <resultMap id="findInfoByUidAndTypeResultMap" type="CommonAttention">
+        <result column="f_oid" property="fOid"/>
+        <association property="commonUserPassivity" column="f_oid"
+                    select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <collection property="recipes" column="f_oid"
+                    select="com.smxy.recipe.dao.RecipeDao.getInfoByUidBrief">
+        </collection>
+        <collection property="articles" column="f_oid"
+                    select="com.smxy.recipe.dao.ArticleDao.findInfoByUidBrief">
+        </collection>
+    </resultMap>
+
+    <select id="findInfoByOidAndType" resultMap="findInfoByOidAndTypeResultMap">
+        select distinct * from t_common_attention where f_oid=#{fOid} and f_type=#{fType};
+    </select>
+    <resultMap id="findInfoByOidAndTypeResultMap" type="CommonAttention">
+        <result column="f_uid" property="fUid"/>
+        <association property="commonUserInitiative" column="f_uid"
+                    select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+    </resultMap>
+
+</mapper>

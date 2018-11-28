@@ -69,7 +69,6 @@ public class ArticleCommentMobController {
 
     @PostMapping("/saveInfo")
     public ResApi<String> commentSaveInfo(ArticleComment articleComment){
-        System.out.println(articleComment);
         return articleCommentService.commentSaveInfo(articleComment);
     }
 

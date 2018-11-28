@@ -32,7 +32,9 @@ package com.smxy.recipe.service.impl;
 import com.smxy.recipe.dao.ArticleDao;
 import com.smxy.recipe.dao.ArticleGreatDao;
 import com.smxy.recipe.dao.CollectDao;
+import com.smxy.recipe.dao.CommonAttentionDao;
 import com.smxy.recipe.entity.Article;
+import com.smxy.recipe.entity.ArticleCommentGreat;
 import com.smxy.recipe.entity.Collect;
 import com.smxy.recipe.service.ArticleService;
 import com.smxy.recipe.utils.ResApi;
@@ -44,6 +46,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
@@ -52,13 +55,15 @@ public class ArticleServiceImpl implements ArticleService {
     private RabbitTemplate rabbitTemplate;
     private ArticleGreatDao articleGreatDao;
     private CollectDao collectDao;
+    private CommonAttentionDao commonAttentionDao;
 
     @Autowired
-    public ArticleServiceImpl(ArticleDao articleDao, RabbitTemplate rabbitTemplate, ArticleGreatDao articleGreatDao, CollectDao collectDao) {
+    public ArticleServiceImpl(ArticleDao articleDao, RabbitTemplate rabbitTemplate, ArticleGreatDao articleGreatDao, CollectDao collectDao, CommonAttentionDao commonAttentionDao) {
         this.articleDao = articleDao;
         this.rabbitTemplate = rabbitTemplate;
         this.articleGreatDao = articleGreatDao;
         this.collectDao = collectDao;
+        this.commonAttentionDao = commonAttentionDao;
     }
 
     @Override
@@ -82,7 +87,15 @@ public class ArticleServiceImpl implements ArticleService {
         article.setFName(ToolsApi.base64Decode(article.getFName()));
         article.setFContent(ToolsApi.base64Decode(article.getFContent()));
         rabbitTemplate.convertAndSend("recipeSystem.direct", "articleCountUpload.queue", aid);
-        if (!uid.equals(-1) && articleGreatDao.getByAidAndUid(aid, uid) != null) {
+        if (article.getArticleComments().size()>3){
+            article.setArticleComments(article.getArticleComments().subList(0, 3));
+        }
+        article.getArticleComments().forEach(item -> {
+            item.setFGood(item.getArticleCommentGreats().size());
+            item.setFContent(ToolsApi.base64Decode(item.getFContent()));
+        });
+        article.getArticleComments().sort((o1, o2) -> o2.getFGood().compareTo(o1.getFGood()));
+        if (!uid.equals(-1) && articleGreatDao.getByAidAndUid(aid, uid).size() != 0) {
             map.put("isGreat", true);
         } else {
             map.put("isGreat", false);
@@ -91,6 +104,11 @@ public class ArticleServiceImpl implements ArticleService {
             map.put("isCollect", true);
         } else {
             map.put("isCollect", false);
+        }
+        if (commonAttentionDao.findInfoByUidAndOidAndType(uid, article.getCommonUser().getFId(), 1) != 0) {
+            map.put("isAttention", true);
+        } else {
+            map.put("isAttention", false);
         }
         map.put("article", article);
         return ResApi.getSuccess(map);

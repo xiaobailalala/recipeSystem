@@ -30,6 +30,7 @@
 package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.Collect;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -43,4 +44,6 @@ public interface CollectDao {
     Integer getCountByRidAndTypeForRecipe(Integer fRid);
 
     Integer getCountByRidAndTypeForArticle(Integer fRid);
+
+    List<Collect> findByUidAndType(@Param("fUid") Integer uid, @Param("fType") Integer type);
 }
