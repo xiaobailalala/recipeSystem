@@ -27,4 +27,6 @@ public interface CommonUserService {
 	ResApi<Object> getOneById(Integer id);
 
 	ResApi<Object> updateCommonUserPwd(CommonUser commonUser);
+
+    ResApi<Object> collectionInfo(Integer uid);
 }

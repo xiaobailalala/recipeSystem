@@ -7,6 +7,10 @@
         select * from t_food_article_comment where f_aid=#{fAid} order by f_id DESC;
     </select>
 
+    <select id="getCountByAid" parameterType="Integer" resultType="Integer">
+        select count(*) from t_food_article_comment where f_aid=#{fAid};
+    </select>
+
     <select id="getInfoByIdBrief" parameterType="Integer" resultType="ArticleComment">
         select * from t_food_article_comment where f_id=#{fId};
     </select>
@@ -27,15 +31,15 @@
     </resultMap>
 
     <select id="getGreatCount" resultType="ArticleCommentGreat" parameterType="Integer">
-        select * from t_food_comment_great where f_cid=#{fId};
+        select * from t_food_article_comment_great where f_cid=#{fId};
     </select>
 
     <insert id="saveInfoGreat">
-        insert into t_food_article_great (f_uid, f_cid) values (#{fUid}, #{fCid});
+        insert into t_food_article_comment_great (f_uid, f_cid) values (#{fUid}, #{fCid});
     </insert>
 
     <delete id="deleteInfoGreat">
-        delete from t_food_article_great where f_uid=#{fUid} and f_cid=#{fCid};
+        delete from t_food_article_comment_great where f_uid=#{fUid} and f_cid=#{fCid};
     </delete>
 
     <insert id="saveInfo" parameterType="ArticleComment">

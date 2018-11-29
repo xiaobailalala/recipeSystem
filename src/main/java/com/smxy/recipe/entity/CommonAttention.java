@@ -23,7 +23,7 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/11/14 15:05
+ * Build File @date: 2018/11/25 20:43
  * @Description TODO
  * @version 1.0
  */
@@ -38,18 +38,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Article {
+public class CommonAttention {
     private Integer fId;
-    private String fName;
-    private String fContent;
     private Integer fUid;
-    private CommonUser commonUser;
-    private String fCover;
-    private Integer fGood;
-    private Integer fCount;
-    private Integer fCollect;
-    private String fType;
-    private String fRelease;
-    private List<ArticleComment> articleComments;
-    private Integer commentCount;
+    private CommonUser commonUserInitiative;
+    private Integer fOid;
+    private CommonUser commonUserPassivity;
+    private Integer fType;
+    private List<Recipe> recipes;
+    private List<Article> articles;
 }

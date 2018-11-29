@@ -41,6 +41,10 @@ public interface ArticleDao {
 
     Article findInfoById(Integer fId);
 
+    List<Article> findInfoByUidBrief(Integer fUid);
+
+    Article findInfoByIdBrief(Integer fId);
+
     Integer updateCount(Article article);
 
 }

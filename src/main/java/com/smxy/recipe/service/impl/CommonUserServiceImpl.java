@@ -7,8 +7,12 @@
  */
 package com.smxy.recipe.service.impl;
 
+import com.smxy.recipe.dao.CollectDao;
 import com.smxy.recipe.dao.CommonUserDao;
+import com.smxy.recipe.entity.Article;
+import com.smxy.recipe.entity.Collect;
 import com.smxy.recipe.entity.CommonUser;
+import com.smxy.recipe.entity.Recipe;
 import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,10 +33,12 @@ import java.util.Map;
 public class CommonUserServiceImpl implements CommonUserService {
 
     private CommonUserDao commonUserDao;
+    private CollectDao collectDao;
 
     @Autowired
-    public CommonUserServiceImpl(CommonUserDao commonUserDao) {
+    public CommonUserServiceImpl(CommonUserDao commonUserDao, CollectDao collectDao) {
         this.commonUserDao = commonUserDao;
+        this.collectDao = collectDao;
     }
 
     @Override
@@ -114,5 +121,15 @@ public class CommonUserServiceImpl implements CommonUserService {
         String newPwd = ToolsApi.entryptBySaltMd5("UcJAxskwvJxTNery", commonUser.getFAccount());
         commonUserDao.updatePwdByAccount(commonUser);
         return new ResApi<>(200, "success", "success");
+    }
+
+    @Override
+    public ResApi<Object> collectionInfo(Integer uid) {
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("recipe", collectDao.findByUidAndType(uid, 1));
+        List<Collect> collectList = collectDao.findByUidAndType(uid, 2);
+        collectList.forEach(item -> item.getArticle().setFName(ToolsApi.base64Decode(item.getArticle().getFName())));
+        map.put("article", collectList);
+        return ResApi.getSuccess(map);
     }
 }

@@ -22,4 +22,22 @@
         select count(*) from t_common_collect where f_rid=#{fRid} and f_type=2;
     </select>
 
+    <select id="findByUidAndType" resultMap="getCollectInfoDetail">
+        select * from t_common_collect where f_uid=#{fUid} and  f_type=#{fType};
+    </select>
+
+    <resultMap id="getCollectInfoDetail" type="Collect">
+        <result column="f_uid" property="fUid"/>
+        <result column="f_rid" property="fRid"/>
+        <association property="commonUser" column="f_uid"
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <association property="recipe" column="f_rid"
+                     select="com.smxy.recipe.dao.RecipeDao.getInfoByIdBrief">
+        </association>
+        <association property="article" column="f_rid"
+                     select="com.smxy.recipe.dao.ArticleDao.findInfoByIdBrief">
+        </association>
+    </resultMap>
+
 </mapper>

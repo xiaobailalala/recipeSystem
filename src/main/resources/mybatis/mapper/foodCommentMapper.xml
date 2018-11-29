@@ -30,6 +30,10 @@
         </association>
     </resultMap>
 
+    <select id="getCountByRid" parameterType="Integer" resultType="Integer">
+        select count(*) from t_food_comment where f_rid=#{fRid};
+    </select>
+
     <select id="getGreatCount" resultType="FoodCommentGreat" parameterType="Integer">
         select * from t_food_comment_great where f_cid=#{fId};
     </select>

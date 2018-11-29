@@ -47,6 +47,8 @@ public interface FoodCommentDao {
 
     FoodComment getInfoByIdBrief(Integer fId);
 
+    Integer getCountByRid(Integer fRid);
+
     List<FoodCommentGreat> getGreatCount(Integer fId);
 
 }
