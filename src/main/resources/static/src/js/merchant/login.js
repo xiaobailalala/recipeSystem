@@ -13,7 +13,7 @@ $(function () {
                 success: function (res) {
                     if (res.code === 200) {
                         location.href = "/merchant/merchantUser/index";
-                    } else {msg
+                    } else {
                         var msg = res.msg;
                         layer.msg(msg);
                     }

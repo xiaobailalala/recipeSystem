@@ -46,11 +46,6 @@ public class MerchantUserController {
         return "merchant/register";
     }
 
-    @GetMapping("/productList")
-    public String goProductList(){
-        return "merchant/pages/product/list";
-    }
-
     @RequiresRoles("merchant")
     @GetMapping("/index")
     public String goIndex() {

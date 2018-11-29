@@ -248,23 +248,18 @@ div.clear-float {
 }
 
 
-
-.main {
-    margin-top: 100px;
+/* 页面主区域*/
+#edit-content{
+    /*此处要大于61 因为上一导航条高度为61*/
+    margin-top: 101px;
 }
-
-#moreImgupload {
-    color: #000000;
-    margin-left: 25px;
-}
-
-/* upload 上传div */
+/*修改商品主图删除按钮样式*/
+/*商品主图 样式*/
 .editimg {
     display: inline-block;
     position: relative;
     margin: 5px;
 }
-
 .editimg>.imgs>a {
     position: absolute;
     display: inline-block;
@@ -275,32 +270,24 @@ div.clear-float {
     top: 5px;
     background-color: transparent;
 }
-
-.productAdd-form>.layui-upload {
-    margin-bottom: 35px;
+/* layui默认样式 */
+/* 下拉选择框的子项目颜色 */
+.layui-form-select dl dd.layui-this {
+    background-color: #000000;
 }
-
+/*商品名称*/
 .product-name {
     padding: 15px;
     height: 80px;
 }
-
-.product-price {
-    padding-left: 15px;
-    width: 200px;
-    display: inline-block;
-}
-
-.productTitle-div>.layui-input-block {
-    position: relative;
-}
-
-.productTitle-div>.layui-input-block>p {
+.product-title>.layui-input-block>p {
     color: #999999;
     position: absolute;
     bottom: 5px;
     right: 8px;
 }
+
+
 /*商品类型面板样式*/
 .product-div-model-title {
     position: relative;
@@ -316,34 +303,6 @@ div.clear-float {
     line-height: 50px;
 }
 
-.product-card .closeModel {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    margin-top: -10px;
-    width: 20px;
-    height: 20px;
-    padding: 3px;
-    cursor: pointer;
-    background-color: #666;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bolder;
-    opacity: 0;
-    transition: all 0.5s;
-}
-
-.product-card:hover .closeModel {
-    opacity: 1;
-}
-
-.product-card:hover .closeModel::before {
-    position: relative;
-    top: -17px;
-    right: 0px;
-}
-
 .product-card .layui-card-body {
     min-height: 150px;
 }
@@ -352,27 +311,12 @@ div.clear-float {
     padding-left: 15px;
 }
 
-
 #showModel {
     box-sizing: content-box;
     min-height: 150px;
     padding: 10px;
 }
 
-
-/* layui默认样式 */
-/* 下拉选择框的子项目颜色 */
-.layui-form-select dl dd.layui-this {
-    background-color: #000000;
-}
-
-/* table的悬浮颜色 */
-/* .layui-table tbody tr:hover {
-    background-color: transparent;
-} */
-
-
-/* 添加型号面板样式 */
 .addModelImg>.layui-form-onswitch {
     border-color: #bdbbbb;
     background-color: #bdbbbb;
@@ -498,6 +442,7 @@ div.clear-float {
     text-decoration: underline;
 }
 
+
 /* 单击+添加型号下的div样式   */
 .addModel-div {
     background-color: #FFFFFF;
@@ -593,107 +538,5 @@ div.clear-float {
     display: block;
 }
 .noshowtable {
-    display: none;
-}
-
-/* 运费及其他设计 */
-
-.cell-time .layui-form-radio>i:hover, .layui-form-radioed>i{
-    color: #000000;
-}
-
-.other-set-div>.layui-form-checked[lay-skin=primary] i{
-    border-color: #000000;
-    background-color: #000000;
-    color: #fff;
-}
-
-.other-set-div>.layui-form-checkbox[lay-skin=primary]:hover i{
-    border-color: #000000;
-}
-/* 商品详情 */
-.pro_details{
-    border: 1px solid #dddddd;
-}
-.pro_details .layui-card-header{
-    height: 50px;
-    background-color: #f1f1f1;
-    line-height: 50px;
-    position: relative;
-}
-.pro_details .layui-card-header i{
-    background-color: #000000;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 25px;
-    width: 25px;
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    color: #ffffff;
-    font-weight: bolder;
-    font-size: 18px;
-    opacity: 0;
-    transition: all 0.5s linear;
-}
-.pro_details .layui-card-header:hover i{
-    opacity: 1;
-}
-
-.pro_details_image .upload-img-preview{
-    width: 222px;
-    height: 222px;
-    border: 1px dashed #dddddd;
-    margin-bottom: 30px;
-    cursor: pointer;
-    position: relative;
-}
-
-.pro_details_image .upload-ops{
-    width: 222px;
-    height: 222px;
-    position: absolute;
-    top: 45px;
-    left: 17px;
-    background-color: rgba(0, 0, 0, .5);
-}
-.pro_details_image .upload-ops a{
-    color: #ffffff;
-    line-height: 222px;
     display: block;
-    width: 222px;
-    text-align: center;
-}
-
-
-div.footer {
-    margin-top: 30px;
-}
-
-div.foot-link {
-    padding: 20px;
-    text-align: center;
-}
-
-div.foot-link>ul {
-    padding: 0px;
-    margin: 0px;
-    list-style: none;
-}
-
-div.foot-link>ul>li {
-    display: inline-block;
-}
-
-div.foot-link>ul>i {
-    color: #999999;
-}
-
-div.foot-link>ul>li>a {
-    color: #999999;
-}
-
-div.foot-link>ul>li>a:hover {
-    color: #ff1f5a;
-    text-decoration: underline;
 }

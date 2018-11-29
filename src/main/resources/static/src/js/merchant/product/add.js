@@ -191,7 +191,7 @@ $(function () {
     });
 
 
-    layui.use(['element', 'form', 'upload', 'table', 'laydate'], function () {
+    layui.use(['element', 'form', 'upload', 'table', 'laydate','util','layer'], function () {
         var $ = layui.jquery,
             upload = layui.upload,
             form = layui.form,
@@ -258,7 +258,7 @@ $(function () {
                     alert('点击了bar1')
                 }
             }
-        })
+        });
 
         //添加商品详情页面
         var pro_details =
@@ -416,8 +416,6 @@ $(function () {
                     tableInit();
                 });
             }
-
-
         });
 
 
@@ -674,9 +672,10 @@ $(function () {
                 // });
                 // formdata.append("productImage",productImages);
                 $('textarea[name=pro_details_content]').each(function (index, item) {
-                    if ($(this).val()) {
-                        productDetailsText.push($(this).val());
-                    }
+                    productDetailsText.push($(this).val());
+                    // if ($(this).val()) {
+                    //
+                    // }
                 });
                 formdata.append("productDetailsContent", productDetailsText);
                 if ($('input[name=manager_hot]').is(':checked')) {
@@ -688,7 +687,6 @@ $(function () {
                     formdata.append("pro_price", $('input[name=price]').val());
                     formdata.append("pro_repertory", $('input[name=repertory]').val());
                 } else {
-
                     $('input[name=table_input_price]').each(function () {
                         marquePrice.push($(this).val());
                     });

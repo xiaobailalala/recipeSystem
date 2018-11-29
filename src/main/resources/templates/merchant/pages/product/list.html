@@ -11,9 +11,10 @@
             <h3>所有商品</h3>
             <table id="produceAllList" lay-filter="produceList_table"></table>
         </div>
-        <button type="button" id="haha">TEST</button>
+        <!--<button type="button" id="haha">TEST</button>-->
     </div>
     <div>
+        <!--TODO: false 为设置底部标签 true 为不显示底部标签-->
         <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},false)}">
             <script th:src="@{/src/js/merchant/product/list.js}"></script>
             <script type="text/html" id="product-control">
