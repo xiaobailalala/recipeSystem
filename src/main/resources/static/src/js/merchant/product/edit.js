@@ -7,6 +7,7 @@ $(function () {
             upload = layui.upload,
             form = layui.form,
             table = layui.table;
+        var upload_i = 0;
         $(window).scroll(function () {
             var topp = 50 - $(document).scrollTop();
             $('.top-nav').css('top', topp > 0 ? topp + 'px' : '0');
@@ -262,6 +263,40 @@ $(function () {
                 });
             }
         });
+        //删除型号面板的型号
+        BODY.on('click', '.model-li-close', function (e) {
+            e.preventDefault();
+            var form = layui.form;
+            var modelli = $([
+                '<div class="section-model-li">',
+                '   <div class="model-name-div">',
+                '       <input class="modelName" type="checkbox" name="" title="" lay-filter="modelName-filter">',
+                '   </div>',
+                '   <i class="layui-icon layui-icon-close model-li-del"></i>',
+                '</div>'
+            ].join(''));
+            var text = $(this).siblings('span').text();
+            var $thisli = $(this).parents('.addModelClassify-div');
+            var index = $('.addModelClassify-div').index($thisli);
+            // var arr = t_data[index].model.filter(function (item) {
+            //     return item.name == text;
+            // });
+            if ($('.model-li-close').length == 1) {
+                $('.showtable').addClass('noshowtable').removeClass('showtable');
+            }
+            //删除型号面板元素同时修改table数据
+            // t_data[index].model.splice(t_data[index].model.indexOf(arr[0]), 1);
+            $(this).parents('ul').find('section').append(modelli);
+            modelli.find('input').attr('title', text);
+            $(this).parents('.model-li').remove();
+            $('#table_data_body tr').each(function (index, item) {
+                if ($(this).children('td').text() == text) {
+                    $(this).remove();
+                }
+            });
+            tableInit();
+            form.render();
+        });
 
         //商品主图预览
         var ImageListView = $('#product_images'),
@@ -375,6 +410,50 @@ $(function () {
             });
         }
 
+        //添加商品详情页面
+        var pro_details =
+            '<div class="layui-card pro_details">\n' +
+            '    <div class="layui-card-header">\n' +
+            '        <h3 style="display: inline-block;">商品详情</h3>\n' +
+            '        <i class="layui-icon layui-icon-close"></i>\n' +
+            '    </div>\n' +
+            '    <div class="layui-card-body">\n' +
+            '        <div style="display:inline-block;vertical-align: top;" class="pro_details_image">\n' +
+            '            <h3 style="text-align: center;margin-bottom: 10px;">商品详情图片</h3>\n' +
+            '            <div>\n' +
+            '                <div class="nohave-img">\n' +
+            '                    <div class="upload-img-preview">\n' +
+            '                        <i class="layui-icon layui-icon-add-1"></i>\n' +
+            '                        <img src="" alt="" class="layui-upload-img">\n' +
+            '                    </div>\n' +
+            '                    <div class="upload-ops">\n' +
+            '                        <a href="javascript:;" class="imgSingleDel">删除</a>\n' +
+            '                    </div>\n' +
+            '                </div>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div style="display:inline-block;" class="pro_details_content">\n' +
+            '            <h3 style="text-align: center;margin-bottom: 10px;">商品详情文字</h3>\n' +
+            '            <textarea name="pro_details_content" id="" cols="100" rows="10" style="border:1px solid #bebcbc;padding: 15px;"></textarea>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>';
+
+        //添加商品详情页面
+        BODY.on('click', '.add_product_details_btn', function (e) {
+            e.preventDefault();
+            $('#add_product_details_div').before(pro_details);
+            upload_i++;
+            // console.log(upload_i);
+            $('.product_details_div .pro_details:last').find('.upload-img-preview').attr('id', 'upload-img-preview-product' + upload_i);
+            onImgUpload_details('#upload-img-preview-product' + upload_i)
+        });
+        //删除商品详情面板
+        BODY.on('click', '.pro_details .layui-card-header i', function (e) {
+            e.preventDefault();
+            $(this).parents('.pro_details').remove();
+        });
+
         form.render();
         //表单验证
         form.verify({
@@ -397,5 +476,9 @@ $(function () {
             }
         });
         table.render();
+        //表格重载
+        function tableInit() {
+            table.init('parse-table', {});
+        }
     });
 });

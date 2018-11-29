@@ -613,34 +613,34 @@ $(function () {
 
 
         // form.on('select', function (data) {});
-        form.on('select(choose_classify)', function (data) {
-            var markclassify = 'youle';
-            var index = $('select[lay-filter="choose_classify"]').index(data.elem);
-            var text = $($('.div_select').get(index)).find('dl.layui-anim dd.layui-this').text();
-            var length = $('.div_select').length;
-            $('.div_select').each(function (indexInArray, valueOfElement) {
-                if (length == 1) {
-                    markclassify = 'meiyou'
-                } else if (indexInArray == index) {
-                    return true;
-                } else {
-                    var othertext = $($(this)).find('dl.layui-anim  dd.layui-this').text();
-                    if (text == othertext) {
-                        markclassify = 'youle';
-                        return false;
-                    } else {
-                        markclassify = 'meiyou';
-                    }
-                }
-            });
-            if (markclassify == 'youle') {
-                layer.msg('商品型号不能重复');
-            }
-        });
-        laydate.render({
-            elem: '#time_pick',
-            type: 'datetime'
-        });
+        // form.on('select(choose_classify)', function (data) {
+        //     var markclassify = 'youle';
+        //     var index = $('select[lay-filter="choose_classify"]').index(data.elem);
+        //     var text = $($('.div_select').get(index)).find('dl.layui-anim dd.layui-this').text();
+        //     var length = $('.div_select').length;
+        //     $('.div_select').each(function (indexInArray, valueOfElement) {
+        //         if (length == 1) {
+        //             markclassify = 'meiyou'
+        //         } else if (indexInArray == index) {
+        //             return true;
+        //         } else {
+        //             var othertext = $($(this)).find('dl.layui-anim  dd.layui-this').text();
+        //             if (text == othertext) {
+        //                 markclassify = 'youle';
+        //                 return false;
+        //             } else {
+        //                 markclassify = 'meiyou';
+        //             }
+        //         }
+        //     });
+        //     if (markclassify == 'youle') {
+        //         layer.msg('商品型号不能重复');
+        //     }
+        // });
+        // laydate.render({
+        //     elem: '#time_pick',
+        //     type: 'datetime'
+        // });
 
         form.on('submit(submin_btn)', function (data) {
             var form = document.getElementById('product_form');

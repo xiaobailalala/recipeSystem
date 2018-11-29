@@ -82,7 +82,11 @@ textarea {
 div.clear-float {
     clear: both;
 }
-
+/* layui默认样式 */
+/* 下拉选择框的子项目颜色 */
+.layui-form-select dl dd.layui-this {
+    background-color: #000000;
+}
 .container {
     background-color: #FFFFFF;
     min-height: 100%;
@@ -269,11 +273,6 @@ div.clear-float {
     right: 3px;
     top: 5px;
     background-color: transparent;
-}
-/* layui默认样式 */
-/* 下拉选择框的子项目颜色 */
-.layui-form-select dl dd.layui-this {
-    background-color: #000000;
 }
 /*商品名称*/
 .product-name {
@@ -539,4 +538,106 @@ div.clear-float {
 }
 .noshowtable {
     display: block;
+}
+
+/* 运费及其他设计 */
+
+.cell-time .layui-form-radio>i:hover, .layui-form-radioed>i{
+    color: #000000;
+}
+
+.other-set-div>.layui-form-checked[lay-skin=primary] i{
+    border-color: #000000;
+    background-color: #000000;
+    color: #fff;
+}
+
+.other-set-div>.layui-form-checkbox[lay-skin=primary]:hover i{
+    border-color: #000000;
+}
+/* 商品详情 */
+.pro_details{
+    border: 1px solid #dddddd;
+}
+.pro_details .layui-card-header{
+    height: 50px;
+    background-color: #f1f1f1;
+    line-height: 50px;
+    position: relative;
+}
+.pro_details .layui-card-header i{
+    background-color: #000000;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: #ffffff;
+    font-weight: bolder;
+    font-size: 18px;
+    opacity: 0;
+    transition: all 0.5s linear;
+}
+.pro_details .layui-card-header:hover i{
+    opacity: 1;
+}
+
+.pro_details_image .upload-img-preview{
+    width: 222px;
+    height: 222px;
+    border: 1px dashed #dddddd;
+    margin-bottom: 30px;
+    cursor: pointer;
+    position: relative;
+}
+
+.pro_details_image .upload-ops{
+    width: 222px;
+    height: 222px;
+    position: absolute;
+    top: 45px;
+    left: 17px;
+    background-color: rgba(0, 0, 0, .5);
+}
+.pro_details_image .upload-ops a{
+    color: #ffffff;
+    line-height: 222px;
+    display: block;
+    width: 222px;
+    text-align: center;
+}
+
+
+div.footer {
+    margin-top: 30px;
+}
+
+div.foot-link {
+    padding: 20px;
+    text-align: center;
+}
+
+div.foot-link>ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+div.foot-link>ul>li {
+    display: inline-block;
+}
+
+div.foot-link>ul>i {
+    color: #999999;
+}
+
+div.foot-link>ul>li>a {
+    color: #999999;
+}
+
+div.foot-link>ul>li>a:hover {
+    color: #ff1f5a;
+    text-decoration: underline;
 }

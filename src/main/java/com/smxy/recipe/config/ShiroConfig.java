@@ -65,6 +65,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/sensorData/**", "anon");
         filterChainDefinitionMap.put("/endpoint-websocket-wxClient", "anon");
         filterChainDefinitionMap.put("/merchant/merchantUser/register", "anon");
+        filterChainDefinitionMap.put("/merchantApp/**", "anon");
         filterChainDefinitionMap.put("/merchant/**", "merchant");
         filterChainDefinitionMap.put("/manage/**", "admin");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
