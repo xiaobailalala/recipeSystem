@@ -1,14 +1,11 @@
 package com.smxy.recipe.controller.merchantapp;
 
-import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.utils.ResApi;
 import org.apache.commons.collections.map.HashedMap;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
@@ -21,6 +18,7 @@ import java.util.Map;
 @PathRestController("/merchantApp/testController")
 public class TestController {
     @PostMapping("/hello")
+    @ResponseBody
     public Map<String, String> Hello(String name){
         Map<String, String> map = new HashedMap();
         System.out.println(name);

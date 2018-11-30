@@ -1,4 +1,5 @@
 $(function () {
+    var verify_code;
     // 从JSON文件中获取省市区信息
     $.getJSON("/src/res/merchant/address.json",
         function (jasondata) {
@@ -68,6 +69,47 @@ $(function () {
         var h = now.getHours();       //获取当前小时数(0-23)
         var m = now.getMinutes();     //获取当前分钟数(0-59)
         var s = now.getSeconds();
+        var codeTime = 60;
+        var interval_id;
+
+        //设置发送验证码按钮倒计时时间
+        function setCodeTime(){
+            if (codeTime === 0) {
+                clearInterval(interval_id);
+                $('#send_code').removeClass("layui-btn-disabled")
+                    .addClass("layui-btn-primary").html("重新发送验证码");
+                codeTime = 60;
+                // return false;
+            }else{
+                codeTime--;
+                $('#send_code').html(codeTime + "秒后可重新获取");
+            }
+        }
+
+        //发送验证码
+        $('#send_code').click(function (e) {
+            e.preventDefault();
+            var phoneNum = $('input[name=fAccount]').val();
+            if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(phoneNum)){
+                layer.alert("请输入正确的手机号");
+            }else{
+                $(this).removeClass("layui-btn-primary").addClass("layui-btn-disabled");
+                interval_id = setInterval(setCodeTime, 1000);
+                $.ajax({
+                    url: "/merchant/verifyCode",
+                    type: "POST",
+                    data: {
+                        phoneNumber: phoneNum
+                    },
+                    success: res => {
+                        verify_code = res.code;
+                    },
+                    error: err => {
+                        layer.alert("发送验证码失败，请重试！");
+                    }
+                });
+            }
+        });
 
         function p(s) {
             return s < 10 ? '0' + s : s;
@@ -89,21 +131,25 @@ $(function () {
 
         form.on('submit(login)', function (data) {
             // layer.msg(JSON.stringify(data.field));
-            $.ajax({
-                url: "/merchant/merchantUser/register",
-                type: "POST",
-                data: data.field,
-                success: function (res) {
-                    if (res.code === 200) {
-                        layer.msg("注册成功")
+            if ($('#phone_number').val() === verify_code) {
+                $.ajax({
+                    url: "/merchant/merchantUser/register",
+                    type: "POST",
+                    data: data.field,
+                    success: function (res) {
+                        if (res.code === 200) {
+                            layer.msg("注册成功");
+                        }
+                        else {
+                            var msg = res.msg;
+                            layer.msg(msg);
+                            // Tools.tip(res.msg)
+                        }
                     }
-                     else {
-                        var msg = res.msg;
-                        layer.msg(msg);
-                        // Tools.tip(res.msg)
-                    }
-                }
-            })
+                });
+            } else {
+                layer.alert("验证码不正确");
+            }
             return false;
         });
 
