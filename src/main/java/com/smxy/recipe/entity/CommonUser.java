@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author zpx
  *
@@ -30,5 +32,9 @@ public final class CommonUser {
 	private String fSex="男";
 	private String fSign;
 	private Integer fPid=0;
+	private String fBg;
 	private Profession profession;
+	private Integer collectCount;
+	private List<Recipe> recipes;
+	private List<Article> articles;
 }

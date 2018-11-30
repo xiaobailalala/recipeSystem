@@ -44,9 +44,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
@@ -132,5 +131,38 @@ public class ArticleServiceImpl implements ArticleService {
             collectDao.deleteInfo(collect);
         }
         return ResApi.getSuccess();
+    }
+
+    @Override
+    public ResApi<Object> articleListIndex() {
+        Map<String, List<Article>> map = new HashMap<>(8);
+        List<Article> articleList = articleDao.findAllInfo(),
+                compareList = new ArrayList<>(articleList),
+                bannerList;
+        int maxLen = 8;
+        if (articleList.size() > maxLen) {
+            bannerList = articleList.subList(0, 8);
+        } else {
+            bannerList = articleList.subList(0, articleList.size());
+        }
+        bannerList.forEach(item -> item.setFName(ToolsApi.base64Decode(item.getFName())));
+        map.put("bannerList", bannerList);
+        compareList.sort((o1, o2) -> o2.getFCollect().compareTo(o1.getFCollect()));
+        compareList.forEach(item -> item.setFName(ToolsApi.base64Decode(item.getFName())));
+        map.put("dataList", compareList);
+        return ResApi.getSuccess(map);
+    }
+
+    @Override
+    public ResApi<Object> articleForTopic(Integer classify) {
+        Map<String, Object> map = new HashMap<>(8);
+        List<Article> articles = articleDao.findInfoByTopicBrief(classify);
+        articles.forEach(item -> item.setFName(ToolsApi.base64Decode(item.getFName())));
+        map.put("articleList", articles);
+        articles = articles.stream().collect(
+                Collectors.collectingAndThen(Collectors.toCollection(
+                        () -> new TreeSet<>(Comparator.comparing(Article::getFUid))), ArrayList::new));
+        map.put("peopleList", articles);
+        return ResApi.getSuccess(map);
     }
 }

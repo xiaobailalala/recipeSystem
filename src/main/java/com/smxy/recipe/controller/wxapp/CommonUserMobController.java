@@ -54,8 +54,8 @@ public class CommonUserMobController {
      * @return
      */
     @PostMapping("/commonUsersaveHead")
-    public ResApi<String> commonUsersaveHead(@RequestParam("file") MultipartFile multipartFile, int img, String preImg){
-        return commonUserService.commonUsersaveHead(multipartFile,img,preImg);
+    public ResApi<String> commonUsersaveHead(@RequestParam("file") MultipartFile multipartFile, int img, String preImg, Integer fId){
+        return commonUserService.commonUsersaveHead(multipartFile,img,preImg, fId);
     }
 
     /**
@@ -70,6 +70,16 @@ public class CommonUserMobController {
     @GetMapping("/collectionInfo")
     public ResApi<Object> collectionInfo(Integer uid){
         return commonUserService.collectionInfo(uid);
+    }
+
+    @GetMapping("/peopleInfoDetail")
+    public ResApi<Object> peopleInfoDetail(Integer uid) {
+        return commonUserService.peopleInfoDetail(uid);
+    }
+
+    @PostMapping("/updateCommonUserBg")
+    public ResApi<Object> updateCommonUserBg(@RequestParam("file") MultipartFile multipartFile, CommonUser commonUser) {
+        return commonUserService.updateCommonUserBg(multipartFile, commonUser);
     }
 
 }

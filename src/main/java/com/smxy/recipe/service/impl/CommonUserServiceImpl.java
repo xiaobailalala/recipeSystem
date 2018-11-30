@@ -8,11 +8,9 @@
 package com.smxy.recipe.service.impl;
 
 import com.smxy.recipe.dao.CollectDao;
+import com.smxy.recipe.dao.CommonAttentionDao;
 import com.smxy.recipe.dao.CommonUserDao;
-import com.smxy.recipe.entity.Article;
-import com.smxy.recipe.entity.Collect;
-import com.smxy.recipe.entity.CommonUser;
-import com.smxy.recipe.entity.Recipe;
+import com.smxy.recipe.entity.*;
 import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
@@ -34,11 +32,13 @@ public class CommonUserServiceImpl implements CommonUserService {
 
     private CommonUserDao commonUserDao;
     private CollectDao collectDao;
+    private CommonAttentionDao commonAttentionDao;
 
     @Autowired
-    public CommonUserServiceImpl(CommonUserDao commonUserDao, CollectDao collectDao) {
+    public CommonUserServiceImpl(CommonUserDao commonUserDao, CollectDao collectDao, CommonAttentionDao commonAttentionDao) {
         this.commonUserDao = commonUserDao;
         this.collectDao = collectDao;
+        this.commonAttentionDao = commonAttentionDao;
     }
 
     @Override
@@ -82,10 +82,20 @@ public class CommonUserServiceImpl implements CommonUserService {
     }
 
     @Override
-    public ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg) {
+    public ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg, Integer fId) {
         // TODO Auto-generated method stub
+        int hasDeleteImg = 2;
+        if (img == hasDeleteImg && preImg != null) {
+            ToolsApi.multipartFileDeleteFile(preImg);
+        }
         if (ToolsApi.imgLimit(ToolsApi.suffixName(file.getOriginalFilename()))) {
             String name = ToolsApi.multipartFileUploadFile(file, null);
+            if (img == hasDeleteImg) {
+                CommonUser commonUser = new CommonUser();
+                commonUser.setFId(fId);
+                commonUser.setFCover(name);
+                commonUserDao.updateUserHead(commonUser);
+            }
             return new ResApi<>(200, "success", name);
         } else {
             return new ResApi<>(400, "头像上传失败", null);
@@ -131,5 +141,29 @@ public class CommonUserServiceImpl implements CommonUserService {
         collectList.forEach(item -> item.getArticle().setFName(ToolsApi.base64Decode(item.getArticle().getFName())));
         map.put("article", collectList);
         return ResApi.getSuccess(map);
+    }
+
+    @Override
+    public ResApi<Object> peopleInfoDetail(Integer uid) {
+        Map<String, Object> map = new HashMap<>(8);
+        CommonUser commonUser = commonUserDao.peopleInfoDetail(uid);
+        commonUser.getArticles().forEach(item -> item.setFName(ToolsApi.base64Decode(item.getFName())));
+        map.put("info", commonUser);
+        List<CommonAttention> commonAttentions1 = commonAttentionDao.findInfoByUidAndType(uid, 1);
+        List<CommonAttention> commonAttentions2 = commonAttentionDao.findInfoByOidAndType(uid, 1);
+        map.put("attentionInfo", commonAttentions1);
+        map.put("fansInfo", commonAttentions2);
+        return ResApi.getSuccess(map);
+    }
+
+    @Override
+    public ResApi<Object> updateCommonUserBg(MultipartFile multipartFile, CommonUser commonUser) {
+        if (commonUser.getFBg() != null) {
+            ToolsApi.multipartFileDeleteFile(commonUser.getFBg());
+        }
+        String name = ToolsApi.multipartFileUploadFile(multipartFile, null);
+        commonUser.setFBg(name);
+        commonUserDao.updateUserBg(commonUser);
+        return ResApi.getSuccess(name);
     }
 }

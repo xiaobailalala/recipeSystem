@@ -4,8 +4,8 @@
 <mapper namespace="com.smxy.recipe.dao.ArticleDao">
 
     <insert id="saveInfo" parameterType="Article">
-        insert into t_food_article (f_name, f_content, f_uid, f_cover, f_type, f_release)
-        values (#{fName}, #{fContent}, #{fUid}, #{fCover}, #{fType},#{fRelease});
+        insert into t_food_article (f_name, f_content, f_uid, f_cover, f_type, f_release, f_topic)
+        values (#{fName}, #{fContent}, #{fUid}, #{fCover}, #{fType}, #{fRelease}, #{fTopic});
     </insert>
 
     <select id="findAllInfo" resultMap="getArticleDetail">
@@ -61,5 +61,9 @@
     <update id="updateCount" parameterType="Article">
         update t_food_article set f_count=#{fCount} where f_id=#{fId};
     </update>
+
+    <select id="findInfoByTopicBrief" parameterType="Integer" resultMap="getArticleDetailBrief">
+        select * from t_food_article where f_topic=#{fTopic};
+    </select>
 
 </mapper>

@@ -44,4 +44,8 @@ public interface ArticleService {
     ResApi<String> greatOperation(Integer open, Integer aid, Integer uid);
 
     ResApi<String> collectArticle(Integer open, Collect collect);
+
+    ResApi<Object> articleListIndex();
+
+    ResApi<Object> articleForTopic(Integer classify);
 }

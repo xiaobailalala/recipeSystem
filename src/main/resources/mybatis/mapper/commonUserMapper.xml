@@ -10,16 +10,18 @@
 		f_password=#{fPassword};
 	</select>
     <resultMap type="CommonUser" id="getUserDetail">
+		<result property="fId" column="f_id" />
         <result property="fPid" column="f_pid" />
-        <association
-			property="profession" column="f_pid"
-			select="getProfessionInfo">
+        <association property="profession" column="f_pid"
+			select="com.smxy.recipe.dao.ProfessionDao.getOneById">
 		</association>
+		<collection property="recipes" column="f_id"
+					select="com.smxy.recipe.dao.RecipeDao.getInfoByUidBrief">
+		</collection>
+		<collection property="articles" column="f_id"
+					select="com.smxy.recipe.dao.ArticleDao.findInfoByUidBrief">
+		</collection>
     </resultMap>
-    <select id="getProfessionInfo" resultType="Profession"
-            parameterType="CommonUser">
-		select * from t_common_profession where f_id=#{fPid};
-	</select>
 	
 	<select id="getInfoByIdBrief" parameterType="Integer" resultType="CommonUser">
 		select * from t_common_user where f_id=#{fId};
@@ -47,7 +49,36 @@
 		update t_common_user set f_password=#{fPassword} where f_id=#{fId};
 	</update>
 
+	<update id="updateUserHead" parameterType="CommonUser">
+		update t_common_user set f_cover=#{fCover} where f_id=#{fId};
+	</update>
+
+	<update id="updateUserBg" parameterType="CommonUser">
+		update t_common_user set f_bg=#{fBg} where f_id=#{fId};
+	</update>
+
 	<select id="getInfoById" parameterType="Integer" resultType="CommonUser">
 		select * from t_common_user where f_id=#{fId};
 	</select>
+
+	<select id="peopleInfoDetail" resultMap="peopleInfoDetailResultMap" parameterType="Integer">
+		select * from t_common_user where f_id=#{fId};
+	</select>
+
+	<resultMap type="CommonUser" id="peopleInfoDetailResultMap">
+		<result property="fPid" column="f_pid" />
+		<result property="fId" column="f_id" />
+		<association property="profession" column="f_pid"
+					 select="com.smxy.recipe.dao.ProfessionDao.getOneById">
+		</association>
+		<collection property="recipes" column="f_id"
+					select="com.smxy.recipe.dao.RecipeDao.getInfoByUidBrief">
+		</collection>
+		<collection property="articles" column="f_id"
+					select="com.smxy.recipe.dao.ArticleDao.findInfoByUidBrief">
+		</collection>
+		<collection property="collectCount" column="f_id"
+					select="com.smxy.recipe.dao.CollectDao.getCountByUid">
+		</collection>
+	</resultMap>
 </mapper>

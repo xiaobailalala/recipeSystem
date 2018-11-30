@@ -32,7 +32,13 @@ public interface CommonUserDao {
 
 	Integer updatePwdByAccount(CommonUser commonUser);
 
+	Integer updateUserHead(CommonUser commonUser);
+
+	Integer updateUserBg(CommonUser commonUser);
+
 	CommonUser getInfoById(Integer fId);
+
+	CommonUser peopleInfoDetail(Integer fid);
 
 }
 

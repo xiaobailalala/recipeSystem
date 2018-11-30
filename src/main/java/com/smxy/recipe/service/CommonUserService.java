@@ -19,7 +19,7 @@ import com.smxy.recipe.utils.ResApi;
 public interface CommonUserService {
 	ResApi<CommonUser> commonUserLogin(CommonUser commonUser);
 	ResApi<String> commonUserReg(CommonUser commonUser);
-	ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg);
+	ResApi<String> commonUsersaveHead(MultipartFile file, int img, String preImg, Integer fId);
 	ResApi<CommonUser> commonUserSaveInfo(CommonUser commonUser);
 
     ResApi<Object> getAllInfo();
@@ -29,4 +29,8 @@ public interface CommonUserService {
 	ResApi<Object> updateCommonUserPwd(CommonUser commonUser);
 
     ResApi<Object> collectionInfo(Integer uid);
+
+	ResApi<Object> peopleInfoDetail(Integer uid);
+
+	ResApi<Object> updateCommonUserBg(MultipartFile multipartFile, CommonUser commonUser);
 }

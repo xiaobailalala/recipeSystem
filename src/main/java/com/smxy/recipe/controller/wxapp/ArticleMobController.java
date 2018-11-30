@@ -72,4 +72,14 @@ public class ArticleMobController {
         return articleService.collectArticle(open, collect);
     }
 
+    @GetMapping("/listIndex")
+    public ResApi<Object> articleListIndex(){
+        return articleService.articleListIndex();
+    }
+
+    @GetMapping("/articleForClassify")
+    public ResApi<Object> articleForTopic(Integer classify){
+        return articleService.articleForTopic(classify);
+    }
+
 }

@@ -47,4 +47,6 @@ public interface ArticleDao {
 
     Integer updateCount(Article article);
 
+    List<Article> findInfoByTopicBrief(Integer fTopic);
+
 }

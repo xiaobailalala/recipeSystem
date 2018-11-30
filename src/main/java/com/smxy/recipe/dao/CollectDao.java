@@ -45,5 +45,7 @@ public interface CollectDao {
 
     Integer getCountByRidAndTypeForArticle(Integer fRid);
 
+    Integer getCountByUid(Integer fUid);
+
     List<Collect> findByUidAndType(@Param("fUid") Integer uid, @Param("fType") Integer type);
 }

@@ -50,6 +50,7 @@ public class Article {
     private Integer fCollect;
     private String fType;
     private String fRelease;
+    private Integer fTopic;
     private List<ArticleComment> articleComments;
     private Integer commentCount;
 }
