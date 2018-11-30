@@ -26,16 +26,28 @@ public class MerchantProductController {
     MerchantProductService merchantProductService;
 
     @RequiresPermissions("product:select")
+    @GetMapping("/goProductAdd")
+    public String goProductAdd() {
+        return "/merchant/pages/product/add";
+    }
+
+    @RequiresPermissions("product:select")
+    @GetMapping("/goProductEdit")
+    public String goEdit(){
+        return "/merchant/pages/product/edit";
+    }
+
+    @RequiresPermissions("product:select")
+    @GetMapping("/goProductList")
+    public String goProductList(){
+        return "/merchant/pages/product/list";
+    }
+
+    @RequiresPermissions("product:select")
     @ResponseBody
     @GetMapping("/list")
     public Map<String, Object> list() {
         return merchantProductService.productAll();
-    }
-
-    @RequiresPermissions("product:select")
-    @GetMapping("/goProductAdd")
-    public String goProductAdd() {
-        return "/merchant/pages/product/add";
     }
 
     @RequiresPermissions("product:insert")

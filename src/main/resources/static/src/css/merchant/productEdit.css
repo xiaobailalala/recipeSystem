@@ -82,7 +82,11 @@ textarea {
 div.clear-float {
     clear: both;
 }
-
+/* layui默认样式 */
+/* 下拉选择框的子项目颜色 */
+.layui-form-select dl dd.layui-this {
+    background-color: #000000;
+}
 .container {
     background-color: #FFFFFF;
     min-height: 100%;
@@ -248,23 +252,18 @@ div.clear-float {
 }
 
 
-
-.main {
-    margin-top: 100px;
+/* 页面主区域*/
+#edit-content{
+    /*此处要大于61 因为上一导航条高度为61*/
+    margin-top: 101px;
 }
-
-#moreImgupload {
-    color: #000000;
-    margin-left: 25px;
-}
-
-/* upload 上传div */
+/*修改商品主图删除按钮样式*/
+/*商品主图 样式*/
 .editimg {
     display: inline-block;
     position: relative;
     margin: 5px;
 }
-
 .editimg>.imgs>a {
     position: absolute;
     display: inline-block;
@@ -275,32 +274,19 @@ div.clear-float {
     top: 5px;
     background-color: transparent;
 }
-
-.productAdd-form>.layui-upload {
-    margin-bottom: 35px;
-}
-
+/*商品名称*/
 .product-name {
     padding: 15px;
     height: 80px;
 }
-
-.product-price {
-    padding-left: 15px;
-    width: 200px;
-    display: inline-block;
-}
-
-.productTitle-div>.layui-input-block {
-    position: relative;
-}
-
-.productTitle-div>.layui-input-block>p {
+.product-title>.layui-input-block>p {
     color: #999999;
     position: absolute;
     bottom: 5px;
     right: 8px;
 }
+
+
 /*商品类型面板样式*/
 .product-div-model-title {
     position: relative;
@@ -316,34 +302,6 @@ div.clear-float {
     line-height: 50px;
 }
 
-.product-card .closeModel {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    margin-top: -10px;
-    width: 20px;
-    height: 20px;
-    padding: 3px;
-    cursor: pointer;
-    background-color: #666;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 14px;
-    font-weight: bolder;
-    opacity: 0;
-    transition: all 0.5s;
-}
-
-.product-card:hover .closeModel {
-    opacity: 1;
-}
-
-.product-card:hover .closeModel::before {
-    position: relative;
-    top: -17px;
-    right: 0px;
-}
-
 .product-card .layui-card-body {
     min-height: 150px;
 }
@@ -352,27 +310,12 @@ div.clear-float {
     padding-left: 15px;
 }
 
-
 #showModel {
     box-sizing: content-box;
     min-height: 150px;
     padding: 10px;
 }
 
-
-/* layui默认样式 */
-/* 下拉选择框的子项目颜色 */
-.layui-form-select dl dd.layui-this {
-    background-color: #000000;
-}
-
-/* table的悬浮颜色 */
-/* .layui-table tbody tr:hover {
-    background-color: transparent;
-} */
-
-
-/* 添加型号面板样式 */
 .addModelImg>.layui-form-onswitch {
     border-color: #bdbbbb;
     background-color: #bdbbbb;
@@ -498,6 +441,7 @@ div.clear-float {
     text-decoration: underline;
 }
 
+
 /* 单击+添加型号下的div样式   */
 .addModel-div {
     background-color: #FFFFFF;
@@ -593,7 +537,7 @@ div.clear-float {
     display: block;
 }
 .noshowtable {
-    display: none;
+    display: block;
 }
 
 /* 运费及其他设计 */

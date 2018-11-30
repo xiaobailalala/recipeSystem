@@ -191,7 +191,7 @@ $(function () {
     });
 
 
-    layui.use(['element', 'form', 'upload', 'table', 'laydate'], function () {
+    layui.use(['element', 'form', 'upload', 'table', 'laydate','util','layer'], function () {
         var $ = layui.jquery,
             upload = layui.upload,
             form = layui.form,
@@ -258,7 +258,7 @@ $(function () {
                     alert('点击了bar1')
                 }
             }
-        })
+        });
 
         //添加商品详情页面
         var pro_details =
@@ -416,8 +416,6 @@ $(function () {
                     tableInit();
                 });
             }
-
-
         });
 
 
@@ -615,34 +613,34 @@ $(function () {
 
 
         // form.on('select', function (data) {});
-        form.on('select(choose_classify)', function (data) {
-            var markclassify = 'youle';
-            var index = $('select[lay-filter="choose_classify"]').index(data.elem);
-            var text = $($('.div_select').get(index)).find('dl.layui-anim dd.layui-this').text();
-            var length = $('.div_select').length;
-            $('.div_select').each(function (indexInArray, valueOfElement) {
-                if (length == 1) {
-                    markclassify = 'meiyou'
-                } else if (indexInArray == index) {
-                    return true;
-                } else {
-                    var othertext = $($(this)).find('dl.layui-anim  dd.layui-this').text();
-                    if (text == othertext) {
-                        markclassify = 'youle';
-                        return false;
-                    } else {
-                        markclassify = 'meiyou';
-                    }
-                }
-            });
-            if (markclassify == 'youle') {
-                layer.msg('商品型号不能重复');
-            }
-        });
-        laydate.render({
-            elem: '#time_pick',
-            type: 'datetime'
-        });
+        // form.on('select(choose_classify)', function (data) {
+        //     var markclassify = 'youle';
+        //     var index = $('select[lay-filter="choose_classify"]').index(data.elem);
+        //     var text = $($('.div_select').get(index)).find('dl.layui-anim dd.layui-this').text();
+        //     var length = $('.div_select').length;
+        //     $('.div_select').each(function (indexInArray, valueOfElement) {
+        //         if (length == 1) {
+        //             markclassify = 'meiyou'
+        //         } else if (indexInArray == index) {
+        //             return true;
+        //         } else {
+        //             var othertext = $($(this)).find('dl.layui-anim  dd.layui-this').text();
+        //             if (text == othertext) {
+        //                 markclassify = 'youle';
+        //                 return false;
+        //             } else {
+        //                 markclassify = 'meiyou';
+        //             }
+        //         }
+        //     });
+        //     if (markclassify == 'youle') {
+        //         layer.msg('商品型号不能重复');
+        //     }
+        // });
+        // laydate.render({
+        //     elem: '#time_pick',
+        //     type: 'datetime'
+        // });
 
         form.on('submit(submin_btn)', function (data) {
             var form = document.getElementById('product_form');
@@ -674,9 +672,10 @@ $(function () {
                 // });
                 // formdata.append("productImage",productImages);
                 $('textarea[name=pro_details_content]').each(function (index, item) {
-                    if ($(this).val()) {
-                        productDetailsText.push($(this).val());
-                    }
+                    productDetailsText.push($(this).val());
+                    // if ($(this).val()) {
+                    //
+                    // }
                 });
                 formdata.append("productDetailsContent", productDetailsText);
                 if ($('input[name=manager_hot]').is(':checked')) {
@@ -688,7 +687,6 @@ $(function () {
                     formdata.append("pro_price", $('input[name=price]').val());
                     formdata.append("pro_repertory", $('input[name=repertory]').val());
                 } else {
-
                     $('input[name=table_input_price]').each(function () {
                         marquePrice.push($(this).val());
                     });

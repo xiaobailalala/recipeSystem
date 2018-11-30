@@ -13,6 +13,7 @@ package com.smxy.recipe.utils;
 
 import com.smxy.recipe.entity.SysResource;
 import com.smxy.recipe.service.SysResourceService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.csource.common.NameValuePair;
@@ -39,6 +40,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Random;
@@ -100,9 +102,21 @@ public class ToolsApi {
     }
 
     public static void main(String[] args) {
-        System.out.println(ToolsApi.entryptBySaltMd5("123456YYHyyh", "15080557852"));
+        int[] code = randomArray(0, 9, 6);
+        String CODE = "";
+        for (int i : code) {
+            CODE += i;
+        }
+
+//        System.out.println(ToolsApi.entryptBySaltMd5("123456YYHyyh", "15080557852"));
     }
 
+    /**
+     * @param min 数组元素最小值
+     * @param max 数组元素最大值
+     * @param n 数组长度
+     * @return int数组
+     */
     public static int[] randomArray(int min, int max, int n) {
         int len = max - min + 1;
         if (max < min || n > len) {
