@@ -18,6 +18,8 @@ import java.util.List;
 
 public interface CommonUserDao {
 
+    String getUsernameById(Integer fId);
+
 	Integer isUser(CommonUser commonUser);
 
 	CommonUser isLogin(CommonUser commonUser);

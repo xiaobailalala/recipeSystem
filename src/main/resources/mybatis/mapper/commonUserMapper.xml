@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.CommonUserDao">
+
+	<select id="getUsernameById" parameterType="Integer" resultType="String">
+		select f_username from t_common_user where f_id=#{fId};
+	</select>
+
     <select id="isUser" parameterType="CommonUser" resultType="int">
 		select count(*) from t_common_user where f_account=#{fAccount};
 	</select>

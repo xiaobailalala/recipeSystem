@@ -364,9 +364,7 @@ public class RecipeServiceImpl implements RecipeService {
         Map<String, Object> map = new HashMap<>(8);
         List<Recipe> recipeList = recipeDao.getAllInfoBre();
         List<Article> articleList = articleDao.findAllInfo();
-        articleList.forEach(item -> {
-            item.setFName(ToolsApi.base64Decode(item.getFName()));
-        });
+        articleList.forEach(item -> item.setFName(ToolsApi.base64Decode(item.getFName())));
         map.put("randomRecipe", randomRecipe(recipeList));
         map.put("articleList", articleList);
         return ResApi.getSuccess(map);
@@ -376,6 +374,21 @@ public class RecipeServiceImpl implements RecipeService {
     public ResApi<Object> randomRecipe() {
         List<Recipe> recipeList = recipeDao.getAllInfoBre();
         return ResApi.getSuccess(randomRecipe(recipeList));
+    }
+
+    @Override
+    public ResApi<Object> handpickList() {
+        List<Recipe> recipeList = recipeDao.getAllInfoBre();
+        recipeList.sort((o1, o2) -> {
+            if (o2.getFCount().compareTo(o1.getFCount()) > 0) {
+                return 1;
+            } else if (o2.getFCount().compareTo(o1.getFCount()) == 0) {
+                return o2.getFGood().compareTo(o1.getFGood());
+            } else {
+                return -1;
+            }
+        });
+        return ResApi.getSuccess(recipeList);
     }
 
     private List<Recipe> randomRecipe(List<Recipe> recipeList){

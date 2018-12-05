@@ -52,5 +52,5 @@ public interface RecipeService {
     ResApi<Object> randomRecipe();
 
 
-
+    ResApi<Object> handpickList();
 }

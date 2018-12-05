@@ -80,4 +80,9 @@ public class RecipeMobController {
         return recipeService.deleteRecipeCollect(collect);
     }
 
+    @GetMapping("/handpickList")
+    public ResApi<Object> handpickList() {
+        return recipeService.handpickList();
+    }
+
 }

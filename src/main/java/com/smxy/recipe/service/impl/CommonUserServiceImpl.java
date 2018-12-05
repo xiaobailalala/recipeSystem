@@ -138,7 +138,10 @@ public class CommonUserServiceImpl implements CommonUserService {
         Map<String, Object> map = new HashMap<>(8);
         map.put("recipe", collectDao.findByUidAndType(uid, 1));
         List<Collect> collectList = collectDao.findByUidAndType(uid, 2);
-        collectList.forEach(item -> item.getArticle().setFName(ToolsApi.base64Decode(item.getArticle().getFName())));
+        collectList.forEach(item -> {
+            item.getArticle().setFName(ToolsApi.base64Decode(item.getArticle().getFName()));
+            item.getArticle().setFContent(ToolsApi.base64Decode(item.getArticle().getFContent()));
+        });
         map.put("article", collectList);
         return ResApi.getSuccess(map);
     }

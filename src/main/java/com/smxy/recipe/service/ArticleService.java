@@ -35,7 +35,7 @@ import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ArticleService {
-    ResApi<String> saveInfo(Article article);
+    ResApi<String> saveInfo(Article article, Integer[] peopleArr, Integer[] articleArr, Integer[] recipeArr);
 
     ResApi<Object> uploadCover(MultipartFile multipartFile);
 
@@ -48,4 +48,6 @@ public interface ArticleService {
     ResApi<Object> articleListIndex();
 
     ResApi<Object> articleForTopic(Integer classify);
+
+    ResApi<Object> handpickList();
 }

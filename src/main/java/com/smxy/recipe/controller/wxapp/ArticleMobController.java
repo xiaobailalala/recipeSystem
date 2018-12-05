@@ -48,8 +48,8 @@ public class ArticleMobController {
     private ArticleService articleService;
 
     @PostMapping("/saveInfo")
-    public ResApi<String> saveInfo(Article article) {
-        return articleService.saveInfo(article);
+    public ResApi<String> saveInfo(Article article, Integer[] peopleArr, Integer[] articleArr, Integer[] recipeArr) {
+        return articleService.saveInfo(article, peopleArr, articleArr, recipeArr);
     }
 
     @PostMapping("/uploadCover")
@@ -80,6 +80,11 @@ public class ArticleMobController {
     @GetMapping("/articleForClassify")
     public ResApi<Object> articleForTopic(Integer classify){
         return articleService.articleForTopic(classify);
+    }
+
+    @GetMapping("/handpickList")
+    public ResApi<Object> handpickList() {
+        return articleService.handpickList();
     }
 
 }

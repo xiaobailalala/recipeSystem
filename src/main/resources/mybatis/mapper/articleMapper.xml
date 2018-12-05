@@ -3,9 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.ArticleDao">
 
+    <select id="findNameById" parameterType="Integer" resultType="String">
+        select f_name from t_food_article where f_id=#{fId};
+    </select>
+
     <insert id="saveInfo" parameterType="Article">
-        insert into t_food_article (f_name, f_content, f_uid, f_cover, f_type, f_release, f_topic)
-        values (#{fName}, #{fContent}, #{fUid}, #{fCover}, #{fType}, #{fRelease}, #{fTopic});
+        insert into t_food_article (f_name, f_content, f_uid, f_cover, f_type, f_release, f_topic, f_referPeople, f_referArticle, f_referRecipe)
+        values (#{fName}, #{fContent}, #{fUid}, #{fCover}, #{fType}, #{fRelease}, #{fTopic}, #{fReferPeople}, #{fReferArticle}, #{fReferRecipe});
     </insert>
 
     <select id="findAllInfo" resultMap="getArticleDetail">

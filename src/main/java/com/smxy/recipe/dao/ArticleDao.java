@@ -35,6 +35,8 @@ import java.util.List;
 
 public interface ArticleDao {
 
+    String findNameById(Integer fId);
+
     Integer saveInfo(Article article);
 
     List<Article> findAllInfo();

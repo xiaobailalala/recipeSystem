@@ -14,6 +14,9 @@ import com.smxy.recipe.entity.Recipe;
 import java.util.List;
 
 public interface RecipeDao {
+
+    String getNameById(Integer fId);
+
     Integer saveInfo(Recipe recipe);
 
     List<Recipe> getAllInfo();
