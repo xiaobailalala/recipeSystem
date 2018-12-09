@@ -7,8 +7,8 @@
         select * from t_food_material where f_name=#{fName};
     </select>
 
-    <insert id="saveInfo" parameterType="String">
-        insert into t_food_material (f_name) values (#{fName});
+    <insert id="saveInfo">
+        insert into t_food_material (f_name, f_cover) values (#{fName}, #{fCover});
     </insert>
 
     <select id="getAllInfo" resultType="Material">
@@ -20,10 +20,13 @@
     </delete>
 
     <update id="updateInfo" parameterType="Material">
-        update t_food_material set f_name=#{fName} where f_id=#{fId};
+        update t_food_material set f_name=#{fName},f_cover=#{fCover} where f_id=#{fId};
     </update>
 
     <select id="getInfoById" parameterType="Integer" resultType="Material">
         select * from t_food_material where f_id=#{fId};
+    </select>
+    <select id="getDataByVagueName" resultType="Material">
+        select * from t_food_material where f_name like concat('%', #{fName}, '%');
     </select>
 </mapper>

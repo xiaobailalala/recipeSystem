@@ -21,4 +21,5 @@ import lombok.NoArgsConstructor;
 public final class Material {
 	private Integer fId;
 	private String fName;
+	private String fCover;
 }

@@ -1,13 +1,22 @@
 package com.smxy.recipe;
 
+import com.smxy.recipe.dao.MaterialDao;
+import com.smxy.recipe.entity.Material;
 import com.smxy.recipe.service.MaterialService;
 import com.smxy.recipe.utils.ToolsApi;
+import org.apache.http.entity.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -15,15 +24,47 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DemoApplicationTests {
 
     @Autowired
+    private MaterialDao materialDao;
+
+    @Autowired
     private MaterialService materialService;
 
     @Test
     public void contextLoads() {
-        com.smxy.recipe.utils.Test.execute();
+//        com.smxy.recipe.utils.Test.execute();
 //        ResApi<Object> data = getData();
 //        System.out.println(data);
 //        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFvPOfiAWr7HAAP0AAkuLZg362.png");
     }
+
+//    @Test
+//    public void addMessage() {
+//        int count = 0;
+//        for (int i = 126; i <= 722; i++) {
+//            Material material = materialDao.getInfoById(i);
+//            String name = material.getFName();
+//            File file = new File("C:\\Users\\Shinelon\\Desktop\\material\\" + name + ".jpg");
+//            if (!file.exists()) {
+//                file = new File("C:\\Users\\Shinelon\\Desktop\\material\\" + name + ".png");
+//            }
+//            FileInputStream fileInputStream = null;
+//            try {
+//                fileInputStream = new FileInputStream(file);
+//                MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(),
+//                        ContentType.APPLICATION_OCTET_STREAM.toString(), fileInputStream);
+//                material.setFCover(ToolsApi.multipartFileUploadFile(multipartFile, null));
+//                int result = materialDao.updateInfo(material);
+//                if (result > 0) {
+//                    count++;
+//                } else {
+//                    System.out.println(name);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        System.out.println(count);
+//    }
 //
 //    @Cacheable(value = {"testList"})
 //    public ResApi<Object> getData() {

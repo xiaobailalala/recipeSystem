@@ -11,18 +11,23 @@ package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.Material;
 import com.smxy.recipe.utils.ResApi;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MaterialService {
 
-    ResApi<Object> saveInfo(String fName);
+    ResApi<String> saveInfo(MultipartFile file, String fName);
 
-    ResApi<Object> deleteInfo(Integer id);
+    ResApi<String> deleteInfo(Integer id, String filePath);
 
     ResApi<Object> getAllInfo();
 
     Material getInfoById(Integer id);
 
-    ResApi<Object> updateInfo(Integer id, Material material);
+    ResApi<String> updateInfo(Integer id, MultipartFile file, Material material);
 
     ResApi<Object> getOneByName(String fName);
+
+    ResApi<Object> randomList();
+
+    ResApi<Object> getDataByVagueName(String name);
 }

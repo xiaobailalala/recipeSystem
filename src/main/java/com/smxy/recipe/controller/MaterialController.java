@@ -17,6 +17,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @PathController("/manage/material")
 public class MaterialController {
@@ -28,15 +29,15 @@ public class MaterialController {
     @RequiresPermissions("material:insert")
     @ResponseBody
     @PostMapping("/info")
-    public ResApi<Object> saveInfo(String fName) {
-        return materialService.saveInfo(fName);
+    public ResApi<String> saveInfo(@RequestParam("file") MultipartFile multipartFile, String fName) {
+        return materialService.saveInfo(multipartFile, fName);
     }
 
     @RequiresPermissions("material:delete")
     @ResponseBody
     @DeleteMapping("/info/{id}")
-    public ResApi<Object> deleteInfo(@PathVariable("id") Integer id) {
-        return materialService.deleteInfo(id);
+    public ResApi<String> deleteInfo(@PathVariable("id") Integer id, String filePath) {
+        return materialService.deleteInfo(id, filePath);
     }
 
     @RequiresPermissions("material:select")
@@ -62,8 +63,8 @@ public class MaterialController {
     @RequiresPermissions("material:update")
     @ResponseBody
     @PutMapping("/info/{id}")
-    public ResApi<Object> updateInfo(@PathVariable("id") Integer id, Material material) {
-        return materialService.updateInfo(id, material);
+    public ResApi<String> updateInfo(@PathVariable("id") Integer id, @RequestParam("file") MultipartFile file, Material material) {
+        return materialService.updateInfo(id, file, material);
     }
 
     @RequiresPermissions("material:select")

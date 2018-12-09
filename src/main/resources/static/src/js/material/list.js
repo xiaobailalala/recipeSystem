@@ -2,6 +2,7 @@ $(function(){
     (function Delete(){
         Tools.body.on('click','.deleteInfo',function(){
             var id=$(this).data("id");
+            var filePath = $(this).data("path");
             swal({
                 title: "确定删除吗？",
                 text: "你将无法恢复该食材信息",
@@ -13,6 +14,7 @@ $(function(){
             },function(){
                 var formData=new FormData();
                 formData.append("_method","delete");
+                formData.append("filePath", filePath);
                 $.ajax({
                     url:"/manage/material/info/"+id,
                     type:"post",

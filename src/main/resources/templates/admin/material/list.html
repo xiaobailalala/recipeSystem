@@ -32,7 +32,7 @@
                 <div class="panel panel-default">
                     <div class="panel-title">
                         信息列表
-                        <a type="button" th:href="@{/manage/material/add}" class="btn btn-info"
+                        <a th:href="@{/manage/material/add}" class="btn btn-info"
                            style="float: right;color: #ffffff;">新增食材</a>
                     </div>
                     <div class="panel-body table-responsive">
@@ -41,6 +41,7 @@
                             <thead>
                             <tr>
                                 <th>序号</th>
+                                <th>食材封面</th>
                                 <th>食材名称</th>
                                 <th>操作</th>
                             </tr>
@@ -48,6 +49,7 @@
                             <tfoot>
                             <tr>
                                 <th>序号</th>
+                                <th>食材封面</th>
                                 <th>食材名称</th>
                                 <th>操作</th>
                             </tr>
@@ -55,6 +57,9 @@
                             <tbody>
                             <tr th:each="item,status:${list.data}">
                                 <td th:text="${status.index+1}"></td>
+                                <td>
+                                    <img style="height: 100px;width: 100px;" th:src="(${fileServerPath})+${item.fCover}" alt="">
+                                </td>
                                 <td th:text="${item.fName}"></td>
                                 <td>
                                     <a th:href="@{/manage/material/editor/}+${item.fId}" th:data-id="${item.fId}"
@@ -62,7 +67,7 @@
                                         <i class="fa fa-edit"></i>
                                         编辑
                                     </a>
-                                    <a href="javascript:;" th:data-id="${item.fId}" class="btn btn-danger deleteInfo">
+                                    <a href="javascript:;" th:data-id="${item.fId}" th:data-path="${item.fCover}" class="btn btn-danger deleteInfo">
                                         <i class="fa fa-close"></i>
                                         删除
                                     </a>

@@ -10,6 +10,7 @@
 package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.Material;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface MaterialDao {
 
     Material getInfoByName(String fName);
 
-    Integer saveInfo(String fName);
+    Integer saveInfo(@Param("fName") String name, @Param("fCover") String cover);
 
     List<Material> getAllInfo();
 
@@ -27,4 +28,6 @@ public interface MaterialDao {
     Integer updateInfo(Material material);
 
     Material getInfoById(Integer fId);
+
+    List<Material> getDataByVagueName(String fName);
 }

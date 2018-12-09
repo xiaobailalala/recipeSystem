@@ -13,40 +13,47 @@ import com.smxy.recipe.dao.MaterialDao;
 import com.smxy.recipe.entity.Material;
 import com.smxy.recipe.service.MaterialService;
 import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 @Service("materialService")
 public class MaterialServiceImpl implements MaterialService {
 
+    @SuppressWarnings("all")
     @Autowired
     private MaterialDao materialDao;
 
     @Override
-    public ResApi<Object> saveInfo(String fName) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> saveInfo(MultipartFile file, String fName) {
         if (materialDao.getInfoByName(fName)!=null){
-            resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
+            return ResApi.getError(501,"该分类已存在，请勿重复添加");
         }else {
-            if (materialDao.saveInfo(fName)>0){
-                resApi=new ResApi<>(200,"success","success");
+            String fCover = ToolsApi.multipartFileUploadFile(file, null);
+            if (materialDao.saveInfo(fName, fCover)>0){
+                return ResApi.getSuccess();
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
-    public ResApi<Object> deleteInfo(Integer id) {
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
+    public ResApi<String> deleteInfo(Integer id, String filePath) {
         if (materialDao.deleteInfo(id)>0){
-            resApi=new ResApi<>(200,"success","success");
+            ToolsApi.multipartFileDeleteFile(filePath);
+            return ResApi.getSuccess();
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
     public ResApi<Object> getAllInfo() {
-        return new ResApi<>(200,"success",materialDao.getAllInfo());
+        return ResApi.getSuccess(materialDao.getAllInfo());
     }
 
     @Override
@@ -55,17 +62,20 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public ResApi<Object> updateInfo(Integer id, Material material) {
+    public ResApi<String> updateInfo(Integer id, MultipartFile file, Material material) {
         material.setFId(id);
-        ResApi<Object> resApi=new ResApi<>(500,"系统出错","error");
-        if (materialDao.getInfoByName(material.getFName())!=null){
-            resApi=new ResApi<>(501,"该分类已存在，请勿重复添加","failed");
+        if (file.getSize() == 0 && materialDao.getInfoByName(material.getFName())!=null){
+            return ResApi.getError(501,"该分类已存在，请勿重复添加");
         }else {
+            if (file.getSize()>0) {
+                ToolsApi.multipartFileDeleteFile(material.getFCover());
+                material.setFCover(ToolsApi.multipartFileUploadFile(file, null));
+            }
             if (materialDao.updateInfo(material)>0){
-                resApi=new ResApi<>(200,"success","success");
+                return ResApi.getSuccess();
             }
         }
-        return resApi;
+        return ResApi.getError();
     }
 
     @Override
@@ -76,6 +86,22 @@ public class MaterialServiceImpl implements MaterialService {
             resApi=new ResApi<>(200,"success",material);
         }
         return resApi;
+    }
+
+    @Override
+    public ResApi<Object> randomList() {
+        List<Material> materials = materialDao.getAllInfo();
+        int[] randomNumber = ToolsApi.randomArray(0, materials.size() - 1, 20);
+        List<Material> randomList = new LinkedList<>();
+        for (int index : Objects.requireNonNull(randomNumber)) {
+            randomList.add(materials.get(index));
+        }
+        return ResApi.getSuccess(randomList);
+    }
+
+    @Override
+    public ResApi<Object> getDataByVagueName(String name) {
+        return ResApi.getSuccess(materialDao.getDataByVagueName(name));
     }
 
 
