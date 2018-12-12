@@ -17,6 +17,7 @@ import com.smxy.recipe.utils.ToolsApi;
 import com.smxy.recipe.utils.api.CodeApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -27,6 +28,7 @@ import java.util.Map;
  * @author zpx
  *
  */
+@Transactional(rollbackFor = Exception.class)
 @Service("commonUserService")
 public class CommonUserServiceImpl implements CommonUserService {
 

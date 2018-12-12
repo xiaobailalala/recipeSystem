@@ -1,36 +1,20 @@
 $(function(){
     (function Add() {
         var name = false,oid=false,cover=false,bg=false,color=false;
-        $('body').on('input propertychange', "#fName", function () {
-            if ($(this).val().length === 0 || $(this).val()===undefined || $(this).val()==='' || $(this).val()===null){
-                name=false;
-            }else{
-                name=true;
-            }
+        Tools.body.on('input propertychange', "#fName", function () {
+            name = !($(this).val().length === 0 || $(this).val() === undefined || $(this).val() === '' || $(this).val() === null);
             isSub();
         });
-        $('body').on('input propertychange', "#fBg", function () {
-            if ($(this).val().length === 0 || $(this).val()===undefined || $(this).val()==='' || $(this).val()===null){
-                bg=false;
-            }else{
-                bg=true;
-            }
+        Tools.body.on('input propertychange', "#fBg", function () {
+            bg = !($(this).val().length === 0 || $(this).val() === undefined || $(this).val() === '' || $(this).val() === null);
             isSub();
         });
-        $('body').on('input propertychange', "#fColor", function () {
-            if ($(this).val().length === 0 || $(this).val()===undefined || $(this).val()==='' || $(this).val()===null){
-                color=false;
-            }else{
-                color=true;
-            }
+        Tools.body.on('input propertychange', "#fColor", function () {
+            color = !($(this).val().length === 0 || $(this).val() === undefined || $(this).val() === '' || $(this).val() === null);
             isSub();
         });
         $('#fOid').change(function(){
-            if ($(this).val()===-1){
-                oid=false;
-            } else{
-                oid=true;
-            }
+            oid = $(this).val() !== -1;
             isSub();
         });
         $('#browser').click(function(){

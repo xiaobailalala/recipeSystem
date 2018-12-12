@@ -7,6 +7,7 @@ import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @author Yangyihui
  * @date 2018/11/20 0020 15:19
  */
+@Transactional(rollbackFor = Exception.class)
 @Service("merchantProductService")
 public class MerchantProductServiceImpl implements MerchantProductService {
     private static final String PRODUCT_STATE_SHELVE = "shelve";

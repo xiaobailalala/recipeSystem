@@ -16,14 +16,17 @@ import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Transactional(rollbackFor = Exception.class)
 @Service("tipsService")
 public class TipsServiceImpl implements TipsService {
 
+    @SuppressWarnings("all")
     @Autowired
     private TipsDao tipsDao;
 

@@ -9,10 +9,7 @@
  */
 package com.smxy.recipe.config;
 
-import com.smxy.recipe.realm.XformAuthenticationFilter;
-import com.smxy.recipe.realm.AdminShiroRealm;
-import com.smxy.recipe.realm.MerchantShiroRealm;
-import com.smxy.recipe.realm.UserModularRealmAuthenticator;
+import com.smxy.recipe.realm.*;
 import com.smxy.recipe.resolver.MyExceptionResolver;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
@@ -20,6 +17,7 @@ import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -153,8 +151,14 @@ public class ShiroConfig {
         realms.add(adminShiroRealm());
         realms.add(merchantShiroRealm());
         securityManager.setRealms(realms);
+        securityManager.setSessionManager(sessionManager());
         securityManager.setRememberMeManager(cookieRememberMeManager());
         return securityManager;
+    }
+
+    @Bean
+    public SessionManager sessionManager() {
+        return new MySessionManager();
     }
 
     @Bean

@@ -21,12 +21,14 @@ import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackFor = Exception.class)
 @Service("recipeService")
 public class RecipeServiceImpl implements RecipeService {
 

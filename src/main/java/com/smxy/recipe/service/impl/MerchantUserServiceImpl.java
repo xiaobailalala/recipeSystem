@@ -17,6 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import java.util.Map;
  * @author Yangyihui
  * @date 2018/11/12 0012 21:36
  */
+@Transactional(rollbackFor = Exception.class)
 @Service("merchantUserService")
 public class MerchantUserServiceImpl implements MerchantUserService {
     @Autowired

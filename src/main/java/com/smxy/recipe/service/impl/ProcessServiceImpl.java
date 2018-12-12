@@ -36,7 +36,9 @@ import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.api.BaiduTtsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(rollbackFor = Exception.class)
 @Service("processService")
 public class ProcessServiceImpl implements ProcessService {
 

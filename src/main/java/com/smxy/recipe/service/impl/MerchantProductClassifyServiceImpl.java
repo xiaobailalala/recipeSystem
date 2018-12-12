@@ -5,6 +5,7 @@ import com.smxy.recipe.service.MerchantProductClassifyService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Demo MerchantProductClassifyService
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
  * @author Yangyihui
  * @date 2018/11/22 0022 10:58
  */
+@Transactional(rollbackFor = Exception.class)
 @Service("merchantProductClassifyService")
 public class MerchantProductClassifyServiceImpl  implements MerchantProductClassifyService {
     @Autowired

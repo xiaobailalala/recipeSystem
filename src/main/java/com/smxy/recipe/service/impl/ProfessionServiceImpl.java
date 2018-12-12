@@ -16,11 +16,13 @@ import com.smxy.recipe.dao.ProfessionDao;
 import com.smxy.recipe.entity.Profession;
 import com.smxy.recipe.service.ProfessionService;
 import com.smxy.recipe.utils.ResApi;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author zpx
  *
  */
+@Transactional(rollbackFor = Exception.class)
 @Service("professionService")
 public class ProfessionServiceImpl implements ProfessionService {
 	

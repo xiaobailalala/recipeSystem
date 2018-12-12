@@ -39,12 +39,14 @@ import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+@Transactional(rollbackFor = Exception.class)
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 

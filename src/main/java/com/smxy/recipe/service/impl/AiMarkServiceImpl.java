@@ -37,10 +37,12 @@ import com.smxy.recipe.utils.ToolsApi;
 import com.smxy.recipe.utils.api.BaiduTtsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional(rollbackFor = Exception.class)
 @Service("aiMarkService")
 public class AiMarkServiceImpl implements AiMarkService {
 

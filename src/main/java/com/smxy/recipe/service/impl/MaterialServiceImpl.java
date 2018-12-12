@@ -16,12 +16,14 @@ import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+@Transactional(rollbackFor = Exception.class)
 @Service("materialService")
 public class MaterialServiceImpl implements MaterialService {
 
