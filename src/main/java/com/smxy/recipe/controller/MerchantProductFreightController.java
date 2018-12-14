@@ -16,13 +16,4 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @PathController("/merchant/merchantProductFreight")
 public class MerchantProductFreightController {
-    @Autowired
-    private ProductFreightService productFreightService;
-
-    @RequiresPermissions("product:select")
-    @ResponseBody
-    @GetMapping("/getAllFreight")
-    public ResApi<Object> getAllFreight(){
-        return productFreightService.getAllProductFreight();
-    }
 }

@@ -38,4 +38,40 @@ public interface MerchantProductMarqueDao {
      * @date 2018/11/26 0026 20:30
      */
     Integer deleteMarqueByFPid(Integer fPid);
+
+    /**
+     * 功能描述: 根据商品类型ID删除对应商品类型
+     * @param fId 商品类型ID
+     * @return : java.lang.Integer
+     * @author : yangyihui
+     * @date : 2018/12/9 0009 21:50
+     */
+    Integer deleteMarqueByFId(Integer fId);
+
+    /**
+     * 功能描述: 更新商品类型
+     * @param merchantProductMarque 商品类型
+     * @return : java.lang.Integer 数据库更新数
+     * @author : yangyihui
+     * @date : 2018/12/9 0009 20:39
+     */
+    Integer updateMarqueInfo(MerchantProductMarque merchantProductMarque);
+
+    /**
+     * 功能描述: 根据商品类型ID获取商品类型图片路径
+     * @param fId 商品类型ID
+     * @return : com.smxy.recipe.entity.MerchantProductMarque
+     * @author : yangyihui
+     * @date : 2018/12/9 0009 21:07
+     */
+    String getMarqueImagePathById(Integer fId);
+
+    /**
+     * 功能描述: 根据商品ID查找所有商品类型ID
+     * @param fPid 商品ID
+     * @return : java.util.List<java.lang.Integer>
+     * @author : yangyihui
+     * @date : 2018/12/9 0009 21:47
+     */
+    List<Integer> getMarqueId(Integer fPid);
 }

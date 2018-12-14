@@ -96,7 +96,7 @@ $(function () {
                 $(this).removeClass("layui-btn-primary").addClass("layui-btn-disabled");
                 interval_id = setInterval(setCodeTime, 1000);
                 $.ajax({
-                    url: "/merchant/verifyCode",
+                    url: "/merchantCommon/verifyCode",
                     type: "POST",
                     data: {
                         phoneNumber: phoneNum
@@ -139,6 +139,7 @@ $(function () {
                     success: function (res) {
                         if (res.code === 200) {
                             layer.msg("注册成功");
+                            location.href = "/merchantCommon/login";
                         }
                         else {
                             var msg = res.msg;

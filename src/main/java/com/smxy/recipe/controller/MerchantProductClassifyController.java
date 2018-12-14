@@ -19,13 +19,4 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @PathController("/merchant/merchantProductClassify")
 public class MerchantProductClassifyController {
-    @Autowired
-    MerchantProductClassifyService merchantProductClassifyService;
-
-    @RequiresPermissions("product:select")
-    @GetMapping("/getAllProductCla")
-    @ResponseBody
-    public ResApi<Object> getAllProductCla(){
-        return merchantProductClassifyService.getAllProductClassify();
-    }
 }

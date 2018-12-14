@@ -4,6 +4,7 @@
 <body>
 <div th:fragment="common_nav">
     <div class="header">
+        <input type="hidden" name="userId" th:value="${session.merUser.FId}">
         <div class="layui-main header-middle">
             <div class="mylayui-div-inline-block">
                 <a href="/" class="logo"><img th:src="@{/src/images/merchant/logo-dark-smile.png}" alt=""> </a>
@@ -21,17 +22,17 @@
                             </dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item mylayui-nav-item"><a href=""><img th:src="${session.merUser.FCover}"
-                                                                                class=" layui-nav-img">[[${session.merUser.FShopname}]]</a>
+                    <li class="layui-nav-item mylayui-nav-item"><a href=""><img th:src="(${fileServerPath})+${session.merUser.FCover}"
+                                                                                class=" layui-nav-img" th:text="${session.merUser.FShopname}"></a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;">修改信息</a>
+                                <a th:href="@{~/merchant/merchantUser/userInfo}">修改信息</a>
                             </dd>
                             <dd>
                                 <a href="javascript:;">安全管理</a>
                             </dd>
                             <dd>
-                                <a href="/merchant/merchantUser/merchantLogout">退了</a>
+                                <a href="/merchantCommon/merchantLogout">退了</a>
                             </dd>
                         </dl>
                     </li>
@@ -53,7 +54,8 @@
                                 <a href="/merchant/merchantProduct/goProductAdd">添加商品</a>
                             </dd>
                             <dd>
-                                <a href="/merchant/merchantProduct/goProductList">所有商品</a>
+                                <!--<a th:href="'/merchant/merchantProduct/list/' + ${session.merUser.FId}">所有商品</a>-->
+                                <a th:href="@{/merchant/merchantProduct/goProductList}">所有商品</a>
                             </dd>
                             <dd>
                                 <a href="">售中商品</a>

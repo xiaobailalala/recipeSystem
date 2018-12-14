@@ -14,4 +14,17 @@
         WHERE f_pid = #{fPid};
     </delete>
 
+    <select id="getMerchantUserProductByMid" parameterType="Integer" resultMap="getUserProductDetails">
+        SELECT *
+        FROM t_merchant_user_product
+        WHERE f_mid = #{fMid};
+    </select>
+    <resultMap id="getUserProductDetails" type="com.smxy.recipe.entity.MerchantUserProduct">
+        <result property="fPid" column="f_pid" />
+        <association property="merchantProduct" column="f_pid"
+                     select="com.smxy.recipe.dao.MerchantProductDao.getProductById">
+        </association>
+    </resultMap>
+
+
 </mapper>

@@ -22,4 +22,32 @@
         FROM t_product_marque
         WHERE f_pid = #{fPid};
     </delete>
+
+    <delete id="deleteMarqueByFId" parameterType="Integer">
+        DELETE
+        FROM t_product_marque
+        WHERE f_id = #{fId};
+    </delete>
+
+    <update id="updateMarqueInfo" parameterType="com.smxy.recipe.entity.MerchantProductMarque">
+        UPDATE t_product_marque
+        SET f_marqueclaid = #{fMarqueclaid},
+            f_marquename  = #{fMarquename},
+            f_marqueimage = #{fMarqueimage},
+            f_price       = #{fPrice},
+            f_repository  = #{fRepository}
+        WHERE f_id = #{fId}
+    </update>
+
+    <select id="getMarqueImagePathById" parameterType="Integer" resultType="String">
+        SELECT f_marqueimage
+        FROM t_product_marque
+        WHERE f_id = #{fId};
+    </select>
+
+    <select id="getMarqueId" parameterType="Integer" resultType="Integer">
+        SELECT f_id
+        FROM t_product_marque
+        WHERE f_pid = #{fPid};
+    </select>
 </mapper>

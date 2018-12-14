@@ -206,7 +206,7 @@ $(function () {
             var select = $("select[name=fCategory]");
             var proclassify = '';
             $.ajax({
-                url: "/merchant/merchantProductClassify/getAllProductCla",
+                url: "/merchantCommon/getAllProductCla",
                 type: "GET",
                 success: res => {
                     res.data.forEach(function (item, index) {
@@ -222,7 +222,7 @@ $(function () {
             var select = $("select[name=fMarqueclaid]");
             var marclassify = '';
             $.ajax({
-                url: "/merchant/productMarqueClassify/getAllMarqueClassify",
+                url: "/merchantCommon/getAllMarqueClassify",
                 type: "GET",
                 success: res => {
                     res.data.forEach(function (item, index) {
@@ -238,7 +238,7 @@ $(function () {
             var select = $("select[name=fFreightid]");
             var productfreight = '';
             $.ajax({
-                url: "/merchant/merchantProductFreight/getAllFreight",
+                url: "/merchantCommon/getAllFreight",
                 type: "GET",
                 success: res => {
                     res.data.forEach(function (item, index) {
@@ -673,9 +673,6 @@ $(function () {
                 // formdata.append("productImage",productImages);
                 $('textarea[name=pro_details_content]').each(function (index, item) {
                     productDetailsText.push($(this).val());
-                    // if ($(this).val()) {
-                    //
-                    // }
                 });
                 formdata.append("productDetailsContent", productDetailsText);
                 if ($('input[name=manager_hot]').is(':checked')) {

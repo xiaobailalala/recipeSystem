@@ -3,12 +3,23 @@ package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.MerchantUser;
 
+import java.util.Map;
+
 /**
  * Demo MerchantUserDao
  * @auther yangyihui
  * @date 2018/11/17 0017 21:33
  */
 public interface MerchantUserDao {
+
+    /**
+     * 功能描述: 根据商家ID查询数据
+     * @param fId 商家ID
+     * @return : com.smxy.recipe.entity.MerchantUser
+     * @author : yangyihui
+     * @date : 2018/12/12 0012 13:59
+     */
+    MerchantUser getMerchantUserById(Integer fId);
 
     /**
      * 功能描述:根据一个商家用户名查找一个商家
@@ -76,5 +87,32 @@ public interface MerchantUserDao {
      * @date 2018/11/19 0019 20:28
      */
     Integer updateMerchantUser(MerchantUser merchantUser);
+
+    /**
+     * 功能描述: 根据商家ID更改商家头像
+     * @param map ID及头像路径集合
+     * @return : java.lang.Integer
+     * @author : yangyihui
+     * @date : 2018/12/14 0014 13:27
+     */
+    Integer updateUserCoverById(Map<String, Object> map);
+
+    /**
+     * 功能描述: 更新商家用户信息
+     * @param merchantUser 商家用户信息类
+     * @return : java.lang.Integer
+     * @author : yangyihui
+     * @date : 2018/12/14 0014 16:23
+     */
+    Integer updateMerchantUserInfo(MerchantUser merchantUser);
+
+    /**
+     * 功能描述: 根据ID更新用户密码
+     * @param map 信息集合
+     * @return : java.lang.Integer
+     * @author : yangyihui
+     * @date : 2018/12/14 0014 16:31
+     */
+    Integer updateMerchantUserPasswordById(Map<String, Object> map);
 
 }

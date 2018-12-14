@@ -12,17 +12,20 @@
     </fieldset>
     <div class="form_div">
         <form class="productAdd-form layui-form" id="product_form" autocomplete="off" enctype="multipart/form-data">
+            <input type="hidden" name="fId" th:value="${item.data.product.fId}">
             <!-- 多图片上传 商品主图上传-->
             <div class="upload_proimage" style="margin-bottom: 35px;">
                 <blockquote class="layui-elem-quote layui-quote-nm">
                     <h3>商品主图</h3>
                     <div class="layui-upload-list" id="product_images">
-                        <!--<div class="editimg">-->
-                        <!--<div class="imgs">-->
-                        <!--<img src="" alt="" class="layui-upload-img" width="90px" height="90px">-->
-                        <!--<a class="demo-delete layui-btn"><i class="layui-icon layui-icon-close "></i></a>-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <div class="editimg" th:each="pro_img:${item.data.productImage}">
+                            <div class="imgs">
+                                <img th:src="(${fileServerPath})+${pro_img.fImg}" alt="商品主图" class="layui-upload-img"
+                                     width="90px" height="90px" data-id="">
+                                <input type="hidden" name="imgsId" th:value="${pro_img.fId}">
+                                <a class="demo-delete layui-btn"><i class="layui-icon layui-icon-close "></i></a>
+                            </div>
+                        </div>
                     </div>
                 </blockquote>
                 <button type="button" class="layui-btn layui-btn-warm" id="moreImgupload"
@@ -35,8 +38,10 @@
             <div class="layui-form-item product-title">
                 <label class="layui-form-label" style="box-sizing: content-box;">商品名称：</label>
                 <div class="layui-input-block">
-                    <textarea name="fName" id="" cols="30" rows="10" placeholder="请输入商品标题"
-                              class="layui-input product-name" lay-verify="required"></textarea>
+                    <textarea name="fName" id="productTitle" cols="30" rows="10" placeholder="请输入商品标题"
+                              class="layui-input product-name"
+                              lay-verify="required"
+                              th:text="${#strings.containsIgnoreCase(item.data.product.fName,'#店长推荐#')? #strings.substring(item.data.product.fName,6) : item.data.product.fName}"></textarea>
                     <p><span id="text-count">0</span>/60</p>
                 </div>
             </div>
@@ -45,7 +50,7 @@
                 <label class="layui-form-label" style="box-sizing: content-box;">商品类型：</label>
                 <div class="layui-input-block layui-form-select">
                     <select name="fCategory" lay-verify="required" lay-filter="product_category">
-                        <option value="">请选择商品类型</option>
+                        <option selected disabled th:text="${item.data.product.fCategory}+'(默认选中)'"></option>
                     </select>
                 </div>
             </div>
@@ -64,53 +69,73 @@
                             <div class="layui-card-header product-div-model-title">
                                 <div class="div_select" style="width:150px; display: inline-block;">
                                     <select name="fMarqueclaid">
-                                        <option value="">请选择型号分类</option>
+                                        <option selected disabled
+                                                th:text="${item.data.marqueClassifyName.fMarquename}+'(默认选中)'"></option>
                                     </select>
                                 </div>
-                                <div style="display: inline-block;">
-                                    <div class="addModelImg">
-                                        <input type="checkbox" name="" lay-skin="switch" lay-text="添加图片|添加图片"
-                                               style="height: 60px;" lay-filter="appendImg">
-                                    </div>
+                                <div class="product_marque_title">
+                                    <span>型号名</span>
+                                    <span>价格</span>
+                                    <span>库存</span>
+                                    <span>图片</span>
+                                    <span>操作</span>
                                 </div>
+                                <!--<div style="display: inline-block;">-->
+                                <!--<div class="addModelImg">-->
+                                <!--<input type="checkbox" name="" lay-skin="switch" lay-text="添加图片|添加图片"-->
+                                <!--style="height: 60px;" lay-filter="appendImg">-->
+                                <!--</div>-->
+                                <!--</div>-->
                                 <!--<i class="layui-icon layui-icon-close closeModel-btn closeModel"></i>-->
                             </div>
                             <div class="layui-card-body addModelClassify-div" style="padding:10px 0px;">
-                                <ul style="min-height:80px; padding: 10px 15px;">
-                                    <li class="model-li-add model-li">
-                                        <a href="javascript:;" class="addMarque">+添加型号</a>
-                                        <div class="addModel-div">
-                                            <i id="arrow" class="layui-icon layui-icon-up"></i>
-                                            <section class="addmodel-section">
-                                                <!-- 可根据数据库生成 -->
-                                                <div class="section-model-li">
-                                                    <div class="model-name-div">
-                                                        <input class="modelName" type="checkbox" name="" title="0"
-                                                               lay-filter="modelName-filter">
-                                                    </div>
-                                                    <i class="layui-icon layui-icon-close model-li-del"></i>
-                                                </div>
-                                            </section>
-                                            <hr>
-                                            <div class="model-name-input">
-                                                <label class="layui-form-label"
-                                                       style="box-sizing: content-box;width: auto;">添加型号</label>
-                                                <input type="text" name="" placeholder="输入型号"
-                                                       class="layui-input model-name"
-                                                       style="width: 230px;display: inline-block;">
-                                                <a href="" class="addmodel-name-btn addmodel-name-btn-add">添加</a>
-                                                <a href="" class="addmodel-name-btn addmodel-name-btn-cencle">取消</a>
-                                            </div>
-                                            <div class="addModel-footer">
-                                                <a href=""
-                                                   class="layui-btn layui-btn-primary addModel-div-cencle">取消</a>
-                                                <a href=""
-                                                   class="layui-btn layui-btn-danger addModel-div-confirm">确定</a>
-                                            </div>
+                                <div class="product_marque_div"
+                                     th:each="pro_marque:${item.data.product.merchantProductMarques}">
+                                    <div class="product_marque" style="padding-left: 15px; min-height: 80px;">
+                                        <div class="product_marque_item">
+                                            <input name="fMarquename" type="text" class="layui-input"
+                                                   th:value="${pro_marque.fMarquename}"
+                                                   style="width: 150px; margin: 0 auto;">
                                         </div>
-                                    </li>
-                                </ul>
-                                <hr>
+                                        <div class="product_marque_item">
+                                            <input name="fPrice" type="text" class="layui-input"
+                                                   th:value="${pro_marque.fPrice}"
+                                                   lay-verify="price" style="width: 150px; margin: 0 auto;">
+                                        </div>
+                                        <div class="product_marque_item">
+                                            <input name="fRepository" type="text" class="layui-input"
+                                                   th:value="${pro_marque.fRepository}"
+                                                   lay-verify="repertory" style="width: 150px; margin: 0 auto;">
+                                        </div>
+                                        <div class="product_marque_item">
+                                            <div class="upload_img Marqueimage" style="z-index: 8">
+                                                <span style="position: absolute;" th:if="${pro_marque.fMarqueimage == null}"
+                                                  class="layui-icon layui-icon-add-1"></span>
+                                                <img th:if="${pro_marque.fMarqueimage != null}"
+                                                     th:src="(${fileServerPath}) + ${pro_marque.fMarqueimage}"
+                                                     alt="商品类型图片"
+                                                     style="max-width: 100%;height: 100%;z-index: 10;">
+                                            </div>
+                                            <div class="upload_img_ops"
+                                                 th:style="${pro_marque.fMarqueimage != null? 'display:block':'display:none'}">
+                                                <a href="javascript:;" style="color: #ffffff;"
+                                                   class="upload_img_delete">删除</a>
+                                            </div>
+                                            <input type="hidden" name="marqueId" th:value="${pro_marque.fId}">
+                                            <input type="file" style="display: none;" accept="images"
+                                                   name="proMarqueImg">
+                                        </div>
+                                        <div class="product_marque_item" style="text-align: center;">
+                                            <a href="javascript:;" class="product_marque_delete">删除</a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div id="product_marque_add_div" style="padding-left: 15px;">
+                                    <button type="button" id="product_marque_add" class="layui-btn layui-btn-primary">
+                                        点击添加商品型号
+                                    </button>
+                                </div>
                                 <!-- <div>
                                     <div class="addModel-btn-div">
                                         <button class="layui-btn layui-btn-primary addModelClassify" type="button">添加型号分类</button>
@@ -118,27 +143,6 @@
                                 </div> -->
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!--型号表格-->
-                <div class="noshowtable layui-form-item">
-                    <label class="layui-form-label" style="box-sizing: content-box; padding-right: 0;width: 85px;;">价格与库存：</label>
-                    <div class="layui-input-block">
-                        <table id="modeltable" style="padding:0 10px;" lay-filter="parse-table">
-                            <!-- lay-data="{id: 'idTable'}"-->
-                            <thead id="table_data_head">
-                            <tr>
-                                <th id="thisTop"
-                                    data-text="marque_price"
-                                    lay-data="{field:'product_op_price',width: 130,align: 'center', title: '价格',templet:'#table_input_price'}"></th>
-                                <th
-                                        data-text=="marque_repertory"
-                                        lay-data="{field:'product_op_repertory',width: 130,align: 'center', title: '库存',templet:'#table_input_repertory'}"></th>
-                            </tr>
-                            </thead>
-                            <tbody id="table_data_body">
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -155,7 +159,8 @@
                            style="box-sizing: content-box; padding-right: 0;width: 85px;;">运费设置</label>
                     <div class="layui-input-block" style="width: 380px;">
                         <select name="fFreightid" lay-filter="carriage">
-                            <option value="">默认运费模板</option>
+                            <option selected disabled
+                                    th:text="${item.data.productFreight.fFreightname}+'(默认选中)'"></option>
                         </select>
                     </div>
                 </div>
@@ -187,13 +192,46 @@
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>商品详情</legend>
                 </fieldset>
-                <div class="product_details_div" style="padding: 0px 50px;">
-                    <div id="add_product_details_div">
-                        <span style="font-size:15px; padding-left: 15px;">添加商品详情</span>
-                        <button type="button" class="layui-btn layui-btn-primary add_product_details_btn"
-                                style="margin-left: 15px;">
-                            <i class="layui-icon layui-icon-add-1"></i></button>
+                <div class="layui-card pro_details" th:each="pro_details:${item.data.product.merchantProductDetails}">
+                    <div class="layui-card-header">
+                        <h3 style="display: inline-block;">商品详情</h3>
+                        <i class="layui-icon layui-icon-close"></i>
                     </div>
+                    <div class="layui-card-body" style="padding: 10px 50px;">
+                        <div style="display:inline-block;vertical-align: top;" class="pro_details_image">
+                            <h3 style="text-align: center;margin-bottom: 10px;">商品详情图片</h3>
+                            <div>
+                                <div class="upload_img DetailsImage" style="z-index: 8; width: 222px;height: 222px;">
+                                    <span th:if="${pro_details.fDetailimg == null}" style="position: absolute;"
+                                          class="layui-icon layui-icon-add-1"></span>
+                                    <img th:if="${pro_details.fDetailimg != null}"
+                                         th:src="(${fileServerPath}) + ${pro_details.fDetailimg}"
+                                         alt="商品详情图片"
+                                         style="max-width: 100%;height: 100%;z-index: 10;">
+                                </div>
+                                <div class="upload_img_ops"
+                                     th:style="${pro_details.fDetailimg != null? 'display:block;':'display:none;'} + 'height: 224px;;width: 224px;;top: 43px;left: 49px;'">
+                                    <a href="javascript:;" style="color: #ffffff;line-height: 224px;"
+                                       class="upload_img_details_delete">删除</a>
+                                </div>
+                                <input type="hidden" th:value="${pro_details.fId}" name="pro_details_Id">
+                                <input type="file" style="display: none;" accept="images"
+                                       name="proDetailsImg">
+                            </div>
+                        </div>
+                        <div style="display:inline-block;margin-left: 25px;" class="pro_details_content">
+                            <h3 style="text-align: center;margin-bottom: 10px;">商品详情文字</h3>
+                            <textarea name="pro_details_content" id="" cols="100" rows="10"
+                                      style="border:1px solid #bebcbc;padding: 15px;"
+                                      th:text="${pro_details.fDetailcontents}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div id="add_product_details_div">
+                    <span style="font-size:15px; padding-left: 15px;">添加商品详情</span>
+                    <button type="button" class="layui-btn layui-btn-primary add_product_details_btn"
+                            style="margin-left: 15px;">
+                        <i class="layui-icon layui-icon-add-1"></i></button>
                 </div>
             </div>
 
@@ -201,7 +239,8 @@
 
             <div class="layui-form-item" style="text-align: center;">
                 <div>
-                    <button id="product_submit" class="layui-btn layui-btn-warm layui-btn-lg" lay-submit lay-filter="submin_btn"
+                    <button id="product_submit" class="layui-btn layui-btn-warm layui-btn-lg" lay-submit
+                            lay-filter="submit_btn"
                             style="width:180px;">立即提交
                     </button>
                     <button type="reset" class="layui-btn layui-btn-primary layui-btn-lg" style="width:180px;">重置

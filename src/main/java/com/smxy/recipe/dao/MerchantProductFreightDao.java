@@ -18,4 +18,14 @@ public interface MerchantProductFreightDao {
      * @date 2018/11/22 0022 16:59
      */
     List<MerchantProductFreight> getAllMerchantProductFreight();
+
+
+    /**
+     * 功能描述: 通过ID获取商品运费模板
+     * @param fId 商品运费模板ID
+     * @return : com.smxy.recipe.entity.MerchantProductFreight
+     * @author : yangyihui
+     * @date : 2018/12/6 0006 21:41
+     */
+    MerchantProductFreight getMerchantProductFreightById(Integer fId);
 }

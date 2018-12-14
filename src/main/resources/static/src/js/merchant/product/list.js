@@ -13,6 +13,19 @@ $(function () {
         var element = layui.element;
         var table = layui.table;
         var util = layui.util;
+        var pagecount;
+        // var index = window.location.href.lastIndexOf("/");
+        // var id = window.location.href.substr(index + 1, window.location.href.length);
+        var id = $("input[name=userId]").val();
+        (function getPageCount() {
+            $.ajax({
+                url: "/merchant/merchantProduct/list/" + id,
+                type: "GET",
+                success: res => {
+                    pagecount = res.count;
+                }
+            })
+        }());
 
         $('#haha').click(function (e) {
             e.preventDefault();
@@ -33,14 +46,20 @@ $(function () {
         table.render({
             elem: '#produceAllList',
             toolbar: '#products-control',
-            page: true,
-            url: "/merchant/merchantProduct/list",
+            page: {
+                limit: 1,
+                limits: [1, 2, 3, 4],
+                count: pagecount
+            },
+            url: "/merchant/merchantProduct/list/" + id,
             text: {
                 error: "现在还没有任何商品哦~快去添加吧！"
             },
             title: "商品目录",
             parseDate: function (res) {
-                return {}
+                return {
+                    "item" : res.item
+                }
             },
             response: {
                 statusCode: 200,
@@ -56,71 +75,92 @@ $(function () {
                     title: 'ID',
                     align: 'center',
                     width: 80,
-                    style: 'height:120px;'
+                    style: 'height:120px;',
+                    templet: function (d) {
+                        return "<span>"+d.merchantProduct.fid+"</span>";
+                    }
                 }, {
                     field: 'fcover',
                     title: '商品图片',
                     align: 'center',
                     width: 120,
                     templet: function (d) {
-                        return "<img src=" + Tools.fileServerPath + d.fcover + " style=width:100px;height:100px;>"
+                        return "<img src=" + Tools.fileServerPath + d.merchantProduct.fcover + " style=width:100px;height:100px;>"
                     },
                     style: 'height:120px;'
                 }, {
-                    field: 'fname',
+                    field: 'd.merchantProduct.fname',
                     title: '标题',
                     align: 'center',
                     minWidth: 150,
-                    style: 'height:120px;'
+                    style: 'height:120px;',
+                    templet: function (d) {
+                        return "<span>"+d.merchantProduct.fname+"</span>";
+                    }
                 }, {
-                    field: 'd.merchantProductMarques.fprice',
+                    field: 'fprice',
                     title: '价格',
                     align: 'center',
                     width: 80,
                     sort: true,
                     templet: function (d) {
-                        return "<span>" + d.merchantProductMarques[0].fprice + "</span>";
+                        return "<span>" + d.merchantProduct.merchantProductMarques[0].fprice + "</span>";
                     },
                     style: 'height:120px;'
                 }, {
-                    field: 'd.merchantProductMarques.frepository',
+                    field: 'frepository',
                     title: '库存',
                     align: 'center',
                     width: 80,
                     sort: true,
                     templet: function (d) {
-                        return "<span>" + d.merchantProductMarques[0].frepository + "</span>";
+                        return "<span>" + d.merchantProduct.merchantProductMarques[0].frepository + "</span>";
                     },
                     style: 'height:120px;'
                 }, {
                     field: 'fstate',
                     title: '商品状态',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    templet: function (d) {
+                        return "<span>"+d.merchantProduct.fstate+"</span>";
+                    }
                 }, {
                     field: 'fgood',
                     title: '获赞数',
                     align: 'center',
                     width: 80,
                     sort: true,
-                    style: 'height:120px;'
+                    style: 'height:120px;',
+                    templet: function (d) {
+                        return "<span>"+d.merchantProduct.fgood+"</span>";
+                    }
                 }, {
                     field: 'fcategory',
                     title: '商品分类',
                     align: 'center',
-                    width: 110
+                    width: 110,
+                    templet: function (d) {
+                        return "<span>"+d.merchantProduct.fcategory+"</span>";
+                    }
                 }, {
                     field: 'fsales',
                     title: '商品销售量',
                     align: 'center',
                     width: 100,
-                    style: 'height:120px;'
+                    style: 'height:120px;',
+                    templet: function (d) {
+                        return "<span>"+d.merchantProduct.fsales+"</span>";
+                    }
                 }, {
                     field: 'freview',
                     title: '商品审核状态',
                     align: 'center',
                     width: 100,
-                    style: 'height:120px;'
+                    style: 'height:120px;',
+                    templet: function (d) {
+                        return "<span>"+d.merchantProduct.freview+"</span>";
+                    }
                 }, {
                     field: 'control',
                     fixed: 'right',
@@ -131,8 +171,9 @@ $(function () {
                 }
                 ]
             ],
-            done: function () {
+            done: function (res, curr, count) {
                 //取消layui表格默认样式
+                console.log(res);console.log(count);
                 $("td[data-field='fcover']").each(function () {
                     $(this).find(".layui-table-cell").removeClass('layui-table-cell');
                 });
@@ -206,13 +247,14 @@ $(function () {
         });
         table.on('tool(produceList_table)', function (obj) {
             var data = obj.data;
+            console.log(data.merchantProduct);
             var event = obj.event;
             switch (event) {
                 case 'shelve':
                     console.log('shelve');
                     console.log(data.fid);
                     $.ajax({
-                        url: "/merchant/merchantProduct/update/" + data.fid + "/shelve",
+                        url: "/merchant/merchantProduct/update/" + data.merchantProduct.fid + "/shelve",
                         type: "PUT",
                         success: function (res) {
                             if (res.code === 200) {
@@ -225,7 +267,7 @@ $(function () {
                 case 'unshelve':
                     console.log('unshelve');
                     $.ajax({
-                        url: "/merchant/merchantProduct/update/" + data.fid + "/unshelve",
+                        url: "/merchant/merchantProduct/update/" + data.merchantProduct.fid  + "/unshelve",
                         type: "PUT",
                         success: function (res) {
                             if (res.code === 200) {
@@ -240,7 +282,7 @@ $(function () {
                         btn: ['确定', '取消'],
                         btn1: function (index, layero) {
                             $.ajax({
-                                url: "/merchant/merchantProduct/delete/" + data.fid,
+                                url: "/merchant/merchantProduct/delete/" + data.merchantProduct.fid ,
                                 type: "DELETE",
                                 success: function (res) {
                                     if (res.code === 200) {
@@ -253,7 +295,7 @@ $(function () {
                     });
                     break;
                 case 'edit':
-                    console.log('edit');
+                    location.href = "/merchant/merchantProduct/editor/" + data.merchantProduct.fid ;
                     break;
             }
         });
@@ -266,7 +308,7 @@ $(function () {
                     } else {
                         $.each(checkdata.data, function (index, item) {
                             $.ajax({
-                                url: "/merchant/merchantProduct/update/" + item.fid + "/shelve",
+                                url: "/merchant/merchantProduct/update/" + item.merchantProduct.fid + "/shelve",
                                 type: "PUT",
                                 success: function (res) {
                                     if (res.code === 200) {
@@ -284,11 +326,11 @@ $(function () {
                     } else {
                         $.each(checkdata.data, function (index, item) {
                             $.ajax({
-                                url: "/merchant/merchantProduct/update/" + item.fid + "/unshelve",
+                                url: "/merchant/merchantProduct/update/" + item.merchantProduct.fid + "/unshelve",
                                 type: "PUT",
                                 success: function (res) {
                                     if (res.code === 200) {
-                                        layer.msg("商品上架成功");
+                                        layer.msg("商品下架成功");
                                         table.reload('produceAllList');
                                     }
                                 }
@@ -305,7 +347,7 @@ $(function () {
                             btn1: function (index, layero) {
                                 $.each(checkdata.data, function (index, item) {
                                     $.ajax({
-                                        url: "/merchant/merchantProduct/delete/" + item.fid,
+                                        url: "/merchant/merchantProduct/delete/" + item.merchantProduct.fid,
                                         type: "DELETE",
                                         success: function (res) {
                                             if (res.code === 200) {

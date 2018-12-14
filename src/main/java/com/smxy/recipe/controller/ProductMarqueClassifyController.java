@@ -16,14 +16,4 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @PathController("/merchant/productMarqueClassify")
 public class ProductMarqueClassifyController {
-    @Autowired
-    private ProductMarqueClassifyService productMarqueClassifyService;
-
-    @RequiresPermissions("product:select")
-    @GetMapping("/getAllMarqueClassify")
-    @ResponseBody
-    public ResApi<Object> getAllMarqueClassify(){
-        return productMarqueClassifyService.getAllMarqueClassify();
-    }
-
 }

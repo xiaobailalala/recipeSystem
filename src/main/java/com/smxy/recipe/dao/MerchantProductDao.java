@@ -57,4 +57,13 @@ public interface MerchantProductDao {
      */
     Integer updateProductStatusById(@Param(value = "fId") Integer fId,@Param(value = "fState") String fState);
 
+    /**
+     * 功能描述:  更新商品信息
+     * @param merchantProduct 商品实体类
+     * @return : java.lang.Integer 数据库更新数
+     * @author : yangyihui
+     * @date : 2018/12/9 0009 10:41
+     */
+    Integer updateProductInfo(MerchantProduct merchantProduct);
+
 }

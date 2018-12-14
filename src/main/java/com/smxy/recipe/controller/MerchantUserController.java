@@ -4,14 +4,13 @@ import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.MerchantUserService;
 import com.smxy.recipe.utils.ResApi;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,23 +28,6 @@ public class MerchantUserController {
     @Autowired
     private MerchantUserService merchantUserService;
 
-    @GetMapping("/login")
-    public String goLogin() {
-        return "merchant/login";
-    }
-
-    @GetMapping("/merchantLogout")
-    public String merchantLogout(){
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        return "redirect:/merchant/merchantUser/login";
-    }
-
-    @GetMapping("/register")
-    public String goRegister() {
-        return "merchant/register";
-    }
-
     @RequiresRoles("merchant")
     @GetMapping("/index")
     public String goIndex() {
@@ -61,6 +43,31 @@ public class MerchantUserController {
     @ResponseBody
     @PostMapping("/register")
     public ResApi<String> userRegister(MerchantUser merchantUser, HttpServletRequest request) {
+        System.out.println(merchantUser.toString());
         return merchantUserService.userRegister(merchantUser, request);
+    }
+
+    @GetMapping("/userInfo")
+    public String userInfo() {
+        return "/merchant/pages/merchantUser/userInfo";
+    }
+
+    @PostMapping("/editorImage/{id}")
+    @ResponseBody
+    public ResApi<String> editorImage(MultipartFile editorImage, @PathVariable("id") Integer fId, HttpServletRequest request) {
+        System.out.println(editorImage.getOriginalFilename());
+        return merchantUserService.editorUserCoverById(editorImage, fId, request);
+    }
+
+    @PostMapping("/editorUserDetails/{id}")
+    @ResponseBody
+    public ResApi<String> editorUserDetails(MerchantUser merchantUser, @PathVariable("id") Integer fId) {
+        return merchantUserService.editorUserDetails(merchantUser, fId);
+    }
+
+    @PostMapping("/editorUserPassword/{id}")
+    @ResponseBody
+    public ResApi<String> editorUserPassword(String fPassword, String oldPassword, @PathVariable("id") Integer fId) {
+        return merchantUserService.editorUserPassword(fPassword, oldPassword, fId);
     }
 }

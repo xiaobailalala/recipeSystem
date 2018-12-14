@@ -26,6 +26,9 @@ public class MerchantUser implements Serializable {
     private String fProvince;
     private String fCity;
     private String fArea;
+    private String fStreet;
     private Integer fCount;
+    private String fSignature;
     private List<AdminUserRole> adminUserRoles;
+    private List<MerchantProduct> merchantProducts;
 }

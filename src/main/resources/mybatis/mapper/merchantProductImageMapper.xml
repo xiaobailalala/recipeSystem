@@ -13,4 +13,22 @@
         FROM t_product_images
         WHERE f_pid = #{fPid};
     </delete>
+
+    <delete id="deleteProductImageByFId" parameterType="Integer">
+        DELETE
+        FROM t_product_images
+        WHERE f_id = #{fId};
+    </delete>
+
+    <select id="getProductByfPid" parameterType="Integer" resultType="com.smxy.recipe.entity.MerchantProductImage">
+        SELECT *
+        FROM t_product_images
+        WHERE f_pid = #{fPid};
+    </select>
+
+    <select id="getProductImageId" resultType="Integer">
+        SELECT f_id
+        FROM t_product_images
+        WHERE f_pid = #{fPid};
+    </select>
 </mapper>

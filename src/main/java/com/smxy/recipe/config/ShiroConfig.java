@@ -49,7 +49,7 @@ public class ShiroConfig {
         XformAuthenticationFilter xFormAuthenticationFilterMerchant = new XformAuthenticationFilter();
         xFormAuthenticationFilterMerchant.setUsernameParam("fAccount");
         xFormAuthenticationFilterMerchant.setPasswordParam("fPassword");
-        xFormAuthenticationFilterMerchant.setLoginUrl("/merchant/merchantUser/login");
+        xFormAuthenticationFilterMerchant.setLoginUrl("/merchantCommon/login");
         filters.put("merchant", xFormAuthenticationFilterMerchant);
         XformAuthenticationFilter xFormAuthenticationFilterCommonUser = new XformAuthenticationFilter();
         xFormAuthenticationFilterMerchant.setUsernameParam("fAccount");
@@ -69,6 +69,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/systemMessage/**", "anon");
         filterChainDefinitionMap.put("/endpoint-websocket-wxClient", "anon");
         filterChainDefinitionMap.put("/merchant/merchantUser/register", "anon");
+        filterChainDefinitionMap.put("/merchant/merchantUser/login", "anon");
+        filterChainDefinitionMap.put("/merchantMob/**", "anon");
+        filterChainDefinitionMap.put("/merchantCommon/**", "anon");
         filterChainDefinitionMap.put("/merchantApp/**", "anon");
         filterChainDefinitionMap.put("/vue/**", "anon");
 //        filterChainDefinitionMap.put("/vue/**", "common");
@@ -151,16 +154,6 @@ public class ShiroConfig {
         return merchantShiroRealm;
     }
 
-    /**
-     * 普通用户自定义Realm
-     */
-    @Bean
-    public CommonUserShiroRealm commonUserShiroRealm(){
-        CommonUserShiroRealm commonUserShiroRealm = new CommonUserShiroRealm();
-        commonUserShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
-        return commonUserShiroRealm;
-    }
-
     @Bean
     public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator modularRealmAuthenticator) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -168,7 +161,6 @@ public class ShiroConfig {
         Collection<Realm> realms = new ArrayList<>();
         realms.add(adminShiroRealm());
         realms.add(merchantShiroRealm());
-        realms.add(commonUserShiroRealm());
         securityManager.setRealms(realms);
         securityManager.setSessionManager(sessionManager());
         securityManager.setRememberMeManager(cookieRememberMeManager());

@@ -5,4 +5,7 @@
     <select id="getAllMerchantProductFreight" resultType="com.smxy.recipe.entity.MerchantProductFreight">
         SELECT * FROM t_product_freight ORDER BY f_id ASC ;
     </select>
+    <select id="getMerchantProductFreightById" parameterType="Integer" resultType="com.smxy.recipe.entity.MerchantProductFreight">
+        SELECT * FROM t_product_freight WHERE f_id = #{fId};
+    </select>
 </mapper>

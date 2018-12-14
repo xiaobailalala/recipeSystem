@@ -82,11 +82,13 @@ textarea {
 div.clear-float {
     clear: both;
 }
+
 /* layui默认样式 */
 /* 下拉选择框的子项目颜色 */
 .layui-form-select dl dd.layui-this {
     background-color: #000000;
 }
+
 .container {
     background-color: #FFFFFF;
     min-height: 100%;
@@ -137,11 +139,11 @@ div.clear-float {
     color: rgba(7, 7, 7, 0.65);
 }
 
-.mylayui-head-nav .mylayui-nav-item a>.layui-nav-more {
+.mylayui-head-nav .mylayui-nav-item a > .layui-nav-more {
     border-color: #070707 transparent transparent;
 }
 
-.mylayui-head-nav .mylayui-nav-item a>.layui-nav-mored {
+.mylayui-head-nav .mylayui-nav-item a > .layui-nav-mored {
     border-color: transparent transparent #070707;
 }
 
@@ -181,7 +183,7 @@ div.clear-float {
     color: #1A090D;
 }
 
-.mylayui-top-nav>.mylayui-div-control {
+.mylayui-top-nav > .mylayui-div-control {
     display: inline-block;
     vertical-align: bottom;
 }
@@ -218,7 +220,7 @@ div.clear-float {
     height: 30px;
 }
 
-.mylayui-form-div>.mylayui-div-control {
+.mylayui-form-div > .mylayui-div-control {
     display: inline-block;
     vertical-align: bottom;
     height: 60px;
@@ -235,36 +237,49 @@ div.clear-float {
     background-color: #1A090D;
 }
 
-.mylayui-top-nav .mylayui-nav-item a>.layui-nav-more {
+.mylayui-top-nav .mylayui-nav-item a > .layui-nav-more {
     border-color: #070707 transparent transparent;
 }
 
-.mylayui-top-nav .mylayui-nav-item a>.layui-nav-mored {
+.mylayui-top-nav .mylayui-nav-item a > .layui-nav-mored {
     border-color: transparent transparent #070707;
 }
 
-.mylayui-top-nav .mylayui-nav-item a:hover>.layui-nav-more {
+.mylayui-top-nav .mylayui-nav-item a:hover > .layui-nav-more {
     border-color: #FFF transparent transparent;
 }
 
-.mylayui-top-nav .mylayui-nav-item a:hover>.layui-nav-mored {
+.mylayui-top-nav .mylayui-nav-item a:hover > .layui-nav-mored {
     border-color: transparent transparent #FFF;
 }
 
-
 /* 页面主区域*/
-#edit-content{
+#edit-content {
     /*此处要大于61 因为上一导航条高度为61*/
     margin-top: 101px;
 }
+
 /*修改商品主图删除按钮样式*/
 /*商品主图 样式*/
+#editimg-btn {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 90px;
+    border: 1px dashed #dddddd;
+}
+
+#editimg-btn span {
+
+}
+
 .editimg {
     display: inline-block;
     position: relative;
     margin: 5px;
 }
-.editimg>.imgs>a {
+
+.editimg > .imgs > a {
     position: absolute;
     display: inline-block;
     width: 10px;
@@ -274,40 +289,98 @@ div.clear-float {
     top: 5px;
     background-color: transparent;
 }
+
 /*商品名称*/
 .product-name {
     padding: 15px;
     height: 80px;
 }
-.product-title>.layui-input-block>p {
+
+.product-title > .layui-input-block > p {
     color: #999999;
     position: absolute;
     bottom: 5px;
     right: 8px;
 }
 
-
 /*商品类型面板样式*/
-.product-div-model-title {
-    position: relative;
-}
-
 .product-card {
     border: 1px solid #dddddd;
 }
 
 .product-card .product-div-model-title {
-    height: 50px;
+    padding-top: 10px;
+    height: 100px;
+    position: relative;
     background-color: #f1f1f1;
-    line-height: 50px;
 }
 
 .product-card .layui-card-body {
     min-height: 150px;
 }
 
-.addModel-btn-div {
-    padding-left: 15px;
+.product_marque_title {
+    background-color: #f1f1f1;
+}
+
+.product_marque_title span {
+    text-align: center;
+    width: 180px;
+    display: inline-block;
+}
+
+.product_marque_item {
+    width: 180px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+
+.upload_img {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    border: 1px dashed #dddddd;
+}
+
+.upload_img span {
+    color: #d3d3d3;
+    font-size: 25px;
+    left: 50%;
+    top: 50%;
+    margin-left: -12.5px;
+    margin-top: -12.5px;
+}
+
+.upload_img:hover {
+    border: 1px dashed #a9a9a9;
+}
+
+.upload_img:hover span {
+    color: #a9a9a9;
+}
+
+.upload_img_ops {
+    display: none;
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    left: 50px;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 11;
+    opacity: 0;
+    transition: all linear 0.3s;
+}
+.upload_img_ops:hover{
+    opacity: 1;
+}
+
+.upload_img_ops a:hover {
+    text-decoration: underline;
 }
 
 #showModel {
@@ -316,245 +389,22 @@ div.clear-float {
     padding: 10px;
 }
 
-.addModelImg>.layui-form-onswitch {
-    border-color: #bdbbbb;
-    background-color: #bdbbbb;
-}
-
-.addModelImg>.layui-form-switch {
-    margin: 0px;
-    height: 30px;
-    line-height: 30px;
-}
-
-.addModelImg>.layui-form-switch i {
-    top: 6px;
-}
-
-.model-li {
-    float: left;
-    position: relative;
-    margin-right: 15px;
-}
-
-.li-div-modelname .li-span-name {
-    text-align: center;
-    padding: 0 10px;
-    display: inline-block;
-    width: 80px;
-    line-height: 35px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    border: 1px solid #d1d1d1;
-}
-
-.li-span-name i.model-li-close {
-    opacity: 0;
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #000000;
-    color: #FFFFFF;
-}
-
-.li-span-name:hover i.model-li-close {
-    opacity: 1;
-    transition: all 0.5s linear;
-}
-
-.li-span-name i.model-li-close::before {
-    position: absolute;
-    top: -6px;
-    right: 2px;
-}
-
-.model-li-add {
-    line-height: 35px;
-    width: 80px;
-}
-
-.upload-img-preview {
-    width: 80px;
-    height: 80px;
-    border: 1px dashed #dddddd;
-    margin-bottom: 30px;
-    cursor: pointer;
-    position: relative;
-}
-
-.upload-img-preview:hover {
-    border: 1px dashed #a3a3a3;
-}
-
-.upload-img-preview i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: -10px;
-    margin-top: -10px;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
-    color: #a3a3a3;
-}
-
-.upload-img-preview img {
-    width: 100%;
-    height: 100%;
-}
-
-.showimgpreview {
-    display: none;
-}
-
-.have-img:hover .upload-ops {
-    opacity: 1;
-}
-
-.upload-ops {
-    display: none;
-    transition: all linear 0.3s;
-    z-index: 10;
-    opacity: 0;
-    width: 78px;
-    height: 78px;
-    position: absolute;
-    top: 45px;
-    right: 0px;
-    background-color: rgba(0, 0, 0, .5);
-}
-
-.upload-ops a {
-    color: #ffffff;
-    line-height: 80px;
-    display: block;
-    width: 80px;
-    text-align: center;
-}
-
-.upload-ops a:hover {
-    text-decoration: underline;
-}
-
-
-/* 单击+添加型号下的div样式   */
-.addModel-div {
-    background-color: #FFFFFF;
-    width: 450px;
-    padding: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
-    margin-top: 15px;
-    position: relative;
-    display: none;
-    z-index: 100;
-}
-
-.section-model-li {
-    float: left;
-    position: relative;
-}
-
-.section-model-li>i {
-    opacity: 0;
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #000000;
-    color: #FFFFFF;
-}
-
-.section-model-li:hover>i {
-    opacity: 1;
-    transition: all 0.5s linear;
-}
-
-.section-model-li>i::before {
-    position: absolute;
-    right: 2px;
-    top: -6px;
-}
-
-.model-li-add {
-    position: relative;
-}
-
-.model-name-div {
-    position: relative;
-    padding: 10px 0px;
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.model-name-div>.layui-form-checkbox i {
-    box-sizing: content-box;
-}
-
-.model-name-div>.layui-form-checked span,
-.model-name-div>.layui-form-checked:hover span {
-    background-color: #6D676E;
-}
-
-.model-name-div>.layui-form-checked i,
-.layui-form-checked:hover i {
-    color: #6D676E;
-}
-
-.addmodel-name-btn {
-    display: inline-block;
-    margin-left: 15px;
-}
-
-.addModel-footer {
-    text-align: right;
-    height: 55px;
-    line-height: 55px;
-    background-color: #f1f1f1;
-    padding: 0px 15px;
-    margin-top: 15px;
-}
-
-#arrow {
-    position: absolute;
-    font-size: 25px;
-    top: -18px;
-    left: 25px;
-    height: 0;
-    width: 0;
-    color: #f1f1f1;
-}
-
-/* 商品类型数据表格样式 */
-.showtable {
-    margin-top: 35px;
-    display: block;
-}
-.noshowtable {
-    display: block;
-}
-
 /* 运费及其他设计 */
 
-.cell-time .layui-form-radio>i:hover, .layui-form-radioed>i{
+.cell-time .layui-form-radio > i:hover, .layui-form-radioed > i {
     color: #000000;
 }
 
-.other-set-div>.layui-form-checked[lay-skin=primary] i{
+.other-set-div > .layui-form-checked[lay-skin=primary] i {
     border-color: #000000;
     background-color: #000000;
     color: #fff;
 }
 
-.other-set-div>.layui-form-checkbox[lay-skin=primary]:hover i{
+.other-set-div > .layui-form-checkbox[lay-skin=primary]:hover i {
     border-color: #000000;
 }
+
 /* 商品详情 */
 .pro_details{
     border: 1px solid #dddddd;
@@ -594,12 +444,16 @@ div.clear-float {
 }
 
 .pro_details_image .upload-ops{
+    display: none;
+    transition: all linear 0.3s;
     width: 222px;
     height: 222px;
     position: absolute;
     top: 45px;
     left: 17px;
     background-color: rgba(0, 0, 0, .5);
+    z-index: 10;
+    opacity: 0;
 }
 .pro_details_image .upload-ops a{
     color: #ffffff;
@@ -608,7 +462,6 @@ div.clear-float {
     width: 222px;
     text-align: center;
 }
-
 
 div.footer {
     margin-top: 30px;
@@ -619,25 +472,25 @@ div.foot-link {
     text-align: center;
 }
 
-div.foot-link>ul {
+div.foot-link > ul {
     padding: 0px;
     margin: 0px;
     list-style: none;
 }
 
-div.foot-link>ul>li {
+div.foot-link > ul > li {
     display: inline-block;
 }
 
-div.foot-link>ul>i {
+div.foot-link > ul > i {
     color: #999999;
 }
 
-div.foot-link>ul>li>a {
+div.foot-link > ul > li > a {
     color: #999999;
 }
 
-div.foot-link>ul>li>a:hover {
+div.foot-link > ul > li > a:hover {
     color: #ff1f5a;
     text-decoration: underline;
 }

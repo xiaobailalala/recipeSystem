@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Demo MerchantProductService
@@ -24,20 +23,37 @@ import java.util.Map;
 @Service("merchantProductService")
 public class MerchantProductServiceImpl implements MerchantProductService {
     private static final String PRODUCT_STATE_SHELVE = "shelve";
-    private static final String PRODUCT_STATE_UNSHELVE = "unshelve";
+
+    private MerchantUserDao merchantUserDao;
+    private MerchantProductDao merchantProductDao;
+    private MerchantProductImageDao merchantProductImageDao;
+    private MerchantProductMarqueDao merchantProductMarqueDao;
+    private MerchantProductDetailsDao merchantProductDetailsDao;
+    private MerchantUserProductDao merchantUserProductDao;
+    private MerchantProductClassifyDao merchantProductClassifyDao;
+    private MerchantProductMarqueClassifyDao merchantProductMarqueClassifyDao;
+    private MerchantProductFreightDao merchantProductFreightDao;
 
     @Autowired
-    private MerchantProductDao merchantProductDao;
-    @Autowired
-    private MerchantProductImageDao merchantProductImageDao;
-    @Autowired
-    private MerchantProductMarqueDao merchantProductMarqueDao;
-    @Autowired
-    private MerchantProductDetailsDao merchantProductDetailsDao;
-    @Autowired
-    private MerchantUserProductDao merchantUserProductDao;
-    @Autowired
-    private MerchantProductClassifyDao merchantProductClassifyDao;
+    public MerchantProductServiceImpl(MerchantProductDao merchantProductDao,
+                                      MerchantProductImageDao merchantProductImageDao,
+                                      MerchantProductMarqueDao merchantProductMarqueDao,
+                                      MerchantProductDetailsDao merchantProductDetailsDao,
+                                      MerchantUserProductDao merchantUserProductDao,
+                                      MerchantProductClassifyDao merchantProductClassifyDao,
+                                      MerchantProductMarqueClassifyDao merchantProductMarqueClassifyDao,
+                                      MerchantProductFreightDao merchantProductFreightDao,
+                                      MerchantUserDao merchantUserDao) {
+        this.merchantProductDao = merchantProductDao;
+        this.merchantProductImageDao = merchantProductImageDao;
+        this.merchantProductMarqueDao = merchantProductMarqueDao;
+        this.merchantProductDetailsDao = merchantProductDetailsDao;
+        this.merchantUserProductDao = merchantUserProductDao;
+        this.merchantProductClassifyDao = merchantProductClassifyDao;
+        this.merchantProductMarqueClassifyDao = merchantProductMarqueClassifyDao;
+        this.merchantProductFreightDao = merchantProductFreightDao;
+        this.merchantUserDao = merchantUserDao;
+    }
 
     @Override
     public Map<String, Object> productAll() {
@@ -46,6 +62,17 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         map.put("msg", ResApi.getSuccess().getMsg());
         map.put("count", merchantProductDao.getAllProduct().size());
         map.put("item", merchantProductDao.getAllProduct());
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> productAllPyId(Integer mId) {
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(mId);
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("code", ResApi.getSuccess().getCode());
+        map.put("msg", ResApi.getSuccess().getMsg());
+        map.put("count", merchantUser.getMerchantProducts().size());
+        map.put("item", merchantUser.getMerchantProducts());
         return map;
     }
 
@@ -134,5 +161,151 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         } else {
             return ResApi.getError(502, "操作失败！请重试");
         }
+    }
+
+    @Override
+    public ResApi<String> updateProductInfo(Integer fId, MerchantProduct merchantProduct,
+                                            MultipartFile[] productImage, MultipartFile[] proMarqueImg,
+                                            MultipartFile[] proDetailsImg, String proTitle,
+                                            String[] marqueName, String[] marquePrice,
+                                            String[] marqueRepository, String[] productDetailsContent,
+                                            Integer[] productImageId, Integer[] marqueId,
+                                            Integer[] productDetailsId, Integer[] deleteMarqueImageFlag,
+                                            Integer[] deleteDetailImageFlag, Integer[] marqueImageFlag,
+                                            Integer[] detailImageFlag,
+                                            HttpServletRequest request) {
+        MerchantProduct merchantProductPast = merchantProductDao.getProductById(fId);
+        merchantProduct.setFName(proTitle);
+        List<MerchantProductImage> productImages = merchantProductImageDao.getProductByfPid(fId);
+        merchantProduct.setFCover(productImages.get(0).getFImg());
+        merchantProduct.setFGood(merchantProductPast.getFGood());
+        if (merchantProduct.getFCategory() == null) {
+            merchantProduct.setFCategory(merchantProductPast.getFCategory());
+        } else {
+            merchantProduct.setFCategory(merchantProductClassifyDao.getProductClassifyById(Integer.parseInt(merchantProduct.getFCategory())).getFName());
+        }
+        merchantProduct.setFState(merchantProductPast.getFState());
+        merchantProduct.setFSales(merchantProductPast.getFSales());
+        if (merchantProduct.getFMarqueclaid() == null) {
+            merchantProduct.setFMarqueclaid(merchantProductPast.getFMarqueclaid());
+        }
+        merchantProduct.setFAddtime(merchantProductPast.getFAddtime());
+        merchantProduct.setFGrosssales(merchantProductPast.getFGrosssales());
+        if (merchantProduct.getFFreightid() == null) {
+            merchantProduct.setFFreightid(merchantProductPast.getFFreightid());
+        }
+        merchantProduct.setFReview(merchantProductPast.getFReview());
+        int productUpdate = merchantProductDao.updateProductInfo(merchantProduct);
+        if (productUpdate > 0) {
+            //TODO: 商品主图更新操作
+            if (productImageId != null && productImageId.length > 0) {
+                List<Integer> compare = ToolsApi.compare(Arrays.asList(productImageId), merchantProductImageDao.getProductImageId(fId));
+                for (Integer integer : compare) {
+                    merchantProductImageDao.deleteProductImageByFId(integer);
+                }
+            }
+            if (productImage.length > 0) {
+                for (MultipartFile aProductImage : productImage) {
+                    String filename;
+                    if (aProductImage == null || aProductImage.getSize() == 0) {
+                        filename = null;
+                    } else {
+                        filename = ToolsApi.multipartFileUploadFile(aProductImage, null);
+                    }
+                    merchantProductImageDao.saveProductImage(new MerchantProductImage(fId, filename));
+                }
+            }
+            //TODO:商品类型更新操作
+            List<Integer> marqueIdToList = Arrays.asList(marqueId);
+            List<Integer> marqueIdList = new ArrayList<>(marqueIdToList);
+            if (marqueIdList.size() > 0) {
+                List<Integer> compare = ToolsApi.compare(marqueIdList, merchantProductMarqueDao.getMarqueId(fId));
+                for (Integer integer : compare) {
+                    merchantProductMarqueDao.deleteMarqueByFId(integer);
+                }
+            }
+            for (int i = 0; i < proMarqueImg.length; i++) {
+                String filename;
+                if (proMarqueImg[i].getSize() == 0 && marqueImageFlag[i] == 1) {
+                    merchantProductMarqueDao.updateMarqueInfo(new MerchantProductMarque(marqueIdList.get(0), marqueName[i],
+                            merchantProductMarqueDao.getMarqueImagePathById(marqueIdList.get(0)),
+                            Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]), merchantProduct.getFMarqueclaid(), fId));
+                    Integer remove = marqueIdList.remove(0);
+                } else if (proMarqueImg[i].getSize() == 0 && marqueImageFlag[i] == 0) {
+                    if (Arrays.asList(deleteMarqueImageFlag).get(0).equals(marqueIdList.get(0))) {
+                        merchantProductMarqueDao.updateMarqueInfo(new MerchantProductMarque(marqueIdList.get(0), marqueName[i], null,
+                                Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]), merchantProduct.getFMarqueclaid(), fId));
+                        Integer remove = marqueIdList.remove(0);
+                    } else {
+                        filename = null;
+                        merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque(marqueName[i], filename,
+                                Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]),
+                                merchantProduct.getFMarqueclaid(), fId));
+                    }
+                } else {
+                    if (proMarqueImg[i].getSize() > 0 && marqueIdList.size() > 0){
+                        filename = ToolsApi.multipartFileUploadFile(proMarqueImg[i], null);
+                        merchantProductMarqueDao.updateMarqueInfo(new MerchantProductMarque(marqueIdList.get(0), marqueName[i], filename,
+                                Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]), merchantProduct.getFMarqueclaid(), fId));
+                        Integer remove = marqueIdList.remove(0);
+                    } else {
+                        filename = ToolsApi.multipartFileUploadFile(proMarqueImg[i], null);
+                        merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque(marqueName[i], filename,
+                                Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]),
+                                merchantProduct.getFMarqueclaid(), fId));
+                    }
+                }
+            }
+            //TODO: 商品详情更新操作
+            List<Integer> detailsIdToList = Arrays.asList(productDetailsId);
+            List<Integer> detailsIdList = new ArrayList<>(detailsIdToList);
+            if (detailsIdList.size() > 0) {
+                List<Integer> compare = ToolsApi.compare(detailsIdList, merchantProductDetailsDao.getDetailsId(fId));
+                for (Integer integer : compare) {
+                    merchantProductDetailsDao.deleteProductDetailsByFId(integer);
+                }
+            }
+            for (int i = 0; i < proDetailsImg.length; i++) {
+                String filename;
+                if (proDetailsImg[i].getSize() == 0 && detailImageFlag[i] == 1) {
+                    merchantProductDetailsDao.updateProductDetailsInfo(new MerchantProductDetails(detailsIdList.get(0), fId,
+                            merchantProductDetailsDao.getDetailImagePath(detailsIdList.get(0)), productDetailsContent[i]));
+                    Integer remove = detailsIdList.remove(0);
+                } else if (proDetailsImg[i].getSize() == 0 && detailImageFlag[i] == 0) {
+                    if (Arrays.asList(deleteDetailImageFlag).get(0).equals(detailsIdList.get(0))) {
+                        merchantProductDetailsDao.updateProductDetailsInfo(new MerchantProductDetails(detailsIdList.get(0), fId,
+                                null, productDetailsContent[i]));
+                        Integer remove = detailsIdList.remove(0);
+                    } else {
+                        filename = null;
+                        merchantProductDetailsDao.saveProductDetailsInfo(new MerchantProductDetails(fId, filename, productDetailsContent[i]));
+                    }
+                } else {
+                    if (proDetailsImg[i].getSize() > 0 && detailsIdList.size() > 0){
+                        filename = ToolsApi.multipartFileUploadFile(proDetailsImg[i], null);
+                        merchantProductDetailsDao.updateProductDetailsInfo(new MerchantProductDetails(detailsIdList.get(0), fId,
+                                filename, productDetailsContent[i]));
+                        Integer remove = detailsIdList.remove(0);
+                    } else {
+                        filename = ToolsApi.multipartFileUploadFile(proDetailsImg[i], null);
+                        merchantProductDetailsDao.saveProductDetailsInfo(new MerchantProductDetails(fId, filename, productDetailsContent[i]));
+                    }
+                }
+            }
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError(500, "商品更新失败");
+        }
+    }
+
+    @Override
+    public ResApi<Object> getProductById(Integer fId) {
+        Map<String, Object> map = new HashMap<>(8);
+        MerchantProduct merchantProduct = merchantProductDao.getProductById(fId);
+        map.put("productImage", merchantProductImageDao.getProductByfPid(fId));
+        map.put("product", merchantProduct);
+        map.put("marqueClassifyName", merchantProductMarqueClassifyDao.getMarqueClassifyById(merchantProduct.getFMarqueclaid()));
+        map.put("productFreight", merchantProductFreightDao.getMerchantProductFreightById(merchantProduct.getFFreightid()));
+        return ResApi.getSuccess(map);
     }
 }

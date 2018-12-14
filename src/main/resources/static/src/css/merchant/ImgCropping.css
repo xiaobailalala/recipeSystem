@@ -1,0 +1,114 @@
+.l-btn{
+    display: inline-block;
+    outline: none;
+    resize: none;
+    padding:5px 10px;
+    background: #FFB20F;
+    color: #fff;
+    border:solid 1px #FFB20F;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.l-btn:hover{
+    background: #ec9e0f;
+    animation: anniu 1s infinite;
+}
+.l-btn:active{
+    box-shadow: 0 2px 3px rgba(0,0,0,.2) inset;
+}
+.hidden{
+    display: none;
+}
+.tailoring-content-one{
+    height: 40px;
+    width: 100%;
+    border-bottom: 1px solid #DDD ;
+}
+.tailoring-content .choose-btn{
+    float: left;
+}
+.tailoring-content .close-tailoring{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    background: #eee;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    line-height: 30px;
+    float: right;
+    cursor: pointer;
+}
+.tailoring-content .close-tailoring:hover{
+    background: #ccc;
+}
+
+.tailoring-content .tailoring-content-two{
+    width: 100%;
+    height: 460px;
+    position: relative;
+    padding: 5px 0;
+}
+.tailoring-content .tailoring-box-parcel{
+    width: 520px;
+    height: 450px;
+    position: absolute;
+    left: 0;
+    border: solid 1px #ddd;
+}
+.tailoring-content .preview-box-parcel{
+    display: inline-block;
+    width: 228px;
+    height: 450px;
+    position: absolute;
+    right: 0;
+    padding: 4px 14px;
+}
+.preview-box-parcel p{
+    color: #555;
+}
+.previewImg{
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+.preview-box-parcel .square{
+    margin-top: 10px;
+    border: solid 1px #ddd;
+}
+.preview-box-parcel .circular{
+    border-radius: 100%;
+    margin-top: 10px;
+    border: solid 1px #ddd;
+}
+
+.tailoring-content .tailoring-content-three{
+    width: 100%;
+    height: 40px;
+    border-top: 1px solid #DDD ;
+    padding-top: 10px;
+}
+.sureCut{
+    float: right;
+}
+
+@media all and (max-width: 768px) {
+    .tailoring-container .tailoring-content{
+        width: 100%;
+        min-width: 320px;
+        height: 460px;
+    }
+    .tailoring-content .tailoring-content-two{
+        height: 360px;
+    }
+    .tailoring-content .tailoring-box-parcel{
+        height: 350px;
+    }
+    .tailoring-container .tailoring-box-parcel{
+        width: 100%;
+    }
+    .tailoring-container .preview-box-parcel{
+        display: none;
+    }
+}

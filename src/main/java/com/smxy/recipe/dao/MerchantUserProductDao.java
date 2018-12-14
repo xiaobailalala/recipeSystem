@@ -1,7 +1,9 @@
 package com.smxy.recipe.dao;
 
+import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.entity.MerchantUserProduct;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,4 +30,14 @@ public interface MerchantUserProductDao {
      * @date 2018/11/26 0026 20:42
      */
     Integer deleteMerchantUserProductByFPid(Integer fPid);
+
+    /**
+     * 功能描述: 根据商家ID查找数据
+     * @param fMid 商家ID
+     * @return : java.util.List<java.lang.Integer>
+     * @author : yangyihui
+     * @date : 2018/12/12 0012 13:54
+     */
+    List<MerchantUserProduct> getMerchantUserProductByMid(Integer fMid);
+
 }

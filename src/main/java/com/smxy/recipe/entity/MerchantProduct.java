@@ -28,7 +28,7 @@ public class MerchantProduct implements Serializable {
     private Integer fMarqueclaid;
     private String fAddtime;
     private Double fGrosssales;
-    private String fFreightid;
+    private Integer fFreightid;
     private String fReview;
     private List<MerchantProductMarque> merchantProductMarques;
     private List<MerchantProductDetails> merchantProductDetails;

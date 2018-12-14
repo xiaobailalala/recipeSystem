@@ -3,13 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.MerchantUserDao">
 
-    <resultMap id="getMerchantUserDetails" type="MerchantUser">
+    <resultMap id="getMerchantUserDetails" type="com.smxy.recipe.entity.MerchantUser">
         <result property="fId" column="f_id"/>
         <collection
                 property="adminUserRoles" column="f_id"
                 select="com.smxy.recipe.dao.MerchantUserRoleDao.getMerchantUserRoleByFmid">
         </collection>
+        <collection property="merchantProducts" column="f_id"
+                    select="com.smxy.recipe.dao.MerchantUserProductDao.getMerchantUserProductByMid">
+        </collection>
     </resultMap>
+
+    <select id="getMerchantUserById" parameterType="Integer" resultMap="getMerchantUserDetails">
+        SELECT *
+        FROM t_merchant_user
+        WHERE f_id = #{fId};
+    </select>
 
     <select id="isMerchantUser" parameterType="String" resultMap="getMerchantUserDetails">
         SELECT *
@@ -46,6 +55,29 @@
         SET f_shopname = #{fShopname},
             f_cover    = #{fCover}
         WHERE f_id = #{fId};
+    </update>
+
+    <update id="updateUserCoverById" parameterType="Map">
+        UPDATE t_merchant_user
+        SET f_cover = #{fCover}
+        WHERE f_id = #{fId}
+    </update>
+
+    <update id="updateMerchantUserInfo" parameterType="com.smxy.recipe.entity.MerchantUser">
+        UPDATE t_merchant_user
+        SET f_shopname  = #{fShopname},
+            f_province  = #{fProvince},
+            f_city      = #{fCity},
+            f_area      = #{fArea},
+            f_street    = #{fStreet},
+            f_signature = #{fSignature}
+        WHERE f_id = #{fId}
+    </update>
+
+    <update id="updateMerchantUserPasswordById" parameterType="Map">
+        UPDATE t_merchant_user
+        SET f_password = #{fPassword}
+        WHERE f_id = #{fId}
     </update>
 
     <select id="getMerchantIdByAccount" parameterType="String" resultType="Integer">

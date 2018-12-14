@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:include="~{merchant/common/commonHeader::header('修改个人信息',~{::link})}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/userInfo.css}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/cropper.min.css}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/ImgCropping.css}">
+</head>
+<body>
+<div th:replace="~{/merchant/common/commonNav::common_nav}"></div>
+<div class="layui-container" style="width: 1000px;">
+    <div class="layui-row">
+        <div class="layui-col-md12" style="margin-top: 50px;min-height: 600px;background-color: #ffffff;padding: 10px;">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title mylayui-table-title">
+                    <li class="layui-this">我的资料</li>
+                    <li>店铺LOGO</li>
+                    <li>密码</li>
+                </ul>
+                <div class="layui-tab-content" style="padding-top: 20px;">
+                    <div class="layui-tab-item layui-show">
+                        <form class="layui-form layui-form-pane" action="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">手机号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="fAccount" required lay-verify="required"
+                                           placeholder="请输入手机号" autocomplete="off" class="layui-input" disabled
+                                           th:value="${session.merUser.FAccount}">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux" style="position: relative;">
+                                    手机号暂不支持修改，如需修改请下载APP客户端
+                                    <span style="color: #FFB20F;  cursor: pointer;" id="downloadApp">下载手机客户端</span>
+                                    <div id="showQRCode"
+                                         style="position: absolute; right: 0px;box-shadow: 0px 0px 5px #888888;opacity: 0;z-index: 99;">
+                                        <img th:src="@{/src/images/merchant/QR_code_app.png}" alt=""
+                                             style="width: 100px;height: 100px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商铺名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="fShopname" required placeholder="请输入商铺名" autocomplete="off"
+                                           class="layui-input" th:value="${session.merUser.FShopname}">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">商铺地址</label>
+                                <div class="layui-input-inline">
+                                    <select name="fProvince" lay-search id="province"
+                                            lay-filter="provincepick">
+                                        <option value="">请选择省份</option>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline">
+                                    <select name="fCity" lay-search id="city" lay-filter="citypick">
+                                        <option value="">请选择城市</option>
+                                    </select>
+                                </div>
+                                <div class="layui-input-inline">
+                                    <select name="fArea" lay-search id="area" lay-filter="areapick">
+                                        <option value="">请选择地区</option>
+                                    </select>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux" th:text="'已选择：' + ${session.merUser.FProvince} + '-' + ${session.merUser.FCity} + '-' +${session.merUser.FArea}">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" style="width: 118px;">店铺详细地址</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="fStreet" class="layui-input" autocomplete="off"
+                                           placeholder="请输出店铺详细地址" style="width: 381px;" th:value="${session.merUser.FStreet}">
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">签名</label>
+                                <div class="layui-input-block" style="position: relative;">
+                                    <textarea name="fSignature" id="signature" cols="30" rows="8"class="layui-textarea"
+                                    style="resize:none;" th:text="${session.merUser.FSignature}"></textarea>
+                                    <p style="position: absolute;right: 4px; top: 152px; color: #b4b4b4;"><span id="text-count">0</span>/50</p>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-lg layui-btn-warm" lay-submit  lay-filter="userDetails">确认修改</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-row">
+                            <div class="layui-col-md5" style="background-color: #EBF5DF;min-height: 383.5px; text-align: center;">
+                                <button class="layui-btn layui-btn-warm" id="edit_cover" style="margin-top: 25px;margin-bottom: 5px;"><span class="layui-icon layui-icon-upload"></span>上传图片</button>
+                                <p style="color: #999;font-size: 12px;">建议尺寸168*168，支持jpg、png，最大不能超过1MB</p>
+                                <img  th:src="(${fileServerPath})+${session.merUser.FCover}" id="finalImg" alt="" style="width: 168px;height: 168px;margin-top: 50px; border-radius: 100%;">
+                                <!--<input type="file" accept="image/jpeg, image/png, image/gif" name="fCover" >-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <form class="layui-form layui-form-pane" id="userPassword">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">手机号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="fPhoneNumber" autocomplete="off" lay-verify="account" required>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">验证码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" name="fVerifyCode" autocomplete="off" required>
+                                </div>
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn layui-btn-primary" type="button" id="sendCode">发送验证码</button>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">原密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" class="layui-input" lay-verify="password" name="oldPassword" autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">新密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" class="layui-input" lay-verify="password" name="password" autocomplete="off" id="password" required>
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">
+                                    <p>密码6-12位，数字,大写字母,小写字母,特殊符,至少其中三种组成密码</p>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">确认新密码</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" class="layui-input" lay-verify="repassword" name="rePassword" autocomplete="off" id="repassword" required>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-warm layui-btn-lg" lay-submit lay-filter="userPassword">确认修改</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},true)}">
+    <script th:src="@{/src/js/merchant/cropper.min.js}"></script>
+    <script th:src="@{/src/js/merchant/merchantUser/userInfo.js}"></script>
+</div>
+</body>
+<div id="layer_show" class="tailoring-container" style="display: none;">
+    <div class="tailoring-content" style="padding: 15px;box-sizing: border-box;">
+        <div class="tailoring-content-one">
+            <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+                <input type="file" accept="image/jpg,image/jpeg,image/png" name="fCover" id="chooseImg" class="hidden" onchange="selectImg(this)">
+                选择图片
+            </label>
+        </div>
+        <div class="tailoring-content-two">
+            <div class="tailoring-box-parcel">
+                <img id="tailoringImg">
+            </div>
+            <div class="preview-box-parcel">
+                <p>图片预览：</p>
+                <div class="square previewImg"></div>
+                <div class="circular previewImg"></div>
+            </div>
+        </div>
+        <div class="tailoring-content-three">
+            <button class="l-btn cropper-reset-btn">复位</button>
+            <button class="l-btn cropper-rotate-btn">旋转</button>
+            <button class="l-btn cropper-scaleX-btn">换向</button>
+            <button class="l-btn sureCut" id="sureCut">确定</button>
+        </div>
+    </div>
+</div>
+</html>

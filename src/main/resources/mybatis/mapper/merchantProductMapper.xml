@@ -14,6 +14,10 @@
                 property="merchantProductMarques" column="{fMarqueclaid=f_marqueclaid,fPid=f_id}"
                 select="com.smxy.recipe.dao.MerchantProductMarqueDao.getMarqueByClassifyIdAndProductId">
         </collection>
+        <collection
+                property="merchantProductDetails" column="f_id"
+                select="com.smxy.recipe.dao.MerchantProductDetailsDao.getProductDetailsByPid">
+        </collection>
     </resultMap>
 
     <select id="getProductById" parameterType="Integer" resultMap="getMerchantProductDetails">
@@ -32,6 +36,16 @@
         UPDATE t_merchant_product
         SET f_state = #{fState}
         WHERE f_id = #{fId};
+    </update>
+
+    <update id="updateProductInfo" parameterType="com.smxy.recipe.entity.MerchantProduct">
+        UPDATE t_merchant_product
+        SET f_name        = #{fName},
+            f_cover       = #{fCover},
+            f_category    = #{fCategory},
+            f_marqueclaid = #{fMarqueclaid},
+            f_freightid   = #{fFreightid}
+        WHERE f_id = #{fId}
     </update>
 
     <insert id="saveProductInfo" parameterType="com.smxy.recipe.entity.MerchantProduct" keyProperty="fId"
