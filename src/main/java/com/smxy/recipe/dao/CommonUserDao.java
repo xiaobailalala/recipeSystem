@@ -20,7 +20,7 @@ public interface CommonUserDao {
 
     String getUsernameById(Integer fId);
 
-	Integer isUser(CommonUser commonUser);
+	CommonUser isUser(CommonUser commonUser);
 
 	CommonUser isLogin(CommonUser commonUser);
 	

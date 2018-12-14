@@ -51,6 +51,11 @@ public class ShiroConfig {
         xFormAuthenticationFilterMerchant.setPasswordParam("fPassword");
         xFormAuthenticationFilterMerchant.setLoginUrl("/merchant/merchantUser/login");
         filters.put("merchant", xFormAuthenticationFilterMerchant);
+        XformAuthenticationFilter xFormAuthenticationFilterCommonUser = new XformAuthenticationFilter();
+        xFormAuthenticationFilterMerchant.setUsernameParam("fAccount");
+        xFormAuthenticationFilterMerchant.setPasswordParam("fPassword");
+        xFormAuthenticationFilterMerchant.setLoginUrl("/vue/login");
+        filters.put("common", xFormAuthenticationFilterCommonUser);
         shiroFilterFactoryBean.setFilters(filters);
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -61,9 +66,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/mob/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/sensorData/**", "anon");
+        filterChainDefinitionMap.put("/systemMessage/**", "anon");
         filterChainDefinitionMap.put("/endpoint-websocket-wxClient", "anon");
         filterChainDefinitionMap.put("/merchant/merchantUser/register", "anon");
         filterChainDefinitionMap.put("/merchantApp/**", "anon");
+        filterChainDefinitionMap.put("/vue/**", "anon");
+//        filterChainDefinitionMap.put("/vue/**", "common");
         filterChainDefinitionMap.put("/merchant/**", "merchant");
         filterChainDefinitionMap.put("/manage/**", "admin");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -143,6 +151,16 @@ public class ShiroConfig {
         return merchantShiroRealm;
     }
 
+    /**
+     * 普通用户自定义Realm
+     */
+    @Bean
+    public CommonUserShiroRealm commonUserShiroRealm(){
+        CommonUserShiroRealm commonUserShiroRealm = new CommonUserShiroRealm();
+        commonUserShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return commonUserShiroRealm;
+    }
+
     @Bean
     public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator modularRealmAuthenticator) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -150,6 +168,7 @@ public class ShiroConfig {
         Collection<Realm> realms = new ArrayList<>();
         realms.add(adminShiroRealm());
         realms.add(merchantShiroRealm());
+        realms.add(commonUserShiroRealm());
         securityManager.setRealms(realms);
         securityManager.setSessionManager(sessionManager());
         securityManager.setRememberMeManager(cookieRememberMeManager());

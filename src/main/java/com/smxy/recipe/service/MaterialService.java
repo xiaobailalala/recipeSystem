@@ -27,7 +27,7 @@ public interface MaterialService {
 
     ResApi<Object> getOneByName(String fName);
 
-    ResApi<Object> randomList();
+    ResApi<Object> randomList(Integer number);
 
     ResApi<Object> getDataByVagueName(String name);
 }

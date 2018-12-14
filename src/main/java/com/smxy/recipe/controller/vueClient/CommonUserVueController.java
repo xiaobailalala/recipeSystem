@@ -23,33 +23,31 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/12 19:41
+ * Build File @date: 2018/12/13 21:19
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller;
+package com.smxy.recipe.controller.vueClient;
 
-import com.smxy.recipe.config.template.PathController;
-import com.smxy.recipe.entity.SysNotification;
-import com.smxy.recipe.service.SysNotificationService;
+import com.alibaba.fastjson.JSONObject;
+import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.entity.CommonUser;
+import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@PathController("/manage/sysNotification")
-public class SysNotificationController {
+@PathRestController("/vue/commonUser")
+public class CommonUserVueController {
 
     @SuppressWarnings("all")
     @Autowired
-    private SysNotificationService sysNotificationService;
+    private CommonUserService commonUserService;
 
-    @ResponseBody
-    @PostMapping("/getNotificationMessage")
-    public ResApi<String> getNotificationMessage(@RequestParam("file") MultipartFile file, SysNotification sysNotification) {
-        return sysNotificationService.getNotificationMessage(file, sysNotification);
+    @PostMapping("/userLogin")
+    public ResApi<String> userLogin(CommonUser commonUser) {
+        return commonUserService.userLogin(commonUser);
     }
 
 }

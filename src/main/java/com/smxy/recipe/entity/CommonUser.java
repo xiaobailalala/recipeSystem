@@ -37,4 +37,8 @@ public final class CommonUser {
 	private Integer collectCount;
 	private List<Recipe> recipes;
 	private List<Article> articles;
+
+	public CommonUser(String fAccount) {
+		this.fAccount = fAccount;
+	}
 }

@@ -23,31 +23,23 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/12 19:36
+ * Build File @date: 2018/12/12 21:27
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.smxy.recipe.entity.SysNotification;
+import com.smxy.recipe.utils.ResApi;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.Serializable;
+public interface SysNotificationService {
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SysNotification implements Serializable {
-    private Integer fId;
-    private String fContent;
-    private String fCover;
-    private Integer fOid;
-    private Recipe recipe;
-    private Article article;
-    private Integer fUid;
-    private CommonUser commonUser;
-    private Integer fState;
-    private Integer fType;
-    private String fRelease;
+    ResApi<String> getNotificationMessage(MultipartFile file, SysNotification sysNotification);
+
+    ResApi<Object> showMessage(Integer uid);
+
+    ResApi<Object> showMessageCount(Integer uid);
+
+    ResApi<String> deleteMessage(Integer uid);
 }

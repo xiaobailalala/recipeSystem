@@ -7,8 +7,8 @@
 		select f_username from t_common_user where f_id=#{fId};
 	</select>
 
-    <select id="isUser" parameterType="CommonUser" resultType="int">
-		select count(*) from t_common_user where f_account=#{fAccount};
+    <select id="isUser" parameterType="CommonUser" resultType="CommonUser">
+		select * from t_common_user where f_account=#{fAccount};
 	</select>
     <select id="isLogin" parameterType="CommonUser" resultMap="getUserDetail">
 		select * from t_common_user where f_account=#{fAccount} and

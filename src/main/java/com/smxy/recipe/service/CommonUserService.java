@@ -33,4 +33,6 @@ public interface CommonUserService {
 	ResApi<Object> peopleInfoDetail(Integer uid);
 
 	ResApi<Object> updateCommonUserBg(MultipartFile multipartFile, CommonUser commonUser);
+
+    ResApi<String> userLogin(CommonUser commonUser);
 }

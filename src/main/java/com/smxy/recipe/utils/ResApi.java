@@ -42,6 +42,10 @@ public class ResApi<T> implements Serializable {
 		return new ResApi<>(200, "success", o);
 	}
 
+	public static ResApi<String> getSuccessAndSendMessage(String msg){
+		return new ResApi<>(200, "success", msg);
+	}
+
 	public static ResApi<Object> getData(Object o){
 		return new ResApi<>(o);
 	}

@@ -11,10 +11,16 @@ import com.smxy.recipe.dao.CollectDao;
 import com.smxy.recipe.dao.CommonAttentionDao;
 import com.smxy.recipe.dao.CommonUserDao;
 import com.smxy.recipe.entity.*;
+import com.smxy.recipe.realm.LoginType;
+import com.smxy.recipe.realm.UserToken;
 import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
 import com.smxy.recipe.utils.api.CodeApi;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +38,8 @@ import java.util.Map;
 @Service("commonUserService")
 public class CommonUserServiceImpl implements CommonUserService {
 
+    private static final String COMMON_LOGIN_TYPE = LoginType.COMMON.toString();
+
     private CommonUserDao commonUserDao;
     private CollectDao collectDao;
     private CommonAttentionDao commonAttentionDao;
@@ -47,7 +55,7 @@ public class CommonUserServiceImpl implements CommonUserService {
     public ResApi<CommonUser> commonUserLogin(CommonUser commonUser) {
         // TODO Auto-generated method stub
         ResApi<CommonUser> resApi;
-        if (commonUserDao.isUser(commonUser) > 0) {
+        if (commonUserDao.isUser(commonUser) != null) {
             commonUser.setFPassword(ToolsApi.entryptBySaltMd5(commonUser.getFPassword(), commonUser.getFAccount()));
             commonUser = commonUserDao.isLogin(commonUser);
             if (commonUser != null) {
@@ -65,7 +73,7 @@ public class CommonUserServiceImpl implements CommonUserService {
     public ResApi<String> commonUserReg(CommonUser commonUser) {
         // TODO Auto-generated method stub
         ResApi<String> resApi;
-        if (commonUserDao.isUser(commonUser) > 0) {
+        if (commonUserDao.isUser(commonUser) != null) {
             resApi = new ResApi<>(402, "该用户已存在。", null);
         } else {
             commonUser.setFPassword(ToolsApi.entryptBySaltMd5(commonUser.getFPassword(), commonUser.getFAccount()));
@@ -170,5 +178,30 @@ public class CommonUserServiceImpl implements CommonUserService {
         commonUser.setFBg(name);
         commonUserDao.updateUserBg(commonUser);
         return ResApi.getSuccess(name);
+    }
+
+    @Override
+    public ResApi<String> userLogin(CommonUser commonUser) {
+        System.out.println(commonUser);
+        Subject currentUser = SecurityUtils.getSubject();
+        try {
+            if (!currentUser.isAuthenticated()){
+                UserToken token = new UserToken(commonUser.getFAccount(), commonUser.getFPassword(), COMMON_LOGIN_TYPE);
+                token.setRememberMe(false);
+                try {
+                    currentUser.login(token);
+                    commonUser= (CommonUser) currentUser.getPrincipal();
+                    SecurityUtils.getSubject().getSession().setAttribute("commonUser", commonUser);
+                    return ResApi.getSuccessAndSendMessage(currentUser.getSession().getId().toString());
+                }catch (UnknownAccountException ae){
+                    return ResApi.getError(501,"账号不存在。");
+                }catch (IncorrectCredentialsException ice){
+                    return ResApi.getError(502, "您输入的密码不正确。");
+                }
+            }
+            return ResApi.getError(503, "未认证");
+        }catch (Exception e){
+            return ResApi.getError();
+        }
     }
 }

@@ -91,9 +91,9 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public ResApi<Object> randomList() {
+    public ResApi<Object> randomList(Integer number) {
         List<Material> materials = materialDao.getAllInfo();
-        int[] randomNumber = ToolsApi.randomArray(0, materials.size() - 1, 20);
+        int[] randomNumber = ToolsApi.randomArray(0, materials.size() - 1, number);
         List<Material> randomList = new LinkedList<>();
         for (int index : Objects.requireNonNull(randomNumber)) {
             randomList.add(materials.get(index));

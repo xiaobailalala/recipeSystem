@@ -1,6 +1,7 @@
 #ServerHostIp: 192.168.1.108
 #ServerHostIp: 172.21.91.21
-ServerHostIp: 192.168.1.108
+#ServerHostIp: 192.168.1.108
+ServerHostIp: 47.107.179.70
 #ServerHostIp: 172.20.10.10
 spring:
   # 配置数据库连接信息以及改变数据源为Druid
@@ -32,11 +33,11 @@ spring:
       max-request-size: 300Mb
   elasticsearch:
     jest:
-      uris: http://${ServerHostIp}:9201
+      uris: http://${ServerHostIp}:9200
   data:
     elasticsearch:
       cluster-name: elasticsearch
-      cluster-nodes: ${ServerHostIp}:9301
+      cluster-nodes: ${ServerHostIp}:9300
   redis:
     host: ${ServerHostIp}
 #    host: 192.168.43.126

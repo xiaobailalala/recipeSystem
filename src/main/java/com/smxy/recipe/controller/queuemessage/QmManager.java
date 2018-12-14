@@ -29,34 +29,42 @@
  */
 package com.smxy.recipe.controller.queuemessage;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.dao.ArticleCommentDao;
 import com.smxy.recipe.dao.ArticleDao;
 import com.smxy.recipe.dao.FoodCommentDao;
 import com.smxy.recipe.dao.RecipeDao;
 import com.smxy.recipe.entity.Article;
 import com.smxy.recipe.entity.Recipe;
+import com.smxy.recipe.entity.SysNotification;
+import com.smxy.recipe.service.socket.SysNotificationSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 @Controller
 public class QmManager {
 
+    private static final Logger logger = LoggerFactory.getLogger(QmManager.class);
+
     private RecipeDao recipeDao;
     private FoodCommentDao foodCommentDao;
     private ArticleDao articleDao;
     private ArticleCommentDao articleCommentDao;
+    private SysNotificationSocketService sysNotificationSocketService;
 
     @Autowired
-    public QmManager(RecipeDao recipeDao, FoodCommentDao foodCommentDao, ArticleDao articleDao, ArticleCommentDao articleCommentDao) {
+    public QmManager(RecipeDao recipeDao, FoodCommentDao foodCommentDao, ArticleDao articleDao, ArticleCommentDao articleCommentDao, SysNotificationSocketService sysNotificationSocketService) {
         this.recipeDao = recipeDao;
         this.foodCommentDao = foodCommentDao;
         this.articleDao = articleDao;
         this.articleCommentDao = articleCommentDao;
+        this.sysNotificationSocketService = sysNotificationSocketService;
     }
 
     @RabbitListener(queues = "recipeCountUpload.queue")
@@ -91,6 +99,11 @@ public class QmManager {
         } else {
             articleCommentDao.deleteInfoGreat((Integer) map.get(paramUid), (Integer) map.get(paramCid));
         }
+    }
+
+    @RabbitListener(queues = "systemMessage.queue")
+    public void systemMessage(String jsonStr) {
+        sysNotificationSocketService.pushSystemMessageForUser(jsonStr);
     }
 
 

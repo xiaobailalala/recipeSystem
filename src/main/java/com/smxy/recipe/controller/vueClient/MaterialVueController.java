@@ -23,31 +23,30 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/12 19:36
+ * Build File @date: 2018/12/13 21:29
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.controller.vueClient;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.service.MaterialService;
+import com.smxy.recipe.utils.ResApi;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.Serializable;
+import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SysNotification implements Serializable {
-    private Integer fId;
-    private String fContent;
-    private String fCover;
-    private Integer fOid;
-    private Recipe recipe;
-    private Article article;
-    private Integer fUid;
-    private CommonUser commonUser;
-    private Integer fState;
-    private Integer fType;
-    private String fRelease;
+@PathRestController("/vue/material")
+public class MaterialVueController {
+
+    @SuppressWarnings("all")
+    @Autowired
+    private MaterialService materialService;
+
+    @GetMapping("/randomDataList")
+    public ResApi<Object> randomDataList() {
+        return materialService.randomList(15);
+    }
+
 }

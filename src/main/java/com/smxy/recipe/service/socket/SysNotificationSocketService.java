@@ -23,33 +23,31 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/12 19:41
+ * Build File @date: 2018/12/13 8:59
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller;
+package com.smxy.recipe.service.socket;
 
-import com.smxy.recipe.config.template.PathController;
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.entity.SysNotification;
-import com.smxy.recipe.service.SysNotificationService;
-import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@PathController("/manage/sysNotification")
-public class SysNotificationController {
+
+@Transactional(rollbackFor = Exception.class)
+@Service("sysNotificationSocketService")
+public class SysNotificationSocketService {
 
     @SuppressWarnings("all")
     @Autowired
-    private SysNotificationService sysNotificationService;
+    private SimpMessagingTemplate template;
 
-    @ResponseBody
-    @PostMapping("/getNotificationMessage")
-    public ResApi<String> getNotificationMessage(@RequestParam("file") MultipartFile file, SysNotification sysNotification) {
-        return sysNotificationService.getNotificationMessage(file, sysNotification);
+    public void pushSystemMessageForUser(String message) {
+        SysNotification sysNotification = JSONObject.parseObject(message, SysNotification.class);
+        template.convertAndSend("/systemMessage/userMsg/" + sysNotification.getFUid(), message);
     }
 
 }

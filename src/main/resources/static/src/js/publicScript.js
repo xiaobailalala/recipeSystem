@@ -3,7 +3,8 @@ var Tools={
     successAddTimeoutTip:successAddTimeoutTip,
     path:window.document.location.pathname.substring(0,window.document.location.pathname.substr(1).indexOf('/')+1),
     myModal:myModal,
-    fileServerPath:"http://192.168.1.108/",
+    // fileServerPath:"http://192.168.1.108/",
+    fileServerPath:"http://47.107.179.70/",
     // fileServerPath:"http://172.20.10.10/",
     body: $("body")
 }

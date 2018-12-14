@@ -147,6 +147,7 @@ $(function () {
                 '                </div>\n' +
                 '                <div class="modal-body">\n' +
                 '                    <form class="form-horizontal sendMessageForm">\n' +
+                '                        <input type="hidden" name="fUid" value="' + id + '"/>' +
                 '                        <div class="form-group">\n' +
                 '                            <label class="col-sm-2 control-label form-label"></label>\n' +
                 '                            <div class="col-sm-10">您正在向 <strong>' + name + '</strong> 发送消息\n' +
@@ -158,14 +159,14 @@ $(function () {
                 '                                <div class="notifiImgContainer" id="cover" style="text-align: center;width: 160px;height: 160px;border-radius: 8px;display: inline-block;vertical-align: bottom;overflow: hidden;">\n' +
                 '                                    <div style="width: 100%;height: 100%;background-color: #eeeeee;display: flex;align-items: center;justify-content: center;"><i style="font-size: 50px;font-weight: bold;color: #888888;" class="fa fa-plus"></i></div>\n' +
                 '                                </div>\n' +
-                '                                <input class="imgInput" type="file" style="display: none;"/>' +
+                '                                <input class="imgInput" name="file" type="file" style="display: none;"/>' +
                 '                                <button class="btn btn-info margin-l-20 imgBrowser" type="button">浏览</button>\n' +
                 '                            </div>\n' +
                 '                        </div>\n' +
                 '                        <div class="form-group">\n' +
                 '                            <label class="col-sm-2 control-label form-label" for="content">内容</label>\n' +
                 '                            <div class="col-sm-10">\n' +
-                '                                <textarea name="content" class="form-control" id="content" rows="10"></textarea>\n' +
+                '                                <textarea name="fContent" class="form-control" id="content" rows="10"></textarea>\n' +
                 '                            </div>\n' +
                 '                        </div>\n' +
                 '                    </form>\n' +
@@ -210,14 +211,16 @@ $(function () {
         Tools.body.on("submit", ".sendMessageForm", function(e) {
             e.preventDefault();
             var formData = new FormData(this);
+            formData.append("fType", 0);
+            formData.append("fState", 0);
             $.ajax({
-                url: "",
+                url: "/manage/sysNotification/getNotificationMessage",
                 type: "POST",
                 contentType: false,
                 processData: false,
                 data: formData,
                 success: res => {
-
+                    console.log(res);
                 }
             });
         });

@@ -23,31 +23,26 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/12 19:36
+ * Build File @date: 2018/12/12 21:26
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.smxy.recipe.entity.SysNotification;
 
-import java.io.Serializable;
+import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SysNotification implements Serializable {
-    private Integer fId;
-    private String fContent;
-    private String fCover;
-    private Integer fOid;
-    private Recipe recipe;
-    private Article article;
-    private Integer fUid;
-    private CommonUser commonUser;
-    private Integer fState;
-    private Integer fType;
-    private String fRelease;
+public interface SysNotificationDao {
+
+    Integer saveInfo(SysNotification sysNotification);
+
+    List<SysNotification> findInfoByUid(Integer fUid);
+
+    Integer findInfoByUidAndState(Integer fUid);
+
+    Integer updateStateByUid(Integer fUid);
+
+    Integer deleteInfoByUid(Integer fUid);
+
 }

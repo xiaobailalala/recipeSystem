@@ -44,7 +44,7 @@ public class MaterialMobController {
 
     @GetMapping("/randomList")
     public ResApi<Object> randomList() {
-        return materialService.randomList();
+        return materialService.randomList(20);
     }
 
     @GetMapping("/getDataByVagueName")

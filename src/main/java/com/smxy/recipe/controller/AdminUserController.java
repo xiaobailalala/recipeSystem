@@ -29,12 +29,10 @@ import java.util.List;
 public class AdminUserController {
 
     private AdminUserService adminUserService;
-    private AdminRoleService adminRoleService;
 
     @Autowired
     public AdminUserController(AdminUserService adminUserService, AdminRoleService adminRoleService) {
         this.adminUserService = adminUserService;
-        this.adminRoleService = adminRoleService;
     }
 
     @RequiresPermissions("adminUser:select")
