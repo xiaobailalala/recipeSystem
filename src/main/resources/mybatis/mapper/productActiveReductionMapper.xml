@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ProductActiveReductionDao">
+
+    <insert id="insertProductActiveReduction" parameterType="com.smxy.recipe.entity.ProductActiveDiscount"
+            useGeneratedKeys="true" keyProperty="fId">
+        INSERT INTO t_product_reduction (f_name, f_start_time, f_end_time, f_full_money, f_reduce_money, f_pid, f_mid)
+        VALUES (#{fName}, #{fStartTime}, #{fEndTime}, #{fFullMoney}, #{fReduceMoney }, #{fPid}, #{fMid});
+    </insert>
+
+    <delete id="deleteProductActiveReduction" parameterType="Integer">
+        DELETE
+        FROM t_product_discounts
+        WHERE f_id = #{fId};
+    </delete>
+
+</mapper>

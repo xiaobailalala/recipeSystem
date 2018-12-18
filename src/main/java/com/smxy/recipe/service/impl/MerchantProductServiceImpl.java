@@ -66,13 +66,34 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     }
 
     @Override
-    public Map<String, Object> productAllPyId(Integer mId) {
+    public Map<String, Object> productAllById(Integer mId) {
         MerchantUser merchantUser = merchantUserDao.getMerchantUserById(mId);
         Map<String, Object> map = new HashMap<>(8);
         map.put("code", ResApi.getSuccess().getCode());
         map.put("msg", ResApi.getSuccess().getMsg());
         map.put("count", merchantUser.getMerchantProducts().size());
         map.put("item", merchantUser.getMerchantProducts());
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> productAllPage(Integer mId, HttpServletRequest request) {
+        int page = Integer.parseInt(request.getParameter("page"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(mId);
+        List<MerchantProduct> productList = merchantUser.getMerchantProducts();
+        int startIndex = (page - 1) * limit;
+        int endIndex = page * limit;
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("code", ResApi.getSuccess().getCode());
+        map.put("msg", ResApi.getSuccess().getMsg());
+        map.put("count", productList.size());
+        if (endIndex > productList.size()) {
+            map.put("item", productList.subList(startIndex, productList.size()));
+        } else {
+            map.put("item", productList.subList(startIndex, endIndex));
+        }
+
         return map;
     }
 
@@ -84,8 +105,11 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         merchantProduct.setFName(pro_title);
         merchantProduct.setFAddtime(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
         merchantProduct.setFCover(ToolsApi.multipartFileUploadFile(productImage[0], null));
+        merchantProduct.setFGood(0);
         merchantProduct.setFState("上架");
         merchantProduct.setFSales(0);
+        merchantProduct.setFDiscount("没有活动");
+        merchantProduct.setFReduction("没有活动");
         //TODO: 商品审核状态 [待审核、审核成功、审核失败]
         merchantProduct.setFReview("待审核");
         merchantProduct.setFGrosssales((double) 0);
@@ -179,6 +203,8 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         List<MerchantProductImage> productImages = merchantProductImageDao.getProductByfPid(fId);
         merchantProduct.setFCover(productImages.get(0).getFImg());
         merchantProduct.setFGood(merchantProductPast.getFGood());
+        merchantProduct.setFReduction(merchantProductPast.getFReduction());
+        merchantProduct.setFDiscount(merchantProductPast.getFDiscount());
         if (merchantProduct.getFCategory() == null) {
             merchantProduct.setFCategory(merchantProductPast.getFCategory());
         } else {

@@ -52,9 +52,9 @@ public class ShiroConfig {
         xFormAuthenticationFilterMerchant.setLoginUrl("/merchantCommon/login");
         filters.put("merchant", xFormAuthenticationFilterMerchant);
         XformAuthenticationFilter xFormAuthenticationFilterCommonUser = new XformAuthenticationFilter();
-        xFormAuthenticationFilterMerchant.setUsernameParam("fAccount");
-        xFormAuthenticationFilterMerchant.setPasswordParam("fPassword");
-        xFormAuthenticationFilterMerchant.setLoginUrl("/vue/login");
+        xFormAuthenticationFilterCommonUser.setUsernameParam("fAccount");
+        xFormAuthenticationFilterCommonUser.setPasswordParam("fPassword");
+        xFormAuthenticationFilterCommonUser.setLoginUrl("/vue/login");
         filters.put("common", xFormAuthenticationFilterCommonUser);
         shiroFilterFactoryBean.setFilters(filters);
         shiroFilterFactoryBean.setUnauthorizedUrl("/common/error/unauthorized");
@@ -74,7 +74,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/merchantCommon/**", "anon");
         filterChainDefinitionMap.put("/merchantApp/**", "anon");
         filterChainDefinitionMap.put("/vue/**", "anon");
-//        filterChainDefinitionMap.put("/vue/**", "common");
         filterChainDefinitionMap.put("/merchant/**", "merchant");
         filterChainDefinitionMap.put("/manage/**", "admin");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -155,12 +154,20 @@ public class ShiroConfig {
     }
 
     @Bean
+    public CommonUserShiroRealm commonUserShiroRealm(){
+        CommonUserShiroRealm commonUserShiroRealm = new CommonUserShiroRealm();
+        commonUserShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        return commonUserShiroRealm;
+    }
+
+    @Bean
     public DefaultWebSecurityManager securityManager(ModularRealmAuthenticator modularRealmAuthenticator) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setAuthenticator(modularRealmAuthenticator);
         Collection<Realm> realms = new ArrayList<>();
         realms.add(adminShiroRealm());
         realms.add(merchantShiroRealm());
+        realms.add(commonUserShiroRealm());
         securityManager.setRealms(realms);
         securityManager.setSessionManager(sessionManager());
         securityManager.setRememberMeManager(cookieRememberMeManager());

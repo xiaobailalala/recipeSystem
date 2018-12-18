@@ -7,15 +7,16 @@
         FROM t_product_classify;
     </select>
 
-    <select id="getProductClassifyById" parameterType="Integer" resultType="com.smxy.recipe.entity.MerchantProductClassify">
+    <select id="getProductClassifyById" parameterType="Integer"
+            resultType="com.smxy.recipe.entity.MerchantProductClassify">
         SELECT *
         FROM t_product_classify
         WHERE f_id = #{fId};
     </select>
 
     <insert id="saveProductClassify" parameterType="com.smxy.recipe.entity.MerchantProductClassify">
-        INSERT INTO t_product_classify (f_name)
-        VALUE (#{fName});
+        INSERT INTO t_product_classify (f_name, f_cover)
+        VALUE (#{fName}, #{fCover});
     </insert>
 
     <delete id="deleteProductClassify" parameterType="Integer">
@@ -23,4 +24,11 @@
         FROM t_product_classify
         WHERE f_id = #{fId};
     </delete>
+
+    <update id="updateProductClassifyById" parameterType="com.smxy.recipe.entity.MerchantProductClassify">
+        UPDATE t_product_classify
+        SET f_name  = #{fName},
+            f_cover = #{fCover}
+        WHERE f_id = #{fId};
+    </update>
 </mapper>

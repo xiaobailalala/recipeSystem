@@ -35,6 +35,15 @@ public interface MerchantProductClassifyDao{
     Integer deleteProductClassify(Integer fId);
 
     /**
+     * 功能描述: 根据商品类型实体类更新
+     * @param merchantProductClassify 商品类型实体类
+     * @return : java.lang.Integer
+     * @author : yangyihui
+     * @date : 2018/12/14 0014 19:30
+     */
+    Integer updateProductClassifyById(MerchantProductClassify merchantProductClassify);
+
+    /**
      * 功能描述: 获取所有商品型号
      * @return 所有商品型号的集合
      * @auther yangyihui

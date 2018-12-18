@@ -246,8 +246,17 @@ textarea {
     border-color: transparent transparent #FFF;
 }
 
+/*layui默认样式*/
+.layui-nav-child {
+    z-index: 1000;
+}
+
 
 /* 商品表样式 */
+.active {
+    background-color: #393D49;
+    color: #ffffff;
+}
 .product-div {
     width: 95%;
     margin: 80px auto;

@@ -1,6 +1,7 @@
 package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.MerchantProduct;
+import com.smxy.recipe.entity.ProductActiveDiscount;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +31,17 @@ public interface MerchantProductService {
      * @author : yangyihui
      * @date : 2018/12/11 0011 21:05
      */
-    Map<String, Object> productAllPyId(Integer mId);
+    Map<String, Object> productAllById(Integer mId);
+
+    /**
+     * 功能描述: 根据商家ID获取商品所有信息(分页查询)
+     * @param mId 商家ID
+     * @param request 请求域
+     * @return : java.util.Map<java.lang.String,java.lang.Object>
+     * @author : yangyihui
+     * @date : 2018/12/14 0014 22:56
+     */
+    Map<String, Object> productAllPage(Integer mId,HttpServletRequest request);
 
     /**
      * 功能描述: 保存一条商品类
@@ -55,7 +66,6 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 根据ID删除商品
-     *
      * @param fId 要删除的商品ID
      * @return ResApi工具类
      * @auther yangyihui
@@ -65,7 +75,6 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 根据商品ID 更新商品状态
-     *
      * @param fId    商品ID
      * @param fState 商品状态
      * @return ResApi 工具类

@@ -20,4 +20,5 @@ import java.io.Serializable;
 public class MerchantProductClassify implements Serializable {
     private Integer fId;
     private String fName;
+    private String fCover;
 }

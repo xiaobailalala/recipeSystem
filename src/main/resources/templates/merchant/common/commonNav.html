@@ -4,14 +4,14 @@
 <body>
 <div th:fragment="common_nav">
     <div class="header">
-        <input type="hidden" name="userId" th:value="${session.merUser.FId}">
+        <input type="hidden" name="userId" th:value="${session.merUser.fId}">
         <div class="layui-main header-middle">
             <div class="mylayui-div-inline-block">
                 <a href="/" class="logo"><img th:src="@{/src/images/merchant/logo-dark-smile.png}" alt=""> </a>
             </div>
             <div class="mylayui-div-inline-block mylayui-div-control">
                 <ul class="layui-nav mylayui-bg-recipe-yellow-dark mylayui-head-nav">
-                    <li class="layui-nav-item mylayui-nav-item"><a href="javascript:;" class="mylayui-nav-a">我的订单<span
+                    <li class="layui-nav-item mylayui-nav-item"><a href="javascript:;" class="mylayui-nav-a">我的消息<span
                             class="layui-badge layui-bg-cyan">99+</span></a></li>
                     <li class="layui-nav-item mylayui-nav-item">
                         <a href="javascript:;" class="mylayui-nav-a"><span
@@ -22,8 +22,14 @@
                             </dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item mylayui-nav-item"><a href=""><img th:src="(${fileServerPath})+${session.merUser.FCover}"
-                                                                                class=" layui-nav-img" th:text="${session.merUser.FShopname}"></a>
+                    <li class="layui-nav-item mylayui-nav-item"><a href="">
+                        <img th:if="${#strings.contains(session.merUser.fCover, 'group')}"
+                                th:src="(${fileServerPath})+${session.merUser.fCover}"
+                             class=" layui-nav-img" th:text="${session.merUser.fShopname}">
+                        <img th:unless="${#strings.contains(session.merUser.fCover, 'group')}"
+                             th:src="${session.merUser.fCover}"
+                             class=" layui-nav-img" th:text="${session.merUser.fShopname}">
+                    </a>
                         <dl class="layui-nav-child">
                             <dd>
                                 <a th:href="@{~/merchant/merchantUser/userInfo}">修改信息</a>
@@ -94,13 +100,13 @@
                     </li>
                     <span style="vertical-align: middle;color: black;">|</span>
                     <li class="layui-nav-item mylayui-nav-item"><a href="javascript:;" class="mylayui-nav-a"><i
-                            class="iconfont icon-banshou"></i> 店铺装修</a>
+                            class="layui-icon layui-icon-speaker"></i>店铺活动</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="">分类管理</a>
+                                <a href="">现时折扣</a>
                             </dd>
                             <dd>
-                                <a href="">运费模板</a>
+                                <a href="">满减优惠</a>
                             </dd>
                         </dl>
                     </li>

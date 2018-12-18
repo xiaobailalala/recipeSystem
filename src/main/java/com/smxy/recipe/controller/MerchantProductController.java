@@ -2,6 +2,7 @@ package com.smxy.recipe.controller;
 
 import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.MerchantProduct;
+import com.smxy.recipe.entity.ProductActiveDiscount;
 import com.smxy.recipe.service.MerchantProductService;
 import com.smxy.recipe.utils.ResApi;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -50,7 +51,8 @@ public class MerchantProductController {
     @ResponseBody
     @GetMapping("/list/{id}")
     public Map<String, Object> list(@PathVariable("id") Integer mId, HttpServletRequest request) {
-        return merchantProductService.productAllPyId(mId);
+        System.out.println(request.getParameter("page") + "----" + request.getParameter("limit"));
+        return merchantProductService.productAllPage(mId, request);
     }
 
     @RequiresPermissions("product:insert")
