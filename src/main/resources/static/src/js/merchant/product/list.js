@@ -19,11 +19,42 @@ $(function () {
         var id = $("input[name=userId]").val();
         var pro_id;
 
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            if (hours >= 0 && hours <= 9) {
+                hours = "0" + hours;
+            }
+            if (minutes >= 0 && minutes <= 9) {
+                minutes = "0" + minutes;
+            }
+            if (seconds >= 0 && seconds <= 9) {
+                seconds = "0" + seconds;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                + " " + hours + seperator2 + minutes
+                + seperator2 + seconds;
+            return currentdate;
+        }
+
         lay('.start_time').each(function () {
             laydate.render({
                 elem: this,
                 type: "datetime",
-                theme: "#FFB800"
+                theme: "#FFB800",
+                min: getNowFormatDate()
             });
         });
         lay('.end_time').each(function () {
@@ -76,11 +107,11 @@ $(function () {
                 ' <div class="layui-form-item reduce_div">\n' +
                 '            <div class="layui-inline">\n' +
                 '                <span style="position: absolute;display: inline-block;width: 80px;left: 0;line-height: 38px;padding-left: 10px;">消费满：</span>\n' +
-                '                <input type="text" name="fullMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 60px;">\n' +
+                '                <input type="text" name="fullMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 60px;" required lay-verify="price">\n' +
                 '            </div>\n' +
                 '            <div class="layui-inline">\n' +
                 '                <span style="position: absolute;display: inline-block;width: 30px;left: 0;line-height: 38px;padding-left: 10px;">减：</span>\n' +
-                '                <input type="text" name="reduceMoney" placeholder="请填写金额" class="layui-input"style="padding-left: 32px;width: 115px;">\n' +
+                '                <input type="text" name="reduceMoney" placeholder="请填写金额" class="layui-input"style="padding-left: 32px;width: 115px;" required lay-verify="price">\n' +
                 '            </div>\n' +
                 '            <div class="layui-inline" style="border: 1px solid #e6e6e6; border-radius: 2px;">\n' +
                 '                <i class="layui-icon layui-icon-delete del_reduce" style="line-height: 38px;width: 38px;display: inline-block;text-align: center;border-right: 1px solid #e6e6e6;float: left;"></i>\n' +
@@ -328,6 +359,9 @@ $(function () {
                     $.ajax({
                         url: "/merchant/merchantProduct/update/" + data.merchantProduct.fid + "/shelve",
                         type: "PUT",
+                        data:{
+                            _method:"PUT"
+                        },
                         success: function (res) {
                             if (res.code === 200) {
                                 layer.msg("商品上架成功");
@@ -341,6 +375,9 @@ $(function () {
                     $.ajax({
                         url: "/merchant/merchantProduct/update/" + data.merchantProduct.fid + "/unshelve",
                         type: "PUT",
+                        data:{
+                            _method:"PUT"
+                        },
                         success: function (res) {
                             if (res.code === 200) {
                                 layer.msg("商品下架成功");
@@ -356,6 +393,9 @@ $(function () {
                             $.ajax({
                                 url: "/merchant/merchantProduct/delete/" + data.merchantProduct.fid,
                                 type: "DELETE",
+                                data:{
+                                    _method:"DELETE"
+                                },
                                 success: function (res) {
                                     if (res.code === 200) {
                                         layer.msg("删除商品成功");
@@ -392,7 +432,7 @@ $(function () {
                                     shadeClose: true,
                                     scrollbar: false,
                                     skin: 'layui-layer-rim', //加上边框
-                                    area: ['420px', '600px'], //宽高
+                                    area: ['420px', '620px'], //宽高
                                     content: $("#product_discounts"),
                                     success: function (layero, index) {
                                         pro_id = data.merchantProduct.fid;
@@ -512,58 +552,80 @@ $(function () {
             var startTime = $("input[name=fStartTime]").val();
             var endTime = $("input[name=fEndTime]").val();
             var discount = $("input[name=fDiscount]").val();
+            var startDate = new Date(startTime);
+            var endDate = new Date(endTime);
             if (name === "" || startTime === "" || endTime === "" || discount === "") {
                 layer.alert("请完善活动详情");
             } else {
-                $.ajax({
-                    url: "/merchant/productActiveDiscountController/uploadProductActiveDiscount/" + pro_id + "/" + id,
-                    type: "POST",
-                    data: data.field,
-                    success: res => {
-                        if (res.code === 200) {
-                            layer.msg("商品活动添加成功！");
-                            table.reload('produceAllList');
+                if (startDate.getTime() >= endDate.getTime()) {
+                    layer.alert("结束日期必须大于开始日期");
+                } else {
+                    $.ajax({
+                        url: "/merchant/productActiveDiscount/uploadProductActiveDiscount/" + pro_id + "/" + id,
+                        type: "POST",
+                        data: data.field,
+                        success: res => {
+                            if (res.code === 200) {
+                                layer.msg("商品活动添加成功！");
+                                table.reload('produceAllList');
+                                layer.closeAll();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
         form.on("submit(upload_reduction)", function (data) {
             var name = $(this).parents("#reduction_form").find("input[name=fName]").val();
-            var startTime = $(this).parents("#reduction_form").find("input[name=startTime]").val();
-            var endTime = $(this).parents("#reduction_form").find("input[name=endTime]").val();
-            if (name === "" || startTime === "" || endTime === "" || discount === "") {
+            var startTime = $(this).parents("#reduction_form").find("input[name=fStartTime]").val();
+            var endTime = $(this).parents("#reduction_form").find("input[name=fEndTime]").val();
+            console.log(name)
+            console.log(startTime)
+            console.log(endTime)
+            var startDate = new Date(startTime);
+            var endDate = new Date(endTime);
+            if (name === "" || startTime === "" || endTime === "") {
                 layer.alert("请完善活动详情");
             } else {
-                console.log(pro_id)
-                console.log(id)
-                var fullmoney = [], reducemoney = [];
-                var form = document.getElementById("reduction_form");
-                var formdata = new FormData(form);
-                $(".reduce_div").each(function (index, element) {
-                    fullmoney.push($(this).find("input[name=fullMoney]").val());
-                    reducemoney.push($(this).find("input[name=reduceMoney]").val());
-                });
-                formdata.append("fullmoney",fullmoney);
-                formdata.append("reducemoney",reducemoney);
-                $.ajax({
-                    url: "/merchant/productActiveReductionController/uploadProductActiveReduction/" + pro_id + "/" + id,
-                    type: "POST",
-                    data: formdata,
-                    contentType:false,
-                    processData:false,
-                    success: res => {
-                        if (res.code === 200) {
-                            layer.msg("商品活动添加成功！");
-                            table.reload('produceAllList');
-                        } else {
-                            layer.msg("系统出错")
+                if (startDate.getTime() >= endDate.getTime()) {
+                    layer.alert("结束日期必须大于开始日期");
+                } else {
+                    console.log(pro_id)
+                    console.log(id)
+                    var fullmoney = [], reducemoney = [];
+                    var form = document.getElementById("reduction_form");
+                    var formdata = new FormData(form);
+                    $(".reduce_div").each(function (index, element) {
+                        fullmoney.push($(this).find("input[name=fullMoney]").val());
+                        reducemoney.push($(this).find("input[name=reduceMoney]").val());
+                    });
+                    formdata.append("fullmoney",fullmoney);
+                    formdata.append("reducemoney",reducemoney);
+                    $.ajax({
+                        url: "/merchant/productActiveReduction/uploadProductActiveReduction/" + pro_id + "/" + id,
+                        type: "POST",
+                        data: formdata,
+                        contentType:false,
+                        processData:false,
+                        success: res => {
+                            if (res.code === 200) {
+                                layer.msg("商品活动添加成功！");
+                                table.reload('produceAllList');
+                            } else {
+                                layer.msg("系统出错")
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         })
 
+        form.verify({
+            price: [
+                /^[1-9]\d*|0$/,
+                '只能为正整数'
+            ]
+        });
     });
 });

@@ -3,6 +3,7 @@ package com.smxy.recipe.entity;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Demo ProductActiveReduction
@@ -10,8 +11,7 @@ import java.io.Serializable;
  * @author Yangyihui
  * @date 2018/12/17 0017 23:01
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductActiveReduction implements Serializable {
@@ -21,8 +21,7 @@ public class ProductActiveReduction implements Serializable {
     private String fName;
     private String fStartTime;
     private String fEndTime;
-    private Double fFullMoney;
-    private Double fReduceMoney;
+    private String fStatus;
     private MerchantProduct merchantProduct;
-
+    private List<ProductActiveReductionCondition> productActiveReductionConditions;
 }

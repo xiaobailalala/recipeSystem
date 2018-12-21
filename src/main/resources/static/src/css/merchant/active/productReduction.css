@@ -1,0 +1,289 @@
+html,
+body,
+div,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ol,
+form,
+input,
+textarea,
+th,
+td,
+select {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+    color: #333;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+    color: #232323;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+input,
+textarea {
+    outline: none;
+    border: none;
+}
+
+textarea {
+    resize: none;
+    overflow: auto;
+}
+
+.container {
+    background-color: #EBF5DF;
+    min-height: 100%;
+}
+
+.header {
+    height: 50px;
+    background-color: #FFB20F;
+}
+
+.logo {
+    display: inline-block;
+    width: 235px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.logo img {
+    border: 0px none;
+    width: 100%;
+    height: 100%;
+}
+
+.mylayui-div-inline-block {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.mylayui-bg-recipe-yellow {
+    background-color: #FFD151;
+}
+
+.mylayui-bg-recipe-yellow-dark {
+    background-color: #FFB20F;
+}
+
+.header-middle .mylayui-div-control {
+    float: right;
+}
+
+.mylayui-head-nav .mylayui-nav-item {
+    line-height: 50px;
+    margin-right: 10px;
+}
+
+.mylayui-head-nav .mylayui-nav-item a {
+    color: rgba(7, 7, 7, 0.65);
+}
+
+.mylayui-head-nav .mylayui-nav-item a>.layui-nav-more {
+    border-color: #070707 transparent transparent;
+}
+
+.mylayui-head-nav .mylayui-nav-item a>.layui-nav-mored {
+    border-color: transparent transparent #070707;
+}
+
+.mylayui-head-nav .layui-this::after,
+.mylayui-head-nav .layui-nav-bar {
+    height: 0px;
+}
+
+.mylayui-head-nav .layui-nav-child {
+    background-color: #FBFFFE;
+    min-width: 100%;
+    top: 53px;
+
+}
+
+.mylayui-head-nav .layui-nav-child a:hover {
+    background-color: #FFB20F;
+}
+
+.mylayui-head-nav .mylayui-nav-item a:hover {
+    color: #070707;
+}
+
+/* 第二个导航栏样式 */
+.top-nav {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    background-color: #FFD151;
+}
+
+.top-nav-middle {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.top-nav .mylayui-nav-item a {
+    color: #1A090D;
+}
+
+.mylayui-top-nav>.mylayui-div-control {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.mylayui-top-nav .layui-this::after,
+.mylayui-top-nav .layui-nav-bar {
+    background-color: #070707;
+}
+.mylayui-top-nav .layui-nav-child{
+    z-index: 999;
+}
+.mylayui-top-nav .layui-nav-child a:hover {
+    background-color: #FFB20F;
+}
+
+.mylayui-div-control .mylayui-form-label {
+    width: 100px;
+}
+
+.mylayui-from-search {
+    float: left;
+    margin-left: 230px;
+}
+
+.mylayui-from-search .mylayui-form-div {
+    display: inline-block;
+}
+
+.mylayui-form-div {
+    height: 60px;
+    line-height: 60px;
+}
+
+.mylayui-div-control .layui-input {
+    display: inline-block;
+    height: 30px;
+}
+
+.mylayui-form-div>.mylayui-div-control {
+    display: inline-block;
+    vertical-align: bottom;
+    height: 60px;
+    line-height: 60px;
+}
+
+.mylayui-form-label {
+    color: #070707;
+}
+
+.btn-search {
+    height: 30px;
+    line-height: 30px;
+    background-color: #1A090D;
+}
+
+.mylayui-top-nav .mylayui-nav-item a>.layui-nav-more {
+    border-color: #070707 transparent transparent;
+}
+
+.mylayui-top-nav .mylayui-nav-item a>.layui-nav-mored {
+    border-color: transparent transparent #070707;
+}
+
+.mylayui-top-nav .mylayui-nav-item a:hover>.layui-nav-more {
+    border-color: #FFF transparent transparent;
+}
+
+.mylayui-top-nav .mylayui-nav-item a:hover>.layui-nav-mored {
+    border-color: transparent transparent #FFF;
+}
+
+/*layui默认样式*/
+.layui-nav-child {
+    z-index: 1000;
+}
+
+/*表格样式*/
+.product-div h3 {
+    text-align: center;
+}
+
+div.footer {
+    margin-top: 30px;
+}
+
+div.foot-link {
+    padding: 20px;
+    text-align: center;
+}
+
+div.foot-link>ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+div.foot-link>ul>li {
+    display: inline-block;
+}
+
+div.foot-link>ul>i {
+    color: #999999;
+}
+
+div.foot-link>ul>li>a {
+    color: #999999;
+}
+
+div.foot-link>ul>li>a:hover {
+    color: #ff1f5a;
+    text-decoration: underline;
+}

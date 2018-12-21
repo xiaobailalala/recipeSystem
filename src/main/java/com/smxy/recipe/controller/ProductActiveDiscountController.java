@@ -6,10 +6,11 @@ import com.smxy.recipe.service.ProductActiveDiscountService;
 import com.smxy.recipe.utils.ResApi;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Demo ProductActiveDiscountController
@@ -17,16 +18,49 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author Yangyihui
  * @date 2018/12/18 0018 15:53
  */
-@PathController("/merchant/productActiveDiscountController")
+@PathController("/merchant/productActiveDiscount")
 public class ProductActiveDiscountController {
     @Autowired
     private ProductActiveDiscountService productActiveDiscountService;
+
+    @GetMapping("/goDiscountAll")
+    public String goDiscountAll() {
+        return "/merchant/pages/product/active/discounts_list";
+    }
+
+
+    @RequiresPermissions("product:select")
+    @GetMapping("/getAllDiscountProductByMid/{mid}")
+    @ResponseBody
+    public Map<String, Object> getAllDiscountProductByMid(@PathVariable("mid") Integer fMid, HttpServletRequest request) {
+        return productActiveDiscountService.getProductActiveDiscountListByMid(fMid, request);
+    }
+
 
     @RequiresPermissions("product:insert")
     @ResponseBody
     @PostMapping("/uploadProductActiveDiscount/{pid}/{mid}")
     public ResApi<String> uploadProductActiveDiscount(ProductActiveDiscount productActiveDiscount, @PathVariable("pid") Integer fPid, @PathVariable("mid") Integer fMid) {
-        System.out.println(productActiveDiscount.toString());
         return productActiveDiscountService.insertProductActiveDiscount(productActiveDiscount, fPid, fMid);
+    }
+
+    @GetMapping("/editorProductActiveDiscount/{id}")
+    public String editorProductActiveDiscount(@PathVariable("id") Integer fId, Model model){
+        model.addAttribute("item", productActiveDiscountService.getProductActiveDiscountById(fId));
+        return "/merchant/pages/product/active/discounts_editor";
+    }
+    @RequiresPermissions("product:update")
+    @ResponseBody
+    @PutMapping("/editorProductActiveDiscount/{id}")
+    public ResApi<String> editorProductActiveDiscount(@PathVariable("id") Integer fId, ProductActiveDiscount productActiveDiscount){
+        System.out.println(productActiveDiscount);
+        return productActiveDiscountService.editorProductActiveDiscountById(productActiveDiscount, fId);
+    }
+
+    @DeleteMapping("/deleteProductActiveDiscountById/{id}")
+    @ResponseBody
+    public ResApi<String> deleteProductActiveDiscountById(@PathVariable("id") Integer fId) {
+        return productActiveDiscountService.deleteProductActiveDiscountById(fId);
+
     }
 }

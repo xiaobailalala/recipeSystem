@@ -55,6 +55,7 @@
     </div>
 </div>
 </body>
+<!--限时-->
 <div id="product_discounts" style="display: none;padding: 20px;">
     <form lay-filter="discounts_form" class="layui-form layui-form-pane">
         <div class="layui-form-item">
@@ -100,6 +101,7 @@
             <div class="layui-inline">
                 <input type="text" placeholder="折扣价（0.00元）" class="layui-input" id="discount_price" readonly="readonly">
             </div>
+            <div class="layui-word-aux">请单击输入框自动计算折扣后价格</div>
         </div>
         <div class="layui-form-item">
             <button class="layui-btn layui-btn-warm layui-btn-fluid" lay-submit lay-filter="upload_discount" type="button">确定</button>
@@ -131,11 +133,11 @@
         <div class="layui-form-item reduce_div">
             <div class="layui-inline">
                 <span style="position: absolute;display: inline-block;width: 80px;left: 0;line-height: 38px;padding-left: 10px;">消费满：</span>
-                <input type="text" name="fullMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 60px;">
+                <input type="text" name="fullMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 60px;" required lay-verify="price">
             </div>
             <div class="layui-inline">
                 <span style="position: absolute;display: inline-block;width: 30px;left: 0;line-height: 38px;padding-left: 10px;">减：</span>
-                <input type="text" name="reduceMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 32px;width: 115px;">
+                <input type="text" name="reduceMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 32px;width: 115px;" required lay-verify="price">
             </div>
             <div class="layui-inline" style="border: 1px solid #e6e6e6; border-radius: 2px;">
                 <i class="layui-icon layui-icon-delete del_reduce" style="line-height: 38px;width: 38px;display: inline-block;text-align: center;border-right: 1px solid #e6e6e6;float: left;"></i>

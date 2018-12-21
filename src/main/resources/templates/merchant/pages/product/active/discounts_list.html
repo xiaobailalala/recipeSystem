@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{merchant/common/commonHeader::header('限时折扣',~{::link})}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/active/productDiscounts.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{merchant/common/commonNav::common_nav}"></div>
+    <div class="product-active-list-all">
+        <div class="product-div" style="margin: 80px auto;">
+            <h3>所有限时折扣商品</h3>
+            <table id="productActiveList" lay-filter="productList_table"></table>
+        </div>
+    </div>
+
+
+    <div>
+        <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},true)}">
+            <script th:src="@{/src/js/merchant/product/active/productDiscounts_list.js}"></script>
+            <script type="text/html" id="product-control">
+                <div class="layui-btn-group">
+                    <a class="layui-btn layui-btn-sm layui-btn-warm edit" lay-event="edit">
+                        <i class="layui-icon layui-icon-edit"></i>
+                    </a>
+                    <a class="layui-btn layui-btn-sm layui-btn-danger delete" lay-event="delete">
+                        <i class="layui-icon layui-icon-close"></i>
+                    </a>
+                </div>
+            </script>
+            <script type="text/html" id="products-control">
+                <a class="layui-btn layui-btn-danger more-delete" lay-event="more-delete">
+                    <i class="layui-icon layui-icon-close"></i>
+                </a>
+            </script>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

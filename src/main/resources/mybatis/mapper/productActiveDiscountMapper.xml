@@ -3,13 +3,45 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.ProductActiveDiscountDao">
 
-    <insert id="insertProductActiveDiscount" parameterType="com.smxy.recipe.entity.ProductActiveDiscount" useGeneratedKeys="true" keyProperty="fId">
-        INSERT INTO t_product_discounts (f_name, f_start_time, f_end_time, f_discount, f_number, f_pid, f_mid)
-        VALUES (#{fName}, #{fStartTime}, #{fEndTime}, #{fDiscount}, #{fNumber}, #{fPid}, #{fMid});
+    <insert id="insertProductActiveDiscount" parameterType="com.smxy.recipe.entity.ProductActiveDiscount"
+            useGeneratedKeys="true" keyProperty="fId">
+        INSERT INTO t_product_discounts (f_name, f_start_time, f_end_time, f_discount, f_number, f_pid, f_mid, f_status)
+        VALUES (#{fName}, #{fStartTime}, #{fEndTime}, #{fDiscount}, #{fNumber}, #{fPid}, #{fMid}, #{fStatus});
     </insert>
 
-    <delete id="deleteProductActiveDiscount" parameterType="Integer">
-        DELETE FROM t_product_discounts WHERE f_id = #{fId};
+    <select id="selectAllDiscountProductByMid" parameterType="Map" resultMap="getProductDetails">
+        SELECT *
+        FROM t_product_discounts
+        WHERE f_mid = #{fMid};
+    </select>
+    <resultMap id="getProductDetails" type="com.smxy.recipe.entity.ProductActiveDiscount">
+        <result property="fId" column="f_id"/>
+        <result property="fPid" column="f_pid"/>
+        <association property="merchantProduct" column="f_pid"
+                     select="com.smxy.recipe.dao.MerchantProductDao.getProductById">
+        </association>
+    </resultMap>
+
+    <select id="selectProductActiveDiscountById" parameterType="Integer" resultMap="getProductDetails">
+        SELECT *
+        FROM t_product_discounts
+        WHERE f_id = #{fId};
+    </select>
+
+    <update id="updateProductActiveDiscountById" parameterType="com.smxy.recipe.entity.ProductActiveDiscount">
+        UPDATE t_product_discounts
+        SET f_name       = #{fName},
+            f_start_time = #{fStartTime},
+            f_end_time   = #{fEndTime},
+            f_discount   = #{fDiscount},
+            f_status     = #{fStatus}
+        WHERE f_id = #{fId};
+    </update>
+
+    <delete id="deleteProductActiveDiscountById" parameterType="Integer">
+        DELETE
+        FROM t_product_discounts
+        WHERE f_id = #{fId};
     </delete>
 
 </mapper>

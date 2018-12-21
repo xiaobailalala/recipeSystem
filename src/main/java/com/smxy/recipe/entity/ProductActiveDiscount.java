@@ -24,5 +24,6 @@ public class ProductActiveDiscount implements Serializable {
     private String fEndTime;
     private Double fDiscount;
     private Integer fNumber;
+    private String fStatus;
     private MerchantProduct merchantProduct;
 }
