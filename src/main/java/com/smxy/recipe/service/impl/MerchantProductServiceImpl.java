@@ -1,5 +1,7 @@
 package com.smxy.recipe.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.service.MerchantProductService;
@@ -106,7 +108,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         merchantProduct.setFAddtime(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
         merchantProduct.setFCover(ToolsApi.multipartFileUploadFile(productImage[0], null));
         merchantProduct.setFGood(0);
-        merchantProduct.setFState("上架");
+        merchantProduct.setFState("下架");
         merchantProduct.setFSales(0);
         merchantProduct.setFDiscount("没有活动");
         merchantProduct.setFReduction("没有活动");
@@ -333,5 +335,62 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         map.put("marqueClassifyName", merchantProductMarqueClassifyDao.getMarqueClassifyById(merchantProduct.getFMarqueclaid()));
         map.put("productFreight", merchantProductFreightDao.getMerchantProductFreightById(merchantProduct.getFFreightid()));
         return ResApi.getSuccess(map);
+    }
+
+    @Override
+    public ResApi<String> mobSaveProduct(Integer userID, MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID) {
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(userID);
+        MerchantProduct merchantProduct = new MerchantProduct();
+        merchantProduct.setFName(productName);
+        merchantProduct.setFAddtime(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
+        merchantProduct.setFCover(ToolsApi.multipartFileUploadFile(productImage[0], null));
+        merchantProduct.setFGood(0);
+        merchantProduct.setFState("下架");
+        merchantProduct.setFSales(0);
+        merchantProduct.setFDiscount("没有活动");
+        merchantProduct.setFReduction("没有活动");
+        merchantProduct.setFFreightid(freightID);
+        //TODO: 商品审核状态 [待审核、审核成功、审核失败]
+        merchantProduct.setFReview("待审核");
+        merchantProduct.setFGrosssales((double) 0);
+        //TODO 此处的fMarqueclaid 为1 是指默认型号的id值为1,手机应用添加商品默认都是默认型号
+        merchantProduct.setFMarqueclaid(1);
+        merchantProduct.setFCategory(merchantProductClassifyDao.getProductClassifyById(productClassifyID).getFName());
+        int productRes = merchantProductDao.saveProductInfo(merchantProduct);
+        List<Map<String, Object>> marqueList = new ArrayList<>();
+        JSONArray objects = JSONArray.parseArray(json);
+        for (Object arr : objects) {
+            Map map = JSON.parseObject(arr.toString(), Map.class);
+            Map<String, Object> tempMap = new HashMap<>(8);
+            for (Object o : map.keySet()) {
+                tempMap.put(o.toString(), map.get(o));
+            }
+            marqueList.add(tempMap);
+        }
+        if (productRes > 0) {
+            for (int i = 0; i < productImage.length; i++) {
+                String filename;
+                if (productImage[i] == null || productImage[i].getSize() == 0) {
+                    filename = null;
+                } else {
+                    filename = ToolsApi.multipartFileUploadFile(productImage[i], null);
+                }
+                merchantProductImageDao.saveProductImage(new MerchantProductImage(merchantProduct.getFId(), filename));
+            }
+            int filenumber = 0;
+            for (Map<String, Object> map : marqueList) {
+                String filename;
+                if ((boolean)map.get("isImg")) {
+                    filename = ToolsApi.multipartFileUploadFile(marqueImage[filenumber], null);
+                    merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque((String) map.get("model"), filename, Double.parseDouble((String) map.get("price")), Integer.parseInt((String)map.get("inventory")), 1, merchantProduct.getFId()));
+                    filenumber++;
+                } else {
+                    merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque((String) map.get("model"), null, Double.parseDouble((String) map.get("price")), Integer.parseInt((String)map.get("inventory")), 1, merchantProduct.getFId()));
+                }
+            }
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError(505, "保存商品出错");
+        }
     }
 }

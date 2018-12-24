@@ -6,6 +6,7 @@ import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -103,5 +104,21 @@ public interface MerchantProductService {
      * @date : 2018/12/2 0002 14:11
      */
     ResApi<Object> getProductById(Integer fId);
+
+    /**
+     * 功能描述: 手机端添加商品
+     * @param userID 用户ID
+     * @param productImage 商品主图图片
+     * @param marqueImage 商品类型图片
+     * @param productName 商品名称
+     * @param productClassifyID 商品类型ID
+     * @param json 商品类型JSON数据
+     * @param freightID 运费模板ID
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2018/12/22 0022 15:42
+     */
+    ResApi<String> mobSaveProduct(Integer userID,MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID);
+//    ResApi<String> mobSaveProductDetails();
 
 }
