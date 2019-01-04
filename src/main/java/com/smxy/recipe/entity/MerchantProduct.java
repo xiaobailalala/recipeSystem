@@ -28,6 +28,8 @@ public class MerchantProduct implements Serializable {
     private Double fGrosssales;
     private Integer fFreightid;
     private String fReview;
+    private String fDiscount;
+    private String fReduction;
     private List<MerchantProductMarque> merchantProductMarques;
     private List<MerchantProductDetails> merchantProductDetails;
 

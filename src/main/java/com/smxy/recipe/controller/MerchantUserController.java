@@ -4,6 +4,7 @@ import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.MerchantUserService;
 import com.smxy.recipe.utils.ResApi;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,7 @@ public class MerchantUserController {
         return "/merchant/pages/merchantUser/userInfo";
     }
 
+    @RequiresRoles("merchant")
     @PostMapping("/editorImage/{id}")
     @ResponseBody
     public ResApi<String> editorImage(MultipartFile editorImage, @PathVariable("id") Integer fId, HttpServletRequest request) {
@@ -59,12 +61,14 @@ public class MerchantUserController {
         return merchantUserService.editorUserCoverById(editorImage, fId, request);
     }
 
+    @RequiresRoles("merchant")
     @PostMapping("/editorUserDetails/{id}")
     @ResponseBody
     public ResApi<String> editorUserDetails(MerchantUser merchantUser, @PathVariable("id") Integer fId) {
         return merchantUserService.editorUserDetails(merchantUser, fId);
     }
 
+    @RequiresRoles("merchant")
     @PostMapping("/editorUserPassword/{id}")
     @ResponseBody
     public ResApi<String> editorUserPassword(String fPassword, String oldPassword, @PathVariable("id") Integer fId) {

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{merchant/common/commonHeader::header('限时折扣',~{::link})}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/active/productDiscounts.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{merchant/common/commonNav::common_nav}"></div>
+    <div class="layui-container" style="margin-top: 80px;background-color: #ffffff;padding: 20px;">
+        <h3 style="text-align: center;margin-bottom: 25px;">编辑限时折扣商品活动信息</h3>
+        <input type="hidden" th:value="${item.data.fId}" name="activeDiscount_id">
+        <form lay-filter="discounts_form" class="layui-form layui-form-pane" id="discounts_form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">活动名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="fName" class="layui-input" placeholder="请输入活动名称" th:value="${item.data.fName}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="fStartTime" class="layui-input start_time" placeholder="请输入开始时间" th:value="${item.data.fStartTime}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="fEndTime" class="layui-input end_time" placeholder="请输入结束时间" th:value="${item.data.fEndTime}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">每人限购</label>
+                <div class="layui-input-block">
+                    <input type="number" name="fNumber" class="layui-input" placeholder="无限购可不填" th:value="${item.data.fNumber}">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">打折商品</label>
+                <div class="layui-input-block" style="border-radius: 0 0 2px 2px;border: 1px solid #e6e6e6;">
+                    <div style="position: relative;padding: 15px;">
+                        <img  th:src="(${fileServerPath})+${item.data.merchantProduct.fCover}" alt="product-img" style="display: inline-block;width: 85px; height: 85px;padding: 5px;">
+                        <div style="position: absolute;top: 15px; left:100px;padding-left: 15px;">
+                            <h3 id="product_name" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 25px;" th:text="${item.data.merchantProduct.fName}"></h3>
+                            <p id="product_price" style="font-size: 18px;" th:text="'￥' + ${item.data.merchantProduct.merchantProductMarques[0].fPrice}"
+                            th:if="${item.data.merchantProduct.merchantProductMarques[0].fPrice == item.data.merchantProduct.merchantProductMarques[item.data.merchantProduct.merchantProductMarques.size()-1].fPrice}"></p>
+                            <p id="product_price" style="font-size: 18px;" th:text="'￥' + ${item.data.merchantProduct.merchantProductMarques[0].fPrice} + ' ~ ' + ${item.data.merchantProduct.merchantProductMarques[item.data.merchantProduct.merchantProductMarques.size()-1].fPrice}"
+                            th:if="${item.data.merchantProduct.merchantProductMarques[0].fPrice != item.data.merchantProduct.merchantProductMarques[item.data.merchantProduct.merchantProductMarques.size()-1].fPrice}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <input type="text" name="fDiscount" placeholder="折扣（0折）" class="layui-input" id="discount" th:value="${item.data.fDiscount}">
+                </div>
+                <div class="layui-inline">
+                    <input type="text" placeholder="折扣价（0.00元）" class="layui-input" id="discount_price" readonly="readonly">
+                </div>
+                <div class="layui-word-aux">请单击输入框自动计算折扣后价格</div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-warm layui-btn-fluid" lay-submit lay-filter="upload_discount" type="button">确定</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div>
+        <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},true)}">
+            <script th:src="@{/src/js/merchant/product/active/productDiscounts_editor.js}"></script>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

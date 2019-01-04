@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ProductActiveReductionConditionDao">
+    <insert id="insertProductActiveReductionCondition"
+            parameterType="com.smxy.recipe.entity.ProductActiveReductionCondition"
+            keyProperty="fId" useGeneratedKeys="true">
+        INSERT INTO t_product_reduction_condition (f_full_money, f_reduce_money, f_aid)
+        VALUES (#{fFullMoney}, #{fReduceMoney}, #{fAid});
+    </insert>
+
+    <delete id="deleteProductActiveReductionConditionById" parameterType="Integer">
+        DELETE
+        FROM t_product_reduction_condition
+        WHERE f_id = #{fId};
+    </delete>
+
+    <delete id="deleteProductActiveReductionConditionByAId" parameterType="Integer">
+        DELETE
+        FROM t_product_reduction_condition
+        WHERE f_aid = #{fAid};
+    </delete>
+
+
+    <select id="selectProductActiveReductionConditionByAId" parameterType="Integer"
+            resultType="com.smxy.recipe.entity.ProductActiveReductionCondition">
+        SELECT *
+        FROM t_product_reduction_condition
+        WHERE f_aid = #{fAid};
+    </select>
+
+    <update id="updateProductActiveReductionConditionById"
+            parameterType="com.smxy.recipe.entity.ProductActiveReductionCondition">
+        UPDATE t_product_reduction_condition
+        SET f_full_money   = #{fFullMoney},
+            f_reduce_money = #{fReduceMoney}
+        WHERE f_id = #{fId}
+    </update>
+</mapper>

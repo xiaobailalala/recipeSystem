@@ -11,7 +11,6 @@
             <h3>所有商品</h3>
             <table id="produceAllList" lay-filter="produceList_table"></table>
         </div>
-        <!--<button type="button" id="haha">TEST</button>-->
     </div>
     <div>
         <!--TODO: false 为设置底部标签 true 为不显示底部标签-->
@@ -30,6 +29,9 @@
                     </a>
                     <a class="layui-btn layui-btn-sm layui-btn-warm edit" lay-event="edit">
                         <i class="layui-icon layui-icon-edit"></i>
+                    </a>
+                    <a class="layui-btn layui-btn-sm active" lay-event="active">
+                        <i class="layui-icon layui-icon-share"></i>
                     </a>
                 </div>
             </script>
@@ -53,4 +55,98 @@
     </div>
 </div>
 </body>
+<!--限时-->
+<div id="product_discounts" style="display: none;padding: 20px;">
+    <form lay-filter="discounts_form" class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fName" class="layui-input" placeholder="请输入活动名称">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fStartTime" class="layui-input start_time" placeholder="请输入开始时间">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fEndTime" class="layui-input end_time" placeholder="请输入结束时间">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">每人限购</label>
+            <div class="layui-input-inline">
+                <input type="number" name="fNumber" class="layui-input" placeholder="无限购可不填">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">打折商品</label>
+            <div class="layui-input-block" style="border-radius: 0 0 2px 2px;border: 1px solid #e6e6e6;">
+                <div style="position: relative;padding: 15px;">
+                    <img  alt="product-img" style="display: inline-block;width: 85px; height: 85px;padding: 5px;">
+                    <div style="position: absolute;top: 15px; left:100px;width: 250px;padding-left: 15px;">
+                        <h3 id="product_name" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-bottom: 25px;"></h3>
+                        <p id="product_price" style="font-size: 18px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <input type="text" name="fDiscount" placeholder="折扣（0折）" class="layui-input" id="discount">
+            </div>
+            <div class="layui-inline">
+                <input type="text" placeholder="折扣价（0.00元）" class="layui-input" id="discount_price" readonly="readonly">
+            </div>
+            <div class="layui-word-aux">请单击输入框自动计算折扣后价格</div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-warm layui-btn-fluid" lay-submit lay-filter="upload_discount" type="button">确定</button>
+        </div>
+    </form>
+</div>
+
+<!--满减-->
+<div id="product_reduction" style="display: none;padding: 20px;">
+    <form lay-filter="reduction_form" class="layui-form layui-form-pane" id="reduction_form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fName" class="layui-input" placeholder="请输入活动名称">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fStartTime" class="layui-input start_time" placeholder="请输入开始时间">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fEndTime" class="layui-input end_time" placeholder="请输入结束时间">
+            </div>
+        </div>
+        <div class="layui-form-item reduce_div">
+            <div class="layui-inline">
+                <span style="position: absolute;display: inline-block;width: 80px;left: 0;line-height: 38px;padding-left: 10px;">消费满：</span>
+                <input type="text" name="fullMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 60px;" required lay-verify="price">
+            </div>
+            <div class="layui-inline">
+                <span style="position: absolute;display: inline-block;width: 30px;left: 0;line-height: 38px;padding-left: 10px;">减：</span>
+                <input type="text" name="reduceMoney" placeholder="请填写金额" class="layui-input" style="padding-left: 32px;width: 115px;" required lay-verify="price">
+            </div>
+            <div class="layui-inline" style="border: 1px solid #e6e6e6; border-radius: 2px;">
+                <i class="layui-icon layui-icon-delete del_reduce" style="line-height: 38px;width: 38px;display: inline-block;text-align: center;border-right: 1px solid #e6e6e6;float: left;"></i>
+                <i class="layui-icon layui-icon-add-circle-fine add_reduce" style="line-height: 38px;width: 38px;display: inline-block;text-align: center;float: left;"></i>
+            </div>
+        </div>
+        <div class="layui-form-item" id="top_this">
+            <button class="layui-btn layui-btn-warm layui-btn-fluid" type="button" lay-filter="upload_reduction" lay-submit>确定</button>
+        </div>
+    </form>
+</div>
 </html>

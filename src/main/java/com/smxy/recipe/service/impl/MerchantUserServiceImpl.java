@@ -21,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -166,6 +169,7 @@ public class MerchantUserServiceImpl implements MerchantUserService {
         List<AdminPermission> adminPermissions = new ArrayList<>();
         for (AdminUserRole adminUserRole : merchantUserRoleDao.getMerchantUserRoleByFmid(mid)) {
             for (AdminRolePermission adminRolePermission : adminUserRole.getAdminRole().getAdminRolePermissions()) {
+                System.out.println(adminRolePermission.getAdminPermission());
                 adminPermissions.add(adminRolePermission.getAdminPermission());
             }
         }

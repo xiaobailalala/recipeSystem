@@ -8,6 +8,7 @@ package com.smxy.recipe.controller;
  */
 
 import com.smxy.recipe.config.template.PathController;
+import com.smxy.recipe.dao.MerchantProductClassifyDao;
 import com.smxy.recipe.service.MerchantProductClassifyService;
 import com.smxy.recipe.service.ProductFreightService;
 import com.smxy.recipe.service.ProductMarqueClassifyService;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;

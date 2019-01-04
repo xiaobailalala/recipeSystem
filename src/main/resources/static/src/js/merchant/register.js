@@ -79,6 +79,7 @@ $(function () {
                 $('#send_code').removeClass("layui-btn-disabled")
                     .addClass("layui-btn-primary").html("重新发送验证码");
                 codeTime = 60;
+                verify_code  = "aaaaaa";
                 // return false;
             }else{
                 codeTime--;

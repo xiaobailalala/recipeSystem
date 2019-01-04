@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{merchant/common/commonHeader::header('满减优惠活动编辑',~{::link})}">
+    <link rel="stylesheet" th:href="@{/src/css/merchant/active/productReduction.css}">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{merchant/common/commonNav::common_nav}"></div>
+    <div class="layui-container" style="margin-top: 80px;background-color: #ffffff;padding: 20px;">
+        <div id="product_reduction">
+            <h3 style="margin-bottom: 30px;text-align: center;">编辑满减优惠活动</h3>
+            <input type="hidden" th:value="${item.data.fId}" name="activeReduction_id">
+            <form lay-filter="reduction_form" class="layui-form layui-form-pane" id="reduction_form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">活动名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="fName" class="layui-input" placeholder="请输入活动名称" th:value="${item.data.fName}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开始时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="fStartTime" class="layui-input start_time" placeholder="请输入开始时间" th:value="${item.data.fStartTime}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">结束时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="fEndTime" class="layui-input end_time" placeholder="请输入结束时间" th:value="${item.data.fEndTime}">
+                    </div>
+                </div>
+                <div class="layui-form-item reduce_div" th:each="condition:${item.data.productActiveReductionConditions}">
+                    <input type="hidden" th:value="${condition.fId}" th:name="conditionId">
+                    <label class="layui-form-label" style="vertical-align: middle;">消费满：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="fullMoney" placeholder="请填写金额" class="layui-input" required lay-verify="price" th:value="${condition.fFullMoney}">
+                    </div>
+                    <label class="layui-form-label" style="vertical-align: middle;">减：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="reduceMoney" placeholder="请填写金额" class="layui-input" required lay-verify="price" th:value="${condition.fReduceMoney}">
+                    </div>
+                    <div class="layui-inline" style="border: 1px solid #e6e6e6; border-radius: 2px;">
+                        <i class="layui-icon layui-icon-delete del_reduce" style="line-height: 38px;width: 38px;display: inline-block;text-align: center;border-right: 1px solid #e6e6e6;float: left;background-color: #ffffff;"></i>
+                        <i class="layui-icon layui-icon-add-circle-fine add_reduce" style="line-height: 38px;width: 38px;display: inline-block;text-align: center;float: left;background-color: #ffffff;"></i>
+                    </div>
+                </div>
+                <div class="layui-form-item" id="top_this">
+                    <button class="layui-btn layui-btn-warm layui-btn-fluid" type="button" lay-filter="upload_reduction" lay-submit>确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},true)}">
+            <script th:src="@{/src/js/merchant/product/active/productReduction_editor.js}"></script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

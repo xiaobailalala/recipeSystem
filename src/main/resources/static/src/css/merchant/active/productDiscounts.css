@@ -251,42 +251,10 @@ textarea {
     z-index: 1000;
 }
 
-
-/* 商品表样式 */
-.active {
-    background-color: #393D49;
-    color: #ffffff;
-}
-.product-div {
-    width: 95%;
-    margin: 80px auto;
-}
-
+/*表格样式*/
 .product-div h3 {
     text-align: center;
 }
-.layui-table-tips-c:before {
-    position: relative;
-    right: 1px;
-    top: -3px;
-}
-td[data-field=fcover] div{  /*最后的pic为字段的field*/
-    height: 100%;
-    max-width: 100%;
-}
-/*
-.product-div .layui-table-cell{
-    height:auto;
-    overflow:visible;
-   text-overflow:inherit;
-  white-space:normal;
- } */
-
-
-
-
-
-
 
 div.footer {
     margin-top: 30px;

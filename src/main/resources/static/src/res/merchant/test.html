@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link rel="stylesheet" href="../../../assets/layui/css/layui.css">
+    <script src="../../../assets/js/jquery.min.js"></script>
+    <script src="../../../assets/layui/layui.all.js"></script>
+</head>
+<body>
+<form id="testForm">
+    <input type="file" name="file">
+    <input type="file" name="file">
+    <input type="file" name="file">
+    <input type="text" name="text">
+    <input type="text" name="text">
+    <button class="layui-btn layui-btn-warm" lay-filter="test" id="test">submit</button>
+</form>
+</body>
+<script>
+    $("#test").click(function () {
+        $("#testForm").submit(function (data) {
+            console.log(data)
+            return false
+        });
+    })
+</script>
+</html>

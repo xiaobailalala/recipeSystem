@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.ProductActiveReductionDao">
+
+    <insert id="insertProductActiveReduction" parameterType="com.smxy.recipe.entity.ProductActiveDiscount"
+            useGeneratedKeys="true" keyProperty="fId">
+        INSERT INTO t_product_reduction (f_name, f_start_time, f_end_time, f_pid, f_mid, f_status)
+        VALUES (#{fName}, #{fStartTime}, #{fEndTime}, #{fPid}, #{fMid}, #{fStatus});
+    </insert>
+
+    <delete id="deleteProductActiveReduction" parameterType="Integer">
+        DELETE
+        FROM t_product_discounts
+        WHERE f_id = #{fId};
+    </delete>
+
+    <update id="updateProductActiveReductionById" parameterType="com.smxy.recipe.entity.ProductActiveReduction">
+        UPDATE t_product_reduction
+        SET f_name       = #{fName},
+            f_start_time = #{fStartTime},
+            f_end_time   = #{fEndTime},
+            f_status     = #{fStatus}
+        WHERE f_id = #{fId}
+    </update>
+
+    <select id="selectProductActiveReductionById" parameterType="Integer" resultMap="getActiveDetails">
+        SELECT *
+        FROM t_product_reduction
+        WHERE f_id = #{fId};
+    </select>
+
+    <select id="selectProductActiveReductionByMid" parameterType="Integer" resultMap="getActiveDetails">
+        SELECT *
+        FROM t_product_reduction
+        WHERE f_mid = #{fMid};
+    </select>
+    <resultMap id="getActiveDetails" type="com.smxy.recipe.entity.ProductActiveReduction">
+        <result property="fId" column="f_id"/>
+        <result property="fPid" column="f_pid"/>
+        <association property="merchantProduct" column="f_pid"
+                     select="com.smxy.recipe.dao.MerchantProductDao.getProductById">
+        </association>
+        <collection property="productActiveReductionConditions" column="f_id"
+                    select="com.smxy.recipe.dao.ProductActiveReductionConditionDao.selectProductActiveReductionConditionByAId">
+        </collection>
+    </resultMap>
+
+</mapper>

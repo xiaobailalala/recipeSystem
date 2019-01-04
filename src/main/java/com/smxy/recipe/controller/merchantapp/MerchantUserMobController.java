@@ -38,7 +38,6 @@ public class MerchantUserMobController {
 
     @PostMapping("/getUserBySessionId")
     public ResApi<Object> getUserBySessionId(String sessionID, HttpServletRequest request, HttpServletResponse response){
-        System.out.println("--->"+sessionID);
         SessionKey sessionKey = new WebSessionKey(sessionID, request, response);
         Session session = SecurityUtils.getSecurityManager().getSession(sessionKey);
         Object attribute = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);

@@ -74,7 +74,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/merchantCommon/**", "anon");
         filterChainDefinitionMap.put("/merchantApp/**", "anon");
         filterChainDefinitionMap.put("/vue/**", "anon");
-//        filterChainDefinitionMap.put("/vue/**", "common");
         filterChainDefinitionMap.put("/merchant/**", "merchant");
         filterChainDefinitionMap.put("/manage/**", "admin");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

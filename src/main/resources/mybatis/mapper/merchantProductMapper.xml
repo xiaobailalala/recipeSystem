@@ -48,10 +48,23 @@
         WHERE f_id = #{fId}
     </update>
 
+    <update id="updateProductActiveDiscount" parameterType="Map">
+        UPDATE t_merchant_product
+        SET f_discount = #{fActive}
+        WHERE f_id = #{fId}
+    </update>
+
+    <update id="updateProductActiveReduction" parameterType="Map">
+        UPDATE t_merchant_product
+        SET f_reduction = #{fActive}
+        WHERE f_id = #{fId}
+    </update>
+
     <insert id="saveProductInfo" parameterType="com.smxy.recipe.entity.MerchantProduct" keyProperty="fId"
             useGeneratedKeys="true">
         INSERT INTO t_merchant_product (f_name,
                                         f_cover,
+                                        f_good,
                                         f_category,
                                         f_state,
                                         f_sales,
@@ -59,9 +72,12 @@
                                         f_addtime,
                                         f_grosssales,
                                         f_freightid,
-                                        f_review)
+                                        f_review,
+                                        f_discount,
+                                        f_reduction)
         VALUES (#{fName},
                 #{fCover},
+                #{fGood},
                 #{fCategory},
                 #{fState},
                 #{fSales},
@@ -69,6 +85,8 @@
                 #{fAddtime},
                 #{fGrosssales},
                 #{fFreightid},
-                #{fReview});
+                #{fReview},
+                #{fDiscount},
+                #{fReduction});
     </insert>
 </mapper>
