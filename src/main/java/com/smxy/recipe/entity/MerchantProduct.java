@@ -12,11 +12,9 @@ import java.util.List;
  * @author Yangyihui
  * @date 2018/11/18 0018 09:17
  */
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class MerchantProduct implements Serializable {
     private Integer fId;
     private String fName;

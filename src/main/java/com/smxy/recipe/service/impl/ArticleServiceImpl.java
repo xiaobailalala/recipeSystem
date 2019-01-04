@@ -32,6 +32,7 @@ package com.smxy.recipe.service.impl;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.Article;
 import com.smxy.recipe.entity.Collect;
+import com.smxy.recipe.entity.Recipe;
 import com.smxy.recipe.entity.tools.ArticleRefer;
 import com.smxy.recipe.service.ArticleService;
 import com.smxy.recipe.utils.ResApi;
@@ -220,6 +221,16 @@ public class ArticleServiceImpl implements ArticleService {
             }
         });
         return ResApi.getSuccess(articleList);
+    }
+
+    @Override
+    public ResApi<Object> getInfoAndRecipeList() {
+        List<Article> articleList = articleDao.findAllInfo();
+        List<Recipe> recipeList = recipeDao.getAllInfo();
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("articleList", articleList);
+        map.put("recipeList", recipeList);
+        return ResApi.getSuccess(map);
     }
 
 }

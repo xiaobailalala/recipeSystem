@@ -10,11 +10,24 @@
     </select>
     <resultMap id="getRecipeMaterialDetail" type="RecipeMaterial">
         <result column="f_mid" property="fMid"/>
-        <association property="material" column="fMid"
+        <association property="material" column="f_mid"
                     select="com.smxy.recipe.dao.MaterialDao.getInfoById">
         </association>
     </resultMap>
     <delete id="deleteInfoByRid" parameterType="Integer">
         delete from t_food_recipe_material where f_rid=#{fRid};
     </delete>
+    <select id="getInfoByMid" parameterType="Integer" resultMap="getInfoByMidResultMap">
+        select distinct * from t_food_recipe_material where f_mid=#{fMid};
+    </select>
+    <resultMap id="getInfoByMidResultMap" type="RecipeMaterial">
+        <result column="f_mid" property="fMid" />
+        <result column="f_rid" property="fRid" />
+        <association property="material" column="f_mid"
+                     select="com.smxy.recipe.dao.MaterialDao.getInfoById">
+        </association>
+        <association property="recipe" column="f_rid"
+                    select="com.smxy.recipe.dao.RecipeDao.getInfoById">
+        </association>
+    </resultMap>
 </mapper>

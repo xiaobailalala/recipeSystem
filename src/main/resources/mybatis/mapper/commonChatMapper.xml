@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.CommonChatDao">
+    <insert id="saveInfo" parameterType="CommonChat" keyProperty="fId" useGeneratedKeys="true">
+        insert into t_common_chat (f_content, f_release, f_uid, f_oid, f_state, f_url, f_type, f_long)
+        values (#{fContent}, #{fRelease}, #{fUid}, #{fOid}, #{fState}, #{fUrl}, #{fType}, #{fLong});
+    </insert>
+
+    <select id="findInfoByUidAndOid" resultType="CommonChat">
+        select * from t_common_chat where
+        (f_uid=#{fUid} and f_oid=#{fOid}) or
+        (f_oid=#{fUid} and f_uid=#{fOid});
+    </select>
+</mapper>

@@ -37,6 +37,7 @@ import com.smxy.recipe.dao.RecipeDao;
 import com.smxy.recipe.entity.Article;
 import com.smxy.recipe.entity.Recipe;
 import com.smxy.recipe.entity.SysNotification;
+import com.smxy.recipe.service.socket.CommonChatSocketService;
 import com.smxy.recipe.service.socket.SysNotificationSocketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,14 +58,18 @@ public class QmManager {
     private ArticleDao articleDao;
     private ArticleCommentDao articleCommentDao;
     private SysNotificationSocketService sysNotificationSocketService;
+    private CommonChatSocketService commonChatSocketService;
 
     @Autowired
-    public QmManager(RecipeDao recipeDao, FoodCommentDao foodCommentDao, ArticleDao articleDao, ArticleCommentDao articleCommentDao, SysNotificationSocketService sysNotificationSocketService) {
+    public QmManager(RecipeDao recipeDao, FoodCommentDao foodCommentDao, ArticleDao articleDao,
+                     ArticleCommentDao articleCommentDao, SysNotificationSocketService sysNotificationSocketService,
+                     CommonChatSocketService commonChatSocketService) {
         this.recipeDao = recipeDao;
         this.foodCommentDao = foodCommentDao;
         this.articleDao = articleDao;
         this.articleCommentDao = articleCommentDao;
         this.sysNotificationSocketService = sysNotificationSocketService;
+        this.commonChatSocketService = commonChatSocketService;
     }
 
     @RabbitListener(queues = "recipeCountUpload.queue")
@@ -104,6 +109,11 @@ public class QmManager {
     @RabbitListener(queues = "systemMessage.queue")
     public void systemMessage(String jsonStr) {
         sysNotificationSocketService.pushSystemMessageForUser(jsonStr);
+    }
+
+    @RabbitListener(queues = "chatMessage.queue")
+    public void chatMessage(String jsonStr) {
+        commonChatSocketService.pushChatMessageForUser(jsonStr);
     }
 
 

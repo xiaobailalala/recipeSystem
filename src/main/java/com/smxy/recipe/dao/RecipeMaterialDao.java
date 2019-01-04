@@ -14,7 +14,13 @@ import com.smxy.recipe.entity.RecipeMaterial;
 import java.util.List;
 
 public interface RecipeMaterialDao {
+
     Integer saveInfo(RecipeMaterial recipeMaterial);
+
     List<RecipeMaterial> getInfoByRid(Integer fRid);
+
     Integer deleteInfoByRid(Integer fRid);
+
+    List<RecipeMaterial> getInfoByMid(Integer fMid);
+
 }

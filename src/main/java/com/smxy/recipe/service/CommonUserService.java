@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.smxy.recipe.entity.CommonUser;
 import com.smxy.recipe.utils.ResApi;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author zpx
  *
@@ -35,4 +38,10 @@ public interface CommonUserService {
 	ResApi<Object> updateCommonUserBg(MultipartFile multipartFile, CommonUser commonUser);
 
     ResApi<String> userLogin(CommonUser commonUser);
+
+	ResApi<Object> getUserInfoByToken(String token, HttpServletRequest request, HttpServletResponse response);
+
+    ResApi<Object> peopleInfoBrief(Integer uid);
+
+    ResApi<Object> getUserInfoDetailByToken(String token, HttpServletRequest request, HttpServletResponse response);
 }

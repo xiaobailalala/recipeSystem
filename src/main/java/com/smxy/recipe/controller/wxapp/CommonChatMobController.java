@@ -23,33 +23,38 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/13 16:29
+ * Build File @date: 2018/12/17 11:08
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.vueClient;
+package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
-import com.smxy.recipe.service.RecipeService;
+import com.smxy.recipe.entity.CommonChat;
+import com.smxy.recipe.service.CommonChatService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-@PathRestController("/vue/recipe")
-public class RecipeVueController {
+@PathRestController("/mob/commonChat")
+public class CommonChatMobController {
 
     @SuppressWarnings("all")
     @Autowired
-    private RecipeService recipeService;
+    private CommonChatService commonChatService;
 
-    @GetMapping("/getRecipeInfoByClaId")
-    public ResApi<Object> getRecipeInfoByClaId(Integer twoId, Integer threeId) {
-        return recipeService.getDataByClaId(twoId, threeId);
+    @PostMapping("/chatSaveMessage")
+    public ResApi<String> chatSaveMessage(@RequestParam(value = "file", required = false) MultipartFile file,
+                                          CommonChat commonChat) {
+        return commonChatService.chatSaveMessage(file, commonChat);
     }
 
-    @GetMapping("/getDataByMid")
-    public ResApi<Object> getDataByMid(Integer mid) {
-        return recipeService.getDataByMid(mid);
+    @PostMapping("/showMessage")
+    public ResApi<Object> showMessage(Integer uid, Integer oid) {
+        System.out.println(uid + " " + oid);
+        return commonChatService.showMessage(uid, oid);
     }
 
 }

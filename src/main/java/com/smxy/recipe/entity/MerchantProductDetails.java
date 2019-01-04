@@ -1,9 +1,6 @@
 package com.smxy.recipe.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.Serializable;
@@ -14,8 +11,7 @@ import java.io.Serializable;
  * @author Yangyihui
  * @date 2018/11/23 0023 17:08
  */
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class MerchantProductDetails implements Serializable {

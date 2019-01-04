@@ -393,6 +393,14 @@ public class RecipeServiceImpl implements RecipeService {
         return ResApi.getSuccess(recipeList);
     }
 
+    @Override
+    public ResApi<Object> getDataByMid(Integer mid) {
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("material", materialDao.getInfoById(mid));
+        map.put("dataList", recipeMaterialDao.getInfoByMid(mid));
+        return ResApi.getSuccess(map);
+    }
+
     private List<Recipe> randomRecipe(List<Recipe> recipeList){
         int[] index = ToolsApi.randomArray(0, recipeList.size()-1, 8);
         List<Recipe> recipes = new ArrayList<>();

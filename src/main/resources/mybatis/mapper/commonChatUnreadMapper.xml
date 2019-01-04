@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.CommonChatUnreadDao">
+    <insert id="saveInfo" parameterType="CommonChatUnread">
+        insert into t_common_chat_unread (f_uid, f_cid, f_oid)
+        values (#{fUid}, #{fCid}, #{fOid});
+    </insert>
+
+    <delete id="deleteInfoByUidAndOid">
+        delete from t_common_chat_unread where f_uid=#{fUid} and f_oid=#{fOid};
+    </delete>
+</mapper>

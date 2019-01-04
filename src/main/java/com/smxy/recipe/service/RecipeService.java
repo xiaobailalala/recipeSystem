@@ -53,4 +53,6 @@ public interface RecipeService {
 
 
     ResApi<Object> handpickList();
+
+    ResApi<Object> getDataByMid(Integer mid);
 }

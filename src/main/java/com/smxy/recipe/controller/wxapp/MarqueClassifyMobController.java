@@ -23,33 +23,28 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/11/14 16:14
+ * Build File @date: 2018/12/15 8:01
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.service;
+package com.smxy.recipe.controller.wxapp;
 
-import com.smxy.recipe.entity.Article;
-import com.smxy.recipe.entity.Collect;
+import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.service.MerchantProductClassifyService;
 import com.smxy.recipe.utils.ResApi;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 
-public interface ArticleService {
-    ResApi<String> saveInfo(Article article, Integer[] peopleArr, Integer[] articleArr, Integer[] recipeArr);
+@PathRestController("/mob/marqueClassify")
+public class MarqueClassifyMobController {
 
-    ResApi<Object> uploadCover(MultipartFile multipartFile);
+    @SuppressWarnings("all")
+    @Autowired
+    private MerchantProductClassifyService merchantProductClassifyService;
 
-    ResApi<Object> articleIndex(Integer aid, Integer uid);
+    @GetMapping("/productClassifyList")
+    public ResApi<Object> productClassifyList() {
+        return merchantProductClassifyService.getAllProductClassify();
+    }
 
-    ResApi<String> greatOperation(Integer open, Integer aid, Integer uid);
-
-    ResApi<String> collectArticle(Integer open, Collect collect);
-
-    ResApi<Object> articleListIndex();
-
-    ResApi<Object> articleForTopic(Integer classify);
-
-    ResApi<Object> handpickList();
-
-    ResApi<Object> getInfoAndRecipeList();
 }

@@ -20,12 +20,20 @@ import com.smxy.recipe.utils.api.CodeApi;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.UnknownSessionException;
+import org.apache.shiro.session.mgt.SessionKey;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
+import org.apache.shiro.web.session.mgt.WebSessionKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,7 +190,6 @@ public class CommonUserServiceImpl implements CommonUserService {
 
     @Override
     public ResApi<String> userLogin(CommonUser commonUser) {
-        System.out.println(commonUser);
         Subject currentUser = SecurityUtils.getSubject();
         try {
             if (!currentUser.isAuthenticated()){
@@ -202,6 +209,55 @@ public class CommonUserServiceImpl implements CommonUserService {
             return ResApi.getError(503, "未认证");
         }catch (Exception e){
             return ResApi.getError();
+        }
+    }
+
+    @Override
+    public ResApi<Object> getUserInfoByToken(String token, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            SessionKey sessionKey = new WebSessionKey(token, request, response);
+            Session session = SecurityUtils.getSecurityManager().getSession(sessionKey);
+            Object attribute = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+            SimplePrincipalCollection collection = (SimplePrincipalCollection) attribute;
+            CommonUser commonUser = (CommonUser) collection.getPrimaryPrincipal();
+            if (commonUser != null) {
+                CommonUser user = (CommonUser) session.getAttribute("commonUser");
+                if (user == null) {
+                    session.setAttribute("commonUser", commonUser);
+                }
+                return new ResApi<>(200, "success", commonUser);
+            } else {
+                return null;
+            }
+        } catch (UnknownSessionException e) {
+            return new ResApi<>(500, "failed", "用户未登录");
+        }
+    }
+
+    @Override
+    public ResApi<Object> peopleInfoBrief(Integer uid) {
+        return ResApi.getSuccess(commonUserDao.getInfoByIdBrief(uid));
+    }
+
+    @Override
+    public ResApi<Object> getUserInfoDetailByToken(String token, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            SessionKey sessionKey = new WebSessionKey(token, request, response);
+            Session session = SecurityUtils.getSecurityManager().getSession(sessionKey);
+            Object attribute = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+            SimplePrincipalCollection collection = (SimplePrincipalCollection) attribute;
+            CommonUser commonUser = (CommonUser) collection.getPrimaryPrincipal();
+            if (commonUser != null) {
+                CommonUser user = (CommonUser) session.getAttribute("commonUser");
+                if (user == null) {
+                    session.setAttribute("commonUser", commonUser);
+                }
+                return new ResApi<>(200, "success", commonUserDao.peopleInfoDetail(commonUser.getFId()));
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return new ResApi<>(500, "failed", "用户未登录");
         }
     }
 }

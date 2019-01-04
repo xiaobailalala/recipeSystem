@@ -29,14 +29,16 @@
  */
 package com.smxy.recipe.controller.vueClient;
 
-import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.entity.CommonUser;
 import com.smxy.recipe.service.CommonUserService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @PathRestController("/vue/commonUser")
 public class CommonUserVueController {
@@ -48,6 +50,21 @@ public class CommonUserVueController {
     @PostMapping("/userLogin")
     public ResApi<String> userLogin(CommonUser commonUser) {
         return commonUserService.userLogin(commonUser);
+    }
+
+    @PostMapping("/getUserInfoByToken")
+    public ResApi<Object> getUserInfoByToken(String token, HttpServletRequest request, HttpServletResponse response) {
+        return commonUserService.getUserInfoByToken(token, request, response);
+    }
+
+    @PostMapping("/userReg")
+    public ResApi<String> userReg(CommonUser commonUser) {
+        return commonUserService.commonUserReg(commonUser);
+    }
+
+    @GetMapping("/getUserInfoDetailByToken")
+    public ResApi<Object> getUserInfoDetailByToken(String token, HttpServletRequest request, HttpServletResponse response) {
+        return commonUserService.getUserInfoDetailByToken(token, request, response);
     }
 
 }

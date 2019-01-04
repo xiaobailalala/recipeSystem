@@ -72,6 +72,11 @@ public class CommonUserMobController {
         return commonUserService.collectionInfo(uid);
     }
 
+    @GetMapping("/peopleInfoBrief")
+    public ResApi<Object> peopleInfoBrief(Integer uid) {
+        return commonUserService.peopleInfoBrief(uid);
+    }
+
     @GetMapping("/peopleInfoDetail")
     public ResApi<Object> peopleInfoDetail(Integer uid) {
         return commonUserService.peopleInfoDetail(uid);

@@ -16,6 +16,7 @@ import com.smxy.recipe.entity.AdminUser;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.AdminUserService;
 import com.smxy.recipe.service.MerchantUserService;
+import com.smxy.recipe.utils.ToolsApi;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -75,4 +76,5 @@ public class AdminShiroRealm extends AuthorizingRealm {
         ByteSource credentialsSalt = ByteSource.Util.bytes(account);
         return new SimpleAuthenticationInfo(principal, credentials, credentialsSalt, realmName);
     }
+
 }

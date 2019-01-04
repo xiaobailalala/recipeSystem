@@ -50,6 +50,11 @@ public class RecipeMobController {
         return recipeService.getDataByClaId(twoid, threeid);
     }
 
+    @GetMapping("/getDataByMid")
+    public ResApi<Object> getDataByMid(Integer mid) {
+        return recipeService.getDataByMid(mid);
+    }
+
     @GetMapping("/getRecipeById")
     public ResApi<Object> getRecipeById(Collect collect){
         return recipeService.getDetailInfo(collect);

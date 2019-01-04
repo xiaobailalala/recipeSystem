@@ -23,33 +23,31 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/13 16:29
+ * Build File @date: 2018/12/26 14:40
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.controller.vueClient;
+package com.smxy.recipe.service.socket;
 
-import com.smxy.recipe.config.template.PathRestController;
-import com.smxy.recipe.service.RecipeService;
-import com.smxy.recipe.utils.ResApi;
+import com.alibaba.fastjson.JSONObject;
+import com.smxy.recipe.entity.CommonChat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@PathRestController("/vue/recipe")
-public class RecipeVueController {
+@Transactional(rollbackFor = Exception.class)
+@Service("commonChatSocketService")
+public class CommonChatSocketService {
 
     @SuppressWarnings("all")
     @Autowired
-    private RecipeService recipeService;
+    private SimpMessagingTemplate template;
 
-    @GetMapping("/getRecipeInfoByClaId")
-    public ResApi<Object> getRecipeInfoByClaId(Integer twoId, Integer threeId) {
-        return recipeService.getDataByClaId(twoId, threeId);
-    }
-
-    @GetMapping("/getDataByMid")
-    public ResApi<Object> getDataByMid(Integer mid) {
-        return recipeService.getDataByMid(mid);
+    public void pushChatMessageForUser(String message) {
+        CommonChat commonChat = JSONObject.parseObject(message, CommonChat.class);
+        System.out.println("send To ------>" + commonChat.getFOid());
+        template.convertAndSend("/chat/userMsg/" + commonChat.getFOid(), message);
     }
 
 }
