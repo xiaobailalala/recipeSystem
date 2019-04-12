@@ -30,7 +30,6 @@
 package com.smxy.recipe.realm;
 
 import com.smxy.recipe.dao.CommonUserDao;
-import com.smxy.recipe.entity.AdminUser;
 import com.smxy.recipe.entity.CommonUser;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

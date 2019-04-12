@@ -9,7 +9,6 @@
  */
 package com.smxy.recipe.utils;
 
-import org.csource.common.IniFileReader;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
@@ -23,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +63,7 @@ public class FastDfsClient {
     }
 
     private static Map<String, Object> getInitParam(String initFileName) {
-        Map<String, Object> initParam = new HashMap<>();
+        Map<String, Object> initParam = new HashMap<>(8);
         try {
             InputStream inputStream = new ClassPathResource(initFileName).getInputStream();
             String charSet = "UTF-8";

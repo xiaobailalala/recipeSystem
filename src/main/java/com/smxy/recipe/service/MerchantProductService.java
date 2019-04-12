@@ -1,12 +1,10 @@
 package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.MerchantProduct;
-import com.smxy.recipe.entity.ProductActiveDiscount;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**

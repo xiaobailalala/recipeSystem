@@ -35,8 +35,6 @@ import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
-
 @PathRestController("/vue/material")
 public class MaterialVueController {
 

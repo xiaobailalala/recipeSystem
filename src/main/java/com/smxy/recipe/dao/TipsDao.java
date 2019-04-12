@@ -10,8 +10,6 @@
 package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.Tips;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

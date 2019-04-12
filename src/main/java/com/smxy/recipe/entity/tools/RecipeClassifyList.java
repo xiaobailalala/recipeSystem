@@ -12,7 +12,9 @@ package com.smxy.recipe.entity.tools;
 import com.smxy.recipe.entity.Classify;
 import com.smxy.recipe.entity.ClassifyOne;
 import com.smxy.recipe.entity.ClassifyTwo;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 

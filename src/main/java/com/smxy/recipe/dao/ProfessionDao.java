@@ -11,9 +11,10 @@ package com.smxy.recipe.dao;
  * @author zpx
  *
  */
-import java.util.List;
 
 import com.smxy.recipe.entity.Profession;
+
+import java.util.List;
 
 public interface ProfessionDao {
 

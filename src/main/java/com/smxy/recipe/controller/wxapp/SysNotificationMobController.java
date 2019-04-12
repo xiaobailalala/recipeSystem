@@ -30,14 +30,11 @@
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
-import com.smxy.recipe.entity.SysNotification;
 import com.smxy.recipe.service.SysNotificationService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
 
 @PathRestController("/mob/sysNotification")
 public class SysNotificationMobController {

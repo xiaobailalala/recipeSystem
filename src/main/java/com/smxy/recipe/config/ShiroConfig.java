@@ -31,7 +31,10 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.Filter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
