@@ -8,12 +8,17 @@
     <select id="getInfoByRid" parameterType="Integer" resultType="Process">
         select * from t_food_process where f_rid=#{fRid};
     </select>
+
+    <select id="getInfoByFid" parameterType="Integer" resultType="Process">
+        SELECT * FROM recipe.t_food_process WHERE f_id=#{Fid};
+    </select>
+
     <delete id="deleteInfoByRid" parameterType="Integer">
         delete from t_food_process where f_rid=#{fRid};
     </delete>
 
     <update id="updateVoiceById" parameterType="Process">
-        update t_food_process set f_voice=#{fVoice} where f_id=#{fId};
+        update t_food_process set f_voice=#{fVoice}, f_req_voice=#{fReqVoice}  where f_id=#{fId};
     </update>
 
 </mapper>

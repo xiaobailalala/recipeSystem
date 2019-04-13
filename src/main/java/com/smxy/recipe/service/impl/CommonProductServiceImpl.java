@@ -23,23 +23,26 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/11/23 8:43
+ * Build File @date: 2019/4/13 20:02
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import com.smxy.recipe.entity.CommonProduct;
+import com.smxy.recipe.service.CommonProductService;
+import com.smxy.recipe.utils.ResApi;
+import com.smxy.recipe.utils.ToolsApi;
+import org.springframework.stereotype.Service;
 
-@Data
-@Accessors(chain = true)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ArticleGreat {
-    private Integer fId;
-    private Integer fAid;
-    private Integer fUid;
+@Service("commonProductService")
+public class CommonProductServiceImpl implements CommonProductService {
+
+    @Override
+    public ResApi<String> saveInfo(CommonProduct commonProduct) {
+        commonProduct.setFContent(ToolsApi.base64Encode(commonProduct.getFContent()));
+
+        return ResApi.getSuccess();
+    }
+
 }

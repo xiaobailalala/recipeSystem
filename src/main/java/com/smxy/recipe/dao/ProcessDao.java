@@ -16,6 +16,7 @@ import java.util.List;
 public interface ProcessDao {
     Integer saveInfo(Process process);
     List<Process> getInfoByRid(Integer fRid);
+    Process getInfoByFid(Integer fId);
     Integer deleteInfoByRid(Integer fRid);
     Integer updateVoiceById(Process process);
 }
