@@ -6,6 +6,11 @@
 
 #### 软件架构
 软件架构说明
+* SpringBoot 项目
+* SSM
+* Redis
+* RabbitMQ
+
 
 
 #### 安装教程
