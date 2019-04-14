@@ -1,7 +1,7 @@
 package com.smxy.recipe.controller;
 
 /**
- * Demo MerchantController
+ * Demo MerchantMobController
  *
  * @author Yangyihui
  * @date 2018/11/30 0030 14:56

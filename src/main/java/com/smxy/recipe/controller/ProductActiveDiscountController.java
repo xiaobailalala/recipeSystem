@@ -25,7 +25,7 @@ public class ProductActiveDiscountController {
 
     @GetMapping("/goDiscountAll")
     public String goDiscountAll() {
-        return "/merchant/pages/product/active/discounts_list";
+        return "merchant/pages/product/active/discounts_list";
     }
 
 
@@ -47,7 +47,7 @@ public class ProductActiveDiscountController {
     @GetMapping("/editorProductActiveDiscount/{id}")
     public String editorProductActiveDiscount(@PathVariable("id") Integer fId, Model model){
         model.addAttribute("item", productActiveDiscountService.getProductActiveDiscountById(fId));
-        return "/merchant/pages/product/active/discounts_editor";
+        return "merchant/pages/product/active/discounts_editor";
     }
     @RequiresPermissions("product:update")
     @ResponseBody

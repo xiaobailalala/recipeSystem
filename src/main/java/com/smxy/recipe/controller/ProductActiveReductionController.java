@@ -26,7 +26,7 @@ public class ProductActiveReductionController {
 
     @GetMapping("/goReductionAll")
     public String goReductionAll(){
-        return "/merchant/pages/product/active/reduction_list";
+        return "merchant/pages/product/active/reduction_list";
     }
 
 
@@ -55,7 +55,7 @@ public class ProductActiveReductionController {
     @GetMapping("/editorProductActiveReductionById/{id}")
     public String editorProductActiveReductionById(@PathVariable("id") Integer fId, Model model) {
         model.addAttribute("item", productActiveReductionService.getProductActiveDiscountById(fId));
-        return "/merchant/pages/product/active/reduction_editor";
+        return "merchant/pages/product/active/reduction_editor";
     }
 
     @RequiresPermissions("product:update")

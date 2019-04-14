@@ -1,12 +1,10 @@
 package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.MerchantProduct;
-import com.smxy.recipe.entity.ProductActiveDiscount;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +25,7 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 根据商家ID获取商品所有信息
+     *
      * @param mId 商家ID
      * @return : java.util.Map<java.lang.String,java.lang.Object>
      * @author : yangyihui
@@ -36,13 +35,14 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 根据商家ID获取商品所有信息(分页查询)
-     * @param mId 商家ID
+     *
+     * @param mId     商家ID
      * @param request 请求域
      * @return : java.util.Map<java.lang.String,java.lang.Object>
      * @author : yangyihui
      * @date : 2018/12/14 0014 22:56
      */
-    Map<String, Object> productAllPage(Integer mId,HttpServletRequest request);
+    Map<String, Object> productAllPage(Integer mId, HttpServletRequest request);
 
     /**
      * 功能描述: 保存一条商品类
@@ -67,6 +67,7 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 根据ID删除商品
+     *
      * @param fId 要删除的商品ID
      * @return ResApi工具类
      * @auther yangyihui
@@ -76,6 +77,7 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 根据商品ID 更新商品状态
+     *
      * @param fId    商品ID
      * @param fState 商品状态
      * @return ResApi 工具类
@@ -107,18 +109,29 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 手机端添加商品
-     * @param userID 用户ID
-     * @param productImage 商品主图图片
-     * @param marqueImage 商品类型图片
-     * @param productName 商品名称
+     *
+     * @param userID            用户ID
+     * @param productImage      商品主图图片
+     * @param marqueImage       商品类型图片
+     * @param productName       商品名称
      * @param productClassifyID 商品类型ID
-     * @param json 商品类型JSON数据
-     * @param freightID 运费模板ID
+     * @param json              商品类型JSON数据
+     * @param freightID         运费模板ID
      * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
      * @author : yangyihui
      * @date : 2018/12/22 0022 15:42
      */
-    ResApi<String> mobSaveProduct(Integer userID,MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID);
-//    ResApi<String> mobSaveProductDetails();
+    ResApi<Object> mobSaveProduct(Integer userID, MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID);
+
+    /**
+     * 功能描述: 异步添加商品详情
+     *
+     * @param detailsImage 商品详情图片
+     * @param detailsContent 商品详情文字
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2018/12/31 0031 11:50
+     */
+    ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, String json);
 
 }

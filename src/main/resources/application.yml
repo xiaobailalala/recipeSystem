@@ -67,5 +67,5 @@ mybatis:
 server:
   session:
     timeout: 3600
-#logging:
-#  level: debug
+logging:
+  level: info

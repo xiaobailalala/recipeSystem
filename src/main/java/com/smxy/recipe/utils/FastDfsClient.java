@@ -9,7 +9,6 @@
  */
 package com.smxy.recipe.utils;
 
-import org.csource.common.IniFileReader;
 import org.csource.common.MyException;
 import org.csource.common.NameValuePair;
 import org.csource.fastdfs.*;
@@ -23,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 

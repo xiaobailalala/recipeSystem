@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.service.MerchantProductService;
+import com.smxy.recipe.utils.RedisUtil;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,7 +272,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
                                 merchantProduct.getFMarqueclaid(), fId));
                     }
                 } else {
-                    if (proMarqueImg[i].getSize() > 0 && marqueIdList.size() > 0){
+                    if (proMarqueImg[i].getSize() > 0 && marqueIdList.size() > 0) {
                         filename = ToolsApi.multipartFileUploadFile(proMarqueImg[i], null);
                         merchantProductMarqueDao.updateMarqueInfo(new MerchantProductMarque(marqueIdList.get(0), marqueName[i], filename,
                                 Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]), merchantProduct.getFMarqueclaid(), fId));
@@ -309,7 +310,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
                         merchantProductDetailsDao.saveProductDetailsInfo(new MerchantProductDetails(fId, filename, productDetailsContent[i]));
                     }
                 } else {
-                    if (proDetailsImg[i].getSize() > 0 && detailsIdList.size() > 0){
+                    if (proDetailsImg[i].getSize() > 0 && detailsIdList.size() > 0) {
                         filename = ToolsApi.multipartFileUploadFile(proDetailsImg[i], null);
                         merchantProductDetailsDao.updateProductDetailsInfo(new MerchantProductDetails(detailsIdList.get(0), fId,
                                 filename, productDetailsContent[i]));
@@ -338,7 +339,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     }
 
     @Override
-    public ResApi<String> mobSaveProduct(Integer userID, MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID) {
+    public ResApi<Object> mobSaveProduct(Integer userID, MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID) {
         MerchantUser merchantUser = merchantUserDao.getMerchantUserById(userID);
         MerchantProduct merchantProduct = new MerchantProduct();
         merchantProduct.setFName(productName);
@@ -357,6 +358,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         merchantProduct.setFMarqueclaid(1);
         merchantProduct.setFCategory(merchantProductClassifyDao.getProductClassifyById(productClassifyID).getFName());
         int productRes = merchantProductDao.saveProductInfo(merchantProduct);
+        merchantUserProductDao.saveMerchantUserProductInfo(new MerchantUserProduct(merchantUser.getFId(), merchantProduct.getFId()));
         List<Map<String, Object>> marqueList = new ArrayList<>();
         JSONArray objects = JSONArray.parseArray(json);
         for (Object arr : objects) {
@@ -380,17 +382,45 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             int filenumber = 0;
             for (Map<String, Object> map : marqueList) {
                 String filename;
-                if ((boolean)map.get("isImg")) {
+                if ((boolean) map.get("isImg")) {
                     filename = ToolsApi.multipartFileUploadFile(marqueImage[filenumber], null);
-                    merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque((String) map.get("model"), filename, Double.parseDouble((String) map.get("price")), Integer.parseInt((String)map.get("inventory")), 1, merchantProduct.getFId()));
+                    merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque((String) map.get("model"), filename, Double.parseDouble((String) map.get("price")), Integer.parseInt((String) map.get("inventory")), 1, merchantProduct.getFId()));
                     filenumber++;
                 } else {
-                    merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque((String) map.get("model"), null, Double.parseDouble((String) map.get("price")), Integer.parseInt((String)map.get("inventory")), 1, merchantProduct.getFId()));
+                    merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque((String) map.get("model"), null, Double.parseDouble((String) map.get("price")), Integer.parseInt((String) map.get("inventory")), 1, merchantProduct.getFId()));
                 }
             }
+            List<Object> productDetails = RedisUtil.listGet("merchantProductDetails", 0, -1);
+            if ( productDetails != null || productDetails.size() != 0 ) {
+                for (Object productDetail : productDetails) {
+                    MerchantProductDetails merchantProductDetails = (MerchantProductDetails) productDetail;
+                    merchantProductDetails.setFPid(merchantProduct.getFId());
+                    merchantProductDetailsDao.saveProductDetailsInfo(merchantProductDetails);
+                }
+            }
+            return new ResApi<>(200, "success", "Pid:" + merchantProduct.getFId());
+        } else {
+            return new ResApi<>(500, "error", "系统出错");
+        }
+    }
+
+    @Override
+    public ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, String json) {
+        List<Object> list = new ArrayList<>();
+        for (int i = 0; i < detailsImage.length; i++) {
+            String filename;
+            if (detailsImage[i].getSize() == 0 || detailsImage[i] == null) {
+                filename = null;
+            } else {
+                filename = ToolsApi.multipartFileUploadFile(detailsImage[i], null);
+            }
+            list.add(new MerchantProductDetails(null, filename, detailsContent[i]));
+        }
+        boolean result = RedisUtil.listSet("merchantProductDetails", list);
+        if (result) {
             return ResApi.getSuccess();
         } else {
-            return ResApi.getError(505, "保存商品出错");
+            return ResApi.getError();
         }
     }
 }

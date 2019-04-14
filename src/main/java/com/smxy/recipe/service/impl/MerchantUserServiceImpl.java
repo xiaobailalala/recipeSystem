@@ -225,4 +225,9 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             return new ResApi<>(408, "原密码错误", "passwordError");
         }
     }
+
+    @Override
+    public ResApi<String> getIndexData(Integer userId) {
+        return null;
+    }
 }

@@ -25,9 +25,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String[] arr = new String[]{"A", "B", "C"};
-        moveArrayElement(arr, 2);
-        System.out.println(Arrays.toString(arr));
+        int l = 1;
+        System.out.println(Long.toBinaryString(Long.MAX_VALUE));
+//        String[] arr = new String[]{"A", "B", "C"};
+//        moveArrayElement(arr, 2);
+//        System.out.println(Arrays.toString(arr));
 //        String[][] letterStr = new String[][]{{"A", "B", "C", "D", "E", "F", "G", "H", "I"}, {"J", "K", "L", "M", "N", "O", "P", "Q", "R"}, {"S", "T", "U", "V", "W", "X", "Y", "Z", " "}};
     }
 

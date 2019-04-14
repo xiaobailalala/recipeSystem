@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       lang="en">
-<head th:include="~{/merchant/common/commonHeader::header('编辑商品',~{::link})}">
+<head th:include="~{merchant/common/commonHeader::header('编辑商品',~{::link})}">
     <link rel="stylesheet" th:href="@{/src/css/merchant/productEdit.css}">
 </head>
 <body>
-<div th:replace="~{/merchant/common/commonNav::common_nav}"></div>
+<div th:replace="~{merchant/common/commonNav::common_nav}"></div>
 <div class="layui-fluid layui-main" id="edit-content">
     <fieldset class="layui-elem-field layui-field-title">
         <legend>商品编辑</legend>
@@ -251,7 +251,7 @@
     </div>
 </div>
 
-<div th:replace="~{/merchant/common/commonFooter::onloadJs(~{::script},false)}">
+<div th:replace="~{merchant/common/commonFooter::onloadJs(~{::script},false)}">
     <script th:src="@{/src/js/merchant/product/edit.js}"></script>
 </div>
 </body>

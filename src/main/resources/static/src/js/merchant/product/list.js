@@ -508,6 +508,7 @@ $(function () {
                         layer.msg("请先选择数据!!!");
                     } else {
                         $.each(checkdata.data, function (index, item) {
+                            console.log(item.merchantProduct.fid)
                             $.ajax({
                                 url: "/merchant/merchantProduct/update/" + item.merchantProduct.fid + "/unshelve",
                                 type: "PUT",

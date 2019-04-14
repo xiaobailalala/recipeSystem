@@ -32,36 +32,32 @@ package com.smxy.recipe.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.smxy.recipe.entity.*;
-import com.smxy.recipe.utils.ResApi;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.net.UnknownHostException;
-import java.util.List;
+import java.lang.reflect.Method;
 
+@Configuration
 public class RedisSerializeConfig {
 
     /**
-     * @author zpx
      * @param connectionFactory
      * @return
+     * @author zpx
      * @Bean
      */
+    @Bean(name = "redisTemplate")
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
 
         //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
-        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer<>(Object.class);
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
@@ -70,9 +66,35 @@ public class RedisSerializeConfig {
 
         template.setValueSerializer(serializer);
         //使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(new StringRedisSerializer());
+        template.setKeySerializer(serializer);
+        //加入有关 HashValue 和 HashKey的序列化配置
+        template.setHashKeySerializer(serializer);
+        template.setHashValueSerializer(serializer);
         template.afterPropertiesSet();
+
         return template;
+    }
+
+    /**
+     * 功能描述: 重写键值初始化方法
+     * @return : org.springframework.cache.interceptor.KeyGenerator
+     * @author : yangyihui
+     * @date : 2018/12/30 0030 23:59
+     */
+    @Bean(name = "keyGenerator")
+    public KeyGenerator keyGenerator() {
+        return new KeyGenerator() {
+            @Override
+            public Object generate(Object target, Method method, Object... params) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(target.getClass().getName());
+                stringBuilder.append(":" + method.getName());
+                for (Object obj : params) {
+                    stringBuilder.append(":" + obj.toString());
+                }
+                return stringBuilder.toString();
+            }
+        };
     }
 //    List
 //    @Bean

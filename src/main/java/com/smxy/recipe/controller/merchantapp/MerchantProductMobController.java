@@ -1,5 +1,6 @@
 package com.smxy.recipe.controller.merchantapp;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.service.MerchantProductService;
 import com.smxy.recipe.utils.ResApi;
@@ -28,19 +29,32 @@ public class MerchantProductMobController {
         return ResApi.getSuccess(merchantProductService.productAll());
     }
 
-    @RequiresPermissions("product:select")
     @GetMapping("/list/{id}")
     public Map<String, Object> list(@PathVariable("id") Integer mId, HttpServletRequest request) {
         return merchantProductService.productAllById(mId);
     }
 
-    @ResponseBody
     @PostMapping("/add/{id}")
-    public ResApi<String> add(@PathVariable("id") Integer userID,
+    public ResApi<Object> add(@PathVariable("id") Integer userID,
                               @RequestParam("productImage") MultipartFile[] productImage,
                               @RequestParam("marqueImage") MultipartFile[] marqueImage, @RequestParam("productName") String productName,
                               @RequestParam("productClassifyID") Integer productClassifyID, @RequestParam("jsonArray") String json,
                               @RequestParam("freightID") Integer freightID){
         return merchantProductService.mobSaveProduct(userID, productImage, marqueImage, productName, productClassifyID, json, freightID);
     }
+
+//    public ResApi<String> addDetails()
+
+    @GetMapping("/getProductByID/{id}")
+    public ResApi<Object> getProductByID(@PathVariable("id") Integer fId) {
+        return merchantProductService.getProductById(fId);
+    }
+
+
+    @PostMapping("/update/{id}/{state}")
+    @ResponseBody
+    public ResApi<String> updateProductStatus(@PathVariable("state") String state, @PathVariable("id") Integer id) {
+        return merchantProductService.updateProductStatusById(id, state);
+    }
+
 }

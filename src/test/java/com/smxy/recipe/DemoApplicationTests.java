@@ -1,22 +1,18 @@
 package com.smxy.recipe;
 
 import com.smxy.recipe.dao.MaterialDao;
-import com.smxy.recipe.entity.Material;
+import com.smxy.recipe.entity.MerchantProductDetails;
 import com.smxy.recipe.service.MaterialService;
-import com.smxy.recipe.utils.ToolsApi;
-import org.apache.http.entity.ContentType;
+import com.smxy.recipe.utils.RedisUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,6 +24,28 @@ public class DemoApplicationTests {
 
     @Autowired
     private MaterialService materialService;
+
+
+    @Test
+    public void testRedis() {
+        Map<Object, Object> content = new HashMap<>(8);
+        content.put(1, new MerchantProductDetails(null, null, "coooooooooooool"));
+        content.put(2, new MerchantProductDetails(null, null, "coooooooooooool"));
+        content.put(3, new MerchantProductDetails(null, null, "coooooooooooool"));
+        content.put(4, new MerchantProductDetails(null, null, "coooooooooooool"));
+        content.put(5, new MerchantProductDetails(null, null, "coooooooooooool"));
+        RedisUtil.hashMapSet("pp", content);
+        Map<Object, Object> pp = RedisUtil.hashMapGet("pp");
+        for (Map.Entry<Object, Object> objectEntry : pp.entrySet()) {
+            System.out.println(objectEntry.getKey()+ " : " + objectEntry.getValue());
+        }
+    }
+
+    @Test
+    public void testMAXInteger(){
+        int l = 2>>1;
+        System.out.println(l);
+    }
 
     @Test
     public void contextLoads() {

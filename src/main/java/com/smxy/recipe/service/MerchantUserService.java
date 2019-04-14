@@ -95,4 +95,6 @@ public interface MerchantUserService {
      * @date : 2018/12/14 0014 16:34
      */
     ResApi<String> editorUserPassword(String fPassword, String oldPassword, Integer fId);
+
+    ResApi<String> getIndexData(Integer userId);
 }

@@ -50,7 +50,7 @@ public class MerchantUserController {
 
     @GetMapping("/userInfo")
     public String userInfo() {
-        return "/merchant/pages/merchantUser/userInfo";
+        return "merchant/pages/merchantUser/userInfo";
     }
 
     @RequiresRoles("merchant")
