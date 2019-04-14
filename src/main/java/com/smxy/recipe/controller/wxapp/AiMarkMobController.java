@@ -51,8 +51,8 @@ public class AiMarkMobController {
     private AiMarkService aiMarkService;
 
     @GetMapping("/getVoiceForWXReady")
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark){
-        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark, distanceMark);
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark, String cookTipMark){
+        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark, distanceMark, cookTipMark);
     }
 
     @PostMapping("/test")

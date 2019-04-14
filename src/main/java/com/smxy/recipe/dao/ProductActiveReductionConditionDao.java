@@ -3,7 +3,6 @@ package com.smxy.recipe.dao;
 import com.smxy.recipe.entity.ProductActiveReductionCondition;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Demo ProductAvtiveReductionConditionDao

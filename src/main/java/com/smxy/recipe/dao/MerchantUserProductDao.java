@@ -1,10 +1,8 @@
 package com.smxy.recipe.dao;
 
-import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.entity.MerchantUserProduct;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Demo MerchantUserProductDao

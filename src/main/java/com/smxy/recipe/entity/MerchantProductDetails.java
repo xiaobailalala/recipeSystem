@@ -1,7 +1,9 @@
 package com.smxy.recipe.entity;
 
-import lombok.*;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -12,6 +14,7 @@ import java.io.Serializable;
  * @date 2018/11/23 0023 17:08
  */
 @Data
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class MerchantProductDetails implements Serializable {

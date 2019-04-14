@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
  */
 @Setter
 @Getter
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClassifyProduct implements Serializable {

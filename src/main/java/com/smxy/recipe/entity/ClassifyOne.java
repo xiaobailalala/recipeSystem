@@ -10,6 +10,7 @@
 package com.smxy.recipe.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClassifyOne implements Serializable {

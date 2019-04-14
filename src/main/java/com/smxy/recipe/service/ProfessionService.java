@@ -7,10 +7,10 @@
  */
 package com.smxy.recipe.service;
 
-import java.util.List;
-
 import com.smxy.recipe.entity.Profession;
 import com.smxy.recipe.utils.ResApi;
+
+import java.util.List;
 
 /**
  * @author zpx

@@ -8,6 +8,7 @@
 package com.smxy.recipe.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Classify implements Serializable {

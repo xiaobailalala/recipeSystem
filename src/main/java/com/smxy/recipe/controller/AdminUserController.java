@@ -10,20 +10,14 @@
 package com.smxy.recipe.controller;
 
 import com.smxy.recipe.config.template.PathController;
-import com.smxy.recipe.entity.AdminRole;
 import com.smxy.recipe.entity.AdminUser;
 import com.smxy.recipe.service.AdminRoleService;
 import com.smxy.recipe.service.AdminUserService;
 import com.smxy.recipe.utils.ResApi;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @PathController("/manage/adminUser")
 public class AdminUserController {

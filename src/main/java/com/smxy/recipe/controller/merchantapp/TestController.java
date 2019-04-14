@@ -2,11 +2,8 @@ package com.smxy.recipe.controller.merchantapp;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.dao.MerchantProductDao;
-import com.smxy.recipe.dao.MerchantProductDetailsDao;
-import com.smxy.recipe.entity.MerchantProductDetails;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.service.MerchantProductService;
 import com.smxy.recipe.utils.ResApi;

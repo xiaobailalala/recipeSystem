@@ -1,12 +1,7 @@
 package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.MerchantProductClassify;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

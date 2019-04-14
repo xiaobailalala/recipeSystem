@@ -24,5 +24,5 @@ public interface AiMarkService {
 
     ResApi<String> updateInfo(Integer id, AiMark aiMark);
 
-    ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark);
+    ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark, String cookTipMark);
 }

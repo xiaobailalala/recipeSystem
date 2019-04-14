@@ -23,39 +23,33 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/13 22:12
+ * Build File @date: 2019/4/13 20:00
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
-import com.smxy.recipe.service.SysNotificationService;
+import com.smxy.recipe.entity.CommonProduct;
+import com.smxy.recipe.service.CommonProductService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@PathRestController("/mob/sysNotification")
-public class SysNotificationMobController {
+@PathRestController("/mob/product")
+public class CommonProductMobController {
 
-    @SuppressWarnings("all")
+    private final CommonProductService commonProductService;
+
     @Autowired
-    private SysNotificationService sysNotificationService;
-
-    @PostMapping("/showMessage")
-    public ResApi<Object> showMessage(Integer uid) {
-        return sysNotificationService.showMessage(uid);
+    public CommonProductMobController(CommonProductService commonProductService) {
+        this.commonProductService = commonProductService;
     }
 
-    @PostMapping("/showMessageCount")
-    public ResApi<Object> showMessageCount(Integer uid) {
-        return sysNotificationService.showMessageCount(uid);
+    @PostMapping("/saveInfo")
+    public ResApi<String> saveInfo(CommonProduct commonProduct) {
+        return commonProductService.saveInfo(commonProduct);
     }
 
-    @GetMapping("/deleteMessage")
-    public ResApi<String> deleteMessage(Integer uid) {
-        return sysNotificationService.deleteMessage(uid);
-    }
 
 }

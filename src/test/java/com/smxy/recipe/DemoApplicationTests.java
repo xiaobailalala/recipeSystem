@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,11 +31,22 @@ public class DemoApplicationTests {
     private MaterialService materialService;
 
     @Test
-    public void contextLoads() {
+    public void contextLoads() throws IOException {
 //        com.smxy.recipe.utils.Test.execute();
 //        ResApi<Object> data = getData();
 //        System.out.println(data);
 //        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFvPOfiAWr7HAAP0AAkuLZg362.png");
+        File file = new File("");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(),
+                ContentType.APPLICATION_OCTET_STREAM.toString(), fileInputStream);
+        String s = ToolsApi.multipartFileUploadFile(multipartFile, null);
+        System.out.println(s);
+    }
+
+    @Test
+    public void deleteFile() {
+        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFuwPvmAXRsLAAAgoGrD_EA871.mp3");
     }
 
 //    @Test

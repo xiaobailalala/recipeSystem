@@ -13,5 +13,5 @@ import com.smxy.recipe.entity.Process;
 import com.smxy.recipe.utils.ResApi;
 
 public interface ProcessService {
-    ResApi<Object> produceVoiceForId(Process process);
+    ResApi<Object> produceVoiceForId(Integer fId);
 }

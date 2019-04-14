@@ -44,8 +44,8 @@ public class ProcessMobController {
     private ProcessService processService;
 
     @GetMapping("/produceVoice")
-    public ResApi<Object> produceVoice(Process process){
-        return processService.produceVoiceForId(process);
+    public ResApi<Object> produceVoice(Integer fId){
+        return processService.produceVoiceForId(fId);
     }
 
 }

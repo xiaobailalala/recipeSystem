@@ -31,7 +31,6 @@ package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.entity.ArticleComment;
-import com.smxy.recipe.entity.FoodComment;
 import com.smxy.recipe.service.ArticleCommentService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;

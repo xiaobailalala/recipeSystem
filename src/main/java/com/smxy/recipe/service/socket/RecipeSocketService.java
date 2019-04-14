@@ -29,11 +29,13 @@
  */
 package com.smxy.recipe.service.socket;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.entity.sensor.Dht11Data;
 import com.smxy.recipe.entity.sensor.Gp2y1051Data;
 import com.smxy.recipe.entity.sensor.Hcsr04Data;
 import com.smxy.recipe.entity.sensor.Hcsr501Data;
 import com.smxy.recipe.utils.SensorDataApi;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -47,6 +49,8 @@ public class RecipeSocketService {
 
     @Autowired
     private SimpMessagingTemplate template;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     public void getSensorFireData() {
         List<Dht11Data> dht11DataList = SensorDataApi.dht11List;
@@ -64,6 +68,12 @@ public class RecipeSocketService {
         List<Hcsr501Data> hcsr501DataList = SensorDataApi.hcsr501DataList;
         template.convertAndSend("/sensorData/infrared",
                 hcsr501DataList.size() == 0 ? 0 : hcsr501DataList.get(hcsr501DataList.size() - 1));
+    }
+
+    public void getWarningMsg(Integer uid) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("cmd", "sudo python /home/pi/recipeLab/S8050.py 0 0 0");
+        rabbitTemplate.convertAndSend("zpx.direct", "warning.queue", jsonObject.toJSONString());
     }
 
     public void getSensorDistanceData() {
