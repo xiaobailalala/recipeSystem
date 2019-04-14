@@ -109,7 +109,7 @@ $(function () {
         });
         Highcharts.chart('fireMonitor', {
             chart: {
-                type: 'spline',
+                type: 'area',
                 animation: Highcharts.svg,
                 marginRight: 10,
                 events: {
@@ -294,7 +294,7 @@ $(function () {
         });
         Highcharts.chart('smogMonitor', {
             chart: {
-                type: 'spline',
+                type: 'area',
                 animation: Highcharts.svg,
                 marginRight: 10,
                 events: {

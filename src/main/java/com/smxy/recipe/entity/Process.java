@@ -9,14 +9,15 @@ package com.smxy.recipe.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * @author zpx
  *
  */
 @Data
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public final class Process {
@@ -27,6 +28,7 @@ public final class Process {
 	private String fRequest;
 	private String fCover;
 	private String fVoice;
+	private String fReqVoice;
 
 	public Process(Integer fRid, String fContent, String fRequest, String fCover) {
 		this.fRid = fRid;

@@ -46,16 +46,22 @@ public class ProcessServiceImpl implements ProcessService {
     private ProcessDao processDao;
 
     @Override
-    public ResApi<Object> produceVoiceForId(Process process) {
+    public synchronized ResApi<Object> produceVoiceForId(Integer fId) {
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
-        String filePath = BaiduTtsApi.sendVoiceData(process.getFContent());
-        if (filePath != null) {
-            process.setFVoice(filePath);
-            if (processDao.updateVoiceById(process) > 0) {
-                return new ResApi<>(200, "success", filePath);
+        Process infoByFid = processDao.getInfoByFid(fId);
+        if (infoByFid.getFVoice().equals("0") ) {
+            String filePath = BaiduTtsApi.sendVoiceData(infoByFid.getFContent());
+            String request = BaiduTtsApi.sendVoiceData("该步骤的执行时长为" + infoByFid.getFRequest() + "秒");
+            if (filePath != null && request != null) {
+                infoByFid.setFVoice(filePath);
+                infoByFid.setFReqVoice(request);
+            }
+            if (processDao.updateVoiceById(infoByFid) > 0) {
+                return new ResApi<>(200, "success", infoByFid);
             }
             return resApi;
+        } else {
+            return new ResApi<>(200, "success", infoByFid);
         }
-        return resApi;
     }
 }

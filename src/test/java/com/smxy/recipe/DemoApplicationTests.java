@@ -1,18 +1,23 @@
 package com.smxy.recipe;
 
 import com.smxy.recipe.dao.MaterialDao;
-import com.smxy.recipe.entity.MerchantProductDetails;
+import com.smxy.recipe.entity.Material;
 import com.smxy.recipe.service.MaterialService;
-import com.smxy.recipe.utils.RedisUtil;
+import com.smxy.recipe.utils.ToolsApi;
+import org.apache.http.entity.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,34 +30,23 @@ public class DemoApplicationTests {
     @Autowired
     private MaterialService materialService;
 
-
     @Test
-    public void testRedis() {
-        Map<Object, Object> content = new HashMap<>(8);
-        content.put(1, new MerchantProductDetails(null, null, "coooooooooooool"));
-        content.put(2, new MerchantProductDetails(null, null, "coooooooooooool"));
-        content.put(3, new MerchantProductDetails(null, null, "coooooooooooool"));
-        content.put(4, new MerchantProductDetails(null, null, "coooooooooooool"));
-        content.put(5, new MerchantProductDetails(null, null, "coooooooooooool"));
-        RedisUtil.hashMapSet("pp", content);
-        Map<Object, Object> pp = RedisUtil.hashMapGet("pp");
-        for (Map.Entry<Object, Object> objectEntry : pp.entrySet()) {
-            System.out.println(objectEntry.getKey()+ " : " + objectEntry.getValue());
-        }
-    }
-
-    @Test
-    public void testMAXInteger(){
-        int l = 2>>1;
-        System.out.println(l);
-    }
-
-    @Test
-    public void contextLoads() {
+    public void contextLoads() throws IOException {
 //        com.smxy.recipe.utils.Test.execute();
 //        ResApi<Object> data = getData();
 //        System.out.println(data);
 //        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFvPOfiAWr7HAAP0AAkuLZg362.png");
+        File file = new File("");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(),
+                ContentType.APPLICATION_OCTET_STREAM.toString(), fileInputStream);
+        String s = ToolsApi.multipartFileUploadFile(multipartFile, null);
+        System.out.println(s);
+    }
+
+    @Test
+    public void deleteFile() {
+        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFuwPvmAXRsLAAAgoGrD_EA871.mp3");
     }
 
 //    @Test

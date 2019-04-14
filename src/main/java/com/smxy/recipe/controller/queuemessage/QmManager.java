@@ -29,14 +29,12 @@
  */
 package com.smxy.recipe.controller.queuemessage;
 
-import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.dao.ArticleCommentDao;
 import com.smxy.recipe.dao.ArticleDao;
 import com.smxy.recipe.dao.FoodCommentDao;
 import com.smxy.recipe.dao.RecipeDao;
 import com.smxy.recipe.entity.Article;
 import com.smxy.recipe.entity.Recipe;
-import com.smxy.recipe.entity.SysNotification;
 import com.smxy.recipe.service.socket.CommonChatSocketService;
 import com.smxy.recipe.service.socket.SysNotificationSocketService;
 import org.slf4j.Logger;
@@ -44,7 +42,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 

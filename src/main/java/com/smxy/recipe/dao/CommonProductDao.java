@@ -23,23 +23,11 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/11/23 8:43
+ * Build File @date: 2019/4/13 20:05
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.entity;
+package com.smxy.recipe.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
-
-@Data
-@Accessors(chain = true)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ArticleGreat {
-    private Integer fId;
-    private Integer fAid;
-    private Integer fUid;
+public interface CommonProductDao {
 }

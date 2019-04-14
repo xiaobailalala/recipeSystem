@@ -96,17 +96,13 @@ public class AiMarkServiceImpl implements AiMarkService {
     }
 
     @Override
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark) {
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark, String cookTipMark) {
         List<String> strings = new ArrayList<>();
-        AiMark aiMark = new AiMark();
-        aiMark.setFMark(readyMark);
-        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
-        aiMark.setFMark(fireMark);
-        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
-        aiMark.setFMark(smogMark);
-        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
-        aiMark.setFMark(distanceMark);
-        strings.add(aiMarkDao.getInfoByMark(aiMark).getFVoice());
+        strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(readyMark)).getFVoice());
+        strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(fireMark)).getFVoice());
+        strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(smogMark)).getFVoice());
+        strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(distanceMark)).getFVoice());
+        strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(cookTipMark)).getFVoice());
         return ResApi.getSuccess(strings);
     }
 }

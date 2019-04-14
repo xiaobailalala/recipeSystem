@@ -37,7 +37,6 @@ import org.apache.shiro.realm.Realm;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class UserModularRealmAuthenticator extends ModularRealmAuthenticator {
 

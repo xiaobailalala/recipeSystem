@@ -63,7 +63,7 @@ public class FastDfsClient {
     }
 
     private static Map<String, Object> getInitParam(String initFileName) {
-        Map<String, Object> initParam = new HashMap<>();
+        Map<String, Object> initParam = new HashMap<>(8);
         try {
             InputStream inputStream = new ClassPathResource(initFileName).getInputStream();
             String charSet = "UTF-8";

@@ -105,6 +105,12 @@ public class RecipeSocket {
         commonUserSocketService.distanceNumberPop(uid);
     }
 
+    @MessageMapping("/warning")
+    public void getWarningMsg(Integer uid) {
+        System.out.println("warning");
+        recipeSocketService.getWarningMsg(uid);
+    }
+
     @MessageMapping("/allListenStop")
     public void allListenStop(Integer uid) {
         commonUserSocketService.fireNumberPop(uid);
