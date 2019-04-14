@@ -14,6 +14,7 @@ import com.smxy.recipe.entity.sensor.Gp2y1051Data;
 import com.smxy.recipe.entity.sensor.Hcsr04Data;
 import com.smxy.recipe.entity.sensor.Hcsr501Data;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Controller
 @RequestMapping("/sensorData")
 public class SensorDataApi {
 
