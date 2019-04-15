@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantOrderDao">
+    <insert id="saveOrderById" parameterType="com.smxy.recipe.entity.MerchantOrder" keyProperty="fId"
+            useGeneratedKeys="true">
+        INSERT INTO t_merchant_order (f_order_number, f_user_name, f_product_id, f_user_account, f_address)
+        VALUES (#{fOrderNumber}, #{fUserName}, #{fProductId}, #{fUserAccount}, #{fAddress});
+    </insert>
+
+    <update id="updateOrderState">
+        UPDATE t_merchant_order
+        SET f_state = #{fState}
+        WHERE f_id = #{orderId};
+    </update>
+
+    <select id="getOrderByTypeAndId" resultMap="getOrderInfo">
+        SELECT *
+        FROM t_merchant_order
+        WHERE f_meruser_id = #{userId}
+          AND f_type = #{fType};
+    </select>
+
+    <select id="getOrderById" resultMap="getOrderInfo">
+        SELECT *
+        FROM t_merchant_order
+        WHERE f_id = #{orderId};
+    </select>
+
+    <resultMap id="getOrderInfo" type="com.smxy.recipe.entity.MerchantOrder">
+        <result property="fId" column="f_id"/>
+        <result property="fProductId" column="f_product_id"/>
+        <association property="merchantProduct" column="f_product_id"
+                     select="com.smxy.recipe.dao.MerchantProductDao.getProductById"/>
+    </resultMap>
+
+    <select id="getOrderByUserId" resultMap="getOrderInfo">
+        SELECT *
+        FROM t_merchant_order
+        WHERE f_meruser_id = #{userId};
+    </select>
+
+    <select id="getOrderByUserIdAndStateAndType" resultMap="getOrderInfo">
+        SELECT *
+        FROM t_merchant_order
+        WHERE f_meruser_id = #{userId}
+          AND f_state = #{fState}
+          AND f_type = #{fType};
+    </select>
+
+    <select id="getOrderByStateAndId" resultMap="getOrderInfo">
+        SELECT *
+        FROM t_merchant_order
+        WHERE f_state = #{fState}
+          AND f_meruser_id = #{userId};
+    </select>
+
+</mapper>
