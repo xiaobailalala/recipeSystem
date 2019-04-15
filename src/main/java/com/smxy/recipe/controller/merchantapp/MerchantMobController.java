@@ -1,10 +1,7 @@
 package com.smxy.recipe.controller.merchantapp;
 
 import com.smxy.recipe.config.template.PathRestController;
-import com.smxy.recipe.entity.MerchantOrder;
-import com.smxy.recipe.service.MerchantOrderService;
 import com.smxy.recipe.service.MerchantUserService;
-import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
