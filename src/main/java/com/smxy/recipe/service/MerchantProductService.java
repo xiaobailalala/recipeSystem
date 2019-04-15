@@ -132,6 +132,6 @@ public interface MerchantProductService {
      * @author : yangyihui
      * @date : 2018/12/31 0031 11:50
      */
-    ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, String json);
+    ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent);
 
 }

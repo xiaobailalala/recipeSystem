@@ -45,6 +45,13 @@
         WHERE f_id = #{fId};
     </select>
 
+    <select id="getMarqueById" parameterType="Integer" resultType="com.smxy.recipe.entity.MerchantProductMarque">
+        SELECT *
+        FROM t_product_marque
+        WHERE f_id = #{fId};
+    </select>
+
+
     <select id="getMarqueId" parameterType="Integer" resultType="Integer">
         SELECT f_id
         FROM t_product_marque

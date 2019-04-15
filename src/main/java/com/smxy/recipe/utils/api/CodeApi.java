@@ -12,7 +12,8 @@ package com.smxy.recipe.utils.api;
  *
  */
 
-import net.sf.json.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -40,8 +41,8 @@ public class CodeApi {
         try {
             String errorCode = "error_code";
             result =net(url, params, "GET");
-            JSONObject object = JSONObject.fromObject(result);
-            if(object.getInt(errorCode)==0){
+            JSONObject object = JSONObject.parseObject(result);
+            if(object.getInteger(errorCode)==0){
                 System.out.println(object.get("result"));
             }else{
                 System.out.println(object.get("error_code")+":"+object.get("reason"));
@@ -71,8 +72,8 @@ public class CodeApi {
         String errorCode = "error_code";
         try {
             result = net(url, params, "GET");
-            JSONObject object = JSONObject.fromObject(result);
-            if(object.getInt(errorCode)==0){
+            JSONObject object = JSONObject.parseObject(result);
+            if(object.getInteger(errorCode)==0){
                 System.out.println(object.get("result"));
             }else{
                 System.out.println(object.get("error_code")+":"+object.get("reason"));

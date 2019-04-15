@@ -17,11 +17,16 @@ public class MerchantOrder {
     private Integer fId;
     private String fOrderNumber;
     private String fUserName;
-    private Integer fProductId;
+    private Integer fMarqueId;
+    private Integer fUserId;
     private String fUserAccount;
     private String fAddress;
     private Integer fState;
     private Integer fType;
     private Integer fMerUserId;
+    private Double fProductMoney;
+    private Integer fProductNumber;
+    private Double fFreight;
+    private MerchantProductMarque merchantProductMarque;
     private MerchantProduct merchantProduct;
 }

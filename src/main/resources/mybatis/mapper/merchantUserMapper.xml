@@ -50,7 +50,7 @@
         values (#{fShopname}, #{fAccount}, #{fPassword}, #{fBirth}, #{fProvince}, #{fCity}, #{fArea}, #{fCover});
     </insert>
 
-    <update id="updateMerchantUser" parameterType="MerchantUser">
+    <update id="updateMerchantUserCoverAndShopName" parameterType="MerchantUser">
         UPDATE t_merchant_user
         SET f_shopname = #{fShopname},
             f_cover    = #{fCover}
@@ -84,6 +84,10 @@
         SELECT f_id
         FROM t_merchant_user
         WHERE f_account LIKE #{fAccount};
+    </select>
+
+    <select id="getMerchantUserByAccount" parameterType="string" resultType="com.smxy.recipe.entity.MerchantUser">
+        SELECT * FROM t_merchant_user WHERE f_account = #{account};
     </select>
 
 

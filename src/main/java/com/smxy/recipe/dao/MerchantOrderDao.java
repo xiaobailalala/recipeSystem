@@ -70,5 +70,13 @@ public interface MerchantOrderDao {
     List<MerchantOrder> getOrderByUserIdAndStateAndType(@Param("userId") Integer userId, @Param("fState") Integer fState, @Param("fType") Integer fType);
 
 
+    /**
+     * 功能描述: 根据订单状态和id 获取订单信息
+     * @param userId 1
+     * @param fType 2
+     * @return : java.util.List<com.smxy.recipe.entity.MerchantOrder>
+     * @author : yangyihui
+     * @date : 2019/4/15 19:54
+     */
     List<MerchantOrder> getOrderByStateAndId(@Param("userId") Integer userId,@Param("fType") Integer fType);
 }

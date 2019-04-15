@@ -73,4 +73,11 @@ public class MerchantUserController {
     public ResApi<String> editorUserPassword(String fPassword, String oldPassword, @PathVariable("id") Integer fId) {
         return merchantUserService.editorUserPassword(fPassword, oldPassword, fId);
     }
+
+    @RequiresRoles("merchant")
+    @ResponseBody
+    @PostMapping("/forgetPassword")
+    public ResApi<String> forgetPassword(String password, String account) {
+        return merchantUserService.forgetPassword(account, password);
+    }
 }

@@ -1,10 +1,8 @@
 package com.smxy.recipe.controller.merchantapp;
 
-import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.service.MerchantProductService;
 import com.smxy.recipe.utils.ResApi;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,6 +53,11 @@ public class MerchantProductMobController {
     @ResponseBody
     public ResApi<String> updateProductStatus(@PathVariable("state") String state, @PathVariable("id") Integer id) {
         return merchantProductService.updateProductStatusById(id, state);
+    }
+
+    @PostMapping("/saveProductDetail")
+    public ResApi<String> saveProductDetail(@RequestParam("images") MultipartFile[] images,@RequestParam("details") String[] details) {
+        return merchantProductService.mobSaveProductDetails(images, details);
     }
 
 }

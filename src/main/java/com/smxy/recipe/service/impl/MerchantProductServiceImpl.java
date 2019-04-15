@@ -391,7 +391,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
                 }
             }
             List<Object> productDetails = RedisUtil.listGet("merchantProductDetails", 0, -1);
-            if ( productDetails != null || productDetails.size() != 0 ) {
+            if (productDetails != null || productDetails.size() != 0) {
                 for (Object productDetail : productDetails) {
                     MerchantProductDetails merchantProductDetails = (MerchantProductDetails) productDetail;
                     merchantProductDetails.setFPid(merchantProduct.getFId());
@@ -405,8 +405,11 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     }
 
     @Override
-    public ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, String json) {
+    public ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent) {
         List<Object> list = new ArrayList<>();
+        if (detailsImage.length != detailsContent.length) {
+            return ResApi.getError(502, "保存失败");
+        }
         for (int i = 0; i < detailsImage.length; i++) {
             String filename;
             if (detailsImage[i].getSize() == 0 || detailsImage[i] == null) {

@@ -67,6 +67,15 @@ public interface MerchantProductMarqueDao {
     String getMarqueImagePathById(Integer fId);
 
     /**
+     * 功能描述: 根据商品类型ID获取商品类型
+     * @param fId 1
+     * @return : com.smxy.recipe.entity.MerchantProductMarque
+     * @author : yangyihui
+     * @date : 2019/4/15 12:03
+     */
+    MerchantProductMarque getMarqueById(Integer fId);
+
+    /**
      * 功能描述: 根据商品ID查找所有商品类型ID
      * @param fPid 商品ID
      * @return : java.util.List<java.lang.Integer>
