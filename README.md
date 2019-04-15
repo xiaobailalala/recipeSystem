@@ -10,6 +10,7 @@
 * SSM
 * Redis
 * RabbitMQ
+* MySQL
 
 
 
