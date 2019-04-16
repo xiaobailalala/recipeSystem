@@ -42,9 +42,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @PathController("/manage/sysResource")
 public class SysResourceController {
 
-    @SuppressWarnings("all")
+    private final SysResourceService sysResourceService;
+
     @Autowired
-    private SysResourceService sysResourceService;
+    public SysResourceController(SysResourceService sysResourceService) {
+        this.sysResourceService = sysResourceService;
+    }
 
     @RequiresRoles("sysAdmin")
     @GetMapping("/fileManage")

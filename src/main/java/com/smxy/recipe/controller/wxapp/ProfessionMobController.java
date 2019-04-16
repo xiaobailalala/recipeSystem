@@ -21,9 +21,12 @@ import java.util.List;
 @PathRestController("/mob/profession")
 public class ProfessionMobController {
 
-    @SuppressWarnings("all")
+    private final ProfessionService professionService;
+
     @Autowired
-    private ProfessionService professionService;
+    public ProfessionMobController(ProfessionService professionService) {
+        this.professionService = professionService;
+    }
 
     @GetMapping("/getAllInfo")
     public ResApi<List<Profession>> getAllInfo(){

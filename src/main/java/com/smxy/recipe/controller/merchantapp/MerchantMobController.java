@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @PathRestController("/merchantMob")
 public class MerchantMobController {
+
+    private final MerchantUserService merchantUserService;
+
     @Autowired
-    private MerchantUserService merchantUserService;
+    public MerchantMobController(MerchantUserService merchantUserService) {
+        this.merchantUserService = merchantUserService;
+    }
 
     @GetMapping("/getIndexData/{userId}")
     public ResApi<String> getIndexData(@PathVariable("userId") Integer userId) {

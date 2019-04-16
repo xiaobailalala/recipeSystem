@@ -49,7 +49,7 @@ import java.util.Map;
 @Service("commonAttentionService")
 public class CommonAttentionServiceImpl implements CommonAttentionService {
 
-    private CommonAttentionDao commonAttentionDao;
+    private final CommonAttentionDao commonAttentionDao;
 
     @Autowired
     public CommonAttentionServiceImpl(CommonAttentionDao commonAttentionDao) {

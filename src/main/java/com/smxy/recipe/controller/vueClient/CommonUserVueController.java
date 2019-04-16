@@ -43,9 +43,12 @@ import javax.servlet.http.HttpServletResponse;
 @PathRestController("/vue/commonUser")
 public class CommonUserVueController {
 
-    @SuppressWarnings("all")
+    private final CommonUserService commonUserService;
+
     @Autowired
-    private CommonUserService commonUserService;
+    public CommonUserVueController(CommonUserService commonUserService) {
+        this.commonUserService = commonUserService;
+    }
 
     @PostMapping("/userLogin")
     public ResApi<String> userLogin(CommonUser commonUser) {

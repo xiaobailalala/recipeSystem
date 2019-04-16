@@ -24,9 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 @PathController("/manage/recipe")
 public class RecipeController {
 
-    @SuppressWarnings("all")
+    private final RecipeService recipeService;
+
     @Autowired
-    private RecipeService recipeService;
+    public RecipeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
 
     @RequiresPermissions("recipe:select")
     @GetMapping("/add")

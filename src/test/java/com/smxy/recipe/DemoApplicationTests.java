@@ -37,17 +37,17 @@ public class DemoApplicationTests {
 //        ResApi<Object> data = getData();
 //        System.out.println(data);
 //        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFvPOfiAWr7HAAP0AAkuLZg362.png");
-        File file = new File("");
-        FileInputStream fileInputStream = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(),
-                ContentType.APPLICATION_OCTET_STREAM.toString(), fileInputStream);
-        String s = ToolsApi.multipartFileUploadFile(multipartFile, null);
-        System.out.println(s);
+//        File file = new File("");
+//        FileInputStream fileInputStream = new FileInputStream(file);
+//        MultipartFile multipartFile = new MockMultipartFile(file.getName(), file.getName(),
+//                ContentType.APPLICATION_OCTET_STREAM.toString(), fileInputStream);
+//        String s = ToolsApi.multipartFileUploadFile(multipartFile, null);
+//        System.out.println(s);
     }
 
     @Test
     public void deleteFile() {
-        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFuwPvmAXRsLAAAgoGrD_EA871.mp3");
+//        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFuwPvmAXRsLAAAgoGrD_EA871.mp3");
     }
 
 //    @Test

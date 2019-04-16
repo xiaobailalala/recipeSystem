@@ -112,6 +112,7 @@ public class CodeApi {
             conn.setInstanceFollowRedirects(false);
             conn.connect();
             String currentMethodPost = "POST";
+            assert method != null;
             if (params!= null && method.equals(currentMethodPost)) {
                 try {
                     DataOutputStream out = new DataOutputStream(conn.getOutputStream());

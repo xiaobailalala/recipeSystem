@@ -40,10 +40,14 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class RecipeSocket {
 
+    private final RecipeSocketService recipeSocketService;
+    private final CommonUserSocketService commonUserSocketService;
+
     @Autowired
-    private RecipeSocketService recipeSocketService;
-    @Autowired
-    private CommonUserSocketService commonUserSocketService;
+    public RecipeSocket(RecipeSocketService recipeSocketService, CommonUserSocketService commonUserSocketService) {
+        this.recipeSocketService = recipeSocketService;
+        this.commonUserSocketService = commonUserSocketService;
+    }
 
     @Scheduled(fixedRate = 1500)
     public void getSensorFireData() {

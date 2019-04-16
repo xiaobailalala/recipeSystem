@@ -14,8 +14,14 @@ import org.springframework.stereotype.Service;
  */
 @Service("productActiveReductionConditionService")
 public class ProductActiveReductionConditionServiceImpl implements ProductActiveReductionConditionService {
+
+    private final ProductActiveReductionConditionDao productActiveReductionConditionDao;
+
     @Autowired
-    ProductActiveReductionConditionDao productActiveReductionConditionDao;
+    public ProductActiveReductionConditionServiceImpl(ProductActiveReductionConditionDao productActiveReductionConditionDao) {
+        this.productActiveReductionConditionDao = productActiveReductionConditionDao;
+    }
+
     @Override
     public ResApi<String> deleteProductActiveReductionConditionById(Integer fId) {
         Integer result = productActiveReductionConditionDao.deleteProductActiveReductionConditionById(fId);

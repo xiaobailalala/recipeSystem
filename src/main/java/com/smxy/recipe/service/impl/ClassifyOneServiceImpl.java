@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("classifyOneService")
 public class ClassifyOneServiceImpl implements ClassifyOneService {
 
-    private ClassifyOneDao classifyOneDao;
+    private final ClassifyOneDao classifyOneDao;
 
     @Autowired
     public ClassifyOneServiceImpl(ClassifyOneDao classifyOneDao) {

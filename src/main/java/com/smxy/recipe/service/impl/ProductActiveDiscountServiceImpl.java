@@ -26,10 +26,14 @@ import java.util.Map;
 @Service("productActiveDiscountService")
 public class ProductActiveDiscountServiceImpl implements ProductActiveDiscountService {
 
+    private final ProductActiveDiscountDao productActiveDiscountDao;
+    private final MerchantProductDao merchantProductDao;
+
     @Autowired
-    private ProductActiveDiscountDao productActiveDiscountDao;
-    @Autowired
-    private MerchantProductDao merchantProductDao;
+    public ProductActiveDiscountServiceImpl(ProductActiveDiscountDao productActiveDiscountDao, MerchantProductDao merchantProductDao) {
+        this.productActiveDiscountDao = productActiveDiscountDao;
+        this.merchantProductDao = merchantProductDao;
+    }
 
     @Override
     public ResApi<String> insertProductActiveDiscount(ProductActiveDiscount productActiveDiscount, Integer fPid, Integer fMid) {

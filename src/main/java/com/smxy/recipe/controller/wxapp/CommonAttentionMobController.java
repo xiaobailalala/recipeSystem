@@ -40,9 +40,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @PathRestController("/mob/attention")
 public class CommonAttentionMobController {
 
-    @SuppressWarnings("all")
+    private final CommonAttentionService commonAttentionService;
+
     @Autowired
-    private CommonAttentionService commonAttentionService;
+    public CommonAttentionMobController(CommonAttentionService commonAttentionService) {
+        this.commonAttentionService = commonAttentionService;
+    }
 
     @PostMapping("/addAttention")
     public ResApi<String> addAttention(CommonAttention commonAttention){

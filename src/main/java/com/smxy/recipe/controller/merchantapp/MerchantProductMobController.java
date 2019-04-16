@@ -1,10 +1,8 @@
 package com.smxy.recipe.controller.merchantapp;
 
-import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.service.MerchantProductService;
 import com.smxy.recipe.utils.ResApi;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +18,13 @@ import java.util.Map;
  */
 @PathRestController("/merchantMob/merchantProductMob")
 public class MerchantProductMobController {
-    @SuppressWarnings("all")
+
+    private final MerchantProductService merchantProductService;
+
     @Autowired
-    private MerchantProductService merchantProductService;
+    public MerchantProductMobController(MerchantProductService merchantProductService) {
+        this.merchantProductService = merchantProductService;
+    }
 
     @GetMapping("/getAllProduct")
     public ResApi<Object> getAllProduct(){

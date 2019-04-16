@@ -16,7 +16,7 @@ import java.util.Map;
 @Component
 public class RedisUtil {
 
-    private static RedisTemplate<Object, Object> redisTemplate;
+    private static RedisTemplate redisTemplate;
 
     @Autowired
     public void setRedisTemplate(RedisTemplate redisTemplate) {

@@ -54,8 +54,8 @@ public class FoodCommentServiceImpl implements FoodCommentService {
 
     private static final Logger logger = LoggerFactory.getLogger(FoodCommentServiceImpl.class);
 
-    private FoodCommentDao foodCommentDao;
-    private RabbitTemplate rabbitTemplate;
+    private final FoodCommentDao foodCommentDao;
+    private final RabbitTemplate rabbitTemplate;
 
     @Autowired
     public FoodCommentServiceImpl(FoodCommentDao foodCommentDao, RabbitTemplate rabbitTemplate) {

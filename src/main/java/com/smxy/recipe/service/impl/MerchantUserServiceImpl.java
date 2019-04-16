@@ -35,18 +35,23 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 @Service("merchantUserService")
 public class MerchantUserServiceImpl implements MerchantUserService {
-    @Autowired
-    private MerchantUserDao merchantUserDao;
-    @Autowired
-    private ToolsApi toolsApi;
-    @Autowired
-    private AdminUserRoleDao adminUserRoleDao;
-    @Autowired
-    private AdminRoleDao adminRoleDao;
-    @Autowired
-    private MerchantUserRoleDao merchantUserRoleDao;
+
+    private final MerchantUserDao merchantUserDao;
+    private final ToolsApi toolsApi;
+    private final AdminUserRoleDao adminUserRoleDao;
+    private final AdminRoleDao adminRoleDao;
+    private final MerchantUserRoleDao merchantUserRoleDao;
 
     private static final String MERCHANT_LOGIN_TYPE = LoginType.MERCHANT.toString();
+
+    @Autowired
+    public MerchantUserServiceImpl(MerchantUserDao merchantUserDao, ToolsApi toolsApi, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao) {
+        this.merchantUserDao = merchantUserDao;
+        this.toolsApi = toolsApi;
+        this.adminUserRoleDao = adminUserRoleDao;
+        this.adminRoleDao = adminRoleDao;
+        this.merchantUserRoleDao = merchantUserRoleDao;
+    }
 
     @Override
     public ResApi<String> userLogin(MerchantUser merchantUser, HttpServletRequest request) {

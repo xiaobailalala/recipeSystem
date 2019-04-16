@@ -16,8 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 @Service("merchantProductClassifyService")
 public class MerchantProductClassifyServiceImpl  implements MerchantProductClassifyService {
+
+    private final MerchantProductClassifyDao merchantProductClassifyDao;
+
     @Autowired
-    private MerchantProductClassifyDao merchantProductClassifyDao;
+    public MerchantProductClassifyServiceImpl(MerchantProductClassifyDao merchantProductClassifyDao) {
+        this.merchantProductClassifyDao = merchantProductClassifyDao;
+    }
 
     @Override
     public ResApi<Object> getAllProductClassify() {

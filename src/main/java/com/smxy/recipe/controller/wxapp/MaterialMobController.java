@@ -38,9 +38,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/material")
 public class MaterialMobController {
 
-    @SuppressWarnings("all")
+    private final MaterialService materialService;
+
     @Autowired
-    private MaterialService materialService;
+    public MaterialMobController(MaterialService materialService) {
+        this.materialService = materialService;
+    }
 
     @GetMapping("/randomList")
     public ResApi<Object> randomList() {

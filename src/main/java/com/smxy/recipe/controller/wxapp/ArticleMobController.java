@@ -43,9 +43,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathRestController("/mob/article")
 public class ArticleMobController {
 
-    @SuppressWarnings("all")
+    private final ArticleService articleService;
+
     @Autowired
-    private ArticleService articleService;
+    public ArticleMobController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     @PostMapping("/saveInfo")
     public ResApi<String> saveInfo(Article article, Integer[] peopleArr, Integer[] articleArr, Integer[] recipeArr) {

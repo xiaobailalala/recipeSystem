@@ -34,6 +34,7 @@ import com.smxy.recipe.entity.CommonProduct;
 import com.smxy.recipe.service.CommonProductService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @PathRestController("/mob/product")
@@ -49,6 +50,11 @@ public class CommonProductMobController {
     @PostMapping("/saveInfo")
     public ResApi<String> saveInfo(CommonProduct commonProduct) {
         return commonProductService.saveInfo(commonProduct);
+    }
+
+    @GetMapping("/index")
+    public ResApi<Object> index(Integer aid, Integer uid) {
+        return commonProductService.productIndex(aid, uid);
     }
 
 

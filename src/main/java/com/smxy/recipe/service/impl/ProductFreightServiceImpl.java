@@ -17,8 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("productFreightService")
 public class ProductFreightServiceImpl implements ProductFreightService {
 
+    private final MerchantProductFreightDao merchantProductFreightDao;
+
     @Autowired
-    private MerchantProductFreightDao merchantProductFreightDao;
+    public ProductFreightServiceImpl(MerchantProductFreightDao merchantProductFreightDao) {
+        this.merchantProductFreightDao = merchantProductFreightDao;
+    }
 
     @Override
     public ResApi<Object> getAllProductFreight() {

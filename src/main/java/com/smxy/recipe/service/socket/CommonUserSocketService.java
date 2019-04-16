@@ -42,8 +42,7 @@ import java.util.List;
 @Service("commonUserSocketService")
 public class CommonUserSocketService {
 
-    @Autowired
-    private SimpMessagingTemplate template;
+    private final SimpMessagingTemplate template;
 
     private static List<InMessage> fireListeningList;
 
@@ -58,6 +57,11 @@ public class CommonUserSocketService {
         smogListeningList = new ArrayList<>();
         infraredListeningList = new ArrayList<>();
         distanceListeningList = new ArrayList<>();
+    }
+
+    @Autowired
+    public CommonUserSocketService(SimpMessagingTemplate template) {
+        this.template = template;
     }
 
     public void fireNumberPush(InMessage inMessage) {

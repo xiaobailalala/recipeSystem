@@ -27,9 +27,12 @@ import java.util.Objects;
 @Service("materialService")
 public class MaterialServiceImpl implements MaterialService {
 
-    @SuppressWarnings("all")
+    private final MaterialDao materialDao;
+
     @Autowired
-    private MaterialDao materialDao;
+    public MaterialServiceImpl(MaterialDao materialDao) {
+        this.materialDao = materialDao;
+    }
 
     @Override
     public ResApi<String> saveInfo(MultipartFile file, String fName) {

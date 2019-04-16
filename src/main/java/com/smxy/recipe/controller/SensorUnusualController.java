@@ -41,9 +41,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @PathController("/manage/sensorUnusual")
 public class SensorUnusualController {
 
-    @SuppressWarnings("all")
+    private final SensorUnusualService sensorUnusualService;
+
     @Autowired
-    private SensorUnusualService sensorUnusualService;
+    public SensorUnusualController(SensorUnusualService sensorUnusualService) {
+        this.sensorUnusualService = sensorUnusualService;
+    }
 
     @PostMapping("/info")
     @ResponseBody

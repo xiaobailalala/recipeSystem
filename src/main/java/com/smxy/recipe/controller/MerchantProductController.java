@@ -23,9 +23,12 @@ import java.util.Map;
 @PathController("/merchant/merchantProduct")
 public class MerchantProductController {
 
-    @SuppressWarnings("all")
+    private final MerchantProductService merchantProductService;
+
     @Autowired
-    MerchantProductService merchantProductService;
+    public MerchantProductController(MerchantProductService merchantProductService) {
+        this.merchantProductService = merchantProductService;
+    }
 
     @RequiresPermissions("product:select")
     @GetMapping("/goProductAdd")

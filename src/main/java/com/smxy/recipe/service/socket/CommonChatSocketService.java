@@ -40,9 +40,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("commonChatSocketService")
 public class CommonChatSocketService {
 
-    @SuppressWarnings("all")
+    private final SimpMessagingTemplate template;
+
     @Autowired
-    private SimpMessagingTemplate template;
+    public CommonChatSocketService(SimpMessagingTemplate template) {
+        this.template = template;
+    }
 
     public void pushChatMessageForUser(String message) {
         CommonChat commonChat = JSONObject.parseObject(message, CommonChat.class);

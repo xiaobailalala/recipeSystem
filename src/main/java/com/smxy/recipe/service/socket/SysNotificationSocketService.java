@@ -41,9 +41,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("sysNotificationSocketService")
 public class SysNotificationSocketService {
 
-    @SuppressWarnings("all")
+    private final SimpMessagingTemplate template;
+
     @Autowired
-    private SimpMessagingTemplate template;
+    public SysNotificationSocketService(SimpMessagingTemplate template) {
+        this.template = template;
+    }
 
     public void pushSystemMessageForUser(String message) {
         SysNotification sysNotification = JSONObject.parseObject(message, SysNotification.class);

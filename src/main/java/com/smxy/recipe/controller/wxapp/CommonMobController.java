@@ -10,6 +10,7 @@
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.service.CommonProductService;
 import com.smxy.recipe.service.RecipeService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.api.CodeApi;
@@ -24,9 +25,14 @@ import java.util.Random;
 @PathRestController("/mob/common")
 public class CommonMobController {
 
-    @SuppressWarnings("all")
+    private final RecipeService recipeService;
+    private final CommonProductService commonProductService;
+
     @Autowired
-    RecipeService recipeService;
+    public CommonMobController(RecipeService recipeService, CommonProductService commonProductService) {
+        this.recipeService = recipeService;
+        this.commonProductService = commonProductService;
+    }
 
     @PostMapping("/getCode")
     public Map<String, Object> getCode(String num) {
@@ -50,6 +56,11 @@ public class CommonMobController {
     @GetMapping("/randomRecipe")
     public ResApi<Object> randomRecipe(){
         return recipeService.randomRecipe();
+    }
+
+    @GetMapping("/randomWorks")
+    public ResApi<Object> randomWorks() {
+        return commonProductService.randomWorks();
     }
 
 
