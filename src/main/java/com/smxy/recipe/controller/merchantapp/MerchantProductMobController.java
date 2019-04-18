@@ -27,7 +27,7 @@ public class MerchantProductMobController {
     }
 
     @GetMapping("/getAllProduct")
-    public ResApi<Object> getAllProduct(){
+    public ResApi<Object> getAllProduct() {
         return ResApi.getSuccess(merchantProductService.productAll());
     }
 
@@ -41,7 +41,7 @@ public class MerchantProductMobController {
                               @RequestParam("productImage") MultipartFile[] productImage,
                               @RequestParam("marqueImage") MultipartFile[] marqueImage, @RequestParam("productName") String productName,
                               @RequestParam("productClassifyID") Integer productClassifyID, @RequestParam("jsonArray") String json,
-                              @RequestParam("freightID") Integer freightID){
+                              @RequestParam("freightID") Integer freightID) {
         return merchantProductService.mobSaveProduct(userID, productImage, marqueImage, productName, productClassifyID, json, freightID);
     }
 
@@ -59,9 +59,9 @@ public class MerchantProductMobController {
         return merchantProductService.updateProductStatusById(id, state);
     }
 
-    @PostMapping("/saveProductDetail")
-    public ResApi<String> saveProductDetail(@RequestParam("images") MultipartFile[] images,@RequestParam("details") String[] details) {
-        return merchantProductService.mobSaveProductDetails(images, details);
+    @PostMapping("/saveProductDetail/{id}")
+    public ResApi<String> saveProductDetail(@RequestParam("images") MultipartFile[] images, @RequestParam("details") String[] details, @PathVariable("id") Integer userId) {
+        return merchantProductService.mobSaveProductDetails(images, details, userId);
     }
 
 }

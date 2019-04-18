@@ -43,4 +43,6 @@ public interface CommonUserService {
     ResApi<Object> peopleInfoBrief(Integer uid);
 
     ResApi<Object> getUserInfoDetailByToken(String token, HttpServletRequest request, HttpServletResponse response);
+
+    ResApi<String> followMerchant(Integer uid, Integer mid);
 }

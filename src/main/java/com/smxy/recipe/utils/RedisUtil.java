@@ -1,11 +1,9 @@
 package com.smxy.recipe.utils;
 
-import com.smxy.recipe.entity.MerchantProductMarque;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -19,12 +17,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
 
-    private static RedisTemplate redisTemplate;
-
-    @Autowired
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        RedisUtil.redisTemplate = redisTemplate;
-    }
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 功能描述: 向缓存中存入Map
@@ -34,7 +28,7 @@ public class RedisUtil {
      * @author : yangyihui
      * @date : 2018/12/30 0030 23:43
      */
-    public static boolean hashMapSet(String key, Map<Object, Object> map) {
+    public boolean hashMapSet(String key, Map<?, ?> map) {
         try {
             redisTemplate.opsForHash().putAll(key, map);
             return  true;
@@ -51,7 +45,7 @@ public class RedisUtil {
      * @author : yangyihui
      * @date : 2018/12/30 0030 23:38
      */
-    public static Map<Object, Object> hashMapGet(String key) {
+    public  Map<?, ?> hashMapGet(String key) {
         return redisTemplate.opsForHash().entries(key);
     }
 
@@ -63,7 +57,7 @@ public class RedisUtil {
      * @author : yangyihui
      * @date : 2019/1/1 0001 11:41
      */
-    public static boolean listSet(String key, Object value) {
+    public boolean listSet(String key, Object value) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             //设置60秒过期
@@ -84,7 +78,7 @@ public class RedisUtil {
      * @author : yangyihui
      * @date : 2019/1/1 0001 11:45
      */
-    public static List<Object> listGet(String key, long start, long end) {
+    public  List<Object> listGet(String key, long start, long end) {
         try {
             return redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
@@ -101,7 +95,7 @@ public class RedisUtil {
      * @author : yangyihui
      * @date : 2019/4/15 20:27
      */
-    public static void expire(String key, int seconds) {
+    public  void expire(String key, int seconds) {
         if (seconds <= 0) {
             return;
         }
@@ -111,7 +105,7 @@ public class RedisUtil {
     /**
      * 删除缓存
      */
-    public static boolean delete(final String key) {
+    public  boolean delete(final String key) {
         boolean result = false;
         try {
             redisTemplate.delete(key);
@@ -120,20 +114,5 @@ public class RedisUtil {
             e.printStackTrace();
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-        List<MerchantProductMarque> merchantProductMarqueList = new ArrayList<>(8);
-        MerchantProductMarque merchantProductMarque;
-        for (int i = 0; i < 5; i++) {
-            merchantProductMarque = new MerchantProductMarque("haha", null, 19.8, 10, 4, 3);
-            merchantProductMarqueList.add(merchantProductMarque);
-        }
-        boolean mer1 = RedisUtil.listSet("mer", merchantProductMarqueList);
-        System.out.println(mer1);
-        List<Object> mer = RedisUtil.listGet("mer", 0, -1);
-        for (Object o : mer) {
-            System.out.println(o);
-        }
     }
 }

@@ -1,8 +1,9 @@
 package com.smxy.recipe;
 
 import com.smxy.recipe.dao.MaterialDao;
-import com.smxy.recipe.entity.Material;
+import com.smxy.recipe.entity.MerchantProductMarque;
 import com.smxy.recipe.service.MaterialService;
+import com.smxy.recipe.utils.RedisUtil;
 import com.smxy.recipe.utils.ToolsApi;
 import org.apache.http.entity.ContentType;
 import org.junit.Test;
@@ -16,9 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,6 +33,9 @@ public class DemoApplicationTests {
 
     @Autowired
     private MaterialService materialService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Test
     public void contextLoads() throws IOException {
@@ -49,6 +55,31 @@ public class DemoApplicationTests {
     public void deleteFile() {
 //        ToolsApi.multipartFileDeleteFile("group1/M00/00/02/wKgBbFuwPvmAXRsLAAAgoGrD_EA871.mp3");
     }
+
+    @Test
+    public void redisTest() {
+        List<MerchantProductMarque> merchantProductMarqueList = new ArrayList<>(8);
+        MerchantProductMarque merchantProductMarque;
+        for (int i = 0; i < 5; i++) {
+            merchantProductMarque = new MerchantProductMarque("haha", null, 19.8, 10, 4, 3);
+            merchantProductMarqueList.add(merchantProductMarque);
+        }
+        Map<String, List<MerchantProductMarque>> listMap = new HashMap<>();
+        listMap.put("mer", merchantProductMarqueList);
+        redisUtil.hashMapSet("merc" + 1, listMap);
+
+    }
+
+    @Test
+    public void redisTest1() {
+        Map<String, List<MerchantProductMarque>> merc = (Map<String, List<MerchantProductMarque>>) redisUtil.hashMapGet("merc" + 1);
+        List<MerchantProductMarque> merchantProductMarqueList1 = merc.get("mer");
+        for (MerchantProductMarque marque : merchantProductMarqueList1) {
+            System.out.println(marque);
+        }
+    }
+
+
 
 //    @Test
 //    public void addMessage() {
