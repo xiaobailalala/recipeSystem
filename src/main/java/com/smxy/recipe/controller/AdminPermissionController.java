@@ -21,9 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/adminPermission")
 public class AdminPermissionController {
 
-    @SuppressWarnings("all")
+    private final AdminPermissionService adminPermissionService;
+
     @Autowired
-    private AdminPermissionService adminPermissionService;
+    public AdminPermissionController(AdminPermissionService adminPermissionService) {
+        this.adminPermissionService = adminPermissionService;
+    }
 
     @RequiresPermissions("adminPermission:select")
     @GetMapping("/perm")

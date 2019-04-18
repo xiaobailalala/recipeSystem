@@ -42,9 +42,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathRestController("/mob/foodComment")
 public class FoodCommentMobController {
 
-    @SuppressWarnings("all")
+    private final FoodCommentService foodCommentService;
+
     @Autowired
-    private FoodCommentService foodCommentService;
+    public FoodCommentMobController(FoodCommentService foodCommentService) {
+        this.foodCommentService = foodCommentService;
+    }
 
     @PostMapping("/imgupload")
     public ResApi<Object> commentImgupload(@RequestParam("commentImg") MultipartFile file){

@@ -38,9 +38,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/vue/material")
 public class MaterialVueController {
 
-    @SuppressWarnings("all")
+    private final MaterialService materialService;
+
     @Autowired
-    private MaterialService materialService;
+    public MaterialVueController(MaterialService materialService) {
+        this.materialService = materialService;
+    }
 
     @GetMapping("/randomDataList")
     public ResApi<Object> randomDataList() {

@@ -42,8 +42,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("processService")
 public class ProcessServiceImpl implements ProcessService {
 
+    private final ProcessDao processDao;
+
     @Autowired
-    private ProcessDao processDao;
+    public ProcessServiceImpl(ProcessDao processDao) {
+        this.processDao = processDao;
+    }
 
     @Override
     public synchronized ResApi<Object> produceVoiceForId(Integer fId) {

@@ -22,8 +22,12 @@ import java.util.List;
 public class MerchantOrderServiceImpl implements MerchantOrderService {
     private static final Logger logger = LoggerFactory.getLogger(MerchantOrderService.class);
 
+    private final MerchantOrderDao merchantOrderDao;
+
     @Autowired
-    private MerchantOrderDao merchantOrderDao;
+    public MerchantOrderServiceImpl(MerchantOrderDao merchantOrderDao) {
+        this.merchantOrderDao = merchantOrderDao;
+    }
 
     @Override
     public ResApi<Object> getOrderById(Integer orderId) {

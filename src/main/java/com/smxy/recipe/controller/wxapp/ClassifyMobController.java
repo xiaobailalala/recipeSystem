@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/cla")
 public class ClassifyMobController {
 
-    @SuppressWarnings("all")
+    private final ClassifyOneService classifyOneService;
+
     @Autowired
-    private ClassifyOneService classifyOneService;
+    public ClassifyMobController(ClassifyOneService classifyOneService) {
+        this.classifyOneService = classifyOneService;
+    }
 
     @GetMapping("/getAllInfo")
     public ResApi<Object> getAllInfo(){

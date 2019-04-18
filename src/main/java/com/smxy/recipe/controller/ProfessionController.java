@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/profession")
 public class ProfessionController {
 
-    @SuppressWarnings("all")
+    private final ProfessionService professionService;
+
     @Autowired
-    private ProfessionService professionService;
+    public ProfessionController(ProfessionService professionService) {
+        this.professionService = professionService;
+    }
 
     @RequiresPermissions("profess:select")
     @GetMapping("/info")

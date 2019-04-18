@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/adminUser")
 public class AdminUserController {
 
-    private AdminUserService adminUserService;
+    private final AdminUserService adminUserService;
 
     @Autowired
     public AdminUserController(AdminUserService adminUserService, AdminRoleService adminRoleService) {

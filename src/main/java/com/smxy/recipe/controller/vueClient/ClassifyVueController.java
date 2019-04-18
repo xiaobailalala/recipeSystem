@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/vue/cla")
 public class ClassifyVueController {
 
-    @SuppressWarnings("all")
+    private final ClassifyOneService classifyOneService;
+
     @Autowired
-    private ClassifyOneService classifyOneService;
+    public ClassifyVueController(ClassifyOneService classifyOneService) {
+        this.classifyOneService = classifyOneService;
+    }
+
 
     @GetMapping("/getAllInfo")
     public ResApi<Object> getAllInfo(){

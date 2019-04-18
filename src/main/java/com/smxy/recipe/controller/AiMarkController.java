@@ -41,9 +41,12 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/aiMark")
 public class AiMarkController {
 
-    @SuppressWarnings("all")
+    private final AiMarkService aiMarkService;
+
     @Autowired
-    private AiMarkService aiMarkService;
+    public AiMarkController(AiMarkService aiMarkService) {
+        this.aiMarkService = aiMarkService;
+    }
 
     @RequiresPermissions("aiMark:select")
     @GetMapping("/info")

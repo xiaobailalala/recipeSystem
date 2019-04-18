@@ -28,9 +28,9 @@ import java.util.Map;
 @Service("classifyService")
 public class ClassifyServiceImpl implements ClassifyService {
 
-    private ClassifyDao classifyDao;
-    private ClassifyOneDao classifyOneDao;
-    private ClassifyTwoDao classifyTwoDao;
+    private final ClassifyDao classifyDao;
+    private final ClassifyOneDao classifyOneDao;
+    private final ClassifyTwoDao classifyTwoDao;
 
     @Autowired
     public ClassifyServiceImpl(ClassifyDao classifyDao, ClassifyOneDao classifyOneDao, ClassifyTwoDao classifyTwoDao) {

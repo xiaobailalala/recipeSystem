@@ -27,15 +27,15 @@ import java.util.*;
 public class MerchantProductServiceImpl implements MerchantProductService {
     private static final String PRODUCT_STATE_SHELVE = "shelve";
 
-    private MerchantUserDao merchantUserDao;
-    private MerchantProductDao merchantProductDao;
-    private MerchantProductImageDao merchantProductImageDao;
-    private MerchantProductMarqueDao merchantProductMarqueDao;
-    private MerchantProductDetailsDao merchantProductDetailsDao;
-    private MerchantUserProductDao merchantUserProductDao;
-    private MerchantProductClassifyDao merchantProductClassifyDao;
-    private MerchantProductMarqueClassifyDao merchantProductMarqueClassifyDao;
-    private MerchantProductFreightDao merchantProductFreightDao;
+    private final MerchantUserDao merchantUserDao;
+    private final MerchantProductDao merchantProductDao;
+    private final MerchantProductImageDao merchantProductImageDao;
+    private final MerchantProductMarqueDao merchantProductMarqueDao;
+    private final MerchantProductDetailsDao merchantProductDetailsDao;
+    private final MerchantUserProductDao merchantUserProductDao;
+    private final MerchantProductClassifyDao merchantProductClassifyDao;
+    private final MerchantProductMarqueClassifyDao merchantProductMarqueClassifyDao;
+    private final MerchantProductFreightDao merchantProductFreightDao;
 
     @Autowired
     public MerchantProductServiceImpl(MerchantProductDao merchantProductDao,

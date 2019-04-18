@@ -10,6 +10,11 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
  * @date 2018/12/17 0017 12:53
  */
 public class MerchantUserSocketService {
+
+    private final SimpMessagingTemplate template;
+
     @Autowired
-    private SimpMessagingTemplate template;
+    public MerchantUserSocketService(SimpMessagingTemplate template) {
+        this.template = template;
+    }
 }

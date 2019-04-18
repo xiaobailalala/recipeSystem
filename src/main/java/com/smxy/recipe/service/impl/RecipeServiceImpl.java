@@ -32,26 +32,27 @@ import java.util.stream.Collectors;
 @Service("recipeService")
 public class RecipeServiceImpl implements RecipeService {
 
-    private TipsDao tipsDao;
-    private ClassifyOneDao classifyOneDao;
-    private RecipeClassifyDao recipeClassifyDao;
-    private RecipeDao recipeDao;
-    private RecipeTipsDao recipeTipsDao;
-    private RecipeMaterialDao recipeMaterialDao;
-    private ProcessDao processDao;
-    private ClassifyTwoDao classifyTwoDao;
-    private ClassifyDao classifyDao;
-    private RabbitTemplate rabbitTemplate;
-    private MaterialDao materialDao;
-    private CollectDao collectDao;
-    private ArticleDao articleDao;
-    private CommonAttentionDao commonAttentionDao;
+    private final TipsDao tipsDao;
+    private final ClassifyOneDao classifyOneDao;
+    private final RecipeClassifyDao recipeClassifyDao;
+    private final RecipeDao recipeDao;
+    private final RecipeTipsDao recipeTipsDao;
+    private final RecipeMaterialDao recipeMaterialDao;
+    private final ProcessDao processDao;
+    private final ClassifyTwoDao classifyTwoDao;
+    private final ClassifyDao classifyDao;
+    private final RabbitTemplate rabbitTemplate;
+    private final MaterialDao materialDao;
+    private final CollectDao collectDao;
+    private final ArticleDao articleDao;
+    private final CommonAttentionDao commonAttentionDao;
+    private final CommonProductDao commonProductDao;
 
     @Autowired
     public RecipeServiceImpl(TipsDao tipsDao, ClassifyOneDao classifyOneDao, RecipeClassifyDao recipeClassifyDao, RecipeDao recipeDao,
-                             RecipeTipsDao recipeTipsDao, RecipeMaterialDao recipeMaterialDao,ProcessDao processDao, ClassifyTwoDao classifyTwoDao,
+                             RecipeTipsDao recipeTipsDao, RecipeMaterialDao recipeMaterialDao, ProcessDao processDao, ClassifyTwoDao classifyTwoDao,
                              ClassifyDao classifyDao, RabbitTemplate rabbitTemplate, MaterialDao materialDao, CollectDao collectDao, ArticleDao articleDao,
-                             CommonAttentionDao commonAttentionDao) {
+                             CommonAttentionDao commonAttentionDao, CommonProductDao commonProductDao) {
         this.tipsDao = tipsDao;
         this.classifyOneDao = classifyOneDao;
         this.recipeClassifyDao = recipeClassifyDao;
@@ -66,6 +67,7 @@ public class RecipeServiceImpl implements RecipeService {
         this.collectDao = collectDao;
         this.articleDao = articleDao;
         this.commonAttentionDao = commonAttentionDao;
+        this.commonProductDao = commonProductDao;
     }
 
     @Override
@@ -128,6 +130,8 @@ public class RecipeServiceImpl implements RecipeService {
         Map<String, Object> map = new HashMap<>(8);
         Recipe recipe = recipeDao.getInfoById(collect.getFRid());
         map.put("item", recipe);
+        map.put("more", this.randomRecipe(recipeDao.getAllInfoBre(), 4));
+        map.put("works", commonProductDao.queryInfoByRid(collect.getFRid()));
         if (collect.getFUid().equals(0)) {
             map.put("isCollect", false);
             map.put("isAttention", false);
@@ -366,16 +370,19 @@ public class RecipeServiceImpl implements RecipeService {
         Map<String, Object> map = new HashMap<>(8);
         List<Recipe> recipeList = recipeDao.getAllInfoBre();
         List<Article> articleList = articleDao.findAllInfo();
+        List<CommonProduct> commonProducts = commonProductDao.queryAll();
+        List<CommonProduct> commonProductList = CommonProductServiceImpl.getNumWorks(commonProducts);
         articleList.forEach(item -> item.setFName(ToolsApi.base64Decode(item.getFName())));
-        map.put("randomRecipe", randomRecipe(recipeList));
+        map.put("randomRecipe", randomRecipe(recipeList, 8));
         map.put("articleList", articleList);
+        map.put("worksList", commonProductList);
         return ResApi.getSuccess(map);
     }
 
     @Override
     public ResApi<Object> randomRecipe() {
         List<Recipe> recipeList = recipeDao.getAllInfoBre();
-        return ResApi.getSuccess(randomRecipe(recipeList));
+        return ResApi.getSuccess(randomRecipe(recipeList, 8));
     }
 
     @Override
@@ -401,8 +408,8 @@ public class RecipeServiceImpl implements RecipeService {
         return ResApi.getSuccess(map);
     }
 
-    private List<Recipe> randomRecipe(List<Recipe> recipeList){
-        int[] index = ToolsApi.randomArray(0, recipeList.size()-1, 8);
+    private List<Recipe> randomRecipe(List<Recipe> recipeList, int num){
+        int[] index = ToolsApi.randomArray(0, recipeList.size()-1, num);
         List<Recipe> recipes = new ArrayList<>();
         assert index != null;
         for (int in : index) {

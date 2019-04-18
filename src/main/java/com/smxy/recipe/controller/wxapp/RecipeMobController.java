@@ -44,9 +44,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathRestController("/mob/recipe")
 public class RecipeMobController {
 
-    @SuppressWarnings("all")
+    private final RecipeService recipeService;
+
     @Autowired
-    private RecipeService recipeService;
+    public RecipeMobController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
 
     @GetMapping("/getDataByClaId")
     public ResApi<Object> getDataByClaId(Integer twoid, Integer threeid){

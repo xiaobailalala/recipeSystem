@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("adminPermissionService")
 public class AdminPermissionServiceImpl implements AdminPermissionService {
 
-    private AdminPermissionDao adminPermissionDao;
+    private final AdminPermissionDao adminPermissionDao;
 
     @Autowired
     public AdminPermissionServiceImpl(AdminPermissionDao adminPermissionDao) {

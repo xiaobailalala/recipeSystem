@@ -38,9 +38,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/vue/recipe")
 public class RecipeVueController {
 
-    @SuppressWarnings("all")
+    private final RecipeService recipeService;
+
     @Autowired
-    private RecipeService recipeService;
+    public RecipeVueController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
 
     @GetMapping("/getRecipeInfoByClaId")
     public ResApi<Object> getRecipeInfoByClaId(Integer twoId, Integer threeId) {

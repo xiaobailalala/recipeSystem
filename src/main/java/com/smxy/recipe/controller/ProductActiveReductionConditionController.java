@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @PathController("/merchant/productActiveReductionCondition")
 public class ProductActiveReductionConditionController {
 
+    private final ProductActiveReductionConditionService productActiveReductionConditionService;
+
     @Autowired
-    ProductActiveReductionConditionService productActiveReductionConditionService;
+    public ProductActiveReductionConditionController(ProductActiveReductionConditionService productActiveReductionConditionService) {
+        this.productActiveReductionConditionService = productActiveReductionConditionService;
+    }
 
     @RequiresPermissions("product:delete")
     @DeleteMapping("/deleteProductActiveReductionConditionById/{id}")

@@ -50,8 +50,8 @@ import java.util.Optional;
 @Service("articleCommentService")
 public class ArticleCommentServiceImpl implements ArticleCommentService {
 
-    private ArticleCommentDao articleCommentDao;
-    private RabbitTemplate rabbitTemplate;
+    private final ArticleCommentDao articleCommentDao;
+    private final RabbitTemplate rabbitTemplate;
 
     @Autowired
     public ArticleCommentServiceImpl(ArticleCommentDao articleCommentDao, RabbitTemplate rabbitTemplate) {

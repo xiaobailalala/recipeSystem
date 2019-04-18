@@ -24,9 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 @PathRestController("/mob/commonUser")
 public class CommonUserMobController {
 
-    @SuppressWarnings("all")
+    private final CommonUserService commonUserService;
+
     @Autowired
-    private CommonUserService commonUserService;
+    public CommonUserMobController(CommonUserService commonUserService) {
+        this.commonUserService = commonUserService;
+    }
 
     /**
      * @param commonUser 用户实体类

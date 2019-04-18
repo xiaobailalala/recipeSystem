@@ -20,8 +20,13 @@ import java.util.Map;
  */
 @PathController("/merchant/productActiveDiscount")
 public class ProductActiveDiscountController {
+
+    private final ProductActiveDiscountService productActiveDiscountService;
+
     @Autowired
-    private ProductActiveDiscountService productActiveDiscountService;
+    public ProductActiveDiscountController(ProductActiveDiscountService productActiveDiscountService) {
+        this.productActiveDiscountService = productActiveDiscountService;
+    }
 
     @GetMapping("/goDiscountAll")
     public String goDiscountAll() {

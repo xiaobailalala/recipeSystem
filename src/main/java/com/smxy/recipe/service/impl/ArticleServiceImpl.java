@@ -51,13 +51,13 @@ import java.util.stream.Collectors;
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 
-    private ArticleDao articleDao;
-    private RabbitTemplate rabbitTemplate;
-    private ArticleGreatDao articleGreatDao;
-    private CollectDao collectDao;
-    private CommonAttentionDao commonAttentionDao;
-    private CommonUserDao commonUserDao;
-    private RecipeDao recipeDao;
+    private final ArticleDao articleDao;
+    private final RabbitTemplate rabbitTemplate;
+    private final ArticleGreatDao articleGreatDao;
+    private final CollectDao collectDao;
+    private final CommonAttentionDao commonAttentionDao;
+    private final CommonUserDao commonUserDao;
+    private final RecipeDao recipeDao;
 
     @Autowired
     public ArticleServiceImpl(ArticleDao articleDao, RabbitTemplate rabbitTemplate, ArticleGreatDao articleGreatDao, CollectDao collectDao, CommonAttentionDao commonAttentionDao,

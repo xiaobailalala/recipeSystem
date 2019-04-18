@@ -44,8 +44,12 @@ import java.util.stream.Collectors;
 @Service("sensorUnusualService")
 public class SensorUnusualServiceImpl implements SensorUnusualService {
 
+    private final SensorUnusualDao sensorUnusualDao;
+
     @Autowired
-    private SensorUnusualDao sensorUnusualDao;
+    public SensorUnusualServiceImpl(SensorUnusualDao sensorUnusualDao) {
+        this.sensorUnusualDao = sensorUnusualDao;
+    }
 
     @Override
     public ResApi<Object> saveInfo(SensorUnusual sensorUnusual) {

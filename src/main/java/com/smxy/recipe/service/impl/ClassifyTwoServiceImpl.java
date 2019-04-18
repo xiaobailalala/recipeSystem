@@ -30,8 +30,8 @@ import java.util.Map;
 @Service("classifyTwoService")
 public class ClassifyTwoServiceImpl implements ClassifyTwoService {
 
-    private ClassifyTwoDao classifyTwoDao;
-    private ClassifyOneDao classifyOneDao;
+    private final ClassifyTwoDao classifyTwoDao;
+    private final ClassifyOneDao classifyOneDao;
 
     @Autowired
     public ClassifyTwoServiceImpl(ClassifyTwoDao classifyTwoDao, ClassifyOneDao classifyOneDao) {

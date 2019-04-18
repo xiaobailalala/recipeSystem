@@ -38,9 +38,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/tips")
 public class TipsMobController {
 
-    @SuppressWarnings("all")
+    private final TipsService tipsService;
+
     @Autowired
-    TipsService tipsService;
+    public TipsMobController(TipsService tipsService) {
+        this.tipsService = tipsService;
+    }
 
     @GetMapping("/getInfoRandom")
     public ResApi<Object> getInfoRandom(){

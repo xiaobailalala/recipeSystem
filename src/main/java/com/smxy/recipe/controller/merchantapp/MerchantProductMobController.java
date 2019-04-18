@@ -18,9 +18,13 @@ import java.util.Map;
  */
 @PathRestController("/merchantMob/merchantProductMob")
 public class MerchantProductMobController {
-    @SuppressWarnings("all")
+
+    private final MerchantProductService merchantProductService;
+
     @Autowired
-    private MerchantProductService merchantProductService;
+    public MerchantProductMobController(MerchantProductService merchantProductService) {
+        this.merchantProductService = merchantProductService;
+    }
 
     @GetMapping("/getAllProduct")
     public ResApi<Object> getAllProduct(){

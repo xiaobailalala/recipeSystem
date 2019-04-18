@@ -38,9 +38,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/marqueClassify")
 public class MarqueClassifyMobController {
 
-    @SuppressWarnings("all")
+    private final MerchantProductClassifyService merchantProductClassifyService;
+
     @Autowired
-    private MerchantProductClassifyService merchantProductClassifyService;
+    public MarqueClassifyMobController(MerchantProductClassifyService merchantProductClassifyService) {
+        this.merchantProductClassifyService = merchantProductClassifyService;
+    }
 
     @GetMapping("/productClassifyList")
     public ResApi<Object> productClassifyList() {

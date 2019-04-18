@@ -50,9 +50,9 @@ import java.util.List;
 @Service("commonChatService")
 public class CommonChatServiceImpl implements CommonChatService {
 
-    private CommonChatDao commonChatDao;
-    private RabbitTemplate rabbitTemplate;
-    private CommonChatUnreadDao commonChatUnreadDao;
+    private final CommonChatDao commonChatDao;
+    private final RabbitTemplate rabbitTemplate;
+    private final CommonChatUnreadDao commonChatUnreadDao;
 
     @Autowired
     public CommonChatServiceImpl(CommonChatDao commonChatDao, RabbitTemplate rabbitTemplate, CommonChatUnreadDao commonChatUnreadDao) {

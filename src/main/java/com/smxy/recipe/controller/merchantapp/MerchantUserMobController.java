@@ -28,9 +28,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 @PathRestController("/merchantMob/merchantUserMob")
 public class MerchantUserMobController {
-    @SuppressWarnings("all")
+
+    private final MerchantUserService merchantUserService;
+
     @Autowired
-    private MerchantUserService merchantUserService;
+    public MerchantUserMobController(MerchantUserService merchantUserService) {
+        this.merchantUserService = merchantUserService;
+    }
 
     @PostMapping("/mobUserLogin")
     public ResApi<Object> mobUserLogin(MerchantUser merchantUser, HttpServletRequest request) {

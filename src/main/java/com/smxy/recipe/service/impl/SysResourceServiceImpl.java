@@ -46,8 +46,12 @@ import java.util.Map;
 @Service("sysResourceService")
 public class SysResourceServiceImpl implements SysResourceService {
 
+    private final SysResourceDao sysResourceDao;
+
     @Autowired
-    SysResourceDao sysResourceDao;
+    public SysResourceServiceImpl(SysResourceDao sysResourceDao) {
+        this.sysResourceDao = sysResourceDao;
+    }
 
     @Override
     public ResApi<Object> getInfoAll() {
