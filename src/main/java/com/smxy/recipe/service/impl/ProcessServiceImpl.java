@@ -34,6 +34,7 @@ import com.smxy.recipe.entity.Process;
 import com.smxy.recipe.service.ProcessService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.api.BaiduTtsApi;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,8 +55,14 @@ public class ProcessServiceImpl implements ProcessService {
         ResApi<Object> resApi = new ResApi<>(500, "系统出错", "error");
         Process infoByFid = processDao.getInfoByFid(fId);
         if (infoByFid.getFVoice().equals("0") ) {
-            String filePath = BaiduTtsApi.sendVoiceData(infoByFid.getFContent());
-            String request = BaiduTtsApi.sendVoiceData("该步骤的执行时长为" + infoByFid.getFRequest() + "秒");
+            String filePath = null;
+            String request = null;
+            try {
+                filePath = BaiduTtsApi.sendVoiceData(infoByFid.getFContent());
+                request = BaiduTtsApi.sendVoiceData("该步骤的执行时长为" + infoByFid.getFRequest() + "秒");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             if (filePath != null && request != null) {
                 infoByFid.setFVoice(filePath);
                 infoByFid.setFReqVoice(request);
