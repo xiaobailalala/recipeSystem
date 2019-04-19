@@ -14,33 +14,35 @@
         WHERE f_id = #{orderId};
     </update>
 
-    <select id="getOrderByTypeAndId" resultMap="getOrderInfo">
+    <select id="getOrderByTypeAndId" resultMap="getOrderMarqueInfo">
         SELECT *
         FROM t_merchant_order
         WHERE f_meruser_id = #{userId}
           AND f_type = #{fType};
     </select>
 
-    <select id="getOrderById" resultMap="getOrderInfo">
+    <select id="getOrderById" resultMap="getOrderMarqueInfo">
         SELECT *
         FROM t_merchant_order
         WHERE f_id = #{orderId};
     </select>
 
-    <resultMap id="getOrderInfo" type="com.smxy.recipe.entity.MerchantOrder">
+    <resultMap id="getOrderMarqueInfo" type="com.smxy.recipe.entity.MerchantOrder">
         <result property="fId" column="f_id"/>
-        <result property="fProductId" column="f_product_id"/>
+        <result property="fMarqueId" column="f_marque_id"/>
+        <association property="merchantProductMarque" column="f_marque_id"
+                     select="com.smxy.recipe.dao.MerchantProductMarqueDao.getMarqueById"/>
         <association property="merchantProduct" column="f_product_id"
                      select="com.smxy.recipe.dao.MerchantProductDao.getProductById"/>
     </resultMap>
 
-    <select id="getOrderByUserId" resultMap="getOrderInfo">
+    <select id="getOrderByUserId" resultMap="getOrderMarqueInfo">
         SELECT *
         FROM t_merchant_order
         WHERE f_meruser_id = #{userId};
     </select>
 
-    <select id="getOrderByUserIdAndStateAndType" resultMap="getOrderInfo">
+    <select id="getOrderByUserIdAndStateAndType" resultMap="getOrderMarqueInfo">
         SELECT *
         FROM t_merchant_order
         WHERE f_meruser_id = #{userId}
@@ -48,7 +50,7 @@
           AND f_type = #{fType};
     </select>
 
-    <select id="getOrderByStateAndId" resultMap="getOrderInfo">
+    <select id="getOrderByStateAndId" resultMap="getOrderMarqueInfo">
         SELECT *
         FROM t_merchant_order
         WHERE f_state = #{fState}

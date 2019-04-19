@@ -12,6 +12,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -53,6 +55,8 @@ public class MerchantUserServiceImpl implements MerchantUserService {
         this.commonUserDao = commonUserDao;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(MerchantUserServiceImpl.class);
+
     @Override
     public ResApi<String> userLogin(MerchantUser merchantUser, HttpServletRequest request) {
         ResApi<String> resApi = new ResApi<>(500, "系统出错", "error");
@@ -91,7 +95,7 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             map.put("fCover", filename);
             map.put("fId", fId);
             int result = merchantUserDao.updateUserCoverById(map);
-            if (result > 0){
+            if (result > 0) {
                 subject.getSession().setAttribute("merUser", merchantUserDao.getMerchantUserById(fId));
                 return ResApi.getSuccess();
             } else {
@@ -287,4 +291,92 @@ public class MerchantUserServiceImpl implements MerchantUserService {
                 setFState(1).setFUser(merchantChat.getFUser() == 0 ? 1 : 0).setFUid(merchantChat.getFOid()).
                 setFOid(merchantChat.getFUid()));
     }
+
+    @Override
+    public ResApi<String> forgetPassword(String account, String password) {
+        MerchantUser userByAccount = merchantUserDao.getMerchantUserByAccount(account);
+        Map<String, Object> map = new HashMap<>(8);
+        if (userByAccount == null) {
+            return ResApi.getError(500, "没有此用户,请确认手机号无误");
+        }
+        String newPassword = ToolsApi.entryptBySaltMd5(password, userByAccount.getFAccount());
+        map.put("fPassword", newPassword);
+        map.put("fId", userByAccount.getFId());
+        Integer result = merchantUserDao.updateMerchantUserPasswordById(map);
+        if (result > 0) {
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+    }
+
+    @Override
+    public ResApi<String> editorShopName(Integer userId, String shopName) {
+        MerchantUser merchantUserById = merchantUserDao.getMerchantUserById(userId);
+        if (merchantUserById == null) {
+            logger.error("没有查到用户信息！");
+            return ResApi.getError();
+        }
+        merchantUserById.setFShopname(shopName);
+        Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
+        if (result > 0) {
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+    }
+
+    @Override
+    public ResApi<String> editorShopSign(Integer userId, String shopSign) {
+        MerchantUser merchantUserById = merchantUserDao.getMerchantUserById(userId);
+        if (merchantUserById == null) {
+            logger.error("没有查到用户信息！");
+            return ResApi.getError();
+        }
+        merchantUserById.setFSignature(shopSign);
+        Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
+        if (result > 0) {
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+    }
+
+    @Override
+    public ResApi<String> editorShopAddress(Integer userId, String shopAddress) {
+        String[] address = shopAddress.split("-", -1);
+        MerchantUser merchantUserById = merchantUserDao.getMerchantUserById(userId);
+        if (merchantUserById == null) {
+            logger.error("没有查到用户信息！");
+            return ResApi.getError();
+        }
+        merchantUserById.setFProvince("".equals(address[0]) ? "" : address[0]);
+        merchantUserById.setFCity("".equals(address[1]) ? "" : address[1]);
+        merchantUserById.setFArea("".equals(address[2]) ? "" : address[2]);
+        merchantUserById.setFStreet("".equals(address[3]) ? "" : address[3]);
+        Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
+        if (result > 0) {
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+    }
+
+    @Override
+    public ResApi<String> editorUserBirthday(Integer userId, String birthday) {
+        MerchantUser merchantUserById = merchantUserDao.getMerchantUserById(userId);
+        if (merchantUserById == null) {
+            logger.error("没有查到用户信息！");
+            return ResApi.getError();
+        }
+        merchantUserById.setFBirth(birthday);
+        Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
+        if (result > 0) {
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+    }
+
+
 }

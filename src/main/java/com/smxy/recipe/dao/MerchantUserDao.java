@@ -89,7 +89,7 @@ public interface MerchantUserDao {
      * @auther yangyihui
      * @date 2018/11/19 0019 20:28
      */
-    Integer updateMerchantUser(MerchantUser merchantUser);
+    Integer updateMerchantUserCoverAndShopName(MerchantUser merchantUser);
 
     /**
      * 功能描述: 根据商家ID更改商家头像
@@ -117,5 +117,14 @@ public interface MerchantUserDao {
      * @date : 2018/12/14 0014 16:31
      */
     Integer updateMerchantUserPasswordById(Map<String, Object> map);
+
+    /**
+     * 功能描述: 根据手机号查找用户
+     * @param account 1
+     * @return : com.smxy.recipe.entity.MerchantUser
+     * @author : yangyihui
+     * @date : 2019/4/15 14:53
+     */
+    MerchantUser getMerchantUserByAccount(String account);
 
 }

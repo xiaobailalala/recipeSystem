@@ -35,6 +35,7 @@ import com.smxy.recipe.service.AiMarkService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
 import com.smxy.recipe.utils.api.BaiduTtsApi;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +64,11 @@ public class AiMarkServiceImpl implements AiMarkService {
         if (aiMarkDao.getInfoByMark(aiMark) != null) {
             return ResApi.getError(501, "该代号已存在，请勿重复添加");
         } else {
-            aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
+            try {
+                aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             if (aiMarkDao.saveInfo(aiMark)>0){
                 return ResApi.getSuccess();
             }
@@ -88,7 +93,12 @@ public class AiMarkServiceImpl implements AiMarkService {
     public ResApi<String> updateInfo(Integer id, AiMark aiMark) {
         aiMark.setFId(id);
         ToolsApi.multipartFileDeleteFile(aiMark.getFVoice());
-        aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
+        try {
+            aiMark.setFVoice(BaiduTtsApi.sendVoiceData(aiMark.getFContent()));
+        } catch (JSONException e) {
+
+
+        }
         if (aiMarkDao.updateInfoById(aiMark)>0){
             return ResApi.getSuccess();
         }

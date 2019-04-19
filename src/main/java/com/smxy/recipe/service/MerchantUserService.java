@@ -31,6 +31,7 @@ public interface MerchantUserService {
      * 功能描述: 根据商家ID更改商家头像
      * @param editorImage 头像文件
      * @param fId 商家ID
+     * @param request
      * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
      * @author : yangyihui
      * @date : 2018/12/14 0014 13:37
@@ -97,6 +98,13 @@ public interface MerchantUserService {
      */
     ResApi<String> editorUserPassword(String fPassword, String oldPassword, Integer fId);
 
+    /**
+     * 功能描述: 根据userId 获取主页数据
+     * @param userId 1
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/15 14:46
+     */
     ResApi<String> getIndexData(Integer userId);
 
     ResApi<String> toMerchantSwitch(MultipartFile file, MerchantChat merchantChat);
@@ -104,4 +112,55 @@ public interface MerchantUserService {
     ResApi<Object> getMerchantChatMessage(MerchantChat merchantChat);
 
     ResApi<String> changeChatRead(MerchantChat merchantChat);
+
+    /**
+     * 功能描述: 忘记密码
+     * @param account 1
+     * @param password 2
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/15 14:49
+     */
+    ResApi<String> forgetPassword(String account, String password);
+
+    /**
+     * 功能描述: 更新店铺名
+     * @param shopName 1
+     * @param userId
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/15 15:59
+     */
+    ResApi<String> editorShopName(Integer userId, String shopName);
+
+    /**
+     * 功能描述: 更新店铺名
+     * @param shopSign 1
+     * @param userId
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/15 15:59
+     */
+    ResApi<String> editorShopSign(Integer userId, String shopSign);
+
+    /**
+     * 功能描述: 更新店铺名
+     * @param shopAddress 1
+     * @param userId
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/15 15:59
+     */
+    ResApi<String> editorShopAddress(Integer userId, String shopAddress);
+
+    /**
+     * 功能描述: 更新店铺名
+     * @param shopAddress 1
+     * @param userId
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/15 15:59
+     */
+    ResApi<String> editorUserBirthday(Integer userId, String shopAddress);
+
 }
