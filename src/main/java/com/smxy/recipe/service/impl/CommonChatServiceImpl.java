@@ -29,10 +29,11 @@
  */
 package com.smxy.recipe.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.dao.CommonChatDao;
 import com.smxy.recipe.dao.CommonChatUnreadDao;
+import com.smxy.recipe.dao.CommonLinkmanDao;
 import com.smxy.recipe.entity.CommonChat;
+import com.smxy.recipe.entity.CommonLinkman;
 import com.smxy.recipe.service.CommonChatService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
@@ -53,13 +54,15 @@ public class CommonChatServiceImpl implements CommonChatService {
     private final RabbitTemplate rabbitTemplate;
     private final CommonChatUnreadDao commonChatUnreadDao;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final CommonLinkmanDao commonLinkmanDao;
 
     @Autowired
-    public CommonChatServiceImpl(CommonChatDao commonChatDao, RabbitTemplate rabbitTemplate, CommonChatUnreadDao commonChatUnreadDao, SimpMessagingTemplate simpMessagingTemplate) {
+    public CommonChatServiceImpl(CommonChatDao commonChatDao, RabbitTemplate rabbitTemplate, CommonChatUnreadDao commonChatUnreadDao, SimpMessagingTemplate simpMessagingTemplate, CommonLinkmanDao commonLinkmanDao) {
         this.commonChatDao = commonChatDao;
         this.rabbitTemplate = rabbitTemplate;
         this.commonChatUnreadDao = commonChatUnreadDao;
         this.simpMessagingTemplate = simpMessagingTemplate;
+        this.commonLinkmanDao = commonLinkmanDao;
     }
 
     @Override
@@ -70,6 +73,16 @@ public class CommonChatServiceImpl implements CommonChatService {
             commonChat.setFUrl(ToolsApi.multipartFileUploadFile(file, null));
         }
         commonChatDao.saveInfo(commonChat);
+        String[] timeArr = commonChat.getFRelease().split(" ");
+        CommonLinkman commonLinkman = new CommonLinkman().setFUid(commonChat.getFUid()).
+                setFOid(commonChat.getFOid()).setFLastMsg(commonChat.getFType() == 0 ? commonChat.getFContent() :
+                (commonChat.getFType() == 1 ? ToolsApi.base64Encode("[语音]") : ToolsApi.base64Encode("[图片]"))).
+                setFLastTime(timeArr[1]).setFLastDate(timeArr[0]).setFLastDatetime(System.currentTimeMillis()+"");
+        if (commonLinkmanDao.queryJudgeExist(commonChat.getFUid(), commonChat.getFOid()) != null) {
+            commonLinkmanDao.updateInfo(commonLinkman);
+        } else {
+            commonLinkmanDao.insertInfo(commonLinkman);
+        }
         simpMessagingTemplate.convertAndSend("/chat/userMsg/" + commonChat.getFOid(), commonChat.setFContent(ToolsApi.base64Decode(commonChat.getFContent())));
         return ResApi.getSuccess(commonChat);
     }

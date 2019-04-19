@@ -23,25 +23,17 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/17 11:11
+ * Build File @date: 2019/4/19 19:21
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.dao;
+package com.smxy.recipe.service;
 
-import com.smxy.recipe.entity.CommonChat;
-import org.apache.ibatis.annotations.Param;
+import com.smxy.recipe.entity.CommonLinkman;
+import com.smxy.recipe.utils.ResApi;
 
-import java.util.List;
+public interface CommonLinkmanService {
 
-public interface CommonChatDao {
-
-    Integer saveInfo(CommonChat commonChat);
-
-    List<CommonChat> findInfoByUidAndOid(@Param("fUid") Integer uid, @Param("fOid") Integer oid);
-
-    Integer changeChatReadState(@Param("uid") Integer uid, @Param("oid") Integer oid, @Param("state") Integer state);
-
-    Integer queryUnreadCount(@Param("uid") Integer uid, @Param("oid") Integer roid);
+    ResApi<Object> linkmanList(CommonLinkman commonLinkman);
 
 }

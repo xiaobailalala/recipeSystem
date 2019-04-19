@@ -16,4 +16,8 @@
         UPDATE t_common_chat SET f_state=#{state} WHERE f_uid=#{oid} AND f_oid=#{uid};
     </update>
 
+    <select id="queryUnreadCount" resultType="integer">
+        SELECT COUNT(*) FROM t_common_chat WHERE f_uid=#{oid} AND f_oid=#{uid} AND f_state=0;
+    </select>
+
 </mapper>
