@@ -24,9 +24,12 @@ import javax.servlet.http.HttpServletRequest;
 @PathController("/merchant/merchantUser")
 public class MerchantUserController {
 
-    @SuppressWarnings("all")
+    private final MerchantUserService merchantUserService;
+
     @Autowired
-    private MerchantUserService merchantUserService;
+    public MerchantUserController(MerchantUserService merchantUserService) {
+        this.merchantUserService = merchantUserService;
+    }
 
     @RequiresRoles("merchant")
     @GetMapping("/index")

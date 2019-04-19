@@ -36,10 +36,10 @@ import java.util.*;
 @Service("adminUserService")
 public class AdminUserServiceImpl implements AdminUserService {
 
-    private AdminUserDao adminUserDao;
-    private ToolsApi toolsApi;
-    private AdminRoleDao adminRoleDao;
-    private AdminUserRoleDao adminUserRoleDao;
+    private final AdminUserDao adminUserDao;
+    private final ToolsApi toolsApi;
+    private final AdminRoleDao adminRoleDao;
+    private final AdminUserRoleDao adminUserRoleDao;
 
     @Autowired
     public AdminUserServiceImpl(AdminUserDao adminUserDao, ToolsApi toolsApi, AdminRoleDao adminRoleDao, AdminUserRoleDao adminUserRoleDao) {

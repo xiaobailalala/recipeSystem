@@ -47,8 +47,8 @@ import java.util.List;
 @Service("sysNotificationService")
 public class SysNotificationServiceImpl implements SysNotificationService {
 
-    private SysNotificationDao sysNotificationDao;
-    private RabbitTemplate rabbitTemplate;
+    private final SysNotificationDao sysNotificationDao;
+    private final RabbitTemplate rabbitTemplate;
 
     @Autowired
     public SysNotificationServiceImpl(SysNotificationDao sysNotificationDao, RabbitTemplate rabbitTemplate) {

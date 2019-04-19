@@ -41,9 +41,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathRestController("/mob/commonChat")
 public class CommonChatMobController {
 
-    @SuppressWarnings("all")
+    private final CommonChatService commonChatService;
+
     @Autowired
-    private CommonChatService commonChatService;
+    public CommonChatMobController(CommonChatService commonChatService) {
+        this.commonChatService = commonChatService;
+    }
 
     @PostMapping("/chatSaveMessage")
     public ResApi<String> chatSaveMessage(@RequestParam(value = "file", required = false) MultipartFile file,

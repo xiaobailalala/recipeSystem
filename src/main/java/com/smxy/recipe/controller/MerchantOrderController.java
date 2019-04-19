@@ -18,8 +18,12 @@ import java.util.List;
 @PathController("/merchant/merchantOrder")
 public class MerchantOrderController {
 
+    private final MerchantOrderService merchantOrderService;
+
     @Autowired
-    private MerchantOrderService merchantOrderService;
+    public MerchantOrderController(MerchantOrderService merchantOrderService) {
+        this.merchantOrderService = merchantOrderService;
+    }
 
     @ResponseBody
     @PostMapping("/save")

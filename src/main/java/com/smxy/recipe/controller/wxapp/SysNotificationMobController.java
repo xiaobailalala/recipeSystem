@@ -39,9 +39,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @PathRestController("/mob/sysNotification")
 public class SysNotificationMobController {
 
-    @SuppressWarnings("all")
+    private final SysNotificationService sysNotificationService;
+
     @Autowired
-    private SysNotificationService sysNotificationService;
+    public SysNotificationMobController(SysNotificationService sysNotificationService) {
+        this.sysNotificationService = sysNotificationService;
+    }
 
     @PostMapping("/showMessage")
     public ResApi<Object> showMessage(Integer uid) {

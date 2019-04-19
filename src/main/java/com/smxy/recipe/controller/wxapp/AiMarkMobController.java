@@ -46,13 +46,16 @@ public class AiMarkMobController {
 
     private static final String ADMIN_LOGIN_TYPE = LoginType.MERCHANT.toString();
 
-    @SuppressWarnings("all")
+    private final AiMarkService aiMarkService;
+
     @Autowired
-    private AiMarkService aiMarkService;
+    public AiMarkMobController(AiMarkService aiMarkService) {
+        this.aiMarkService = aiMarkService;
+    }
 
     @GetMapping("/getVoiceForWXReady")
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark, String cookTipMark){
-        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark, distanceMark, cookTipMark);
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark, String cookTipMark, String openSensorMark){
+        return aiMarkService.getVoiceForWXReady(readyMark, fireMark, smogMark, distanceMark, cookTipMark, openSensorMark);
     }
 
     @PostMapping("/test")

@@ -37,8 +37,12 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class CommonUserSocket {
 
+    private final CommonUserSocketService commonUserSocketService;
+
     @Autowired
-    private CommonUserSocketService commonUserSocketService;
+    public CommonUserSocket(CommonUserSocketService commonUserSocketService) {
+        this.commonUserSocketService = commonUserSocketService;
+    }
 
     @Scheduled(fixedRate = 1000)
     public void sendFireNumber() {

@@ -50,9 +50,9 @@ public class CommonUserServiceImpl implements CommonUserService {
 
     private static final String COMMON_LOGIN_TYPE = LoginType.COMMON.toString();
 
-    private CommonUserDao commonUserDao;
-    private CollectDao collectDao;
-    private CommonAttentionDao commonAttentionDao;
+    private final CommonUserDao commonUserDao;
+    private final CollectDao collectDao;
+    private final CommonAttentionDao commonAttentionDao;
 
     @Autowired
     public CommonUserServiceImpl(CommonUserDao commonUserDao, CollectDao collectDao, CommonAttentionDao commonAttentionDao) {

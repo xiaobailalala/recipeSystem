@@ -20,8 +20,13 @@ import java.util.List;
  */
 @PathRestController("/merchantMob/merchantOrderMob")
 public class MerchantOrderMobController {
+
+    private final MerchantOrderService merchantOrderService;
+
     @Autowired
-    private MerchantOrderService merchantOrderService;
+    public MerchantOrderMobController(MerchantOrderService merchantOrderService) {
+        this.merchantOrderService = merchantOrderService;
+    }
 
     @PostMapping("/save")
     public ResApi<String> save(MerchantOrder merchantOrder) {

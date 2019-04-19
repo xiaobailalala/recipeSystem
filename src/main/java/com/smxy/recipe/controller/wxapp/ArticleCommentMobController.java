@@ -42,9 +42,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathRestController("/mob/articleComment")
 public class ArticleCommentMobController {
 
-    @SuppressWarnings("all")
+    private final ArticleCommentService articleCommentService;
+
     @Autowired
-    private ArticleCommentService articleCommentService;
+    public ArticleCommentMobController(ArticleCommentService articleCommentService) {
+        this.articleCommentService = articleCommentService;
+    }
 
     @GetMapping("/getInfoByRid")
     public ResApi<Object> getInfoByRid(Integer rid, Integer uid){

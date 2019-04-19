@@ -22,9 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathController("/manage/claTwo")
 public class ClassifyTwoController {
 
-    @SuppressWarnings("all")
+    private final ClassifyTwoService classifyTwoService;
+
     @Autowired
-    private ClassifyTwoService classifyTwoService;
+    public ClassifyTwoController(ClassifyTwoService classifyTwoService) {
+        this.classifyTwoService = classifyTwoService;
+    }
 
     @RequiresPermissions("recipeClassify:select")
     @GetMapping("/info")

@@ -21,9 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/claOne")
 public class ClassifyOneController {
 
-    @SuppressWarnings("all")
+    private final ClassifyOneService classifyOneService;
+
     @Autowired
-    private ClassifyOneService classifyOneService;
+    public ClassifyOneController(ClassifyOneService classifyOneService) {
+        this.classifyOneService = classifyOneService;
+    }
 
     @RequiresPermissions("recipeClassify:select")
     @ResponseBody

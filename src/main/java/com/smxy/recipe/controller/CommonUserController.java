@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @PathController("/manage/commonUser")
 public class CommonUserController {
 
-    @SuppressWarnings("all")
+    private final CommonUserService commonUserService;
+
     @Autowired
-    private CommonUserService commonUserService;
+    public CommonUserController(CommonUserService commonUserService) {
+        this.commonUserService = commonUserService;
+    }
 
     @RequiresPermissions("commonUser:select")
     @GetMapping("/info")

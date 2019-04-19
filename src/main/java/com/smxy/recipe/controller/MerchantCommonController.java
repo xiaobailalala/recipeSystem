@@ -26,17 +26,17 @@ import java.util.Map;
 
 @PathController("/merchantCommon")
 public class MerchantCommonController {
-    @SuppressWarnings("all")
-    @Autowired
-    private ProductFreightService productFreightService;
 
-    @SuppressWarnings("all")
-    @Autowired
-    MerchantProductClassifyService merchantProductClassifyService;
+    private final ProductFreightService productFreightService;
+    private final MerchantProductClassifyService merchantProductClassifyService;
+    private final ProductMarqueClassifyService productMarqueClassifyService;
 
-    @SuppressWarnings("all")
     @Autowired
-    private ProductMarqueClassifyService productMarqueClassifyService;
+    public MerchantCommonController(ProductFreightService productFreightService, MerchantProductClassifyService merchantProductClassifyService, ProductMarqueClassifyService productMarqueClassifyService) {
+        this.productFreightService = productFreightService;
+        this.merchantProductClassifyService = merchantProductClassifyService;
+        this.productMarqueClassifyService = productMarqueClassifyService;
+    }
 
     @GetMapping("/login")
     public String goLogin() {

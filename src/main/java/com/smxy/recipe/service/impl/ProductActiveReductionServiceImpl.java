@@ -27,14 +27,17 @@ import java.util.Map;
  */
 @Service("productActiveReductionService")
 public class ProductActiveReductionServiceImpl implements ProductActiveReductionService {
-    @Autowired
-    private ProductActiveReductionDao productActiveReductionDao;
+
+    private final ProductActiveReductionDao productActiveReductionDao;
+    private final ProductActiveReductionConditionDao productActiveReductionConditionDao;
+    private final MerchantProductDao merchantProductDao;
 
     @Autowired
-    private ProductActiveReductionConditionDao productActiveReductionConditionDao;
-
-    @Autowired
-    private MerchantProductDao merchantProductDao;
+    public ProductActiveReductionServiceImpl(ProductActiveReductionDao productActiveReductionDao, ProductActiveReductionConditionDao productActiveReductionConditionDao, MerchantProductDao merchantProductDao) {
+        this.productActiveReductionDao = productActiveReductionDao;
+        this.productActiveReductionConditionDao = productActiveReductionConditionDao;
+        this.merchantProductDao = merchantProductDao;
+    }
 
     @Override
     public ResApi<String> insertProductActiveReduction(ProductActiveReduction productActiveReduction, Double[] fullMoney, Double[] reduceMoney, Integer fPid, Integer fMid) {

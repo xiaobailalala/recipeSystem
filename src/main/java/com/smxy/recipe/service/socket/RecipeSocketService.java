@@ -47,10 +47,14 @@ import java.util.List;
 @Service("recipeSocketService")
 public class RecipeSocketService {
 
+    private final SimpMessagingTemplate template;
+    private final RabbitTemplate rabbitTemplate;
+
     @Autowired
-    private SimpMessagingTemplate template;
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    public RecipeSocketService(SimpMessagingTemplate template, RabbitTemplate rabbitTemplate) {
+        this.template = template;
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public void getSensorFireData() {
         List<Dht11Data> dht11DataList = SensorDataApi.dht11List;

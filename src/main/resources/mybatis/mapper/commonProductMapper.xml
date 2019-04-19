@@ -3,8 +3,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.CommonProductDao">
 
-    <!--<insert id="saveInfo" parameterType="CommonProduct">-->
-        <!--INSERT INTO t_common_product (f_cover, f_uid) -->
-    <!--</insert>-->
+    <insert id="saveInfo" parameterType="CommonProduct">
+        INSERT INTO t_common_product (f_cover, f_uid, f_rid, f_content, f_type, f_release)
+        VALUES (#{fCover}, #{fUid}, #{fRid}, #{fContent}, #{fType}, #{fRelease})
+    </insert>
+
+    <select id="queryInfoByRid" parameterType="integer" resultMap="queryInfoByRidResultMap">
+        SELECT * FROM t_common_product WHERE f_rid=#{fRid};
+    </select>
+
+    <select id="queryAll" resultMap="queryInfoByRidResultMap">
+        SELECT * FROM t_common_product;
+    </select>
+
+    <select id="queryInfoById" parameterType="integer" resultMap="queryInfoByRidResultMap">
+        SELECT * FROM t_common_product WHERE f_id=#{fId};
+    </select>
+
+    <update id="updateCount" parameterType="CommonProduct">
+        UPDATE t_common_product SET f_count=#{fCount} WHERE f_id=#{fId};
+    </update>
+    
+    <resultMap id="queryInfoByRidResultMap" type="CommonProduct">
+        <result property="fUid" column="f_uid"/>
+        <result property="fRid" column="f_rid"/>
+        <association property="commonUser" column="f_uid"
+                     select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+        <association property="recipe" column="f_rid"
+                     select="com.smxy.recipe.dao.RecipeDao.getInfoByIdBrief">
+        </association>
+    </resultMap>
 
 </mapper>

@@ -25,9 +25,12 @@ import java.util.List;
 @Service("tipsService")
 public class TipsServiceImpl implements TipsService {
 
-    @SuppressWarnings("all")
+    private final TipsDao tipsDao;
+
     @Autowired
-    private TipsDao tipsDao;
+    public TipsServiceImpl(TipsDao tipsDao) {
+        this.tipsDao = tipsDao;
+    }
 
     @Override
     public ResApi<Object> getAllInfo() {

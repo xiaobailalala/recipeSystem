@@ -42,9 +42,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathController("/manage/sysNotification")
 public class SysNotificationController {
 
-    @SuppressWarnings("all")
+    private final SysNotificationService sysNotificationService;
+
     @Autowired
-    private SysNotificationService sysNotificationService;
+    public SysNotificationController(SysNotificationService sysNotificationService) {
+        this.sysNotificationService = sysNotificationService;
+    }
 
     @ResponseBody
     @PostMapping("/getNotificationMessage")

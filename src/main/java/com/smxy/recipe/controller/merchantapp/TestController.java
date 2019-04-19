@@ -25,10 +25,15 @@ import java.util.Map;
  */
 @PathRestController("/merchantMob/testController")
 public class TestController {
+
+    private final MerchantProductDao merchantProductDao;
+    private final MerchantProductService merchantProductService;
+
     @Autowired
-    MerchantProductDao merchantProductDao;
-    @Autowired
-    MerchantProductService merchantProductService;
+    public TestController(MerchantProductDao merchantProductDao, MerchantProductService merchantProductService) {
+        this.merchantProductDao = merchantProductDao;
+        this.merchantProductService = merchantProductService;
+    }
 
     @PostMapping("/hello")
     @ResponseBody

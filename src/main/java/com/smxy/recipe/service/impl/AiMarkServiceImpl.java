@@ -46,7 +46,7 @@ import java.util.List;
 @Service("aiMarkService")
 public class AiMarkServiceImpl implements AiMarkService {
 
-    private AiMarkDao aiMarkDao;
+    private final AiMarkDao aiMarkDao;
 
     @Autowired
     public AiMarkServiceImpl(AiMarkDao aiMarkDao) {
@@ -96,13 +96,14 @@ public class AiMarkServiceImpl implements AiMarkService {
     }
 
     @Override
-    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark, String cookTipMark) {
+    public ResApi<Object> getVoiceForWXReady(String readyMark, String fireMark, String smogMark, String distanceMark, String cookTipMark, String openSensorMark) {
         List<String> strings = new ArrayList<>();
         strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(readyMark)).getFVoice());
         strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(fireMark)).getFVoice());
         strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(smogMark)).getFVoice());
         strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(distanceMark)).getFVoice());
         strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(cookTipMark)).getFVoice());
+        strings.add(aiMarkDao.getInfoByMark(new AiMark().setFMark(openSensorMark)).getFVoice());
         return ResApi.getSuccess(strings);
     }
 }

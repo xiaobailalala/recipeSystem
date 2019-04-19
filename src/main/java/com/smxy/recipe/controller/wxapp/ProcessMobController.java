@@ -30,7 +30,6 @@
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
-import com.smxy.recipe.entity.Process;
 import com.smxy.recipe.service.ProcessService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +38,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @PathRestController("/mob/process")
 public class ProcessMobController {
 
-    @SuppressWarnings("all")
+    private final ProcessService processService;
+
     @Autowired
-    private ProcessService processService;
+    public ProcessMobController(ProcessService processService) {
+        this.processService = processService;
+    }
 
     @GetMapping("/produceVoice")
     public ResApi<Object> produceVoice(Integer fId){

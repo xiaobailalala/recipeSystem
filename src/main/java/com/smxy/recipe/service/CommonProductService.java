@@ -34,4 +34,8 @@ import com.smxy.recipe.utils.ResApi;
 
 public interface CommonProductService {
     ResApi<String> saveInfo(CommonProduct commonProduct);
+
+    ResApi<Object> productIndex(Integer aid, Integer uid);
+
+    ResApi<Object> randomWorks();
 }

@@ -22,9 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 @PathController("/manage/material")
 public class MaterialController {
 
-    @SuppressWarnings("all")
+    private final MaterialService materialService;
+
     @Autowired
-    private MaterialService materialService;
+    public MaterialController(MaterialService materialService) {
+        this.materialService = materialService;
+    }
 
     @RequiresPermissions("material:insert")
     @ResponseBody

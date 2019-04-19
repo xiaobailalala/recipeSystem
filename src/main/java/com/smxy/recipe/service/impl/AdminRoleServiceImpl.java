@@ -30,9 +30,9 @@ import java.util.Map;
 @Service("adminRoleService")
 public class AdminRoleServiceImpl implements AdminRoleService {
 
-    private AdminRoleDao adminRoleDao;
-    private AdminRolePermissionDao adminRolePermissionDao;
-    private AdminPermissionDao adminPermissionDao;
+    private final AdminRoleDao adminRoleDao;
+    private final AdminRolePermissionDao adminRolePermissionDao;
+    private final AdminPermissionDao adminPermissionDao;
 
     @Autowired
     public AdminRoleServiceImpl(AdminRoleDao adminRoleDao, AdminRolePermissionDao adminRolePermissionDao, AdminPermissionDao adminPermissionDao) {

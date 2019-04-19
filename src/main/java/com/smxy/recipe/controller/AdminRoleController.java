@@ -21,9 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @PathController("/manage/adminRole")
 public class AdminRoleController {
 
-    @SuppressWarnings("all")
+    private final AdminRoleService adminRoleService;
+
     @Autowired
-    private AdminRoleService adminRoleService;
+    public AdminRoleController(AdminRoleService adminRoleService) {
+        this.adminRoleService = adminRoleService;
+    }
 
     @RequiresPermissions("adminRole:select")
     @GetMapping("/role")

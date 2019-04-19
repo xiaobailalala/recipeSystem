@@ -25,10 +25,14 @@ import java.util.List;
 @Service("professionService")
 public class ProfessionServiceImpl implements ProfessionService {
 	
-	@Autowired
-	private ProfessionDao professionDao;
+	private final ProfessionDao professionDao;
 
-	@Override
+    @Autowired
+    public ProfessionServiceImpl(ProfessionDao professionDao) {
+        this.professionDao = professionDao;
+    }
+
+    @Override
 	public ResApi<List<Profession>> getAllInfo() {
 		// TODO Auto-generated method stub
 		return new ResApi<>(200,"success",professionDao.findAll());

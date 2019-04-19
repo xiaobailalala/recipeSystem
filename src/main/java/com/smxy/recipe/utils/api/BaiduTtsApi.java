@@ -37,9 +37,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class BaiduTtsApi {
-    public static final String APP_ID = "14322043";
-    public static final String API_KEY = "KqPSEuc71U2NaNZ8gFMYcwHy";
-    public static final String SECRET_KEY = "BfLW3sC5uFOrEgsEQblV8nMkgGsfeQYN";
+    private static final String APP_ID = "14322043";
+    private static final String API_KEY = "KqPSEuc71U2NaNZ8gFMYcwHy";
+    private static final String SECRET_KEY = "BfLW3sC5uFOrEgsEQblV8nMkgGsfeQYN";
 
     /**
      * spd	String	语速，取值0-9，默认为5中语速

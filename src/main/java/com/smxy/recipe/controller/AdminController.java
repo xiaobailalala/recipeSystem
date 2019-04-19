@@ -27,9 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 @PathController("/manage/adm")
 public class AdminController {
 
-    @SuppressWarnings("all")
+    private final AdminUserService adminUserService;
+
     @Autowired
-    private AdminUserService adminUserService;
+    public AdminController(AdminUserService adminUserService) {
+        this.adminUserService = adminUserService;
+    }
 
     @GetMapping("/adlogout")
     public String adlogout() {
