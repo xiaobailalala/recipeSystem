@@ -49,6 +49,15 @@ public interface ProductActiveReductionDao {
     ProductActiveReduction selectProductActiveReductionById(Integer fId);
 
     /**
+     * 功能描述: 根据商品查找商品活动
+     * @param fPid 1
+     * @return : com.smxy.recipe.entity.ProductActiveReduction
+     * @author : yangyihui
+     * @date : 2019/4/20 0020 2:04
+     */
+    ProductActiveReduction selectActiveReductionByPid(Integer fPid);
+
+    /**
      * 功能描述: 根据商家ID查找所有满减优惠活动
      * @param fMid 商家ID
      * @return : java.util.List<com.smxy.recipe.entity.ProductActiveReduction>

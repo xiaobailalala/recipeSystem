@@ -1,10 +1,13 @@
 package com.smxy.recipe.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.entity.MerchantProduct;
+import com.smxy.recipe.entity.MerchantProductDetails;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -134,5 +137,36 @@ public interface MerchantProductService {
      */
     ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, Integer userId);
 
+    /**
+     * 功能描述: 根据商品id 获取商品详情
+     * @param pid 1
+     * @return : com.smxy.recipe.utils.ResApi<java.util.List<com.smxy.recipe.entity.MerchantProductDetails>>
+     * @author : yangyihui
+     * @date : 2019/4/19 0019 14:35
+     */
+    ResApi<List<MerchantProductDetails>> getProductDetailByPid(Integer pid);
+
+    /**
+     * 功能描述: 更新商品详情
+     * @param pid 1
+     * @param images 2
+     * @param details 3
+     * @param ids 4
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/20 0020 1:52
+     */
+    ResApi<String> editorProductDetailByPid(Integer pid, MultipartFile[] images, String[] details, Integer[] ids);
+
+    /**
+     * 功能描述: 根据商品类型id获取商品
+     * @param claid 1
+     * @param type
+     * @param params
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
+     * @author : yangyihui
+     * @date : 2019/4/20 0020 1:52
+     */
+    ResApi<Object> getProductByClaid(Integer claid, String type, JSONObject params);
     ResApi<String> changeState(Integer id, String state);
 }

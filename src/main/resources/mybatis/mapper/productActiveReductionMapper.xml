@@ -46,4 +46,10 @@
         </collection>
     </resultMap>
 
+    <select id="selectActiveReductionByPid" parameterType="integer" resultMap="getActiveDetails">
+        SELECT *
+        FROM t_product_reduction
+        WHERE f_pid = #{fPid};
+    </select>
+
 </mapper>

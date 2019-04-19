@@ -2,6 +2,7 @@ package com.smxy.recipe.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.service.MerchantProductService;
@@ -15,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.time.format.ResolverStyle;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Demo MerchantProductService
@@ -27,6 +30,9 @@ import java.util.*;
 @Service("merchantProductService")
 public class MerchantProductServiceImpl implements MerchantProductService {
     private static final String PRODUCT_STATE_SHELVE = "shelve";
+    private static final String PRODUCTLIST_TYPE_ALL = "ALL";
+    private static final String PRODUCTLIST_TYPE_ACTION = "ACTION";
+
 
     private final MerchantUserDao merchantUserDao;
     private final MerchantProductDao merchantProductDao;
@@ -432,6 +438,77 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         } else {
             return ResApi.getError();
         }
+    }
+
+    @Override
+    public ResApi<List<MerchantProductDetails>> getProductDetailByPid(Integer pid) {
+        if (pid == null) {
+            return new ResApi<>(505, "商品id不存在", null);
+        }
+        List<MerchantProductDetails> detailsList = merchantProductDetailsDao.getProductDetailsByPid(pid);
+        return new ResApi<>(200, "success", detailsList);
+    }
+
+    @Override
+    public ResApi<String> editorProductDetailByPid(Integer pid, MultipartFile[] images, String[] details, Integer[] ids) {
+        if (images.length != ids.length || details.length != ids.length) {
+            return new ResApi<>(505, "保存失败，参数长度不符", null);
+        }
+        List<MerchantProductDetails> detailsList = new ArrayList<>();
+        for (int i = 0; i < ids.length; i++) {
+            String fileName = null;
+            if (images[i].getSize() == 0 || images[i] == null) {
+                fileName = null;
+            } else {
+                fileName = ToolsApi.multipartFileUploadFile(images[i], null);
+            }
+            detailsList.add(new MerchantProductDetails(ids[i],pid, fileName, details[i]));
+        }
+        return null;
+    }
+
+    @Override
+    public ResApi<Object> getProductByClaid(Integer claid, String type, JSONObject params) {
+        Integer pageIndex = params.getInteger("pageIndex");
+        Integer pageSize = params.getInteger("pageSize");
+        int pageStart = pageSize * (pageIndex - 1);
+        List<JSONObject> dataList = new ArrayList<>(8);
+        JSONObject result = new JSONObject();
+        MerchantProductClassify productClassify = merchantProductClassifyDao.getProductClassifyById(claid);
+        List<MerchantProduct> productList = merchantProductDao.getProductByClaid(productClassify.getFName());
+        if (productList == null || productList.size() == 0) {
+            return ResApi.getSuccess(new ArrayList<>(8));
+        }
+        if (PRODUCTLIST_TYPE_ALL.equals(type)) {
+            dataList = productList.stream().map(this::makeProductByClaidJson).skip(pageStart).limit(pageSize).collect(Collectors.toList());
+        } else if (PRODUCTLIST_TYPE_ACTION.equals(type)){
+            List<MerchantProduct> actionList = new ArrayList<>(8);
+            for (MerchantProduct product : productList) {
+                if (product.getProductActiveDiscount() != null || product.getProductActiveReduction() != null) {
+                    actionList.add(product);
+                }
+            }
+            dataList = actionList.stream().map(this::makeProductByClaidJson).skip(pageStart).limit(pageSize).collect(Collectors.toList());
+        }
+        return ResApi.getSuccess(dataList);
+    }
+
+    private JSONObject makeProductByClaidJson(MerchantProduct product) {
+        JSONObject result = new JSONObject();
+        List<MerchantProductMarque> marqueList = product.getMerchantProductMarques();
+        result.put("productId", product.getFId());
+        result.put("productImage", product.getFCover());
+        result.put("productName", product.getFName());
+        if (marqueList == null || marqueList.size() == 0) {
+            result.put("productPriceMin", 0);
+            result.put("productPriceMax", 0);
+        } else {
+            result.put("productPriceMin", marqueList.get(0).getFPrice());
+            result.put("productPriceMax", product.getMerchantProductMarques().get(0).getFMarqueimage());
+        }
+        result.put("productSale", product.getFSales());
+        result.put("productFreight", product.getFFreightid());
+        return result;
     }
 
     @Override

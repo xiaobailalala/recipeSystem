@@ -18,6 +18,9 @@
                 property="merchantProductDetails" column="f_id"
                 select="com.smxy.recipe.dao.MerchantProductDetailsDao.getProductDetailsByPid">
         </collection>
+        <collection property="productActiveReduction" column="f_id"
+                    select="com.smxy.recipe.dao.ProductActiveReductionDao.selectActiveReductionByPid">
+        </collection>
     </resultMap>
 
     <select id="getProductById" parameterType="Integer" resultMap="getMerchantProductDetails">
@@ -93,4 +96,12 @@
                 #{fDiscount},
                 #{fReduction});
     </insert>
+
+    <select id="getProductByClaid" parameterType="String" resultMap="getMerchantProductDetails">
+        SELECT *
+        FROM t_merchant_product
+        where f_state = '上架'
+          and f_review = '审核成功'
+          and f_category = #{claName};
+    </select>
 </mapper>

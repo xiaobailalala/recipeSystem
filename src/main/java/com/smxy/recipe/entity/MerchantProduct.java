@@ -35,5 +35,7 @@ public class MerchantProduct implements Serializable {
     private String fReduction;
     private List<MerchantProductMarque> merchantProductMarques;
     private List<MerchantProductDetails> merchantProductDetails;
+    private ProductActiveDiscount productActiveDiscount;
+    private ProductActiveReduction productActiveReduction;
 
 }

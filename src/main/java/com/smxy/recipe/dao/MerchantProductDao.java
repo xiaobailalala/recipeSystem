@@ -94,4 +94,12 @@ public interface MerchantProductDao {
      */
     Integer updateProductActiveReduction(Map<String, Object> map);
 
+    /**
+     * 功能描述: 根据商品类型id获取商品列表
+     * @param claName 1
+     * @return : java.util.List<com.smxy.recipe.entity.MerchantProduct>
+     * @author : yangyihui
+     * @date : 2019/4/20 0020 1:53
+     */
+    List<MerchantProduct> getProductByClaid(String claName);
 }
