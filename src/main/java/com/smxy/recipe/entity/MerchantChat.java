@@ -23,23 +23,31 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/17 11:11
+ * Build File @date: 2019/4/18 10:12
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.dao;
+package com.smxy.recipe.entity;
 
-import com.smxy.recipe.entity.CommonChat;
-import org.apache.ibatis.annotations.Param;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-import java.util.List;
-
-public interface CommonChatDao {
-
-    Integer saveInfo(CommonChat commonChat);
-
-    List<CommonChat> findInfoByUidAndOid(@Param("fUid") Integer uid, @Param("fOid") Integer oid);
-
-    Integer changeChatReadState(@Param("uid") Integer uid, @Param("oid") Integer oid, @Param("state") Integer state);
-
+@Data
+@Accessors(chain = true)
+@AllArgsConstructor
+@NoArgsConstructor
+public class MerchantChat {
+    private Integer fId;
+    private String fContent;
+    private String fRelease;
+    private Integer fUid;
+    private Integer fOid;
+    private Integer fState;
+    private String fUrl;
+    private Integer fType;
+    private Integer fUser;
+    private CommonUser commonUser;
+    private MerchantUser merchantUser;
 }

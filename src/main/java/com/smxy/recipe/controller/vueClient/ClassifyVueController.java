@@ -12,6 +12,7 @@ package com.smxy.recipe.controller.vueClient;
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.service.ClassifyOneService;
 import com.smxy.recipe.utils.ResApi;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -24,7 +25,6 @@ public class ClassifyVueController {
     public ClassifyVueController(ClassifyOneService classifyOneService) {
         this.classifyOneService = classifyOneService;
     }
-
 
     @GetMapping("/getAllInfo")
     public ResApi<Object> getAllInfo(){

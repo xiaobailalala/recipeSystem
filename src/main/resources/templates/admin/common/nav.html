@@ -82,8 +82,8 @@
 
             <li class="dropdown link">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox">
-                    <img src="" th:src="(${fileServerPath})+${session.aduser.fHead}" alt="img">
-                    <b th:text="${session.aduser.fUsername}"></b>
+                    <img src="" th:src="(${fileServerPath})+${session.aduser.getFHead()}" alt="img">
+                    <b th:text="${session.aduser.getFUsername()}"></b>
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
@@ -119,8 +119,8 @@
     </div>
     <div th:fragment="sideFixed(first,second)" class="sidebar clearfix">
         <div class="widget profile-widget" style="height:380px;">
-            <img th:src="(${fileServerPath})+${session.aduser.fHead}" class="profile-image" alt="img">
-            <h1 th:text="${session.aduser.fUsername}"></h1>
+            <img th:src="(${fileServerPath})+${session.aduser.getFHead()}" class="profile-image" alt="img">
+            <h1 th:text="${session.aduser.getFUsername()}"></h1>
             <p>
                 <i class="fa fa-map-marker"></i> London</p>
             <a th:href="@{/manage/adm/editor/}+${session.aduser.fId}" class="btn btn-sm">个人信息</a>
@@ -230,6 +230,22 @@
                 <ul th:style="${first==6?'display: block;':''}">
                     <li>
                         <a th:class="${(first==6&&second==1)?'active':''}" th:href="@{/manage/commonUser/info}">用户信息管理</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:" th:class="${first==7?'active':''}">
+                    <span class="icon color10">
+                        <i class="fa fa-paper-plane-o"></i>
+                    </span>商户管理
+                    <span class="caret"></span>
+                </a>
+                <ul th:style="${first==7?'display: block;':''}">
+                    <li>
+                        <a th:class="${(first==7&&second==1)?'active':''}" th:href="@{/manage/adminMerchant/list}">商品列表</a>
+                    </li>
+                    <li>
+                        <a th:class="${(first==7&&second==2)?'active':''}" th:href="@{/manage/adminMerchant/review}">商品审核</a>
                     </li>
                 </ul>
             </li>

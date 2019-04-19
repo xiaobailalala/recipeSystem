@@ -9,7 +9,11 @@
 
     <select id="findInfoByUidAndOid" resultType="CommonChat">
         select * from t_common_chat where
-        (f_uid=#{fUid} and f_oid=#{fOid}) or
-        (f_oid=#{fUid} and f_uid=#{fOid});
+        (f_uid=#{fUid} and f_oid=#{fOid});
     </select>
+
+    <update id="changeChatReadState">
+        UPDATE t_common_chat SET f_state=#{state} WHERE f_uid=#{oid} AND f_oid=#{uid};
+    </update>
+
 </mapper>

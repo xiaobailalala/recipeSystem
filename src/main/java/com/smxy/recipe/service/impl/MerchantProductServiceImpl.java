@@ -423,4 +423,10 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             return ResApi.getError();
         }
     }
+
+    @Override
+    public ResApi<String> changeState(Integer id, String state) {
+        merchantProductDao.updateProductReviewById(state, id);
+        return ResApi.getSuccess();
+    }
 }

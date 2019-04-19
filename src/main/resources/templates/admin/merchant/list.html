@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/common/commonHeader::header('商品列表')}"></head>
+<body>
+<div th:replace="~{admin/common/nav::loading}"></div>
+<div th:replace="~{admin/common/nav::topFixed}"></div>
+<div th:replace="~{admin/common/nav::sideFixed(7, 1)}"></div>
+<div class="content">
+    <div class="page-header">
+        <h1 class="title">商品列表</h1>
+        <ol class="breadcrumb">
+            <li class="active">Welcome to the data management platform of Dietary Cuisine</li>
+        </ol>
+        <div class="right">
+            <div class="btn-group" role="group" aria-label="...">
+                <a th:href="@{/manage/adm/admin/index}" class="btn btn-light">Home</a>
+                <a class="btn btn-light" disabled="disabled">商户管理</a>
+                <a class="btn btn-light" disabled="disabled">商品列表</a>
+                <a href="javascript:history.go(-1);" class="btn btn-light">
+                    <i class="fa fa-reply"></i>
+                </a>
+                <a href="javascript:location.reload();" class="btn btn-light">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        信息列表
+                        <button class="btn btn-warning" id="test">测试</button>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table id="example0" class="table display table-bordered">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>商品封面</th>
+                                <th>商品名称</th>
+                                <th>商品分类</th>
+                                <th>商品添加时间</th>
+                                <th>商品状态</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>序号</th>
+                                <th>商品封面</th>
+                                <th>商品名称</th>
+                                <th>商品分类</th>
+                                <th>商品添加时间</th>
+                                <th>商品状态</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr th:each="item,status:${list.item}">
+                                <td th:text="${status.index+1}"></td>
+                                <td>
+                                    <img style="height: 100px;width: 100px;" th:src="(${fileServerPath})+${item.fCover}" alt="">
+                                </td>
+                                <td width="30%" th:text="${item.fName}"></td>
+                                <td th:text="${item.fCategory}"></td>
+                                <td th:text="${item.fAddtime}"></td>
+                                <td th:class="${item.fState == '上架' ? 'text-success' : (item.fState == '下架' ? 'text-warning' : 'text-danger')}" th:text="${item.fState}"></td>
+
+                                <!--<td th:text="${item.fName}"></td>-->
+                                <!--<td>-->
+                                    <!--<a th:href="@{/manage/material/editor/}+${item.fId}" th:data-id="${item.fId}"-->
+                                       <!--class="btn btn-default">-->
+                                        <!--<i class="fa fa-edit"></i>-->
+                                        <!--编辑-->
+                                    <!--</a>-->
+                                    <!--<a href="javascript:;" th:data-id="${item.fId}" th:data-path="${item.fCover}" class="btn btn-danger deleteInfo">-->
+                                        <!--<i class="fa fa-close"></i>-->
+                                        <!--删除-->
+                                    <!--</a>-->
+                                <!--</td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{admin/common/nav::copyright}"></div>
+</div>
+<div th:replace="~{admin/common/nav::tabpanel}"></div>
+<div th:replace="~{admin/common/commonFooter::onloadJs}"></div>
+</body>
+<script th:src="@{/src/js/merchant/review/productReview.js}"></script>
+</html>

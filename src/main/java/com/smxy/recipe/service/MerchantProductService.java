@@ -134,4 +134,5 @@ public interface MerchantProductService {
      */
     ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, String json);
 
+    ResApi<String> changeState(Integer id, String state);
 }

@@ -40,8 +40,6 @@ spring:
       cluster-nodes: ${ServerHostIp}:9300
   redis:
     host: ${ServerHostIp}
-#    host: 192.168.43.126
-#    password:
     password: devredis.960314
   mail:
     password: fziqpvgpiemvbcdi

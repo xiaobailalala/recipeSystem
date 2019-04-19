@@ -68,8 +68,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/manage/adm/adlogin", "anon");
         filterChainDefinitionMap.put("/mob/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
+
         filterChainDefinitionMap.put("/sensorData/**", "anon");
+        filterChainDefinitionMap.put("/chat/**", "anon");
         filterChainDefinitionMap.put("/systemMessage/**", "anon");
+        filterChainDefinitionMap.put("/merchantChat/**", "anon");
+
         filterChainDefinitionMap.put("/endpoint-websocket-wxClient", "anon");
         filterChainDefinitionMap.put("/merchant/merchantUser/register", "anon");
         filterChainDefinitionMap.put("/merchant/merchantUser/login", "anon");

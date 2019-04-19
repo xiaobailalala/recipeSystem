@@ -23,23 +23,22 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/17 11:11
+ * Build File @date: 2019/4/18 12:23
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.dao;
 
-import com.smxy.recipe.entity.CommonChat;
-import org.apache.ibatis.annotations.Param;
+import com.smxy.recipe.entity.MerchantChat;
 
 import java.util.List;
 
-public interface CommonChatDao {
+public interface MerchantChatDao {
 
-    Integer saveInfo(CommonChat commonChat);
+    List<MerchantChat> queryMessage(MerchantChat merchantChat);
 
-    List<CommonChat> findInfoByUidAndOid(@Param("fUid") Integer uid, @Param("fOid") Integer oid);
+    Integer updateMessageState(MerchantChat merchantChat);
 
-    Integer changeChatReadState(@Param("uid") Integer uid, @Param("oid") Integer oid, @Param("state") Integer state);
+    Integer insertMessage(MerchantChat merchantChat);
 
 }

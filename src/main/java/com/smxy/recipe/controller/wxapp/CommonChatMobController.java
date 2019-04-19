@@ -49,14 +49,13 @@ public class CommonChatMobController {
     }
 
     @PostMapping("/chatSaveMessage")
-    public ResApi<String> chatSaveMessage(@RequestParam(value = "file", required = false) MultipartFile file,
+    public ResApi<Object> chatSaveMessage(@RequestParam(value = "file", required = false) MultipartFile file,
                                           CommonChat commonChat) {
         return commonChatService.chatSaveMessage(file, commonChat);
     }
 
     @PostMapping("/showMessage")
     public ResApi<Object> showMessage(Integer uid, Integer oid) {
-        System.out.println(uid + " " + oid);
         return commonChatService.showMessage(uid, oid);
     }
 

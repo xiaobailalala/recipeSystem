@@ -2,6 +2,7 @@ package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.AdminPermission;
 import com.smxy.recipe.entity.AdminRole;
+import com.smxy.recipe.entity.MerchantChat;
 import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
@@ -97,4 +98,10 @@ public interface MerchantUserService {
     ResApi<String> editorUserPassword(String fPassword, String oldPassword, Integer fId);
 
     ResApi<String> getIndexData(Integer userId);
+
+    ResApi<String> toMerchantSwitch(MultipartFile file, MerchantChat merchantChat);
+
+    ResApi<Object> getMerchantChatMessage(MerchantChat merchantChat);
+
+    ResApi<String> changeChatRead(MerchantChat merchantChat);
 }
