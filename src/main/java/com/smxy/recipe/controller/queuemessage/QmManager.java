@@ -115,10 +115,5 @@ public class QmManager {
         sysNotificationSocketService.pushSystemMessageForUser(jsonStr);
     }
 
-    @RabbitListener(queues = "chatMessage.queue")
-    public void chatMessage(String jsonStr) {
-        commonChatSocketService.pushChatMessageForUser(jsonStr);
-    }
-
 
 }

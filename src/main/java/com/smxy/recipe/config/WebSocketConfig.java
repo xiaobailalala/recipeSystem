@@ -47,7 +47,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/sensorData", "/chat", "/systemMessage");
-        registry.setApplicationDestinationPrefixes("/sensorMonitor");
+        registry.enableSimpleBroker("/sensorData", "/chat", "/systemMessage", "/merchantChat");
+        registry.setApplicationDestinationPrefixes("/sensorMonitor", "/chatSwitch");
     }
 }

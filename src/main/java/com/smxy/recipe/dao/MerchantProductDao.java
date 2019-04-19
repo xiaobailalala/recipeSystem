@@ -17,7 +17,7 @@ public interface MerchantProductDao {
      * 功能描述: 获取所有商品
      *
      * @return 所有商品集合
-     * @auther yangyihui
+     * @author yangyihui
      * @date 2018/11/20 0020 10:57
      */
     List<MerchantProduct> getAllProduct();
@@ -27,7 +27,7 @@ public interface MerchantProductDao {
      *
      * @param fId 商品ID
      * @return
-     * @auther yangyihui
+     * @author yangyihui
      * @date 2018/11/23 0023 19:56
      */
     MerchantProduct getProductById(Integer fId);
@@ -37,7 +37,7 @@ public interface MerchantProductDao {
      *
      * @param merchantProduct 商品实体类
      * @return 数据库更新数
-     * @auther yangyihui
+     * @author yangyihui
      * @date 2018/11/20 0020 15:02
      */
     Integer saveProductInfo(MerchantProduct merchantProduct);
@@ -47,7 +47,7 @@ public interface MerchantProductDao {
      *
      * @param fId 商品ID
      * @return 数据库更新数
-     * @auther yangyihui
+     * @author yangyihui
      * @date 2018/11/26 0026 11:39
      */
     Integer deleteProductByFId(Integer fId);
@@ -58,10 +58,12 @@ public interface MerchantProductDao {
      * @param fId    商品ID
      * @param fState 商品更新状态
      * @return 数据库更新数
-     * @auther yangyihui
+     * @author yangyihui
      * @date 2018/11/26 0026 15:08
      */
     Integer updateProductStatusById(@Param(value = "fId") Integer fId, @Param(value = "fState") String fState);
+
+    Integer updateProductReviewById(@Param("fReview") String review, @Param("fId") Integer id);
 
     /**
      * 功能描述:  更新商品信息

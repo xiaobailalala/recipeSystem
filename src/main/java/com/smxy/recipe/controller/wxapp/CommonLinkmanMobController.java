@@ -23,40 +23,33 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2018/12/17 11:08
+ * Build File @date: 2019/4/19 19:20
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
-import com.smxy.recipe.entity.CommonChat;
-import com.smxy.recipe.service.CommonChatService;
+import com.smxy.recipe.entity.CommonLinkman;
+import com.smxy.recipe.service.CommonLinkmanService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-@PathRestController("/mob/commonChat")
-public class CommonChatMobController {
+@PathRestController("/mob/linkman")
+public class CommonLinkmanMobController {
 
-    private final CommonChatService commonChatService;
+    private final CommonLinkmanService commonLinkmanService;
 
     @Autowired
-    public CommonChatMobController(CommonChatService commonChatService) {
-        this.commonChatService = commonChatService;
+    public CommonLinkmanMobController(CommonLinkmanService commonLinkmanService) {
+        this.commonLinkmanService = commonLinkmanService;
     }
 
-    @PostMapping("/chatSaveMessage")
-    public ResApi<Object> chatSaveMessage(@RequestParam(value = "file", required = false) MultipartFile file,
-                                          CommonChat commonChat) {
-        return commonChatService.chatSaveMessage(file, commonChat);
-    }
-
-    @PostMapping("/showMessage")
-    public ResApi<Object> showMessage(Integer uid, Integer oid) {
-        return commonChatService.showMessage(uid, oid);
+    @PostMapping("/linkmanList")
+    public ResApi<Object> linkmanList(CommonLinkman commonLinkman) {
+        System.out.println(commonLinkman.getFUid());
+        return commonLinkmanService.linkmanList(commonLinkman);
     }
 
 }

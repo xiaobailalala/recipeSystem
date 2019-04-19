@@ -37,6 +37,10 @@
         SET f_state = #{fState}
         WHERE f_id = #{fId};
     </update>
+    
+    <update id="updateProductReviewById">
+        UPDATE t_merchant_product SET f_review = #{fReview} WHERE f_id = #{fId};
+    </update>
 
     <update id="updateProductInfo" parameterType="com.smxy.recipe.entity.MerchantProduct">
         UPDATE t_merchant_product

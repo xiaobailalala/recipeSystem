@@ -29,8 +29,11 @@
  */
 package com.smxy.recipe.controller.websocket;
 
+import com.smxy.recipe.entity.CommonChat;
+import com.smxy.recipe.entity.MerchantChat;
 import com.smxy.recipe.service.socket.CommonUserSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
@@ -42,6 +45,11 @@ public class CommonUserSocket {
     @Autowired
     public CommonUserSocket(CommonUserSocketService commonUserSocketService) {
         this.commonUserSocketService = commonUserSocketService;
+    }
+
+    @MessageMapping("/user/changeChatState")
+    public void changeChatState(CommonChat commonChat) {
+        commonUserSocketService.changeChatState(commonChat);
     }
 
     @Scheduled(fixedRate = 1000)

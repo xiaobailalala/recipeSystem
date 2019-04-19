@@ -29,7 +29,9 @@
  */
 package com.smxy.recipe.service.socket;
 
+import com.smxy.recipe.entity.CommonChat;
 import com.smxy.recipe.entity.tools.InMessage;
+import com.smxy.recipe.service.CommonChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,7 @@ import java.util.List;
 public class CommonUserSocketService {
 
     private final SimpMessagingTemplate template;
+    private final CommonChatService commonChatService;
 
     private static List<InMessage> fireListeningList;
 
@@ -60,8 +63,9 @@ public class CommonUserSocketService {
     }
 
     @Autowired
-    public CommonUserSocketService(SimpMessagingTemplate template) {
+    public CommonUserSocketService(SimpMessagingTemplate template, CommonChatService commonChatService) {
         this.template = template;
+        this.commonChatService = commonChatService;
     }
 
     public void fireNumberPush(InMessage inMessage) {
@@ -130,5 +134,9 @@ public class CommonUserSocketService {
 
     public void sendDistanceNumber(){
         template.convertAndSend("/sensorData/sendDistanceNumber", distanceListeningList);
+    }
+
+    public void changeChatState(CommonChat commonChat) {
+        commonChatService.changeReadState(commonChat);
     }
 }

@@ -31,6 +31,9 @@ public interface MerchantUserDao {
      */
     MerchantUser isMerchantUser(String fAccount);
 
+
+    MerchantUser getMerchantUserByIdBrief(Integer fId);
+    
     /**
      * 功能描述:
      *

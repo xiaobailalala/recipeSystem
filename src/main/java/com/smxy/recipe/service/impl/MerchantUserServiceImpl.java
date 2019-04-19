@@ -1,9 +1,7 @@
 package com.smxy.recipe.service.impl;
 
-import com.smxy.recipe.dao.AdminRoleDao;
-import com.smxy.recipe.dao.AdminUserRoleDao;
-import com.smxy.recipe.dao.MerchantUserDao;
-import com.smxy.recipe.dao.MerchantUserRoleDao;
+import com.alibaba.fastjson.JSONObject;
+import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.realm.LoginType;
 import com.smxy.recipe.realm.UserToken;
@@ -18,15 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Demo MerchantUserServiceImpl
@@ -39,20 +35,24 @@ import java.util.Map;
 public class MerchantUserServiceImpl implements MerchantUserService {
 
     private final MerchantUserDao merchantUserDao;
-    private final ToolsApi toolsApi;
     private final AdminUserRoleDao adminUserRoleDao;
     private final AdminRoleDao adminRoleDao;
     private final MerchantUserRoleDao merchantUserRoleDao;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+    private final MerchantChatDao merchantChatDao;
+    private final CommonUserDao commonUserDao;
 
     private static final String MERCHANT_LOGIN_TYPE = LoginType.MERCHANT.toString();
 
     @Autowired
-    public MerchantUserServiceImpl(MerchantUserDao merchantUserDao, ToolsApi toolsApi, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao) {
+    public MerchantUserServiceImpl(MerchantUserDao merchantUserDao, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao, SimpMessagingTemplate simpMessagingTemplate, MerchantChatDao merchantChatDao, CommonUserDao commonUserDao) {
         this.merchantUserDao = merchantUserDao;
-        this.toolsApi = toolsApi;
         this.adminUserRoleDao = adminUserRoleDao;
         this.adminRoleDao = adminRoleDao;
         this.merchantUserRoleDao = merchantUserRoleDao;
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.merchantChatDao = merchantChatDao;
+        this.commonUserDao = commonUserDao;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(MerchantUserServiceImpl.class);
@@ -235,6 +235,61 @@ public class MerchantUserServiceImpl implements MerchantUserService {
     @Override
     public ResApi<String> getIndexData(Integer userId) {
         return null;
+    }
+
+    @Override
+    public ResApi<String> toMerchantSwitch(MultipartFile file, MerchantChat merchantChat) {
+        System.out.println(merchantChat);
+        if (merchantChat.getFType() == 0) {
+            merchantChat.setFContent(ToolsApi.base64Encode(merchantChat.getFContent()));
+        } else {
+//            merchantChat.setFUrl(ToolsApi.multipartFileUploadFile(file, null));
+            merchantChat.setFUrl("group1/M00/00/02/wKgBbFui_bKAB2qlAAA4ALY9tGc304.jpg");
+        }
+//        merchantChatDao.insertMessage(merchantChat);
+        simpMessagingTemplate.convertAndSend("/merchantChat/" + (merchantChat.getFUser() == 1 ? "user" : "merchant") + "/" + merchantChat.getFOid(),
+                merchantChat.setFContent(ToolsApi.base64Decode(merchantChat.getFContent())));
+        return ResApi.getSuccess();
+    }
+
+    @Override
+    public ResApi<Object> getMerchantChatMessage(MerchantChat merchantChat) {
+        Map<String, Object> data = new HashMap<>(8);
+        List<MerchantChat> merchantChats = new LinkedList<>(merchantChatDao.queryMessage(new MerchantChat().
+                setFUser(merchantChat.getFUser()).setFUid(merchantChat.getFUid()).
+                setFOid(merchantChat.getFOid())));
+        System.out.println(merchantChat);
+        merchantChats.addAll(merchantChatDao.queryMessage(new MerchantChat().
+                setFUser(merchantChat.getFUser() == 0 ? 1 : 0).setFUid(merchantChat.getFOid()).
+                setFOid(merchantChat.getFUid())));
+        merchantChats.sort(Comparator.comparing(MerchantChat::getFRelease));
+        merchantChats.forEach(item -> {
+            if (item.getFType() == 0) {
+                item.setFContent(ToolsApi.base64Decode(item.getFContent()));
+            }
+        });
+        this.changeChatState(merchantChat);
+        data.put("list", merchantChats);
+        data.put("otherInfo", merchantChat.getFUser() == 0 ? merchantUserDao.getMerchantUserByIdBrief(merchantChat.getFOid()) :
+                commonUserDao.getInfoByIdBrief(merchantChat.getFOid()));
+        return ResApi.getSuccess(data);
+    }
+
+    public static void main(String[] args) {
+        String str = "测试数据";
+        System.out.println(ToolsApi.base64Encode(str));
+    }
+
+    @Override
+    public ResApi<String> changeChatRead(MerchantChat merchantChat) {
+        this.changeChatState(merchantChat);
+        return ResApi.getSuccess();
+    }
+
+    private void changeChatState(MerchantChat merchantChat) {
+        merchantChatDao.updateMessageState(new MerchantChat().
+                setFState(1).setFUser(merchantChat.getFUser() == 0 ? 1 : 0).setFUid(merchantChat.getFOid()).
+                setFOid(merchantChat.getFUid()));
     }
 
     @Override

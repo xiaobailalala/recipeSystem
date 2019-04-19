@@ -35,7 +35,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface CommonChatService {
 
-    ResApi<String> chatSaveMessage(MultipartFile file, CommonChat commonChat);
+    ResApi<Object> chatSaveMessage(MultipartFile file, CommonChat commonChat);
 
     ResApi<Object> showMessage(Integer uid, Integer oid);
+
+    ResApi<String> changeReadState(CommonChat commonChat);
 }

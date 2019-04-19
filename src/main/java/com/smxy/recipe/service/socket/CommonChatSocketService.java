@@ -49,8 +49,8 @@ public class CommonChatSocketService {
 
     public void pushChatMessageForUser(String message) {
         CommonChat commonChat = JSONObject.parseObject(message, CommonChat.class);
-        System.out.println("send To ------>" + commonChat.getFOid());
-        template.convertAndSend("/chat/userMsg/" + commonChat.getFOid(), message);
+        System.out.println("/chat/userMsg/" + commonChat.getFOid());
+        template.convertAndSend("/chat/userMsg/" + commonChat.getFOid(), commonChat);
     }
 
 }
