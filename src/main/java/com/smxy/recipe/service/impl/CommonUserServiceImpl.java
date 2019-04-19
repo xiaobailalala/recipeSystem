@@ -262,4 +262,9 @@ public class CommonUserServiceImpl implements CommonUserService {
             return new ResApi<>(500, "failed", "用户未登录");
         }
     }
+
+    @Override
+    public ResApi<String> followMerchant(Integer uid, Integer mid) {
+        return null;
+    }
 }

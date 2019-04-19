@@ -126,12 +126,12 @@ public interface MerchantProductService {
     /**
      * 功能描述: 异步添加商品详情
      *
-     * @param detailsImage 商品详情图片
+     * @param detailsImage   商品详情图片
      * @param detailsContent 商品详情文字
      * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
      * @author : yangyihui
      * @date : 2018/12/31 0031 11:50
      */
-    ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent);
+    ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, Integer userId);
 
 }

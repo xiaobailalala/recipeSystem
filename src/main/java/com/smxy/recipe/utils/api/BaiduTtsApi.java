@@ -32,6 +32,7 @@ package com.smxy.recipe.utils.api;
 import com.baidu.aip.speech.AipSpeech;
 import com.baidu.aip.speech.TtsResponse;
 import com.smxy.recipe.utils.ToolsApi;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class BaiduTtsApi {
      * per	String	发音人选择, 0为女声，1为男声，
      * 3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女
      */
-    public static String sendVoiceData(String content){
+    public static String sendVoiceData(String content) throws JSONException {
         AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
         client.setConnectionTimeoutInMillis(2000);
         client.setSocketTimeoutInMillis(60000);

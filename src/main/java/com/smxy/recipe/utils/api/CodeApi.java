@@ -12,7 +12,8 @@ package com.smxy.recipe.utils.api;
  *
  */
 
-import net.sf.json.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -22,9 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CodeApi {
-	public static final String DEF_CHATSET = "UTF-8";
-    public static final int DEF_CONN_TIMEOUT = 30000;
-    public static final int DEF_READ_TIMEOUT = 30000;
+	private static final String DEF_CHATSET = "UTF-8";
+    private static final int DEF_CONN_TIMEOUT = 30000;
+    private static final int DEF_READ_TIMEOUT = 30000;
     public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
     public static final int REG_VERIFY = 0;
     public static final int RESET_PWD = 1;

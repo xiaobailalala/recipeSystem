@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -36,6 +37,9 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     private final MerchantProductClassifyDao merchantProductClassifyDao;
     private final MerchantProductMarqueClassifyDao merchantProductMarqueClassifyDao;
     private final MerchantProductFreightDao merchantProductFreightDao;
+
+    @Resource
+    private RedisUtil redisUtil;
 
     @Autowired
     public MerchantProductServiceImpl(MerchantProductDao merchantProductDao,
@@ -339,8 +343,8 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     }
 
     @Override
-    public ResApi<Object> mobSaveProduct(Integer userID, MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID) {
-        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(userID);
+    public ResApi<Object> mobSaveProduct(Integer userId, MultipartFile[] productImage, MultipartFile[] marqueImage, String productName, Integer productClassifyID, String json, Integer freightID) {
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(userId);
         MerchantProduct merchantProduct = new MerchantProduct();
         merchantProduct.setFName(productName);
         merchantProduct.setFAddtime(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
@@ -390,14 +394,15 @@ public class MerchantProductServiceImpl implements MerchantProductService {
                     merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque((String) map.get("model"), null, Double.parseDouble((String) map.get("price")), Integer.parseInt((String) map.get("inventory")), 1, merchantProduct.getFId()));
                 }
             }
-            List<Object> productDetails = RedisUtil.listGet("merchantProductDetails", 0, -1);
-            if (productDetails != null || productDetails.size() != 0) {
-                for (Object productDetail : productDetails) {
-                    MerchantProductDetails merchantProductDetails = (MerchantProductDetails) productDetail;
-                    merchantProductDetails.setFPid(merchantProduct.getFId());
-                    merchantProductDetailsDao.saveProductDetailsInfo(merchantProductDetails);
+            Map<String, List<MerchantProductDetails>> detailMap = (Map<String, List<MerchantProductDetails>>) redisUtil.hashMapGet("merchantProductDetails" + userId);
+            List<MerchantProductDetails> productDetails = detailMap.get("merchantProductDetails");
+            if (productDetails != null && productDetails.size() != 0) {
+                for (MerchantProductDetails productDetail : productDetails) {
+                    productDetail.setFPid(merchantProduct.getFId());
+                    merchantProductDetailsDao.saveProductDetailsInfo(productDetail);
                 }
             }
+            redisUtil.delete("merchantProductDetails" + userId);
             return new ResApi<>(200, "success", "Pid:" + merchantProduct.getFId());
         } else {
             return new ResApi<>(500, "error", "系统出错");
@@ -405,8 +410,8 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     }
 
     @Override
-    public ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent) {
-        List<Object> list = new ArrayList<>();
+    public ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, Integer userId) {
+        List<MerchantProductDetails> list = new ArrayList<>();
         if (detailsImage.length != detailsContent.length) {
             return ResApi.getError(502, "保存失败");
         }
@@ -419,7 +424,9 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             }
             list.add(new MerchantProductDetails(null, filename, detailsContent[i]));
         }
-        boolean result = RedisUtil.listSet("merchantProductDetails", list);
+        Map<String, List<MerchantProductDetails>> listMap = new HashMap<>(8);
+        listMap.put("merchantProductDetails", list);
+        boolean result = redisUtil.hashMapSet("merchantProductDetails" + userId, listMap);
         if (result) {
             return ResApi.getSuccess();
         } else {

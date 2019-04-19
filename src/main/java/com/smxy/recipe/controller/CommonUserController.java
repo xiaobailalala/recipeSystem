@@ -59,4 +59,11 @@ public class CommonUserController {
         return commonUserService.updateCommonUserPwd(commonUser);
     }
 
+    @RequiresPermissions("commonUser:insert")
+    @PostMapping("/followMerchant")
+    @ResponseBody
+    public ResApi<String> followMerchant(Integer uid, Integer mid) {
+        return commonUserService.followMerchant(uid, mid);
+    }
+
 }
