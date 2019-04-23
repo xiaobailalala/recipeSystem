@@ -3,6 +3,7 @@ package com.smxy.recipe.controller;
 import com.smxy.recipe.config.template.PathController;
 import com.smxy.recipe.entity.MerchantProduct;
 import com.smxy.recipe.service.MerchantProductService;
+import com.smxy.recipe.service.ProductActiveDiscountService;
 import com.smxy.recipe.utils.ResApi;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,12 @@ import java.util.Map;
 public class MerchantProductController {
 
     private final MerchantProductService merchantProductService;
+    private final ProductActiveDiscountService productActiveDiscountService;
 
     @Autowired
-    public MerchantProductController(MerchantProductService merchantProductService) {
+    public MerchantProductController(MerchantProductService merchantProductService, ProductActiveDiscountService productActiveDiscountService) {
         this.merchantProductService = merchantProductService;
+        this.productActiveDiscountService = productActiveDiscountService;
     }
 
     @RequiresPermissions("product:select")
@@ -124,4 +127,9 @@ public class MerchantProductController {
         return "merchant/pages/product/edit";
     }
 
+    @ResponseBody
+    @GetMapping("/getFourProduct/{fMid}")
+    public ResApi<Object> getFourProduct(@PathVariable("fMid") Integer fMid) {
+        return merchantProductService.getFourProduct(fMid);
+    }
 }

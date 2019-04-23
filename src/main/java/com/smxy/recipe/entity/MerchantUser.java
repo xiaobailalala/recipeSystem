@@ -31,6 +31,8 @@ public class MerchantUser implements Serializable {
     private String fStreet;
     private Integer fCount;
     private String fSignature;
+    private Double fRevenue;
+    private Double fWithdraw;
     private List<AdminUserRole> adminUserRoles;
-    private List<MerchantProduct> merchantProducts;
+    private List<MerchantUserProduct> merchantUserProducts;
 }

@@ -44,4 +44,10 @@
         WHERE f_id = #{fId};
     </delete>
 
+    <select id="selectProductActiveDiscountByPId" parameterType="integer" resultType="ProductActiveDiscount">
+        SELECT *
+        FROM t_product_discounts
+        WHERE f_pid = #{fPid};
+    </select>
+
 </mapper>

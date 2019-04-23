@@ -58,4 +58,13 @@ public interface ProductActiveDiscountDao {
      */
     Integer deleteProductActiveDiscountById(Integer fId);
 
+    /**
+     * 功能描述: 根据商品id 获取折扣活动信息
+     * @param fPid 1
+     * @return : java.util.List<com.smxy.recipe.entity.ProductActiveDiscount>
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 11:10
+     */
+    ProductActiveDiscount selectProductActiveDiscountByPId(Integer fPid);
+
 }

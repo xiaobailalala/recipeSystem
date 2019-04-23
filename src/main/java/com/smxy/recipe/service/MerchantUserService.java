@@ -1,6 +1,11 @@
 package com.smxy.recipe.service;
 
 import com.smxy.recipe.entity.*;
+import com.alibaba.fastjson.JSONObject;
+import com.smxy.recipe.entity.AdminPermission;
+import com.smxy.recipe.entity.AdminRole;
+import com.smxy.recipe.entity.MerchantChat;
+import com.smxy.recipe.entity.MerchantUser;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -98,11 +103,11 @@ public interface MerchantUserService {
     /**
      * 功能描述: 根据userId 获取主页数据
      * @param userId 1
-     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @return
      * @author : yangyihui
      * @date : 2019/4/15 14:46
      */
-    ResApi<String> getIndexData(Integer userId);
+    ResApi<Object> getIndexData(Integer userId);
 
     ResApi<Object> toMerchantSwitch(MultipartFile file, MerchantChat merchantChat);
 
@@ -162,4 +167,83 @@ public interface MerchantUserService {
      */
     ResApi<String> editorUserBirthday(Integer userId, String shopAddress);
 
+    /**
+     * 功能描述: 获取商家访问量总数
+     * @param fMid 1
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 17:57
+     */
+    ResApi<Object> getViewsCount(Integer fMid);
+
+    /**
+     * 功能描述: 获取商家一周内访问量/天数
+     * @param fMid 1
+     * @return : com.smxy.recipe.utils.ResApi<com.alibaba.fastjson.JSONObject>
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 17:58
+     */
+    ResApi<JSONObject> getViewsCountByWeek(Integer fMid);
+
+    /**
+     * 功能描述: 更改用户手机号
+     * @param userId 1
+     * @param params 2
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 19:49
+     */
+    ResApi<String> editorUserAccount(Integer userId, JSONObject params);
+
+    /**
+     * 功能描述: 更新商家用户访问量
+     * @return : void
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 20:00
+     */
+    void saveMerchantViewsCount();
+
+    /**
+     * 功能描述: 获取商家用户数量
+     * @param fMid 1
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
+     * @author : yangyihui
+     * @date : 2019/4/22 0022 22:13
+     */
+    ResApi<Object> getMerchantUserCount(Integer fMid);
+
+    /**
+     * 功能描述: 获取商家粉丝数
+     * @param fMid 1
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
+     * @author : yangyihui
+     * @date : 2019/4/22 0022 22:22
+     */
+    ResApi<Object> getMerchantFansCount(Integer fMid);
+
+    /**
+     * 功能描述: 获取商家粉丝用户
+     * @param fMid 1
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
+     * @author : yangyihui
+     * @date : 2019/4/22 0022 22:42
+     */
+    ResApi<Object> getMerchantFansUser(Integer fMid);
+
+    /**
+     * 功能描述: 保存商家提现金额
+     * @param fMid 1
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
+     * @author : yangyihui
+     * @date : 2019/4/23 0023 10:56
+     */
+    ResApi<String> saveWithdrawMoney(Integer fMid, Double money);
+
+    /** 获取商家收入
+     * 功能描述:
+     * @param fMid 1
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
+     * @author : yangyihui
+     * @date : 2019/4/23 0023 14:55
+     */
+    ResApi<Object> getUserWithdraw(Integer fMid);
 }

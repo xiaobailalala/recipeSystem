@@ -14,15 +14,6 @@ import java.util.Map;
  */
 public interface MerchantProductDao {
     /**
-     * 功能描述: 获取所有商品
-     *
-     * @return 所有商品集合
-     * @author yangyihui
-     * @date 2018/11/20 0020 10:57
-     */
-    List<MerchantProduct> getAllProduct();
-
-    /**
      * 功能描述: 通过ID获取商品
      *
      * @param fId 商品ID
@@ -31,6 +22,15 @@ public interface MerchantProductDao {
      * @date 2018/11/23 0023 19:56
      */
     MerchantProduct getProductById(Integer fId);
+
+    /**
+     * 功能描述: 获取所有商品
+     *
+     * @return 所有商品集合
+     * @author yangyihui
+     * @date 2018/11/20 0020 10:57
+     */
+    List<MerchantProduct> getAllProduct();
 
     /**
      * 功能描述: 添加商品
@@ -63,6 +63,14 @@ public interface MerchantProductDao {
      */
     Integer updateProductStatusById(@Param(value = "fId") Integer fId, @Param(value = "fState") String fState);
 
+    /**
+     * 功能描述: 更改商品状态
+     * @param review 1
+     * @param id 2
+     * @return : java.lang.Integer
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 11:19
+     */
     Integer updateProductReviewById(@Param("fReview") String review, @Param("fId") Integer id);
 
     /**
@@ -94,4 +102,12 @@ public interface MerchantProductDao {
      */
     Integer updateProductActiveReduction(Map<String, Object> map);
 
+    /**
+     * 功能描述: 根据商品类型id获取商品列表
+     * @param claName 1
+     * @return : java.util.List<com.smxy.recipe.entity.MerchantProduct>
+     * @author : yangyihui
+     * @date : 2019/4/20 0020 1:53
+     */
+    List<MerchantProduct> getProductByClaid(String claName);
 }

@@ -9,13 +9,15 @@
                 property="adminUserRoles" column="f_id"
                 select="com.smxy.recipe.dao.MerchantUserRoleDao.getMerchantUserRoleByFmid">
         </collection>
-        <collection property="merchantProducts" column="f_id"
+        <collection property="merchantUserProducts" column="f_id"
                     select="com.smxy.recipe.dao.MerchantUserProductDao.getMerchantUserProductByMid">
         </collection>
     </resultMap>
 
     <select id="getMerchantUserByIdBrief" parameterType="Integer" resultType="com.smxy.recipe.entity.MerchantUser">
-        SELECT * FROM t_merchant_user WHERE f_id=#{fId};
+        SELECT *
+        FROM t_merchant_user
+        WHERE f_id = #{fId};
     </select>
 
     <select id="getMerchantUserById" parameterType="Integer" resultMap="getMerchantUserDetails">
@@ -91,7 +93,47 @@
     </select>
 
     <select id="getMerchantUserByAccount" parameterType="string" resultType="com.smxy.recipe.entity.MerchantUser">
-        SELECT * FROM t_merchant_user WHERE f_account = #{account};
+        SELECT *
+        FROM t_merchant_user
+        WHERE f_account = #{account};
+    </select>
+
+    <update id="updateUserAccountById">
+        UPDATE t_merchant_user
+        SET f_account = #{fAccount}
+        WHERE f_id = #{userId};
+    </update>
+
+    <select id="getAllMerchantId" resultType="java.lang.Integer">
+        SELECT f_id
+        FROM t_merchant_user;
+    </select>
+
+    <select id="getMerchantUserByIds" resultMap="getMerchantUserDetails">
+        SELECT *
+        FROM t_merchant_user
+        WHERE f_id IN
+        <foreach collection="merIdList" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="updateUserWithdraw">
+        UPDATE t_merchant_user
+        SET f_withdraw = #{fWithdraw}
+        WHERE f_id = #{fMid};
+    </update>
+
+    <update id="updateUserRevenue">
+        UPDATE t_merchant_user
+        SET f_revenue = #{fRevenue}
+        WHERE f_id = #{fMid};
+    </update>
+
+    <select id="getUserRevenue" resultType="java.lang.Double">
+        SELECT f_revenue
+        FROM t_merchant_user
+        WHERE f_id = #{fMid};
     </select>
 
 

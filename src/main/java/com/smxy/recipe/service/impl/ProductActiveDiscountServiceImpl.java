@@ -12,10 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Demo ProductActiveDiscountServiceImpl
@@ -71,14 +68,21 @@ public class ProductActiveDiscountServiceImpl implements ProductActiveDiscountSe
 
     @Override
     public Map<String, Object> getProductActiveDiscountListByMid(Integer fMid, HttpServletRequest httpServletRequest) {
-        int page = Integer.parseInt(httpServletRequest.getParameter("page"));
-        int limit = Integer.parseInt(httpServletRequest.getParameter("limit"));
-        int startIndex = (page - 1) * limit;
-        int endIndex = page * limit;
         Map<String, Object> forSqlMap = new HashMap<>(8);
         Map<String, Object> resultMap = new HashMap<>(8);
         forSqlMap.put("fMid", fMid);
         List<ProductActiveDiscount> productActiveDiscountList = productActiveDiscountDao.selectAllDiscountProductByMid(forSqlMap);
+        if (httpServletRequest.getParameter("page") == null || httpServletRequest.getParameter("limit") == null) {
+            resultMap.put("data", productActiveDiscountList);
+            resultMap.put("count", productActiveDiscountList.size());
+            resultMap.put("code", ResApi.getSuccess().getCode());
+            resultMap.put("msg", ResApi.getSuccess().getMsg());
+            return resultMap;
+        }
+        int page = Integer.parseInt(httpServletRequest.getParameter("page"));
+        int limit = Integer.parseInt(httpServletRequest.getParameter("limit"));
+        int endIndex = page * limit;
+        int startIndex = (page - 1) * limit;
         if (endIndex > productActiveDiscountList.size()) {
             resultMap.put("data", productActiveDiscountList.subList(startIndex, productActiveDiscountList.size()));
         } else {

@@ -15,51 +15,31 @@
                         <div class="layui-card-header"><i class="layui-icon layui-icon-app"></i> 商品</div>
                         <div class="layui-card-body">
                             <div class="info-num" style="background-color: #009688">
-                                <span>0</span>
-                            </div>
-                            <div class="info-msg" style="padding: 0px;">
-                                售中商品：<span>0</span><br>
-                                售中商品：<span>0</span><br>
-                                售中商品：<span>0</span>
+                                <span id="productCount">0</span>
                             </div>
                         </div>
                     </div>
                     <div class="layui-card">
-                        <div class="layui-card-header"><i class="layui-icon layui-icon-ok"></i> 待处理订单</div>
+                        <div class="layui-card-header"><i class="layui-icon layui-icon-ok"></i> 订单数</div>
                         <div class="layui-card-body">
                             <div class="info-num" style="background-color: #5FB878">
-                                <span>0</span>
-                            </div>
-                            <div class="info-msg" style="padding: 0px;">
-                                待发货：<span>0</span><br>
-                                待收货：<span>0</span><br>
-                                退款中：<span>0</span>
+                                <span id="orderCount">0</span>
                             </div>
                         </div>
                     </div>
                     <div class="layui-card">
                         <div class="layui-card-header"><i class="layui-icon layui-icon-rmb"></i> 交易额</div>
                         <div class="layui-card-body">
-                            <div class="info-num" style="background-color: #393D49; color: #FFFFFF; font-size: 20px;">
-                                ￥<span>1w</span>
-                            </div>
-                            <div class="info-msg" style="padding: 0px;">
-                                已到账：<span>0</span><br>
-                                未到账：<span>0</span><br>
-                                已退款：<span>0</span>
+                            <div class="info-num" style="background-color: #393D49; color: #FFFFFF; font-size: 20px;width: auto">
+                                ￥<span id="money"></span>
                             </div>
                         </div>
                     </div>
                     <div class="layui-card">
-                        <div class="layui-card-header"><i class="layui-icon layui-icon-speaker"></i> 消息</div>
+                        <div class="layui-card-header"><i class="layui-icon layui-icon-speaker"></i> 客户总数</div>
                         <div class="layui-card-body">
                             <div class="info-num" style="background-color: #1E9FFF">
-                                <span>0</span>
-                            </div>
-                            <div class="info-msg" style="padding: 0px;">
-                                好评：<span >0</span><br>
-                                中评：<span>0</span><br>
-                                 差评：<span>0</span>
+                                <span id="userCount">0</span>
                             </div>
                         </div>
                     </div>
@@ -71,47 +51,33 @@
                             <div class="layui-col-md3">
                                 <div class="layui-card">
                                     <div class="layui-card-img">
-                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt=""></a>
+                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt="" id="pro_img_1"></a>
                                     </div>
-                                    <div class="layui-card-header"><a href="">卡片面板</a></div>
-                                    <div class="layui-card-body">
-                                        卡片式面板面板通常用于非白色背景色的主体内<br>
-                                        从而映衬出边框投影
-                                    </div>
+                                    <div class="layui-card-header"><a href="" id="pro_name_1">卡片面板</a></div>
                                 </div>
                             </div>
                             <div class="layui-col-md3">
                                 <div class="layui-card">
                                     <div class="layui-card-img">
-                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt=""></a>
+                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt="" id="pro_img_2"></a>
                                     </div>
-                                    <div class="layui-card-header"><a href="">卡片面板</a></div>
-                                    <div class="layui-card-body">
-                                        卡片式面板面板通常用于非白色背景色的主体内<br>
-                                        从而映衬出边框投影
-                                    </div>
+                                    <div class="layui-card-header"><a href="" id="pro_name_2">卡片面板</a></div>
                                 </div>
                             </div>
                             <div class="layui-col-md3">
                                 <div class="layui-card">
                                     <div class="layui-card-img">
-                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt=""></a>
+                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt="" id="pro_img_3"></a>
                                     </div>
-                                    <div class="layui-card-header"><a href="">卡片面板</a></div>
-                                    <div class="layui-card-body">
-                                        卡片式面板面板通常用于非白色背景色的主体内<br>
-                                        从而映衬出边框投影
-                                    </div>
+                                    <div class="layui-card-header"><a href="" id="pro_name_3">卡片面板</a></div>
                                 </div>
                             </div>
                             <div class="layui-col-md3">
                                 <div class="layui-card">
                                     <div class="layui-card-img">
-                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt=""></a>
+                                        <a href=""><img th:src="@{/src/images/merchant/timg.jpg}" alt="" id="pro_img_4"></a>
                                     </div>
-                                    <div class="layui-card-header"><a href="">卡片面板</a></div>
-                                    <div class="layui-card-body">
-                                    </div>
+                                    <div class="layui-card-header"><a href="" id="pro_name_4">卡片面板</a></div>
                                 </div>
                             </div>
                         </div>

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Demo MerchantUserServiceImpl
@@ -40,12 +41,18 @@ public class MerchantUserServiceImpl implements MerchantUserService {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final MerchantChatDao merchantChatDao;
     private final CommonUserDao commonUserDao;
+    private final MerchantUserCommonUserDao merchantUserCommonUserDao;
+    private final MerchantProductDao merchantProductDao;
+    private final MerchantOrderDao merchantOrderDao;
+    private final MerchantViewsDao merchantViewsDao;
     private final MerchantUserLinkmanDao merchantUserLinkmanDao;
 
     private static final String MERCHANT_LOGIN_TYPE = LoginType.MERCHANT.toString();
 
+
     @Autowired
     public MerchantUserServiceImpl(MerchantUserDao merchantUserDao, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao, SimpMessagingTemplate simpMessagingTemplate, MerchantChatDao merchantChatDao, CommonUserDao commonUserDao, MerchantUserLinkmanDao merchantUserLinkmanDao) {
+    public MerchantUserServiceImpl(MerchantUserDao merchantUserDao, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao, SimpMessagingTemplate simpMessagingTemplate, MerchantChatDao merchantChatDao, CommonUserDao commonUserDao, MerchantUserCommonUserDao merchantUserCommonUserDao, MerchantProductDao merchantProductDao, MerchantOrderDao merchantOrderDao, MerchantViewsDao merchantViewsDao) {
         this.merchantUserDao = merchantUserDao;
         this.adminUserRoleDao = adminUserRoleDao;
         this.adminRoleDao = adminRoleDao;
@@ -54,6 +61,10 @@ public class MerchantUserServiceImpl implements MerchantUserService {
         this.merchantChatDao = merchantChatDao;
         this.commonUserDao = commonUserDao;
         this.merchantUserLinkmanDao = merchantUserLinkmanDao;
+        this.merchantUserCommonUserDao = merchantUserCommonUserDao;
+        this.merchantProductDao = merchantProductDao;
+        this.merchantOrderDao = merchantOrderDao;
+        this.merchantViewsDao = merchantViewsDao;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(MerchantUserServiceImpl.class);
@@ -98,6 +109,8 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             int result = merchantUserDao.updateUserCoverById(map);
             if (result > 0) {
                 subject.getSession().setAttribute("merUser", merchantUserDao.getMerchantUserById(fId));
+                MerchantUser newUser = (MerchantUser) subject.getPrincipal();
+                newUser.setFCover(filename);
                 return ResApi.getSuccess();
             } else {
                 return ResApi.getError();
@@ -214,7 +227,6 @@ public class MerchantUserServiceImpl implements MerchantUserService {
 
     @Override
     public ResApi<String> editorUserPassword(String fPassword, String oldPassword, Integer fId) {
-        System.out.println(oldPassword + "f" + fPassword);
         Map<String, Object> map = new HashMap<>(8);
         MerchantUser merchantUser = merchantUserDao.getMerchantUserById(fId);
         String oldPass = ToolsApi.entryptBySaltMd5(oldPassword, merchantUser.getFAccount());
@@ -234,8 +246,20 @@ public class MerchantUserServiceImpl implements MerchantUserService {
     }
 
     @Override
-    public ResApi<String> getIndexData(Integer userId) {
-        return null;
+    public ResApi<Object> getIndexData(Integer userId) {
+        JSONObject result = new JSONObject();
+        if (userId == null) {
+            return new ResApi<>(500, "error", null);
+        }
+        List<MerchantOrder> finishedOrderList = merchantOrderDao.getOrderByTypeAndIdGroupByuserId(userId, 1);
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(userId);
+        List<MerchantOrder> merchantOrderList = merchantOrderDao.getOrderByUserId(userId);
+
+        result.put("userCount", finishedOrderList.size());
+        result.put("productCount", merchantUser.getMerchantUserProducts().size());
+        result.put("orderCount", merchantOrderList.size());
+        result.put("revenue", merchantUser.getFRevenue());
+        return new ResApi<>(200, "success", result);
     }
 
     @Override
@@ -343,8 +367,11 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             return ResApi.getError();
         }
         merchantUserById.setFShopname(shopName);
+        Subject subject = SecurityUtils.getSubject();
         Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
         if (result > 0) {
+            MerchantUser newUser = (MerchantUser) subject.getPrincipal();
+            newUser.setFShopname(shopName);
             return ResApi.getSuccess();
         } else {
             return ResApi.getError();
@@ -360,7 +387,10 @@ public class MerchantUserServiceImpl implements MerchantUserService {
         }
         merchantUserById.setFSignature(shopSign);
         Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
+        Subject subject = SecurityUtils.getSubject();
         if (result > 0) {
+            MerchantUser newUser = (MerchantUser) subject.getPrincipal();
+            newUser.setFSignature(shopSign);
             return ResApi.getSuccess();
         } else {
             return ResApi.getError();
@@ -380,7 +410,13 @@ public class MerchantUserServiceImpl implements MerchantUserService {
         merchantUserById.setFArea("".equals(address[2]) ? "" : address[2]);
         merchantUserById.setFStreet("".equals(address[3]) ? "" : address[3]);
         Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
+        Subject subject = SecurityUtils.getSubject();
         if (result > 0) {
+            MerchantUser newUser = (MerchantUser) subject.getPrincipal();
+            newUser.setFProvince("".equals(address[0]) ? "" : address[0]);
+            newUser.setFCity("".equals(address[1]) ? "" : address[1]);
+            newUser.setFArea("".equals(address[2]) ? "" : address[2]);
+            newUser.setFStreet("".equals(address[3]) ? "" : address[3]);
             return ResApi.getSuccess();
         } else {
             return ResApi.getError();
@@ -396,11 +432,126 @@ public class MerchantUserServiceImpl implements MerchantUserService {
         }
         merchantUserById.setFBirth(birthday);
         Integer result = merchantUserDao.updateMerchantUserInfo(merchantUserById);
+        Subject subject = SecurityUtils.getSubject();
+        if (result > 0) {
+            MerchantUser newUser = (MerchantUser) subject.getPrincipal();
+            newUser.setFBirth(birthday);
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+    }
+
+    @Override
+    public ResApi<Object> getViewsCount(Integer fMid) {
+        Integer viewCount = merchantViewsDao.getViewsCountByMerchantId(fMid);
+        return ResApi.getSuccess(viewCount);
+    }
+
+    @Override
+    public ResApi<JSONObject> getViewsCountByWeek(Integer fMid) {
+        JSONObject result = new JSONObject();
+        List<MerchantViews> merchantViewsList = merchantViewsDao.getViewWeekByMerchantId(fMid, ToolsApi.getPast7DayTime(7), ToolsApi.getCurrentYYYYMMDDTime());
+        List<String> weekDays = new ArrayList<>();
+        List<Integer> weekCounts = new ArrayList<>();
+        for (MerchantViews merchantViews : merchantViewsList) {
+            weekDays.add(merchantViews.getFTime());
+            weekCounts.add(merchantViews.getFCount());
+        }
+        result.put("time", weekDays);
+        result.put("count", weekCounts);
+        return new ResApi<>(200, "success", result);
+    }
+
+    @Override
+    public ResApi<String> editorUserAccount(Integer userId, JSONObject params) {
+        String oldAccount = merchantUserDao.getMerchantUserById(userId).getFAccount();
+        String oldAccountFromParams = params.getString("oldAccount");
+        if (!oldAccount.equals(oldAccountFromParams)) {
+            return ResApi.getError();
+        }
+        String newAccount = params.getString("newAccount");
+        Integer result = merchantUserDao.updateUserAccountById(userId, newAccount);
         if (result > 0) {
             return ResApi.getSuccess();
         } else {
             return ResApi.getError();
         }
+    }
+
+    @Override
+    public void saveMerchantViewsCount() {
+        List<Integer> merchantIdList = merchantUserDao.getAllMerchantId();
+        List<Integer> merchantViewIdList = merchantViewsDao.getAllViewsMerchantId();
+        List<Integer> merIdList = new ArrayList<>();
+        List<MerchantViews> viewsList = new ArrayList<>();
+        for (Integer merid : merchantIdList) {
+            if (!merchantViewIdList.contains(merid)) {
+                //添加所有在访问量表中未包含的id
+                merIdList.add(merid);
+            }
+        }
+        //插入访问表中不存在的商家访问量信息
+        synchronized (this) {
+            List<MerchantUser> merchantUserList = merchantUserDao.getMerchantUserByIds(merIdList);
+            for (MerchantUser user : merchantUserList) {
+                viewsList.add(new MerchantViews(user.getFCount(), ToolsApi.getCurrentYYYYMMDDTime(), user.getFId()));
+            }
+            Integer result = merchantViewsDao.insertViewsList(viewsList);
+        }
+
+        //新增访问量表中已存在的商家访问量信息
+        synchronized (this) {
+            List<MerchantUser> existMerchantUserList = merchantUserDao.getMerchantUserByIds(merchantViewIdList);
+            List<MerchantViews> yesterDayViews = merchantViewsDao.getViewsCountByMerchantIdsAndTime(merchantViewIdList, ToolsApi.getYesterdayYYYYMMDDTIme(), ToolsApi.getYesterdayYYYYMMDDTIme());
+            List<MerchantViews> addViewsList = new ArrayList<>();
+            Map<Integer, Integer> userIdMap = existMerchantUserList.stream().collect(Collectors.toMap(MerchantUser::getFId, MerchantUser::getFCount));
+            Map<Integer, Integer> viewsIdMap = yesterDayViews.stream().collect(Collectors.toMap(MerchantViews::getFMid, MerchantViews::getFCount));
+            for (Integer userid : viewsIdMap.keySet()) {
+                int count = userIdMap.get(userid) - viewsIdMap.get(userid);
+                addViewsList.add(new MerchantViews(count, ToolsApi.getCurrentYYYYMMDDTime(), userid));
+            }
+            Integer result = merchantViewsDao.insertViewsList(addViewsList);
+        }
+    }
+
+    @Override
+    public ResApi<Object> getMerchantUserCount(Integer fMid) {
+        List<MerchantOrder> finishedOrderList = merchantOrderDao.getOrderByTypeAndIdGroupByuserId(fMid, 1);
+        return new ResApi<>(200, "success", finishedOrderList.size());
+    }
+
+    @Override
+    public ResApi<Object> getMerchantFansCount(Integer fMid) {
+        return new ResApi<>(200, "success", merchantUserCommonUserDao.getUserCountById(fMid).size());
+    }
+
+    @Override
+    public ResApi<Object> getMerchantFansUser(Integer fMid) {
+        List<CommonUser> commonUserList = merchantUserCommonUserDao.getUserCountById(fMid);
+        return new ResApi<>(200, "success", commonUserList);
+    }
+
+    @Override
+    public ResApi<String> saveWithdrawMoney(Integer fMid, Double money) {
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserByIdBrief(fMid);
+        if (merchantUser.getFRevenue() < money) {
+            return new ResApi<>(505, "error", "没有这么多钱，小伙子别贪心啊！");
+        }
+        double withdraw = merchantUser.getFRevenue() - money;
+        Integer result = merchantUserDao.updateUserWithdraw(fMid, money);
+        Integer result1 = merchantUserDao.updateUserRevenue(fMid, withdraw);
+        if (result > 0 && result1 > 0) {
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+
+    }
+
+    @Override
+    public ResApi<Object> getUserWithdraw(Integer fMid) {
+        return new ResApi<>(200, "success", merchantUserDao.getUserRevenue(fMid));
     }
 
 

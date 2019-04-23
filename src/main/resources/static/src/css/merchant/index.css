@@ -258,7 +258,7 @@ div.clear-float{
     margin: 15px 10px;
     display: inline-block;
     width: 200px;
-    height: 200px;
+    height: 125px;
     vertical-align: top;
 }
 .merchant-info .layui-card .info-num{

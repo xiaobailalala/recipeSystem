@@ -18,7 +18,15 @@
         SELECT *
         FROM t_merchant_order
         WHERE f_meruser_id = #{userId}
-          AND f_type = #{fType};
+          AND f_type = #{fType}
+    </select>
+
+    <select id="getOrderByTypeAndIdGroupByuserId" resultMap="getOrderMarqueInfo">
+        SELECT COUNT(*)
+        FROM t_merchant_order
+        WHERE f_meruser_id = #{userId}
+          AND f_type = #{fType}
+        GROUP BY f_user_id;
     </select>
 
     <select id="getOrderById" resultMap="getOrderMarqueInfo">
@@ -39,7 +47,7 @@
     <select id="getOrderByUserId" resultMap="getOrderMarqueInfo">
         SELECT *
         FROM t_merchant_order
-        WHERE f_meruser_id = #{userId};
+        WHERE f_meruser_id = #{merId};
     </select>
 
     <select id="getOrderByUserIdAndStateAndType" resultMap="getOrderMarqueInfo">

@@ -27,7 +27,7 @@ public class MerchantMobController {
     }
 
     @GetMapping("/getIndexData/{userId}")
-    public ResApi<String> getIndexData(@PathVariable("userId") Integer userId) {
+    public ResApi<Object> getIndexData(@PathVariable("userId") Integer userId) {
         return merchantUserService.getIndexData(userId);
     }
 

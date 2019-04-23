@@ -5,6 +5,8 @@
     <select id="getAllProduct" resultMap="getMerchantProductDetails">
         SELECT *
         FROM t_merchant_product
+        WHERE f_state = '上架'
+        AND f_review = '审核成功'
         ORDER BY f_id ASC;
     </select>
     <resultMap id="getMerchantProductDetails" type="com.smxy.recipe.entity.MerchantProduct">
@@ -17,6 +19,12 @@
         <collection
                 property="merchantProductDetails" column="f_id"
                 select="com.smxy.recipe.dao.MerchantProductDetailsDao.getProductDetailsByPid">
+        </collection>
+        <collection property="productActiveReduction" column="f_id"
+                    select="com.smxy.recipe.dao.ProductActiveReductionDao.selectActiveReductionByPid">
+        </collection>
+        <collection property="productActiveDiscount" column="f_id"
+                    select="com.smxy.recipe.dao.ProductActiveDiscountDao.selectProductActiveDiscountByPId">
         </collection>
     </resultMap>
 
@@ -93,4 +101,12 @@
                 #{fDiscount},
                 #{fReduction});
     </insert>
+
+    <select id="getProductByClaid" parameterType="String" resultMap="getMerchantProductDetails">
+        SELECT *
+        FROM t_merchant_product
+        where f_state = '上架'
+          and f_review = '审核成功'
+          and f_category = #{claName};
+    </select>
 </mapper>
