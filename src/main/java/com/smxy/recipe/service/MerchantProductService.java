@@ -135,4 +135,6 @@ public interface MerchantProductService {
     ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, Integer userId);
 
     ResApi<String> changeState(Integer id, String state);
+
+    ResApi<Object> mobIndex();
 }

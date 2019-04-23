@@ -50,4 +50,5 @@ public class MerchantChat {
     private Integer fUser;
     private CommonUser commonUser;
     private MerchantUser merchantUser;
+    private String fDatetime;
 }

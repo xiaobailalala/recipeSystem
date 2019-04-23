@@ -170,4 +170,17 @@ public class FastDfsClient {
         }
     }
 
+
+    public static void main(String[] args) {
+        String str = "用户管理-user management-Người dùng quản lý.&&昵称-nickname-Biệt danh.&&用户-user-Người dùng&&用户账号-user account-Tài khoản người dùng&&用户密码-user password-Người dùng mật mã.&&分配角色-assign roles-Phân vai&&权限分配-permission assignment-Quyền phân phối&&角色-role-Nhân vật&&请选择-please choose-Hãy lựa chọn.&&新增角色-new role-Thêm nhân vật&&角色名称-role name-Tên nhân vật&&编辑-edit-Biên tập.&&删除-delete-Xoá&&信息-information-Thông tin&&确认删除此角色吗-are you sure you delete this role-Xác nhận xóa bỏ vai trò này không&&权限-jurisdiction-Quyền hạn&&角色管理-role management-Vai trò của quản lý.&&菜单管理-menu management-Quản lý thực đơn&&新增一级菜单-new first-level nenu-Thêm một thực đơn&&名称-name-Tên&&路径-route-Đường dẫn&&保存一级菜单-save first-level menu-Lưu một thực đơn&&必填项不能为空-necessary items should not be blank-hạng không rỗng&&登录-sign in-Đăng nhập&&操作成功-successful operation-Chiến dịch thành công.&&操作失败-failed operation-Chiến dịch thất bại.";
+        String[] arrGroup = str.split("&&");
+        StringBuilder result = new StringBuilder();
+        for (String s : arrGroup) {
+            String[] arrContent = s.split("-");
+            result.append("\"").append(arrContent[0]).append("\": {\"cn\": \"").append(arrContent[0]).append("\", \"en\": \"").append(arrContent[1]).append("\", \"vn\": \"").append(arrContent[2]).append("\"},");
+        }
+        System.out.println(result.toString().substring(0, result.toString().length() - 1));
+
+    }
+
 }

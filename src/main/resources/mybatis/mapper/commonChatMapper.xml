@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.CommonChatDao">
     <insert id="saveInfo" parameterType="CommonChat" keyProperty="fId" useGeneratedKeys="true">
-        insert into t_common_chat (f_content, f_release, f_uid, f_oid, f_state, f_url, f_type, f_long)
-        values (#{fContent}, #{fRelease}, #{fUid}, #{fOid}, #{fState}, #{fUrl}, #{fType}, #{fLong});
+        insert into t_common_chat (f_content, f_release, f_uid, f_oid, f_state, f_url, f_type, f_long,f_datetime)
+        values (#{fContent}, #{fRelease}, #{fUid}, #{fOid}, #{fState}, #{fUrl}, #{fType}, #{fLong}, #{fDatetime});
     </insert>
 
     <select id="findInfoByUidAndOid" resultType="CommonChat">

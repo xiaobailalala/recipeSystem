@@ -267,4 +267,33 @@ public class CommonUserServiceImpl implements CommonUserService {
     public ResApi<String> followMerchant(Integer uid, Integer mid) {
         return null;
     }
+
+    @Override
+    public Boolean isTokenLoseEfficacy(String token, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            SessionKey sessionKey = new WebSessionKey(token, request, response);
+            Session session = SecurityUtils.getSecurityManager().getSession(sessionKey);
+            Object attribute = session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+            SimplePrincipalCollection collection = (SimplePrincipalCollection) attribute;
+            CommonUser commonUser = (CommonUser) collection.getPrimaryPrincipal();
+            return commonUser != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public ResApi<Object> updateUserInfo(CommonUser commonUser) {
+        commonUserDao.updateUserInfo(commonUser);
+        return ResApi.getSuccess(commonUser);
+    }
+
+    @Override
+    public ResApi<Object> updateUserHead(MultipartFile file, String preCover) {
+        if (preCover != null) {
+            ToolsApi.multipartFileDeleteFile(preCover);
+        }
+        String path = ToolsApi.multipartFileUploadFile(file, null);
+        return ResApi.getSuccess(path);
+    }
 }

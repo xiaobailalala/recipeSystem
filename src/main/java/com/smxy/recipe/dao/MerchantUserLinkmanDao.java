@@ -23,25 +23,25 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2019/4/18 12:23
+ * Build File @date: 2019/4/21 13:54
  * @Description TODO
  * @version 1.0
  */
 package com.smxy.recipe.dao;
 
-import com.smxy.recipe.entity.MerchantChat;
+import com.smxy.recipe.entity.MerchantUserLinkman;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface MerchantChatDao {
+public interface MerchantUserLinkmanDao {
 
-    List<MerchantChat> queryMessage(MerchantChat merchantChat);
+    MerchantUserLinkman queryJudgeExist(@Param("uid") Integer uid, @Param("oid") Integer oid, @Param("user") Integer user);
 
-    Integer updateMessageState(MerchantChat merchantChat);
+    Integer updateInfo(MerchantUserLinkman merchantUserLinkman);
 
-    Integer insertMessage(MerchantChat merchantChat);
+    Integer insertInfo(MerchantUserLinkman merchantUserLinkman);
 
-    Integer queryUnreadCount(@Param("uid") Integer uid, @Param("oid") Integer oid, @Param("user") Integer user);
+    List<MerchantUserLinkman> queryInfo(MerchantUserLinkman merchantUserLinkman);
 
 }

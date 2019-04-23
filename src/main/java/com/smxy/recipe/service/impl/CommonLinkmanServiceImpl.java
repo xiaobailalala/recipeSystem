@@ -58,10 +58,10 @@ public class CommonLinkmanServiceImpl implements CommonLinkmanService {
     @Override
     public ResApi<Object> linkmanList(CommonLinkman commonLinkman) {
         List<CommonLinkman> commonLinkmen = commonLinkmanDao.queryInfo(commonLinkman);
-        commonLinkmen.forEach(item -> {
+        for (CommonLinkman item : commonLinkmen) {
             item.setFLastMsg(ToolsApi.base64Decode(item.getFLastMsg()));
             item.setFUnread(commonChatDao.queryUnreadCount(item.getFUid(), item.getFOid()));
-        });
+        }
         return ResApi.getSuccess(commonLinkmen);
     }
 }

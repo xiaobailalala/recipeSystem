@@ -96,4 +96,6 @@ public class RecipeMobController {
         return recipeService.handpickList();
     }
 
+
+
 }

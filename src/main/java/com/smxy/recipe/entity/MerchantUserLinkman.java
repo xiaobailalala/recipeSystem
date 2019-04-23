@@ -23,25 +23,34 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2019/4/18 12:23
+ * Build File @date: 2019/4/21 13:47
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.dao;
+package com.smxy.recipe.entity;
 
-import com.smxy.recipe.entity.MerchantChat;
-import org.apache.ibatis.annotations.Param;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-import java.util.List;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
+public class MerchantUserLinkman {
 
-public interface MerchantChatDao {
-
-    List<MerchantChat> queryMessage(MerchantChat merchantChat);
-
-    Integer updateMessageState(MerchantChat merchantChat);
-
-    Integer insertMessage(MerchantChat merchantChat);
-
-    Integer queryUnreadCount(@Param("uid") Integer uid, @Param("oid") Integer oid, @Param("user") Integer user);
+    private Integer fId;
+    private Integer fUid;
+    private Integer fOid;
+    private CommonUser commonUser;
+    private MerchantUser merchantUser;
+    private String fLastMsg;
+    private String fLastDate;
+    private String fLastDatetime;
+    private Integer fUnread;
+    private Integer fUser;
 
 }
+
+

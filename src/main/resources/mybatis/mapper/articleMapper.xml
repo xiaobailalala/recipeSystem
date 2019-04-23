@@ -16,6 +16,10 @@
         select * from t_food_article order by f_id desc;
     </select>
 
+    <select id="findAllInfoBrief" resultMap="getArticleDetailBrief">
+        select * from t_food_article order by f_id desc;
+    </select>
+
     <resultMap id="getArticleDetail" type="Article">
         <result column="f_uid" property="fUid"/>
         <result column="f_id" property="fId"/>

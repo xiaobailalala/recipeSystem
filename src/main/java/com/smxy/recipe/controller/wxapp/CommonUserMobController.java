@@ -11,7 +11,9 @@ package com.smxy.recipe.controller.wxapp;
 
 import com.smxy.recipe.config.template.PathRestController;
 import com.smxy.recipe.entity.CommonUser;
+import com.smxy.recipe.entity.Profession;
 import com.smxy.recipe.service.CommonUserService;
+import com.smxy.recipe.service.ProfessionService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +22,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @PathRestController("/mob/commonUser")
 public class CommonUserMobController {
 
     private final CommonUserService commonUserService;
+    private final ProfessionService professionService;
 
     @Autowired
-    public CommonUserMobController(CommonUserService commonUserService) {
+    public CommonUserMobController(CommonUserService commonUserService, ProfessionService professionService) {
         this.commonUserService = commonUserService;
+        this.professionService = professionService;
     }
 
     /**
@@ -57,8 +62,8 @@ public class CommonUserMobController {
      * @return
      */
     @PostMapping("/commonUsersaveHead")
-    public ResApi<String> commonUsersaveHead(@RequestParam("file") MultipartFile multipartFile, int img, String preImg, Integer fId){
-        return commonUserService.commonUsersaveHead(multipartFile,img,preImg, fId);
+    public ResApi<String> commonUserSaveHead(@RequestParam("file") MultipartFile multipartFile, int img, String preImg, Integer fId){
+        return commonUserService.commonUsersaveHead(multipartFile, img, preImg, fId);
     }
 
     /**
@@ -88,6 +93,11 @@ public class CommonUserMobController {
     @PostMapping("/updateCommonUserBg")
     public ResApi<Object> updateCommonUserBg(@RequestParam("file") MultipartFile multipartFile, CommonUser commonUser) {
         return commonUserService.updateCommonUserBg(multipartFile, commonUser);
+    }
+
+    @GetMapping("/getProfessionAll")
+    public ResApi<List<Profession>> getAllInfo(){
+        return professionService.getAllInfo();
     }
 
 }

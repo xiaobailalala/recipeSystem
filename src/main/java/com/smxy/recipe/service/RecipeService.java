@@ -55,4 +55,10 @@ public interface RecipeService {
     ResApi<Object> handpickList();
 
     ResApi<Object> getDataByMid(Integer mid);
+
+    ResApi<Object> randomRecipeAndArticle();
+
+    ResApi<Object> hotGroup();
+
+    ResApi<Object> getRecipeByUid(Integer fUid);
 }

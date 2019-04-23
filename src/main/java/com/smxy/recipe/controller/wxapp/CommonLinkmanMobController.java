@@ -35,6 +35,7 @@ import com.smxy.recipe.service.CommonLinkmanService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @PathRestController("/mob/linkman")
 public class CommonLinkmanMobController {
@@ -48,7 +49,6 @@ public class CommonLinkmanMobController {
 
     @PostMapping("/linkmanList")
     public ResApi<Object> linkmanList(CommonLinkman commonLinkman) {
-        System.out.println(commonLinkman.getFUid());
         return commonLinkmanService.linkmanList(commonLinkman);
     }
 

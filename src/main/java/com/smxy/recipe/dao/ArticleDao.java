@@ -41,6 +41,8 @@ public interface ArticleDao {
 
     List<Article> findAllInfo();
 
+    List<Article> findAllInfoBrief();
+
     Article findInfoById(Integer fId);
 
     List<Article> findInfoByUidBrief(Integer fUid);

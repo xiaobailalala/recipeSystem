@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantUserLinkmanDao">
+
+    <select id="queryJudgeExist" resultType="MerchantUserLinkman">
+        SELECT * FROM t_merchant_user_linkman WHERE f_uid=#{uid} AND f_oid=#{oid} AND f_user=#{user};
+    </select>
+
+    <update id="updateInfo" parameterType="MerchantUserLinkman">
+        UPDATE t_merchant_user_linkman SET f_uid=#{fUid},f_oid=#{fOid},f_last_msg=#{fLastMsg},f_last_date=#{fLastDate},f_last_datetime=#{fLastDatetime}
+        WHERE f_uid=#{fUid} AND f_oid=#{fOid} AND f_user=#{fUser};
+    </update>
+
+    <insert id="insertInfo" parameterType="MerchantUserLinkman">
+        INSERT INTO t_merchant_user_linkman (f_uid, f_oid, f_last_msg, f_last_date, f_last_datetime, f_user)
+        VALUES (#{fUid}, #{fOid}, #{fLastMsg}, #{fLastDate}, #{fLastDatetime}, #{fUser});
+    </insert>
+
+    <select id="queryInfo" parameterType="MerchantUserLinkman" resultType="MerchantUserLinkman">
+        SELECT * FROM t_merchant_user_linkman WHERE f_uid=#{fUid} AND f_user=#{fUser} ORDER BY f_last_datetime DESC;
+    </select>
+
+</mapper>

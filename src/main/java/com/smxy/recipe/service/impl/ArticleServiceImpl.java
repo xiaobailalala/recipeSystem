@@ -81,9 +81,9 @@ public class ArticleServiceImpl implements ArticleService {
         Arrays.asList(peopleArr).forEach(item -> referPeople.updateAndGet(v -> v + item + "-"));
         Arrays.asList(articleArr).forEach(item -> referArticle.updateAndGet(v -> v + item + "-"));
         Arrays.asList(recipeArr).forEach(item -> referRecipe.updateAndGet(v -> v + item + "-"));
-        article.setFReferPeople(referPeople.toString().substring(0, referPeople.toString().length() - 1));
-        article.setFReferArticle(referArticle.toString().substring(0, referArticle.toString().length() - 1));
-        article.setFReferRecipe(referRecipe.toString().substring(0, referRecipe.toString().length() - 1));
+        article.setFReferPeople(referPeople.toString().length() != 0 ? referPeople.toString().substring(0, referPeople.toString().length() - 1) : "-1");
+        article.setFReferArticle(referArticle.toString().length() != 0 ? referArticle.toString().substring(0, referArticle.toString().length() - 1) : "-1");
+        article.setFReferRecipe(referRecipe.toString().length() != 0 ? referRecipe.toString().substring(0, referRecipe.toString().length() - 1) : "-1");
         articleDao.saveInfo(article);
         return ResApi.getSuccess();
     }
@@ -92,6 +92,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ResApi<Object> uploadCover(MultipartFile multipartFile) {
         String filePath = ToolsApi.multipartFileUploadFile(multipartFile, null);
         return ResApi.getSuccess(filePath);
+//        return ResApi.getSuccess("this is a image path");
     }
 
     @Override
@@ -231,6 +232,36 @@ public class ArticleServiceImpl implements ArticleService {
         map.put("articleList", articleList);
         map.put("recipeList", recipeList);
         return ResApi.getSuccess(map);
+    }
+
+    @Override
+    public ResApi<Object> getAllInfoByPage(Integer index) {
+        List<Article> articles = new LinkedList<>();
+        List<Article> data = articleDao.findAllInfo();
+        if (index * 10 <= data.size()) {
+            articles = data.subList((index - 1) * 10, index * 10);
+        } else if ((index - 1) * 10 <= data.size()) {
+            articles = data.subList((index - 1) * 10, data.size());
+        }
+        for (Article item : articles) {
+            item.setFName(ToolsApi.base64Decode(item.getFName())).
+                    setFContent(ToolsApi.base64Decode(item.getFContent()));
+        }
+        return ResApi.getSuccess(articles);
+    }
+
+    @Override
+    public ResApi<Object> getArticleByUid(Integer fUid) {
+        List<Article> infoByUidBrief = articleDao.findInfoByUidBrief(fUid);
+        for (Article item : infoByUidBrief) {
+            item.setFContent(ToolsApi.base64Decode(item.getFContent())).setFName(ToolsApi.base64Decode(item.getFName()));
+        }
+        return ResApi.getSuccess(infoByUidBrief);
+    }
+
+    @Override
+    public ResApi<Object> referArticle() {
+        return ResApi.getSuccess(articleDao.findAllInfoBrief());
     }
 
 }

@@ -439,4 +439,18 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         merchantProductDao.updateProductReviewById(state, id);
         return ResApi.getSuccess();
     }
+
+    @Override
+    public ResApi<Object> mobIndex() {
+        Map<String, Object> map = new HashMap<>(8);
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        Collections.shuffle(allProduct);
+        List<MerchantProduct> hot = new LinkedList<>(allProduct);
+        map.put("allArr", allProduct);
+        allProduct.sort((o1, o2) -> o2.getFAddtime().compareTo(o1.getFAddtime()));
+        map.put("newArr", allProduct.subList(0, 8));
+        hot.sort((o1, o2) -> o2.getFGood().compareTo(o1.getFGood()));
+        map.put("hotArr", hot.subList(0, 8));
+        return ResApi.getSuccess(map);
+    }
 }

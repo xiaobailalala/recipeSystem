@@ -52,4 +52,10 @@ public interface ArticleService {
     ResApi<Object> handpickList();
 
     ResApi<Object> getInfoAndRecipeList();
+
+    ResApi<Object> getAllInfoByPage(Integer index);
+
+    ResApi<Object> getArticleByUid(Integer fUid);
+
+    ResApi<Object> referArticle();
 }

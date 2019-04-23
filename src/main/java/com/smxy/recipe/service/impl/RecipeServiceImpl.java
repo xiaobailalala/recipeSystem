@@ -408,6 +408,44 @@ public class RecipeServiceImpl implements RecipeService {
         return ResApi.getSuccess(map);
     }
 
+    @Override
+    public ResApi<Object> randomRecipeAndArticle() {
+        List<Recipe> recipes = recipeDao.getAllInfoBre();
+        List<Article> articles = articleDao.findAllInfo();
+        recipes.sort((o1, o2) -> o2.getFCount().compareTo(o1.getFCount()));
+        articles.sort((o1, o2) -> o2.getFCount().compareTo(o1.getFCount()));
+        List<Object> objects = new LinkedList<>(recipes.subList(0, 4));
+        objects.addAll(articles.subList(0, 4));
+        Collections.shuffle(objects);
+        return ResApi.getSuccess(objects);
+    }
+
+    @Override
+    public ResApi<Object> hotGroup() {
+        Map<String, Object> data = new HashMap<>(8);
+        List<Article> articles = articleDao.findAllInfo();
+        articles.sort((o1, o2) -> o2.getFCount().compareTo(o1.getFCount()));
+        if (articles.size() > 10) {
+            articles = articles.subList(0, 10);
+        }
+        for (Article article : articles) {
+            article.setFName(ToolsApi.base64Decode(article.getFName()));
+            article.setFContent(ToolsApi.base64Decode(article.getFContent()));
+        }
+        List<Recipe> recipes = recipeDao.getAllInfo();
+        recipes.sort((o1, o2) -> o2.getFCount().compareTo(o1.getFCount()));
+        recipes = recipes.subList(0, 9);
+        data.put("recipe", recipes);
+        data.put("article", articles);
+        return ResApi.getSuccess(data);
+    }
+
+    @Override
+    public ResApi<Object> getRecipeByUid(Integer fUid) {
+        List<Recipe> info = recipeDao.getInfoByUidBrief(fUid);
+        return ResApi.getSuccess(info);
+    }
+
     private List<Recipe> randomRecipe(List<Recipe> recipeList, int num){
         int[] index = ToolsApi.randomArray(0, recipeList.size()-1, num);
         List<Recipe> recipes = new ArrayList<>();

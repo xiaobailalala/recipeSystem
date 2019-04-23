@@ -12,8 +12,12 @@
     </update>
 
     <insert id="insertMessage" parameterType="MerchantChat">
-        INSERT INTO t_merchant_chat (f_content, f_release, f_uid, f_oid, f_state, f_url, f_type, f_user)
-        VALUES (#{fContent}, #{fRelease}, #{fUid}, #{fOid}, #{fState}, #{fUrl}, #{fType}, #{fUser});
+        INSERT INTO t_merchant_chat (f_content, f_release, f_uid, f_oid, f_state, f_url, f_type, f_user, f_datetime)
+        VALUES (#{fContent}, #{fRelease}, #{fUid}, #{fOid}, #{fState}, #{fUrl}, #{fType}, #{fUser}, #{fDatetime});
     </insert>
+
+    <select id="queryUnreadCount" resultType="integer">
+        SELECT COUNT(*) FROM t_merchant_chat WHERE f_uid=#{oid} AND f_oid=#{uid} AND f_state=0 AND f_user=#{user};
+    </select>
 
 </mapper>

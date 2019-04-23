@@ -23,25 +23,31 @@
  *
  * @Package:
  * @author: zpx
- * Build File @date: 2019/4/18 12:23
+ * Build File @date: 2019/4/23 10:27
  * @Description TODO
  * @version 1.0
  */
-package com.smxy.recipe.dao;
+package com.smxy.recipe.controller.wxapp;
 
-import com.smxy.recipe.entity.MerchantChat;
-import org.apache.ibatis.annotations.Param;
+import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.service.MerchantProductService;
+import com.smxy.recipe.utils.ResApi;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
+@PathRestController("/mob/merchant")
+public class MerchantMobWxController {
 
-public interface MerchantChatDao {
+    private final MerchantProductService merchantProductService;
 
-    List<MerchantChat> queryMessage(MerchantChat merchantChat);
+    @Autowired
+    public MerchantMobWxController(MerchantProductService merchantProductService) {
+        this.merchantProductService = merchantProductService;
+    }
 
-    Integer updateMessageState(MerchantChat merchantChat);
-
-    Integer insertMessage(MerchantChat merchantChat);
-
-    Integer queryUnreadCount(@Param("uid") Integer uid, @Param("oid") Integer oid, @Param("user") Integer user);
+    @GetMapping("/index")
+    public ResApi<Object> index() {
+        return merchantProductService.mobIndex();
+    }
 
 }

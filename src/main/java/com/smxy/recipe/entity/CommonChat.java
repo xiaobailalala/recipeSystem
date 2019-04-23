@@ -48,4 +48,5 @@ public class CommonChat {
     private String fUrl;
     private Integer fType;
     private Integer fLong;
+    private String fDatetime;
 }

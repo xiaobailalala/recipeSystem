@@ -1,14 +1,13 @@
 package com.smxy.recipe.controller.merchantapp;
 
 import com.smxy.recipe.config.template.PathRestController;
+import com.smxy.recipe.entity.CommonLinkman;
 import com.smxy.recipe.entity.MerchantChat;
+import com.smxy.recipe.entity.MerchantUserLinkman;
 import com.smxy.recipe.service.MerchantUserService;
 import com.smxy.recipe.utils.ResApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -33,7 +32,7 @@ public class MerchantMobController {
     }
 
     @PostMapping("/toChatSwitch")
-    public ResApi<String> toMerchantSwitch(@RequestParam(value = "file", required = false)MultipartFile file,
+    public ResApi<Object> toMerchantSwitch(@RequestParam(value = "file", required = false)MultipartFile file,
                                            MerchantChat merchantChat) {
         return merchantUserService.toMerchantSwitch(file, merchantChat);
     }
@@ -46,6 +45,11 @@ public class MerchantMobController {
     @PostMapping("/changeChatRead")
     public ResApi<String> changeChatRead(MerchantChat merchantChat) {
         return merchantUserService.changeChatRead(merchantChat);
+    }
+
+    @PostMapping("/linkmanList")
+    public ResApi<Object> linkmanList(@RequestBody MerchantUserLinkman merchantUserLinkman) {
+        return merchantUserService.linkmanList(merchantUserLinkman);
     }
 
 }

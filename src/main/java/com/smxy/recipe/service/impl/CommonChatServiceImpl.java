@@ -32,6 +32,7 @@ package com.smxy.recipe.service.impl;
 import com.smxy.recipe.dao.CommonChatDao;
 import com.smxy.recipe.dao.CommonChatUnreadDao;
 import com.smxy.recipe.dao.CommonLinkmanDao;
+import com.smxy.recipe.dao.CommonUserDao;
 import com.smxy.recipe.entity.CommonChat;
 import com.smxy.recipe.entity.CommonLinkman;
 import com.smxy.recipe.service.CommonChatService;
@@ -55,14 +56,16 @@ public class CommonChatServiceImpl implements CommonChatService {
     private final CommonChatUnreadDao commonChatUnreadDao;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final CommonLinkmanDao commonLinkmanDao;
+    private final CommonUserDao commonUserDao;
 
     @Autowired
-    public CommonChatServiceImpl(CommonChatDao commonChatDao, RabbitTemplate rabbitTemplate, CommonChatUnreadDao commonChatUnreadDao, SimpMessagingTemplate simpMessagingTemplate, CommonLinkmanDao commonLinkmanDao) {
+    public CommonChatServiceImpl(CommonChatDao commonChatDao, RabbitTemplate rabbitTemplate, CommonChatUnreadDao commonChatUnreadDao, SimpMessagingTemplate simpMessagingTemplate, CommonLinkmanDao commonLinkmanDao, CommonUserDao commonUserDao) {
         this.commonChatDao = commonChatDao;
         this.rabbitTemplate = rabbitTemplate;
         this.commonChatUnreadDao = commonChatUnreadDao;
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.commonLinkmanDao = commonLinkmanDao;
+        this.commonUserDao = commonUserDao;
     }
 
     @Override
@@ -72,16 +75,24 @@ public class CommonChatServiceImpl implements CommonChatService {
         } else {
             commonChat.setFUrl(ToolsApi.multipartFileUploadFile(file, null));
         }
-        commonChatDao.saveInfo(commonChat);
+        String dateTime = System.currentTimeMillis()+"";
+        commonChatDao.saveInfo(commonChat.setFDatetime(dateTime));
         String[] timeArr = commonChat.getFRelease().split(" ");
         CommonLinkman commonLinkman = new CommonLinkman().setFUid(commonChat.getFUid()).
                 setFOid(commonChat.getFOid()).setFLastMsg(commonChat.getFType() == 0 ? commonChat.getFContent() :
                 (commonChat.getFType() == 1 ? ToolsApi.base64Encode("[语音]") : ToolsApi.base64Encode("[图片]"))).
-                setFLastTime(timeArr[1]).setFLastDate(timeArr[0]).setFLastDatetime(System.currentTimeMillis()+"");
-        if (commonLinkmanDao.queryJudgeExist(commonChat.getFUid(), commonChat.getFOid()) != null) {
-            commonLinkmanDao.updateInfo(commonLinkman);
-        } else {
-            commonLinkmanDao.insertInfo(commonLinkman);
+                setFLastTime(timeArr[1]).setFLastDate(timeArr[0]).setFLastDatetime(dateTime);
+        synchronized (this) {
+            if (commonLinkmanDao.queryJudgeExist(commonChat.getFUid(), commonChat.getFOid()) != null) {
+                commonLinkmanDao.updateInfo(commonLinkman);
+            } else {
+                commonLinkmanDao.insertInfo(commonLinkman);
+            }
+            if (commonLinkmanDao.queryJudgeExist(commonChat.getFOid(), commonChat.getFUid()) != null) {
+                commonLinkmanDao.updateInfo(commonLinkman.setFUid(commonChat.getFOid()).setFOid(commonChat.getFUid()));
+            } else {
+                commonLinkmanDao.insertInfo(commonLinkman.setFUid(commonChat.getFOid()).setFOid(commonChat.getFUid()));
+            }
         }
         simpMessagingTemplate.convertAndSend("/chat/userMsg/" + commonChat.getFOid(), commonChat.setFContent(ToolsApi.base64Decode(commonChat.getFContent())));
         return ResApi.getSuccess(commonChat);
@@ -89,6 +100,7 @@ public class CommonChatServiceImpl implements CommonChatService {
 
     @Override
     public ResApi<Object> showMessage(Integer uid, Integer oid) {
+        Map<String, Object> data = new HashMap<>(8);
         List<CommonChat> commonChats = new LinkedList<>(commonChatDao.findInfoByUidAndOid(uid, oid));
         commonChats.addAll(commonChatDao.findInfoByUidAndOid(oid, uid));
         commonChats.forEach(item -> {
@@ -96,9 +108,11 @@ public class CommonChatServiceImpl implements CommonChatService {
                 item.setFContent(ToolsApi.base64Decode(item.getFContent()));
             }
         });
-        commonChats.sort(Comparator.comparing(CommonChat::getFRelease));
+        commonChats.sort(Comparator.comparing(CommonChat::getFDatetime));
         this.changeChatState(uid, oid);
-        return ResApi.getSuccess(commonChats);
+        data.put("list", commonChats);
+        data.put("otherInfo", commonUserDao.getInfoByIdBrief(oid));
+        return ResApi.getSuccess(data);
     }
 
     @Override

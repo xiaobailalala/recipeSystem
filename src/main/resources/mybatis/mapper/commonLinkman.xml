@@ -4,7 +4,7 @@
 <mapper namespace="com.smxy.recipe.dao.CommonLinkmanDao">
 
     <select id="queryInfo" parameterType="CommonLinkman" resultMap="queryInfoResultMap">
-        SELECT * FROM t_common_linkman WHERE f_uid=#{fUid} OR f_oid=#{fUid} ORDER BY f_last_datetime DESC;
+        SELECT * FROM t_common_linkman WHERE f_uid=#{fUid} ORDER BY f_last_datetime DESC;
     </select>
 
     <resultMap id="queryInfoResultMap" type="CommonLinkman">
@@ -15,7 +15,7 @@
     </resultMap>
     
     <select id="queryJudgeExist" resultType="CommonLinkman">
-        SELECT * FROM t_common_linkman WHERE (f_uid=#{uid} AND f_oid=#{oid}) OR (f_uid=#{oid} AND f_oid=#{uid});
+        SELECT * FROM t_common_linkman WHERE f_uid=#{uid} AND f_oid=#{oid};
     </select>
 
     <insert id="insertInfo" parameterType="CommonLinkman">
@@ -25,7 +25,7 @@
 
     <update id="updateInfo" parameterType="CommonLinkman">
         UPDATE t_common_linkman SET f_uid=#{fUid},f_oid=#{fOid},f_last_msg=#{fLastMsg},f_last_time=#{fLastTime},f_last_date=#{fLastDate},f_last_datetime=#{fLastDatetime}
-        WHERE (f_uid=#{fUid} AND f_oid=#{fOid}) OR (f_uid=#{fOid} AND f_oid=#{fUid});
+        WHERE f_uid=#{fUid} AND f_oid=#{fOid};
     </update>
 
 </mapper>
