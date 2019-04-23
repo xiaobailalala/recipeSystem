@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantViewsDao">
+
+    <sql id="BASE_COLUMN_LIST">
+            f_count,
+            f_time,
+            f_mid
+    </sql>
+
+    <select id="getViewWeekByMerchantId" resultType="MerchantViews">
+        SELECT *
+        FROM t_merchant_views
+        WHERE f_mid = #{fMid}
+          AND f_time BETWEEN #{monday} AND #{sunday}
+        ORDER BY f_time ASC;
+    </select>
+
+    <select id="getViewsCountByMerchantId" parameterType="integer" resultType="integer">
+        SELECT COUNT(*)
+        FROM t_merchant_views
+        WHERE f_mid = #{fMid};
+    </select>
+
+    <select id="getAllViewsMerchantId" resultType="java.lang.Integer">
+        SELECT f_mid
+        FROM t_merchant_views
+        GROUP BY f_mid;
+    </select>
+
+    <insert id="insertViewsList" parameterType="java.util.List">
+        INSERT INTO t_merchant_views (f_count, f_time, f_mid)
+        VALUES
+        <foreach collection="viewsList" separator="," index="index" item="views">
+            ( #{views.fCount,jdbcType=INTEGER}, #{views.fTime,jdbcType=VARCHAR}, #{views.fMid,jdbcType=INTEGER} )
+        </foreach>
+    </insert>
+
+    <select id="getViewsCountByMerchantIdsAndTime" resultType="list">
+        SELECT * FROM t_merchant_views WHERE f_time BETWEEN #{startTime} AND #{endTime} AND f_mid IN
+        <foreach collection="idList" item="id" separator="," index="index" open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

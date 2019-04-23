@@ -2,11 +2,14 @@
 package com.smxy.recipe.dao;
 
 import com.smxy.recipe.entity.MerchantUser;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * Demo MerchantUserDao
+ *
  * @auther yangyihui
  * @date 2018/11/17 0017 21:33
  */
@@ -14,6 +17,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述: 根据商家ID查询数据
+     *
      * @param fId 商家ID
      * @return : com.smxy.recipe.entity.MerchantUser
      * @author : yangyihui
@@ -33,7 +37,7 @@ public interface MerchantUserDao {
 
 
     MerchantUser getMerchantUserByIdBrief(Integer fId);
-    
+
     /**
      * 功能描述:
      *
@@ -66,6 +70,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述: 注册商家用户
+     *
      * @param merchantUser 商家用户信息类
      * @return 数据库更新数
      * @auther: yangyihui
@@ -75,6 +80,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述:通过用户名获取商家id
+     *
      * @param fAccount 商家用户名
      * @return 数据库更新数
      * @auther: yangyihui
@@ -84,6 +90,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述: 更新商家用户的店铺名
+     *
      * @param merchantUser 商家用户实体类
      * @return
      * @auther yangyihui
@@ -93,6 +100,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述: 根据商家ID更改商家头像
+     *
      * @param map ID及头像路径集合
      * @return : java.lang.Integer
      * @author : yangyihui
@@ -102,6 +110,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述: 更新商家用户信息
+     *
      * @param merchantUser 商家用户信息类
      * @return : java.lang.Integer
      * @author : yangyihui
@@ -111,6 +120,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述: 根据ID更新用户密码
+     *
      * @param map 信息集合
      * @return : java.lang.Integer
      * @author : yangyihui
@@ -120,6 +130,7 @@ public interface MerchantUserDao {
 
     /**
      * 功能描述: 根据手机号查找用户
+     *
      * @param account 1
      * @return : com.smxy.recipe.entity.MerchantUser
      * @author : yangyihui
@@ -127,4 +138,40 @@ public interface MerchantUserDao {
      */
     MerchantUser getMerchantUserByAccount(String account);
 
+    /**
+     * 功能描述: 更新用户账号byId
+     *
+     * @param userId   1
+     * @param fAccount 3
+     * @return : java.lang.Integer
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 19:55
+     */
+    Integer updateUserAccountById(@Param("userId") Integer userId, @Param("fAccount") String fAccount);
+
+    /**
+     * 功能描述: 获取商家id
+     *
+     * @return : java.util.List<java.lang.Integer>
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 20:03
+     */
+    List<Integer> getAllMerchantId();
+
+    /**
+     * 功能描述: 通过id列表获取所有商家
+     *
+     * @param merIdList 1
+     * @return : java.util.List<com.smxy.recipe.entity.MerchantUser>
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 20:27
+     */
+    List<MerchantUser> getMerchantUserByIds(@Param("merIdList") List<Integer> merIdList);
+
+    Integer updateUserWithdraw(@Param("fMid") Integer fMid, @Param("fWithdraw") Double money);
+
+
+    Integer updateUserRevenue(@Param("fMid") Integer fMid, @Param("fRevenue") Double money);
+
+    Double getUserRevenue(Integer fMid);
 }

@@ -41,6 +41,16 @@ public interface MerchantOrderDao {
     List<MerchantOrder> getOrderByTypeAndId(@Param("userId") Integer userId, @Param("fType") Integer fType);
 
     /**
+     * 功能描述: 根据merchant_user_id type查询订单详（根据用户id 分组）
+     * @param userId 1
+     * @param fType 2
+     * @return : java.util.List<com.smxy.recipe.entity.MerchantOrder>
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 19:10
+     */
+    List<MerchantOrder> getOrderByTypeAndIdGroupByuserId(@Param("userId") Integer userId, @Param("fType") Integer fType);
+
+    /**
      * 功能描述: 根据id 查询订单详情
      * @param orderId 1
      * @return : com.smxy.recipe.entity.MerchantOrder
@@ -50,13 +60,13 @@ public interface MerchantOrderDao {
     MerchantOrder getOrderById(Integer orderId);
 
     /**
-     * 功能描述: 根据userId查询所有订单信息
-     * @param userId 1
+     * 功能描述: 根据商家用户id查询所有订单信息
+     * @param merId 1
      * @return : java.util.List<com.smxy.recipe.entity.MerchantOrder>
      * @author : yangyihui
      * @date : 2019/4/13 0013 16:28
      */
-    List<MerchantOrder> getOrderByUserId(Integer userId);
+    List<MerchantOrder> getOrderByUserId(Integer merId);
 
     /**
      * 功能描述: 根据用户id、订单状态、订单类型、查询订单详情
@@ -73,10 +83,10 @@ public interface MerchantOrderDao {
     /**
      * 功能描述: 根据订单状态和id 获取订单信息
      * @param userId 1
-     * @param fType 2
+     * @param fState 2
      * @return : java.util.List<com.smxy.recipe.entity.MerchantOrder>
      * @author : yangyihui
      * @date : 2019/4/15 19:54
      */
-    List<MerchantOrder> getOrderByStateAndId(@Param("userId") Integer userId,@Param("fType") Integer fType);
+    List<MerchantOrder> getOrderByStateAndId(@Param("userId") Integer userId,@Param("fState") Integer fState);
 }

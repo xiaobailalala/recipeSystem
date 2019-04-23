@@ -12,9 +12,8 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.web.session.mgt.WebSessionKey;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,16 +69,17 @@ public class MerchantUserMobController {
     }
 
     @PostMapping("/editorUserInfo/{id}/{type}")
-    public ResApi<String> editorUserInfo(@PathVariable("id") Integer userId, @PathVariable("type") String type, JSONObject params) {
+    public ResApi<String> editorUserInfo(@PathVariable("id") Integer userId, @PathVariable("type") String type, @RequestBody JSONObject params) {
+        JSONObject params1 = params.getJSONObject("params");
         switch (type) {
             case "name":
-                return editorShopName(userId, params);
+                return editorShopName(userId, params1);
             case "sign":
-                return editorShopSign(userId, params);
+                return editorShopSign(userId, params1);
             case "address":
-                return editorShopAddress(userId, params);
+                return editorShopAddress(userId, params1);
             case "birth":
-                return editorUserBirthday(userId, params);
+                return editorUserBirthday(userId, params1);
             default:
                 return ResApi.getError(500, "type有误");
         }
@@ -105,13 +105,57 @@ public class MerchantUserMobController {
         return merchantUserService.editorUserBirthday(userId, shopAddress);
     }
 
+    @PostMapping("/editorUserAccount/{userId}")
+    public ResApi<String> editorUserAccount(@PathVariable("userId") Integer userId, @RequestBody JSONObject params) {
+        params = params.getJSONObject("params");
+        return merchantUserService.editorUserAccount(userId, params);
+    }
+
     @PostMapping("/editorImage/{id}")
     public ResApi<String> editorImage(MultipartFile editorImage, @PathVariable("id") Integer fId, HttpServletRequest request) {
         System.out.println(editorImage.getOriginalFilename());
         return merchantUserService.editorUserCoverById(editorImage, fId, request);
     }
 
+    @PostMapping("/getViewsCount/{userId}")
+    public ResApi<Object> getViewsCount(@PathVariable("userId") Integer fMid) {
+        return merchantUserService.getViewsCount(fMid);
+    }
+
+    @PostMapping("/getViewsCountByWeek/{userId}")
+    public ResApi<JSONObject> getViewsCountByWeek(@PathVariable("userId") Integer fMid) {
+        return merchantUserService.getViewsCountByWeek(fMid);
+    }
 
 
+//    @Scheduled(cron = "0/3 * * * * *")
+    public void saveMerchantViewsCount() {
+        merchantUserService.saveMerchantViewsCount();
+    }
 
+    @GetMapping("/getMerchantUserCount/{fMid}")
+    public ResApi<Object> getMerchantUserCount(@PathVariable("fMid") Integer fMid) {
+        return merchantUserService.getMerchantUserCount(fMid);
+    }
+
+    @GetMapping("/getMerchantFansCount/{fMid}")
+    public ResApi<Object> getMerchantFansCount(@PathVariable("fMid") Integer fMid) {
+        return merchantUserService.getMerchantFansCount(fMid);
+    }
+
+    @GetMapping("/getMerchantFansUser/{fMid}")
+    public ResApi<Object> getMerchantFansUser(@PathVariable("fMid") Integer fMid) {
+        return merchantUserService.getMerchantFansUser(fMid);
+    }
+
+    //商家提现
+    @PostMapping("/getWithdrawMoney/{fMid}")
+    public ResApi<String> saveWithdrawMoney(@PathVariable("fMid") Integer fMid, @RequestParam("money") Double money) {
+        return merchantUserService.saveWithdrawMoney(fMid, money);
+    }
+
+    @PostMapping("/getUserWithdraw/{fMid}")
+    public ResApi<Object> getUserWithdraw(@PathVariable("fMid") Integer fMid) {
+        return merchantUserService.getUserWithdraw(fMid);
+    }
 }

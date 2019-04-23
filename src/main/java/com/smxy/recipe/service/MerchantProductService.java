@@ -135,10 +135,11 @@ public interface MerchantProductService {
      * @author : yangyihui
      * @date : 2018/12/31 0031 11:50
      */
-    ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, Integer userId);
+    ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String detailsContent, Integer userId);
 
     /**
      * 功能描述: 根据商品id 获取商品详情
+     *
      * @param pid 1
      * @return : com.smxy.recipe.utils.ResApi<java.util.List<com.smxy.recipe.entity.MerchantProductDetails>>
      * @author : yangyihui
@@ -148,10 +149,11 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 更新商品详情
-     * @param pid 1
-     * @param images 2
+     *
+     * @param pid     1
+     * @param images  2
      * @param details 3
-     * @param ids 4
+     * @param ids     4
      * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
      * @author : yangyihui
      * @date : 2019/4/20 0020 1:52
@@ -160,7 +162,8 @@ public interface MerchantProductService {
 
     /**
      * 功能描述: 根据商品类型id获取商品
-     * @param claid 1
+     *
+     * @param claid  1
      * @param type
      * @param params
      * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
@@ -168,5 +171,41 @@ public interface MerchantProductService {
      * @date : 2019/4/20 0020 1:52
      */
     ResApi<Object> getProductByClaid(Integer claid, String type, JSONObject params);
+
+    /**
+     * 更改商品审核状态
+     * 功能描述:
+     *
+     * @param id    1
+     * @param state 2
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.String>
+     * @author : yangyihui
+     * @date : 2019/4/21 0021 11:19
+     */
     ResApi<String> changeState(Integer id, String state);
+
+    ResApi<String> mobUpdateProduct(Integer uId, Integer pId, MultipartFile[] productImage, Integer[] productImageId,
+                                    Integer freight,
+                                    String productName, Integer productClassifyID, MultipartFile[] marqueImage,
+                                    Integer[] marqueId, String[] marqueName, String[] marquePrice,
+                                    String[] marqueRepository, Integer[] marqueImageFlag);
+
+    ResApi<Object> getFourProduct(Integer fMid);
+
+    /**
+     * 功能描述: vue前台主页4个商品
+     * @param  1
+     * @return : com.smxy.recipe.utils.ResApi<java.lang.Object>
+     * @author : yangyihui
+     * @date : 2019/4/23 0023 15:18
+     */
+    ResApi<Object> getFourProduct();
+
+    ResApi<Object> getAllActiveProduct();
+
+    ResApi<Object> getSixProduct();
+
+    ResApi<Object> getFourProductActive();
+
+    ResApi<Object> getAllProductByMid(Integer fMid);
 }

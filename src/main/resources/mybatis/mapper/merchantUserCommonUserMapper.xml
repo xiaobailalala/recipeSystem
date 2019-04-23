@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantUserCommonUserDao">
+    <select id="getUserCountById" parameterType="integer" resultMap="getCommonUserDetails">
+        SELECT *
+        FROM t_mUser_commUser
+        WHERE f_mid = #{fMid};
+    </select>
+
+    <resultMap id="getCommonUserDetails" type="com.smxy.recipe.entity.MerchantUserCommonUser">
+        <result column="f_uid" property="fUid"/>
+        <association property="commonUser" column="f_uid" select="com.smxy.recipe.dao.CommonUserDao.getInfoById">
+        </association>
+    </resultMap>
+</mapper>

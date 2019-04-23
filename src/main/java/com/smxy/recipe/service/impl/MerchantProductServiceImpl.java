@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.BinaryClient;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.net.PortUnreachableException;
 import java.time.format.ResolverStyle;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -84,8 +86,8 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         Map<String, Object> map = new HashMap<>(8);
         map.put("code", ResApi.getSuccess().getCode());
         map.put("msg", ResApi.getSuccess().getMsg());
-        map.put("count", merchantUser.getMerchantProducts().size());
-        map.put("item", merchantUser.getMerchantProducts());
+        map.put("count", merchantUser.getMerchantUserProducts().size());
+        map.put("item", merchantUser.getMerchantUserProducts());
         return map;
     }
 
@@ -94,7 +96,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         int page = Integer.parseInt(request.getParameter("page"));
         int limit = Integer.parseInt(request.getParameter("limit"));
         MerchantUser merchantUser = merchantUserDao.getMerchantUserById(mId);
-        List<MerchantProduct> productList = merchantUser.getMerchantProducts();
+        List<MerchantUserProduct> productList = merchantUser.getMerchantUserProducts();
         int startIndex = (page - 1) * limit;
         int endIndex = page * limit;
         Map<String, Object> map = new HashMap<>(8);
@@ -213,8 +215,6 @@ public class MerchantProductServiceImpl implements MerchantProductService {
                                             HttpServletRequest request) {
         MerchantProduct merchantProductPast = merchantProductDao.getProductById(fId);
         merchantProduct.setFName(proTitle);
-        List<MerchantProductImage> productImages = merchantProductImageDao.getProductByfPid(fId);
-        merchantProduct.setFCover(productImages.get(0).getFImg());
         merchantProduct.setFGood(merchantProductPast.getFGood());
         merchantProduct.setFReduction(merchantProductPast.getFReduction());
         merchantProduct.setFDiscount(merchantProductPast.getFDiscount());
@@ -234,26 +234,28 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             merchantProduct.setFFreightid(merchantProductPast.getFFreightid());
         }
         merchantProduct.setFReview(merchantProductPast.getFReview());
+        //TODO: 商品主图更新操作
+        if (productImageId != null && productImageId.length > 0) {
+            List<Integer> compare = ToolsApi.compare(Arrays.asList(productImageId), merchantProductImageDao.getProductImageId(fId));
+            for (Integer integer : compare) {
+                merchantProductImageDao.deleteProductImageByFId(integer);
+            }
+        }
+        if (productImage.length > 0) {
+            for (MultipartFile aProductImage : productImage) {
+                String filename;
+                if (aProductImage == null || aProductImage.getSize() == 0) {
+                    filename = null;
+                } else {
+                    filename = ToolsApi.multipartFileUploadFile(aProductImage, null);
+                }
+                merchantProductImageDao.saveProductImage(new MerchantProductImage(fId, filename));
+            }
+        }
+        List<MerchantProductImage> productImages = merchantProductImageDao.getProductByfPid(fId);
+        merchantProduct.setFCover(productImages.get(0).getFImg());
         int productUpdate = merchantProductDao.updateProductInfo(merchantProduct);
         if (productUpdate > 0) {
-            //TODO: 商品主图更新操作
-            if (productImageId != null && productImageId.length > 0) {
-                List<Integer> compare = ToolsApi.compare(Arrays.asList(productImageId), merchantProductImageDao.getProductImageId(fId));
-                for (Integer integer : compare) {
-                    merchantProductImageDao.deleteProductImageByFId(integer);
-                }
-            }
-            if (productImage.length > 0) {
-                for (MultipartFile aProductImage : productImage) {
-                    String filename;
-                    if (aProductImage == null || aProductImage.getSize() == 0) {
-                        filename = null;
-                    } else {
-                        filename = ToolsApi.multipartFileUploadFile(aProductImage, null);
-                    }
-                    merchantProductImageDao.saveProductImage(new MerchantProductImage(fId, filename));
-                }
-            }
             //TODO:商品类型更新操作
             List<Integer> marqueIdToList = Arrays.asList(marqueId);
             List<Integer> marqueIdList = new ArrayList<>(marqueIdToList);
@@ -341,6 +343,8 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     public ResApi<Object> getProductById(Integer fId) {
         Map<String, Object> map = new HashMap<>(8);
         MerchantProduct merchantProduct = merchantProductDao.getProductById(fId);
+        Integer fMid = merchantUserProductDao.getMerchantUserProductByPidBrief(fId).getFMid();
+        map.put("merchantUser", merchantUserDao.getMerchantUserByIdBrief(fMid));
         map.put("productImage", merchantProductImageDao.getProductByfPid(fId));
         map.put("product", merchantProduct);
         map.put("marqueClassifyName", merchantProductMarqueClassifyDao.getMarqueClassifyById(merchantProduct.getFMarqueclaid()));
@@ -416,9 +420,14 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     }
 
     @Override
-    public ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String[] detailsContent, Integer userId) {
+    public ResApi<String> mobSaveProductDetails(MultipartFile[] detailsImage, String detailsContent, Integer userId) {
         List<MerchantProductDetails> list = new ArrayList<>();
-        if (detailsImage.length != detailsContent.length) {
+        JSONArray array = JSON.parseArray(detailsContent);
+        String[] contents = new String[array.size()];
+        for (int i = 0; i < array.size(); i++) {
+            contents[i] = array.getString(i);
+        }
+        if (detailsImage.length != contents.length) {
             return ResApi.getError(502, "保存失败");
         }
         for (int i = 0; i < detailsImage.length; i++) {
@@ -428,7 +437,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             } else {
                 filename = ToolsApi.multipartFileUploadFile(detailsImage[i], null);
             }
-            list.add(new MerchantProductDetails(null, filename, detailsContent[i]));
+            list.add(new MerchantProductDetails(null, filename, contents[i]));
         }
         Map<String, List<MerchantProductDetails>> listMap = new HashMap<>(8);
         listMap.put("merchantProductDetails", list);
@@ -462,7 +471,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             } else {
                 fileName = ToolsApi.multipartFileUploadFile(images[i], null);
             }
-            detailsList.add(new MerchantProductDetails(ids[i],pid, fileName, details[i]));
+            detailsList.add(new MerchantProductDetails(ids[i], pid, fileName, details[i]));
         }
         return null;
     }
@@ -480,8 +489,9 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             return ResApi.getSuccess(new ArrayList<>(8));
         }
         if (PRODUCTLIST_TYPE_ALL.equals(type)) {
+            System.out.println(productList.get(0));
             dataList = productList.stream().map(this::makeProductByClaidJson).skip(pageStart).limit(pageSize).collect(Collectors.toList());
-        } else if (PRODUCTLIST_TYPE_ACTION.equals(type)){
+        } else if (PRODUCTLIST_TYPE_ACTION.equals(type)) {
             List<MerchantProduct> actionList = new ArrayList<>(8);
             for (MerchantProduct product : productList) {
                 if (product.getProductActiveDiscount() != null || product.getProductActiveReduction() != null) {
@@ -504,7 +514,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
             result.put("productPriceMax", 0);
         } else {
             result.put("productPriceMin", marqueList.get(0).getFPrice());
-            result.put("productPriceMax", product.getMerchantProductMarques().get(0).getFMarqueimage());
+            result.put("productPriceMax", marqueList.get(marqueList.size() - 1).getFPrice());
         }
         result.put("productSale", product.getFSales());
         result.put("productFreight", product.getFFreightid());
@@ -515,5 +525,147 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     public ResApi<String> changeState(Integer id, String state) {
         merchantProductDao.updateProductReviewById(state, id);
         return ResApi.getSuccess();
+    }
+
+    @Override
+    public ResApi<String> mobUpdateProduct(Integer uId, Integer pId, MultipartFile[] productImage, Integer[] productImageId,
+                                           Integer freightId,
+                                           String productName, Integer productClassifyID, MultipartFile[] marqueImage,
+                                           Integer[] marqueId, String[] marqueName, String[] marquePrice,
+                                           String[] marqueRepository, Integer[] marqueImageFlag) {
+        MerchantProduct product = merchantProductDao.getProductById(pId);
+        product.setFName(productName);
+        product.setFCategory(merchantProductClassifyDao.getProductClassifyById(productClassifyID).getFName());
+        product.setFFreightid(freightId);
+        //商品主图更新操作
+        if (productImageId != null && productImageId.length > 0) {
+            List<Integer> compare = ToolsApi.compare(Arrays.asList(productImageId), merchantProductImageDao.getProductImageId(pId));
+            for (Integer integer : compare) {
+                merchantProductImageDao.deleteProductImageByFId(integer);
+            }
+        }
+        if (productImage.length > 0) {
+            for (MultipartFile aProductImage : productImage) {
+                String filename;
+                if (aProductImage == null || aProductImage.getSize() == 0) {
+                    filename = null;
+                } else {
+                    filename = ToolsApi.multipartFileUploadFile(aProductImage, null);
+                }
+                merchantProductImageDao.saveProductImage(new MerchantProductImage(pId, filename));
+            }
+        }
+        List<MerchantProductImage> productImages = merchantProductImageDao.getProductByfPid(pId);
+        product.setFCover(productImages.get(0).getFImg());
+        int productUpdate = merchantProductDao.updateProductInfo(product);
+        if (productUpdate > 0) {
+            //商品类型更新操作
+            List<Integer> marqueIdList = Arrays.asList(marqueId);
+            marqueIdList = new ArrayList<>(marqueIdList);
+            if (marqueIdList.size() > 0) {
+                List<Integer> compare = ToolsApi.compare(marqueIdList, merchantProductMarqueDao.getMarqueId(pId));
+                for (Integer integer : compare) {
+                    merchantProductMarqueDao.deleteMarqueByFId(integer);
+                }
+            }
+            List<MultipartFile> files = Arrays.asList(marqueImage);
+            ArrayList<MultipartFile> fileArrayList = new ArrayList<>(files);
+            for (int i = 0; i < marqueImageFlag.length; i++) {
+                String filename;
+                if (marqueIdList.contains(marqueImageFlag[i])) {
+                    //型号图片存在并没有改变过
+                    merchantProductMarqueDao.updateMarqueInfo(new MerchantProductMarque(marqueIdList.get(0), marqueName[i],
+                            merchantProductMarqueDao.getMarqueImagePathById(marqueIdList.get(0)),
+                            Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]), product.getFMarqueclaid(), pId));
+                    Integer remove = marqueIdList.remove(0);
+                } else {
+                    //新增图片
+                    if (fileArrayList.size() == 0) {
+                        return ResApi.getError();
+                    }
+                    filename = ToolsApi.multipartFileUploadFile(fileArrayList.get(0), null);
+                    merchantProductMarqueDao.saveMarqueInfo(new MerchantProductMarque(marqueName[i], filename,
+                            Double.parseDouble(marquePrice[i]), Integer.parseInt(marqueRepository[i]),
+                            product.getFMarqueclaid(), pId));
+                    fileArrayList.remove(0);
+                }
+            }
+            return ResApi.getSuccess();
+        } else {
+            return ResApi.getError();
+        }
+    }
+
+    @Override
+    public ResApi<Object> getFourProduct(Integer fMid) {
+        List<MerchantProduct> dataList = new ArrayList<>();
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(fMid);
+        List<MerchantUserProduct> merchantUserProductList = merchantUser.getMerchantUserProducts();
+        List<MerchantProduct> productList = new ArrayList<>();
+        for (MerchantUserProduct userProduct : merchantUserProductList) {
+            productList.add(userProduct.getMerchantProduct());
+        }
+        dataList = productList.stream().sorted(Comparator.comparing(MerchantProduct::getFGood)).limit(productList.size() > 4 ? 4 : productList.size()).collect(Collectors.toList());
+        return ResApi.getSuccess(dataList);
+    }
+
+    @Override
+    public ResApi<Object> getFourProduct() {
+        List<MerchantProduct> dataList = new ArrayList<>();
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        dataList = allProduct.stream().sorted(Comparator.comparing(MerchantProduct::getFGood)).limit(allProduct.size() > 4 ? 4 : allProduct.size()).collect(Collectors.toList());
+        return ResApi.getSuccess(dataList);
+    }
+
+
+    @Override
+    public ResApi<Object> getAllActiveProduct() {
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        List<MerchantProduct> discountProductList = allProduct.stream().filter(o -> o.getProductActiveDiscount().size() > 0 && (o.getProductActiveReduction().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
+        List<MerchantProduct> reductionProductList = allProduct.stream().filter(o -> o.getProductActiveReduction().size() > 0 && (o.getProductActiveDiscount().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
+        List<MerchantProduct> activeProductList = allProduct.stream().filter(o -> o.getProductActiveReduction().size() > 0 && o.getProductActiveDiscount().size() > 0).collect(Collectors.toList());
+        JSONObject result = new JSONObject();
+        result.put("discount", discountProductList);
+        result.put("reduction", reductionProductList);
+        result.put("active", activeProductList);
+        return ResApi.getSuccess(result);
+    }
+
+    @Override
+    public ResApi<Object> getSixProduct() {
+        List<MerchantProduct> product = merchantProductDao.getAllProduct();
+        product = product.stream().sorted((o1, o2) -> {
+            if (o1.getFGood() > o2.getFGood()) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }).collect(Collectors.toList());
+        product = product.subList(0, product.size() > 6 ? 6 : product.size());
+        return new ResApi<>(200, "success", product);
+    }
+
+    @Override
+    public ResApi<Object> getFourProductActive() {
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        List<MerchantProduct> discountProductList = allProduct.stream().filter(o -> o.getProductActiveDiscount().size() > 0 && (o.getProductActiveReduction().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
+        List<MerchantProduct> reductionProductList = allProduct.stream().filter(o -> o.getProductActiveReduction().size() > 0 && (o.getProductActiveDiscount().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
+        JSONObject result = new JSONObject();
+        result.put("discount", discountProductList.subList(0, discountProductList.size() > 2 ? 2 : discountProductList.size()));
+        result.put("reduction", reductionProductList.subList(0, reductionProductList.size() > 2 ? 2 : reductionProductList.size()));
+        return ResApi.getSuccess(result);
+    }
+
+    @Override
+    public ResApi<Object> getAllProductByMid(Integer fMid) {
+        JSONObject result = new JSONObject();
+        MerchantUser merchantUser = merchantUserDao.getMerchantUserById(fMid);
+        List<MerchantUserProduct> merchantUserProductList = merchantUser.getMerchantUserProducts();
+        List<MerchantProduct> productList = new ArrayList<>();
+        for (MerchantUserProduct userProduct : merchantUserProductList) {
+            productList.add(userProduct.getMerchantProduct());
+        }
+        result.put("productList", productList);
+        return new ResApi<>(200, "success", result );
     }
 }

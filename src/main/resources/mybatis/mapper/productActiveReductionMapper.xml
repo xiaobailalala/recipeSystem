@@ -11,7 +11,7 @@
 
     <delete id="deleteProductActiveReduction" parameterType="Integer">
         DELETE
-        FROM t_product_discounts
+        FROM t_product_reduction
         WHERE f_id = #{fId};
     </delete>
 
@@ -46,10 +46,16 @@
         </collection>
     </resultMap>
 
-    <select id="selectActiveReductionByPid" parameterType="integer" resultMap="getActiveDetails">
+    <select id="selectActiveReductionByPid" parameterType="integer" resultMap="ActiveReductionInfoResultMap">
         SELECT *
         FROM t_product_reduction
         WHERE f_pid = #{fPid};
     </select>
+
+    <resultMap id="ActiveReductionInfoResultMap" type="ProductActiveReduction">
+        <result property="fId" column="f_id"/>
+        <collection property="productActiveReductionConditions" column="f_id"
+                    select="com.smxy.recipe.dao.ProductActiveReductionConditionDao.selectProductActiveReductionConditionByAId"/>
+    </resultMap>
 
 </mapper>

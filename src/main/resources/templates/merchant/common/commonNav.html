@@ -11,8 +11,6 @@
             </div>
             <div class="mylayui-div-inline-block mylayui-div-control">
                 <ul class="layui-nav mylayui-bg-recipe-yellow-dark mylayui-head-nav">
-                    <li class="layui-nav-item mylayui-nav-item"><a href="javascript:;" class="mylayui-nav-a">我的消息<span
-                            class="layui-badge layui-bg-cyan">99+</span></a></li>
                     <li class="layui-nav-item mylayui-nav-item">
                         <a href="javascript:;" class="mylayui-nav-a"><span
                             class="layui-icon layui-icon-cellphone"></span>下载手机端</a>
@@ -33,9 +31,6 @@
                         <dl class="layui-nav-child">
                             <dd>
                                 <a th:href="@{/merchant/merchantUser/userInfo}">修改信息</a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;">安全管理</a>
                             </dd>
                             <dd>
                                 <a href="/merchantCommon/merchantLogout">退了</a>
@@ -63,41 +58,38 @@
                                 <!--<a th:href="'/merchant/merchantProduct/list/' + ${session.merUser.FId}">所有商品</a>-->
                                 <a th:href="@{/merchant/merchantProduct/goProductList}">所有商品</a>
                             </dd>
-                            <dd>
-                                <a href="">售中商品</a>
-                            </dd>
                         </dl>
                     </li>
-                    <span style="vertical-align: middle;color: black;">|</span>
-                    <li class="layui-nav-item mylayui-nav-item"><a href="javascript:;" class="mylayui-nav-a"><i
-                            class="layui-icon layui-icon-form"></i> 订单管理</a>
-                        <dl class="layui-nav-child">
-                            <dd>
-                                <a href="">所有订单</a>
-                            </dd>
-                            <dd>
-                                <a href="">待付款订单</a>
-                            </dd>
-                            <dd>
-                                <a href="">待发货订单</a>
-                            </dd>
-                            <dd>
-                                <a href="">待收货订单</a>
-                            </dd>
-                            <dd>
-                                <a href="">待评价订单</a>
-                            </dd>
-                            <dd>
-                                <a href="">交易成功订单</a>
-                            </dd>
-                            <dd>
-                                <a href="">退款中订单</a>
-                            </dd>
-                            <dd>
-                                <a href="">退款成功订单</a>
-                            </dd>
-                        </dl>
-                    </li>
+<!--                    <span style="vertical-align: middle;color: black;">|</span> -->
+<!--                    <li class="layui-nav-item mylayui-nav-item"><a href="javascript:;" class="mylayui-nav-a"><i-->
+<!--                            class="layui-icon layui-icon-form"></i> 订单管理</a>-->
+<!--                        <dl class="layui-nav-child">-->
+<!--                            <dd>-->
+<!--                                <a href="">所有订单</a>-->
+<!--                            </dd>-->
+<!--                            <dd>-->
+<!--                                <a href="">待付款订单</a>-->
+<!--                            </dd>-->
+<!--                            <dd>-->
+<!--                                <a href="">待发货订单</a>-->
+<!--                            </dd>-->
+<!--                            <dd>-->
+<!--                                <a href="">待收货订单</a>-->
+<!--                            </dd>-->
+<!--                            <dd>-->
+<!--                                <a href="">待评价订单</a>-->
+<!--                            </dd>-->
+<!--                            <dd>-->
+<!--                                <a href="">交易成功订单</a>-->
+<!--                            </dd>-->
+<!--                            <dd>-->
+<!--                                <a href="">退款中订单</a>-->
+<!--                            </dd>-->
+<!--                            <dd>-->
+<!--                                <a href="">退款成功订单</a>-->
+<!--                            </dd>-->
+<!--                        </dl>-->
+<!--                    </li>-->
                     <span style="vertical-align: middle;color: black;">|</span>
                     <li class="layui-nav-item mylayui-nav-item"><a href="javascript:;" class="mylayui-nav-a"><i
                             class="layui-icon layui-icon-speaker"></i>店铺活动</a>
@@ -111,21 +103,6 @@
                         </dl>
                     </li>
                     <div class="mylayui-div-control">
-                        <form class="layui-form mylayui-from-search" action="">
-                            <div class="mylayui-form-div">
-                                <label class="mylayui-form-label">搜索商品</label>
-                                <div class="mylayui-div-control">
-                                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题"
-                                           autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="mylayui-form-div">
-                                <div class="mylayui-div-control">
-                                    <button class="layui-btn btn-search" lay-submit lay-filter=""><i
-                                            class="layui-icon layui-icon-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </ul>
             </div>

@@ -38,4 +38,15 @@ public interface MerchantUserProductDao {
      */
     List<MerchantUserProduct> getMerchantUserProductByMid(Integer fMid);
 
+    /**
+     * 功能描述: 根据商品ID查找数据
+     * @param fPid 商家ID
+     * @return : java.util.List<java.lang.Integer>
+     * @author : yangyihui
+     * @date : 2018/12/12 0012 13:54
+     */
+    MerchantUserProduct getMerchantUserProductByPidBrief(Integer fPid);
+
+
+
 }

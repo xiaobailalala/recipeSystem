@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smxy.recipe.dao.MerchantCommentDao">
+
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="fId">
+        INSERT INTO t_merchant_comment(f_mid, f_pid, f_uid, f_release, f_content, f_state, f_cover, f_replyid)
+        VALUES (#{fMid}, #{fPid}, #{fUid}, #{fRelease}, #{fContent}, #{fState}, #{fCover}, #{fReplyid})
+    </insert>
+
+    <select id="getMerchantCommentByMidAndState" resultMap="getCommentDetails">
+        SELECT *
+        FROM t_merchant_comment
+        WHERE f_state = #{fState}
+          AND f_mid = #{fMid}
+          AND f_replyid = -1;
+    </select>
+
+    <select id="getAnswerMerchantCommentByMidAndState" resultMap="getCommentDetails">
+        SELECT *
+        FROM t_merchant_comment
+        WHERE f_state = #{fState}
+          AND f_mid = #{fMid}
+          AND f_replyid != -1;
+    </select>
+
+    <resultMap id="getCommentDetails" type="MerchantComment">
+        <result column="f_pid" property="fPid"/>
+        <result column="f_uid" property="fUid"/>
+        <association property="merchantProduct" column="f_pid" select="com.smxy.recipe.dao.MerchantProductDao.getProductById">
+        </association>
+        <association property="commonUser" column="f_uid" select="com.smxy.recipe.dao.CommonUserDao.getInfoByIdBrief">
+        </association>
+    </resultMap>
+
+    <select id="getMerchantCommentByPidAndState" resultMap="getCommentDetails">
+        SELECT *
+        FROM t_merchant_comment
+        WHERE f_state = #{fState}
+          AND f_pid = #{fPid}
+          AND f_replyid = -1;
+    </select>
+
+    <select id="getAnswerMerchantCommentByPidAndState" resultMap="getCommentDetails">
+        SELECT *
+        FROM t_merchant_comment
+        WHERE f_state = #{fState}
+          AND f_pid = #{fPid}
+          AND f_replyid != -1;
+    </select>
+
+
+</mapper>

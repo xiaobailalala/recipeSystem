@@ -55,7 +55,7 @@ public interface ProductActiveReductionDao {
      * @author : yangyihui
      * @date : 2019/4/20 0020 2:04
      */
-    ProductActiveReduction selectActiveReductionByPid(Integer fPid);
+   ProductActiveReduction selectActiveReductionByPid(Integer fPid);
 
     /**
      * 功能描述: 根据商家ID查找所有满减优惠活动

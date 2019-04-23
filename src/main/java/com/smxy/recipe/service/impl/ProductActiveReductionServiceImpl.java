@@ -93,12 +93,19 @@ public class ProductActiveReductionServiceImpl implements ProductActiveReduction
 
     @Override
     public Map<String, Object> getProductActiveReductionListByMid(Integer fMid, HttpServletRequest httpServletRequest) {
+        Map<String, Object> resultMap = new HashMap<>(8);
+        List<ProductActiveReduction> productActiveReductions = productActiveReductionDao.selectProductActiveReductionByMid(fMid);
+        if (httpServletRequest.getParameter("page") == null || httpServletRequest.getParameter("limit") == null) {
+            resultMap.put("count", productActiveReductions.size());
+            resultMap.put("code", ResApi.getSuccess().getCode());
+            resultMap.put("msg", ResApi.getSuccess().getMsg());
+            resultMap.put("data",productActiveReductions);
+            return resultMap;
+        }
         int page = Integer.parseInt(httpServletRequest.getParameter("page"));
         int limit = Integer.parseInt(httpServletRequest.getParameter("limit"));
         int startIndex = (page - 1) * limit;
         int endIndex = page * limit;
-        Map<String, Object> resultMap = new HashMap<>(8);
-        List<ProductActiveReduction> productActiveReductions = productActiveReductionDao.selectProductActiveReductionByMid(fMid);
         if (endIndex > productActiveReductions.size()) {
             resultMap.put("data",productActiveReductions.subList(startIndex, productActiveReductions.size()));
         } else {
@@ -119,6 +126,7 @@ public class ProductActiveReductionServiceImpl implements ProductActiveReduction
     public ResApi<String> deleteProductActiveReductionById(Integer fId) {
         ProductActiveReduction productActiveReduction = productActiveReductionDao.selectProductActiveReductionById(fId);
         Integer result = productActiveReductionDao.deleteProductActiveReduction(fId);
+        productActiveReductionConditionDao.deleteProductActiveReductionConditionByAId(fId);
         Map<String, Object> map = new HashMap<>(8);
         map.put("fId", productActiveReduction.getFPid());
         map.put("fActive", "没有活动");

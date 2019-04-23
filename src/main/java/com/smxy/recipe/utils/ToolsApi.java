@@ -15,6 +15,7 @@ import com.smxy.recipe.entity.SysResource;
 import com.smxy.recipe.service.SysResourceService;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
+import org.apache.tomcat.jni.Local;
 import org.csource.common.NameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,7 @@ import java.io.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.*;
 
@@ -53,6 +55,8 @@ public class ToolsApi {
 
     private final static Base64.Decoder decoder = Base64.getDecoder();
     private final static Base64.Encoder encoder = Base64.getEncoder();
+
+    private final static String DATE_FORMAT = "yyyy-MM-dd";
 
     private static JavaMailSenderImpl mailSender;
 
@@ -104,7 +108,8 @@ public class ToolsApi {
 //        for (int i : code) {
 //            CODE += i;
 //        }
-        System.out.println(ToolsApi.entryptBySaltMd5("123456YYHyyh", "15080557852"));
+        System.out.println(getPast7DayTime(7));
+//        System.out.println(ToolsApi.entryptBySaltMd5("123456YYHyyh", "15080557852"));
     }
 
     /**
@@ -402,4 +407,39 @@ public class ToolsApi {
         return different;
     }
 
+    public static String getMondayOfThisWeek() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public static String getSundayOfThisWeek() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public static String getCurrentYYYYMMDDTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public static String getYesterdayYYYYMMDDTIme() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        calendar.add(Calendar.DATE, -1);
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    public static String getPast7DayTime(Integer past) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+        return simpleDateFormat.format(calendar.getTime());
+    }
 }

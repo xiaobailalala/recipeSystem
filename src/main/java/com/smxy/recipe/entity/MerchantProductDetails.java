@@ -23,13 +23,6 @@ public class MerchantProductDetails implements Serializable {
     private String fDetailimg;
     private String fDetailcontents;
 
-    public MerchantProductDetails(Integer fId, Integer fPid, String fDetailimg, String fDetailcontents) {
-        this.fId = fId;
-        this.fPid = fPid;
-        this.fDetailimg = fDetailimg;
-        this.fDetailcontents = fDetailcontents;
-    }
-
     public MerchantProductDetails(Integer fPid, String fDetailimg, String fDetailcontents) {
         this.fPid = fPid;
         this.fDetailimg = fDetailimg;
