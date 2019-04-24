@@ -1,5 +1,6 @@
 package com.smxy.recipe.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smxy.recipe.dao.*;
 import com.smxy.recipe.entity.*;
 import com.smxy.recipe.realm.LoginType;
@@ -7,6 +8,7 @@ import com.smxy.recipe.realm.UserToken;
 import com.smxy.recipe.service.MerchantUserService;
 import com.smxy.recipe.utils.ResApi;
 import com.smxy.recipe.utils.ToolsApi;
+import com.sun.deploy.uitoolkit.ToolkitStore;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -51,8 +53,7 @@ public class MerchantUserServiceImpl implements MerchantUserService {
 
 
     @Autowired
-    public MerchantUserServiceImpl(MerchantUserDao merchantUserDao, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao, SimpMessagingTemplate simpMessagingTemplate, MerchantChatDao merchantChatDao, CommonUserDao commonUserDao, MerchantUserLinkmanDao merchantUserLinkmanDao) {
-    public MerchantUserServiceImpl(MerchantUserDao merchantUserDao, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao, SimpMessagingTemplate simpMessagingTemplate, MerchantChatDao merchantChatDao, CommonUserDao commonUserDao, MerchantUserCommonUserDao merchantUserCommonUserDao, MerchantProductDao merchantProductDao, MerchantOrderDao merchantOrderDao, MerchantViewsDao merchantViewsDao) {
+    public MerchantUserServiceImpl(MerchantUserLinkmanDao merchantUserLinkmanDao, MerchantUserDao merchantUserDao, AdminUserRoleDao adminUserRoleDao, AdminRoleDao adminRoleDao, MerchantUserRoleDao merchantUserRoleDao, SimpMessagingTemplate simpMessagingTemplate, MerchantChatDao merchantChatDao, CommonUserDao commonUserDao, MerchantUserCommonUserDao merchantUserCommonUserDao, MerchantProductDao merchantProductDao, MerchantOrderDao merchantOrderDao, MerchantViewsDao merchantViewsDao) {
         this.merchantUserDao = merchantUserDao;
         this.adminUserRoleDao = adminUserRoleDao;
         this.adminRoleDao = adminRoleDao;
@@ -156,6 +157,7 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             return new ResApi<>(501, "手机号已存在", "phoneError");
         } else {
             int coverNum = (int) (Math.random() * 10 + 1);
+            merchantUser.setFShopname(ToolsApi.stripXss(merchantUser.getFShopname()));
             merchantUser.setFPassword(ToolsApi.entryptBySaltMd5(merchantUser.getFPassword(), merchantUser.getFAccount()));
             merchantUser.setFCover("/src/images/merchant_head/" + coverNum + ".jpg");
             if (merchantUserDao.saveUserInfo(merchantUser) > 0) {
@@ -216,6 +218,7 @@ public class MerchantUserServiceImpl implements MerchantUserService {
             merchantUser.setFSignature(oldMerchantUser.getFSignature());
         }
         Subject subject = SecurityUtils.getSubject();
+        merchantUser.setFShopname(ToolsApi.stripXss(merchantUser.getFShopname()));
         Integer result = merchantUserDao.updateMerchantUserInfo(merchantUser);
         if (result > 0) {
             subject.getSession().setAttribute("merUser", merchantUserDao.getMerchantUserById(fId));

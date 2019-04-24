@@ -40,6 +40,12 @@ public class MerchantUserMobController {
         return merchantUserService.mobUserLogin(merchantUser, request);
     }
 
+    @PostMapping("/mobUserRegister")
+    public ResApi<String> userRegister(MerchantUser merchantUser, HttpServletRequest request) {
+        System.out.println(merchantUser.toString());
+        return merchantUserService.userRegister(merchantUser, request);
+    }
+
     @PostMapping("/getUserBySessionId")
     public ResApi<Object> getUserBySessionId(String sessionID, HttpServletRequest request, HttpServletResponse response) {
         SessionKey sessionKey = new WebSessionKey(sessionID, request, response);

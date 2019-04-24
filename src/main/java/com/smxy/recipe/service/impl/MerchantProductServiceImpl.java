@@ -13,12 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import redis.clients.jedis.BinaryClient;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.net.PortUnreachableException;
-import java.time.format.ResolverStyle;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -75,8 +72,8 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         Map<String, Object> map = new HashMap<>(8);
         map.put("code", ResApi.getSuccess().getCode());
         map.put("msg", ResApi.getSuccess().getMsg());
-        map.put("count", merchantProductDao.getAllProduct().size());
-        map.put("item", merchantProductDao.getAllProduct());
+        map.put("count", merchantProductDao.getAllProductShelve().size());
+        map.put("item", merchantProductDao.getAllProductShelve());
         return map;
     }
 
@@ -117,7 +114,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
                                       MultipartFile[] marqueImage, String[] productDetailsContent,
                                       MultipartFile[] detailsImage, String[] marqueName, HttpServletRequest request) {
         MerchantUser merchantUser = (MerchantUser) request.getSession().getAttribute("merUser");
-        merchantProduct.setFName(pro_title);
+        merchantProduct.setFName(ToolsApi.stripXss(pro_title));
         merchantProduct.setFAddtime(ToolsApi.getDateToDay() + " " + ToolsApi.getTimeNow());
         merchantProduct.setFCover(ToolsApi.multipartFileUploadFile(productImage[0], null));
         merchantProduct.setFGood(0);
@@ -530,7 +527,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     @Override
     public ResApi<Object> mobIndex() {
         Map<String, Object> map = new HashMap<>(8);
-        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProductShelve();
         Collections.shuffle(allProduct);
         List<MerchantProduct> hot = new LinkedList<>(allProduct);
         map.put("allArr", allProduct);
@@ -626,7 +623,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
     @Override
     public ResApi<Object> getFourProduct() {
         List<MerchantProduct> dataList = new ArrayList<>();
-        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProductShelve();
         dataList = allProduct.stream().sorted(Comparator.comparing(MerchantProduct::getFGood)).limit(allProduct.size() > 4 ? 4 : allProduct.size()).collect(Collectors.toList());
         return ResApi.getSuccess(dataList);
     }
@@ -634,7 +631,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
 
     @Override
     public ResApi<Object> getAllActiveProduct() {
-        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProductShelve();
         List<MerchantProduct> discountProductList = allProduct.stream().filter(o -> o.getProductActiveDiscount().size() > 0 && (o.getProductActiveReduction().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
         List<MerchantProduct> reductionProductList = allProduct.stream().filter(o -> o.getProductActiveReduction().size() > 0 && (o.getProductActiveDiscount().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
         List<MerchantProduct> activeProductList = allProduct.stream().filter(o -> o.getProductActiveReduction().size() > 0 && o.getProductActiveDiscount().size() > 0).collect(Collectors.toList());
@@ -647,7 +644,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
 
     @Override
     public ResApi<Object> getSixProduct() {
-        List<MerchantProduct> product = merchantProductDao.getAllProduct();
+        List<MerchantProduct> product = merchantProductDao.getAllProductShelve();
         product = product.stream().sorted((o1, o2) -> {
             if (o1.getFGood() > o2.getFGood()) {
                 return -1;
@@ -661,7 +658,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
 
     @Override
     public ResApi<Object> getFourProductActive() {
-        List<MerchantProduct> allProduct = merchantProductDao.getAllProduct();
+        List<MerchantProduct> allProduct = merchantProductDao.getAllProductShelve();
         List<MerchantProduct> discountProductList = allProduct.stream().filter(o -> o.getProductActiveDiscount().size() > 0 && (o.getProductActiveReduction().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
         List<MerchantProduct> reductionProductList = allProduct.stream().filter(o -> o.getProductActiveReduction().size() > 0 && (o.getProductActiveDiscount().size() == 0 || o.getProductActiveReduction() == null)).collect(Collectors.toList());
         JSONObject result = new JSONObject();
@@ -681,5 +678,15 @@ public class MerchantProductServiceImpl implements MerchantProductService {
         }
         result.put("productList", productList);
         return new ResApi<>(200, "success", result );
+    }
+
+    @Override
+    public Map<String, Object> getAllProduct() {
+        Map<String, Object> map = new HashMap<>(8);
+        map.put("code", ResApi.getSuccess().getCode());
+        map.put("msg", ResApi.getSuccess().getMsg());
+        map.put("count", merchantProductDao.getAllProduct().size());
+        map.put("item", merchantProductDao.getAllProduct());
+        return map;
     }
 }

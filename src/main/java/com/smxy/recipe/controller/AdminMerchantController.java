@@ -50,13 +50,13 @@ public class AdminMerchantController {
 
     @GetMapping("/list")
     public String merchantList(Model model) {
-        model.addAttribute("list", merchantProductService.productAll());
+        model.addAttribute("list", merchantProductService.getAllProduct());
         return "admin/merchant/list";
     }
 
     @GetMapping("/review")
     public String merchantReview(Model model) {
-        model.addAttribute("list", merchantProductService.productAll());
+        model.addAttribute("list", merchantProductService.getAllProduct());
         return "admin/merchant/review";
     }
 

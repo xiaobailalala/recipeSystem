@@ -210,4 +210,6 @@ public interface MerchantProductService {
     ResApi<Object> getFourProductActive();
 
     ResApi<Object> getAllProductByMid(Integer fMid);
+
+    Map<String, Object> getAllProduct();
 }

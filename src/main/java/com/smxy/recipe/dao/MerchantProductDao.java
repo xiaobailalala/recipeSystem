@@ -30,7 +30,18 @@ public interface MerchantProductDao {
      * @author yangyihui
      * @date 2018/11/20 0020 10:57
      */
+    List<MerchantProduct> getAllProductShelve();
+
+    /**
+     * 功能描述: 获取所有商品
+     *
+     * @return 所有商品集合
+     * @author yangyihui
+     * @date 2018/11/20 0020 10:57
+     */
     List<MerchantProduct> getAllProduct();
+    
+    
 
     /**
      * 功能描述: 添加商品

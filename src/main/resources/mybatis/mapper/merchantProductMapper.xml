@@ -2,13 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smxy.recipe.dao.MerchantProductDao">
-    <select id="getAllProduct" resultMap="getMerchantProductDetails">
+    <select id="getAllProductShelve" resultMap="getMerchantProductDetails">
         SELECT *
         FROM t_merchant_product
         WHERE f_state = '上架'
         AND f_review = '审核成功'
         ORDER BY f_id ASC;
     </select>
+    <select id="getAllProduct" resultMap="getMerchantProductDetails">
+        SELECT *
+        FROM t_merchant_product
+        ORDER BY f_id ASC;
+    </select>
+
     <resultMap id="getMerchantProductDetails" type="com.smxy.recipe.entity.MerchantProduct">
         <result property="fId" column="f_id"/>
         <result property="fMarqueclaid" column="f_marqueclaid"/>
